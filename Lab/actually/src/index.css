@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bone: #efede6;
+  --color-ink: #1a1b1d;
+  --color-mist: #6a6965;
+  --color-alpine: #1e423e;
+  --color-clear: #bcd3d8;
+  --color-dawn: #e8c9a0;
+  --color-dusk: #c9b5c8;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-serif: "Georgia", "Times New Roman", serif;
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-wordmark: "Inter", "Segoe UI", system-ui, sans-serif;
+  --nav-h: 72px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --nav-h: 56px;
+  }
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background: var(--color-bone);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-bone);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
+  font-weight: 400;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+.font-serif {
+  font-family: var(--font-serif);
+}
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+}
+.font-wordmark {
+  font-family: var(--font-wordmark);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* Klim not licensed here — Inter/Georgia stand-ins keep metrics close for layout. */
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.3s ease;
+}
+.nav-underline:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-underline::after {
+    transition: none;
+  }
+}
+
+/* Spacer after hero pin for scroll review */
+.section-pad {
+  min-height: 120vh;
+  background: var(--color-bone);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-mist);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}

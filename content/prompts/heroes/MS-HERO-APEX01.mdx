@@ -1,0 +1,154 @@
+---
+id: "MS-HERO-APEX01"
+title: "APEX QUANTUM - Deep Tech Quantum Hero"
+slug: "apex-quantum-deep-tech-quantum-hero"
+description: "For deep-tech and quantum teams. A void-indigo hero with JetBrains Mono type, cyan instrument light, and a cryogenic lab film loop."
+version: "2.0.0"
+created: "2026-08-07"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "saas"
+subcategory: "ai-product"
+styleTags: ["dark-cinematic", "minimal", "3d-immersive"]
+technicalTags: ["video-background", "parallax"]
+motionIntensity: "extreme"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/apex-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/apex-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-APEX01.webp"
+liveDemo: "/demo/cleanroom-apex"
+videoBackgrounds:
+  - file: "/assets/videos/apex-quantum-v1.mp4"
+    format: "mp4"
+    duration: "60s"
+    loop: true
+    sizeMb: 28
+    poster: "/assets/posters/apex-quantum-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 6200
+useCases: ["quantum-computing-homepage", "deep-tech-landing", "hardware-lab-hero"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **APEX QUANTUM** - deep-tech quantum computing platform. Void indigo canvas `#070A1A`, electric quantum cyan `#00D4FF`, controlled violet `#A855F7`, ice headlines `#E8F0FF`. JetBrains Mono display + Inter UI. Full-viewport cryogenic lab film, cold cyan glass nav, precise unhurried entrances. Feels like serious quantum hardware craft - not neon rain megacity, not purple mesh SaaS kits, not wellness cream, not forest climate, not film-lot amber, not brutalist security scrub.
+
+**Famous-UI craft direction (not a clone):** Quantum hardware launch restraint (IBM Quantum / Rigetti calm + product precision). One video system. Soft entrances. Stop.
+
+**Typography:**
+- Display / H1: JetBrains Mono 600-700, tracking `-0.04em`, line-height `0.9`, size `clamp(2.75rem, 8vw, 7rem)`
+- Body: Inter 300-400, 15-17px, line-height 1.65, ice at ~65%
+- Badge / nav: Inter 10-12px, uppercase tracking `0.16-0.22em` on badge
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Canvas | `#070A1A` |
+| Cyan | `#00D4FF` |
+| Violet | `#A855F7` |
+| Ice | `#E8F0FF` |
+| Muted | `rgba(232,240,255,0.65)` |
+| Glass | cyan-tinted blur |
+| Scrim | left-heavy void indigo gradients |
+
+**Radius:** `rounded-full` on pills.  
+**Spacing:** 8px grid. Safe horizontal inset minimum `px-8`.
+
+**Anti-slop hard ban:** pink neon rain kits, purple mesh aurora wallpaper, shiny gradient text, emoji, Aether cream wellness, Lumina film-lot amber, Terra forest sage, Meridian multi-chapter scrub, Vertex zero-radius mono, Neon glitch city.
+
+**Differentiation:**
+| vs | Apex Quantum must not become |
+|----|------------------------------|
+| Neon | Rain megacity + pink glitch |
+| Terra | Forest sage climate aerial |
+| Lumina | Amber espresso studio lot |
+| Meridian | Gold coast multi-chapter scrub |
+| Vertex | Monochrome security scrub |
+| Aether | Cream wellness ocean |
+
+## Layout Structure
+
+- **Navbar:** Fixed, cold cyan glass, brand APEX + Quantum + cyan pulse, center links Platform/Research/Systems/Labs/Contact, pills Documentation + Request Access
+- **Hero:** `100vh`, video cover, dual void scrims, left-aligned copy stack
+- **Copy:** Badge QUANTUM COMPUTING PLATFORM · H1 QUANTUM. · violet REAL. · body · Access Quantum + Read the Paper
+
+## Content slots
+
+| Slot | Default Text | Max Length |
+|------|--------------|------------|
+| brand | APEX QUANTUM | 20 |
+| badge | QUANTUM COMPUTING PLATFORM | 28 |
+| headline | QUANTUM. | 12 |
+| subheadline | REAL. | 8 |
+| description | Error-corrected quantum systems for teams who are done waiting on classical limits. Hardware, software, and control - one stack. | 180 |
+| cta_primary | Access Quantum | 18 |
+| cta_secondary | Read the Paper | 18 |
+
+## Motion Specification
+
+Staggered Framer entrance (if not reduced motion): badge 0.55s, H1 0.75s delay 0.18, violet lockup 0.7s delay 0.28, body 0.6s delay 0.38, CTAs 0.55s delay 0.48. Ease `[0.25, 0.46, 0.45, 0.94]`. **No glitch.**
+
+GSAP: video scale 1→1.04, scrub 1.2, desktop only. Reduced motion: fade only.
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/apex-quantum-v1.mp4` (clean B-roll only · crylabtower master)
+- Poster: `/assets/posters/apex-quantum-v1.webp`
+- Storefront preview: `/assets/videos/apex-preview-v1.mp4`
+- Storefront FS: `/assets/videos/apex-preview-fs-v1.mp4`
+- Attributes: autoPlay muted loop playsInline preload metadata, object-cover
+- Offscreen: IntersectionObserver pause/resume
+- Subject: empty cryogenic quantum lab / cryostat tower - see VIDEO_GEN_PROMPT.md
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1024px | Full nav, large type, parallax OK |
+| ≥768px | Nav links, large type |
+| <768px | Hide center nav, smaller type, stack CTAs, no parallax |
+
+## Accessibility
+
+- Reduced motion: no parallax, simple fade
+- Focus rings cyan
+- Semantic header/section/h1
+- Video aria-hidden when copy is complete
+
+## Performance Notes
+
+- JS budget: Framer + GSAP + React under ~45KB incremental (no Three required for v1)
+- Poster first; preload metadata
+- will-change only during motion
+- font-display: swap
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `ApexQuantumHeroSection.tsx` from this brief only. Wire the exact video paths. Use Tailwind + Framer Motion + optional GSAP parallax.
+
+**Lovable / Bolt:** Single self-contained component; same tokens and copy.
+
+## Expected Output
+
+1. Single React component `ApexQuantumHeroSection.tsx` (`"use client"`)
+2. Fixed cold cyan-glass navbar with APEX brand and two pills
+3. Full-viewport muted looping video with poster and IntersectionObserver
+4. Staggered entrance (no glitch) + desktop parallax
+5. Cyan / violet / void indigo system only
+6. Responsive and reduced-motion paths
+7. No host marketing shell inside the component

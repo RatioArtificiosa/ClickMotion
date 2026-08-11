@@ -1,0 +1,97 @@
+# Next.js
+.next/
+out/
+build/
+dist/
+tsconfig.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.code-workspace
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Testing / capture workspaces
+coverage/
+.playwright/
+tmp/
+tmp-*/
+**/tmp/
+**/tmp-shots/
+**/tmp-hero.png
+**/tmp-home.png
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# Generated
+src/types/database-generated.ts
+public/sitemap.xml
+.manifest.json
+
+# ---------------------------------------------------------------------------
+# VIDEOS — never commit (client HD, previews, masters, lab, test clips)
+# Code + wiring only on GitHub; media lives on disk / CDN / LFS later
+# ---------------------------------------------------------------------------
+*.mp4
+*.webm
+*.mov
+*.mkv
+*.m4v
+*.avi
+*.mpg
+*.mpeg
+*.wmv
+*.flv
+*.ogv
+*.3gp
+
+# Video-only directories (safety net if extensions differ)
+public/assets/videos/
+public/assets/videos/**
+public/previews/
+public/motionsites-rec.mp4
+test videos/
+test videos/**
+Lab/**/public/**/*.mp4
+Lab/**/public/**/*.webm
+Lab/**/public/**/*.mov
+
+# CMS local store & uploads
+data/cms/
+public/uploads/
+
+# Member auth ledger (local; emails + download history)
+data/members/store.json
+
+# Large lab install trees already covered by node_modules/; keep dist out
+Lab/**/dist/
+Lab/**/.vite/
+
+# Optional research dumps (heavy; not required for code backup)
+_research/motionsites.ai/assets/
+Lab/**/research/**/*.jpg
+Lab/**/research/**/*.png
+Lab/**/research/**/phobic-ref/

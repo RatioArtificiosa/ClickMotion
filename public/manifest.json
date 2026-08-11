@@ -1,0 +1,168 @@
+{
+  "generatedAt": "2026-08-08T01:05:48.340Z",
+  "count": 10,
+  "prompts": [
+    {
+      "id": "MS-HERO-AETH01",
+      "slug": "aether-serene-wellness-meditation-hero",
+      "title": "AETHER - Serene Wellness & Meditation Hero",
+      "type": "hero",
+      "category": "health",
+      "styleTags": [
+        "organic",
+        "minimal"
+      ],
+      "motionIntensity": "medium",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-AETH01.webp",
+      "previewVideo": "/previews/MS-HERO-AETH01.mp4"
+    },
+    {
+      "id": "MS-HERO-APEX01",
+      "slug": "apex-quantum-deep-tech-quantum-hero",
+      "title": "APEX QUANTUM - Deep Tech Quantum Hero",
+      "type": "hero",
+      "category": "saas",
+      "styleTags": [
+        "aurora",
+        "3d-immersive"
+      ],
+      "motionIntensity": "extreme",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-APEX01.webp",
+      "previewVideo": "/assets/videos/apex-preview-v1.mp4",
+      "status": "published"
+    },
+    {
+      "id": "MS-HERO-LUMI01",
+      "slug": "lumina-studios-cinematic-film-production-hero",
+      "title": "LUMINA STUDIOS - Cinematic Film Production Hero",
+      "type": "hero",
+      "category": "agency",
+      "styleTags": [
+        "dark-cinematic",
+        "luxury",
+        "editorial"
+      ],
+      "motionIntensity": "medium",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-LUMI01.webp",
+      "previewVideo": "/assets/videos/lumina-preview-v1.mp4"
+    },
+    {
+      "id": "MS-HERO-NEON01",
+      "slug": "neon-forge-cyberpunk-gaming-studio-hero",
+      "title": "NEON FORGE - Cyberpunk Gaming Studio Hero",
+      "type": "hero",
+      "category": "agency",
+      "styleTags": [
+        "neon-glow",
+        "dark-cinematic"
+      ],
+      "motionIntensity": "aggressive",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-NEON01.webp",
+      "previewVideo": "/previews/MS-HERO-NEON01.mp4"
+    },
+    {
+      "id": "MS-HERO-NEXU01",
+      "slug": "nexus-ai-enterprise-ai-platform-hero",
+      "title": "NEXUS AI - Enterprise AI Platform Hero",
+      "type": "hero",
+      "category": "saas",
+      "styleTags": [
+        "aurora",
+        "liquid-glass"
+      ],
+      "motionIntensity": "extreme",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-NEXU01.webp",
+      "previewVideo": "/previews/MS-HERO-NEXU01.mp4"
+    },
+    {
+      "id": "MS-HERO-NOMA01",
+      "slug": "nomad-travel-luxury-travel-platform-hero",
+      "title": "NOMAD TRAVEL - Luxury Travel Platform Hero",
+      "type": "hero",
+      "category": "travel",
+      "styleTags": [
+        "editorial",
+        "organic"
+      ],
+      "motionIntensity": "medium",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-NOMA01.webp",
+      "previewVideo": "/previews/MS-HERO-NOMA01.mp4"
+    },
+    {
+      "id": "MS-HERO-ORBI01",
+      "slug": "orbit-finance-trustworthy-neobank-hero",
+      "title": "ORBIT FINANCE - Trustworthy Neobank Hero",
+      "type": "hero",
+      "category": "fintech",
+      "styleTags": [
+        "corporate",
+        "luxury"
+      ],
+      "motionIntensity": "medium",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-ORBI01.webp",
+      "previewVideo": "/previews/MS-HERO-ORBI01.mp4"
+    },
+    {
+      "id": "MS-HERO-TERR01",
+      "slug": "terra-nova-clean-energy-platform-hero",
+      "title": "TERRA NOVA - Clean Energy Platform Hero",
+      "type": "hero",
+      "category": "tech",
+      "styleTags": [
+        "organic",
+        "dark-cinematic",
+        "editorial"
+      ],
+      "motionIntensity": "medium",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-TERR01.webp",
+      "previewVideo": "/assets/videos/terra-preview-v1.mp4"
+    },
+    {
+      "id": "MS-HERO-VERT01",
+      "slug": "vertex-security-brutalist-cybersecurity-hero",
+      "title": "VERTEX SECURITY - Brutalist Cybersecurity Hero",
+      "type": "hero",
+      "category": "tech",
+      "styleTags": [
+        "minimal",
+        "brutalist"
+      ],
+      "motionIntensity": "aggressive",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-VERT01.webp",
+      "previewVideo": "/previews/MS-HERO-VERT01.mp4"
+    },
+    {
+      "id": "MS-HERO-VERV01",
+      "slug": "verve-social-vibrant-genz-social-platform-hero",
+      "title": "VERVE SOCIAL - Vibrant Gen-Z Social Platform Hero",
+      "type": "hero",
+      "category": "saas",
+      "styleTags": [
+        "playful",
+        "gradient-mesh"
+      ],
+      "motionIntensity": "aggressive",
+      "priceTier": "pro",
+      "thumbnail": "/thumbnails/MS-HERO-VERV01.webp",
+      "previewVideo": "/previews/MS-HERO-VERV01.mp4"
+    },
+    {
+      "id": "MS-HERO-REVL01",
+      "slug": "revel-scroll-narrative-fashion-commerce-hero",
+      "title": "REVEL - Scroll Narrative Fashion Commerce Hero",
+      "thumbnail": "/thumbnails/MS-HERO-REVL01.webp",
+      "previewVideo": "/assets/videos/revel-scroll-preview-v1.mp4",
+      "status": "published",
+      "priceTier": "pro"
+    }
+  ]
+}

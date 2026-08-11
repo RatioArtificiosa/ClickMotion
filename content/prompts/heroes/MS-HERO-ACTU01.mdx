@@ -1,0 +1,281 @@
+---
+id: "MS-HERO-ACTU01"
+title: "Actually! - Interactive Product Can Hero"
+slug: "actually-interactive-product-can-hero"
+description: "Your product becomes the stage: a living 3D object, a pointer that opens a window into the brand, and scroll that reveals all, your product and presentation - restage it for any offer."
+version: "1.0.0"
+created: "2026-08-10"
+updated: "2026-08-10"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "ecommerce"
+subcategory: "food-beverage"
+styleTags: ["editorial", "3d-immersive", "minimal", "organic"]
+technicalTags: ["scroll-trigger", "3d-threejs", "webgl", "text-split"]
+motionIntensity: "extreme"
+difficulty: "advanced"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/actually-hero-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/actually-hero-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-ACTU01.webp"
+liveDemo: "/demo/cleanroom-actually"
+videoBackgrounds: []
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "three", version: "^0.170.0", required: true }
+  - { name: "@react-three/fiber", version: "^9.0.0", required: true }
+  - { name: "@react-three/drei", version: "^10.0.0", required: true }
+  - { name: "lenis", version: "^1.1.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 14000
+useCases: ["cpg-product-hero", "beverage-launch", "nootropic-brand", "physical-product-homepage"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**Actually!** is a full-viewport **product hero** that treats the vessel as the brand. A living 3D can drops into a quiet editorial stage; a pointer-driven circular window peels bone paper into ink studio light; scroll pins the frame, expands the reveal, and opens support copy about the formula. Visitors do not watch a stock film. They meet the product.
+
+**Why use it:**
+- Your can, bottle, or vessel feels premium and touchable on first paint
+- Pointer and grab turn the hero into a private tasting of craft, not a flat render
+- Scroll owns the second act so the formula story lands with intention
+- Every string, label texture, mesh, and color token is meant to be replaced with your brand system
+- Built for CPG, beverage, wellness drinks, and physical products that sell with restraint
+
+Default demo content (ACTUALLY. wordmark, nootropic formula, Clear SKU) is only a starting board. Tell your AI to restage everything until it reads as you alone.
+
+## Design System
+
+**Aesthetic Direction:** **Actually!** - full-bleed **product can hero** (not a mid-page gallery). Bone paper `#efede6` over ink `#1a1b1d`. Giant wordmark **ACTUALLY.** (buyer rebrands). Studio HDRI + labeled GLB can. Circle clip-path window follows the pointer; scroll expands the window, locks the can, and reveals left support copy. Soft clear accent `#bcd3d8`. Editorial CPG restraint. Not SaaS glass. Not purple mesh.
+
+**Famous-UI craft direction (not a clone):** premium beverage launch × Swiss editorial type × tactile product photography - digital. Serious. Quiet. Readable.
+
+**Typography:**
+- Wordmark: heavy geometric sans (Inter Black / Söhne Breit stand-in), `19vw` desktop, tracking `-0.03em`, ink on bone; accent period in clear
+- Support H2: light display serif (Georgia), `clamp(28px, 2.8vw, 44px)`, bone on ink
+- Meta / location: 11px uppercase tracking `0.24em`, mist
+- Body: 16px, leading 1.65, bone/80, max ~42ch
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Bone | `#efede6` | Your paper / cream |
+| Ink | `#1a1b1d` | Your deep stage |
+| Mist | `#6a6965` | Quiet meta |
+| Clear / accent | `#bcd3d8` | Your hero accent |
+| Alpine | `#1e423e` | Loader mark / deep green |
+
+**Anti-slop hard ban:** purple mesh, emoji, rainbow H1, Motionsites pill docks, free-play background film as the product signature, auto-rotating carousel without scroll pin, leaving demo ACTUALLY. copy if the buyer brand is different, stock Unsplash can as the only 3D.
+
+**Differentiation:**
+| vs | Actually! must not become |
+|----|---------------------------|
+| Helix | Mid-page card helix gallery |
+| Nexus | Enterprise AI free-play film |
+| Folio | Liquid-glass decision sheets |
+| Prism | Multi-face constellation hero |
+
+## Layout Structure
+
+- **Hero only** - no forced site chrome inside the component
+- **Desktop stack:** bone paper layer (wordmark + taglines + scroll hint) over ink stage with clip-path circle window into WebGL can + support column
+- **Pin:** start `top top`, end `+=120%`, scrub true
+- **Mobile:** stacked wordmark, can height ~52vh, drag-to-spin, formula block below
+- **Loader:** bone curtain, FLIP into hero H1, soft ~2.2s / hard 9s
+
+## Content slots (every string is replaceable)
+
+| Slot | Default (demo only) | Guidance | Max |
+|------|---------------------|----------|-----|
+| Wordmark | ACTUALLY. | Brand name + optional accent glyph | 1 line |
+| Tagline left | Actually? / Really. Actually. | Two short lines | ~20 chars/line |
+| Meta right | Nootropic, not caffeine / New York City… | Location or category | 2 lines |
+| Support index | 01 / The formula | Chapter label | short |
+| Support H2 | Sustained natural focus… | Formula promise | ~8 words |
+| Support body | A nootropic blend… | Story paragraph | ~40 words |
+| Stats | 1,150 mg / 0 mg caffeine | Two proof numbers | short |
+| Label SKU | 01 clear | Texture map path | path |
+| Loader pops | L-Theanine, Lion's Mane… | Ingredient chips | 5 strings |
+
+## Motion Specification
+
+**Mode:** scroll-scrub pin + pointer window + 3D grab. Not free-play film.
+
+| Event | Timing | Ease / notes |
+|-------|--------|--------------|
+| Loader | soft 2.2s | bone curtain → reveal |
+| Can entrance | ~1.6s after reveal | drop + spin ease-out |
+| Clip entrance | 1.2s delay 0.15 | circle radius grows |
+| Pointer follow | continuous | quickTo x/y on fine pointer |
+| Pin scrub | +=120% | expand clip, lock blend, dolly |
+| Support reveal | pin progress > ~0.58 | stagger fade-up |
+| Grab drag | any time (pre-lock) | pointer capture on can |
+
+## Assets (buyer pack)
+
+| Asset | Path | Role |
+|-------|------|------|
+| Can mesh | `/models/can.glb` | Primary product geometry |
+| Label clear | `/textures/labels/still-01-clear-2.png` | Default SKU map |
+| Labels dawn/dusk | `still-02-dawn-2.png`, `still-03-dusk-2.png` | Optional SKUs |
+| Studio HDRI | `/hdri/studio_small_03_1k.hdr` | Reflections (not a film bg) |
+| Pack still | `/assets/images/cans/actually-01.png` | Marketing mirror |
+
+No `/backgrounds` contribution - the product is the stage, not a looping film tile.
+
+## Technical implementation notes for AI tools
+
+Build a single default-export React component `ActuallyHero` (or page section).
+
+Stack: React + TypeScript, GSAP ScrollTrigger, Lenis coupled to ScrollTrigger.update, three + @react-three/fiber + @react-three/drei (`Environment`, `ContactShadows`, `useGLTF`).
+
+Canvas: transparent, ACES tone mapping, studio lights + HDRI `background={false}`, dpr cap ~1.5.
+
+Desktop clip-path circle on the ink layer; bone paper sibling with wordmark. Mobile skips clip-path pin; keep drag spin.
+
+`prefers-reduced-motion`: skip long pin scrub, show static product pose and readable copy.
+
+## Customization law
+
+After the default builds, the buyer will tell their AI to restage brand wordmark, taglines, formula copy, stats, label textures, mesh, and color tokens until the hero feels made for their product alone.
+
+## Quality bar
+
+It should feel like opening a quiet tasting room: paper, light, a real vessel, and a formula that earns the scroll. Pointer invites. Scroll completes. Nothing shouts.
+
+## Media Integration (3D product pack - fully yours)
+
+This hero is a **product stage**, not a full-bleed video film. The default pack ships:
+
+```
+/models/can.glb
+/textures/labels/still-01-clear-2.png
+/textures/labels/still-02-dawn-2.png
+/textures/labels/still-03-dusk-2.png
+/hdri/studio_small_03_1k.hdr
+/assets/images/cans/actually-01.png   (optional marketing still)
+```
+
+**What buyers put on stage:** their own GLB (or similar) vessel, label UV maps, and optional studio HDRI. Prefer real product photography projected as a label, or a clean CAD-derived can. High resolution. No watermarks.
+
+Storefront previews on ClickMotion (presentation only):
+- Page: `/assets/videos/actually-hero-preview-v1.mp4`
+- Fullscreen: `/assets/videos/actually-hero-preview-fs-v1.mp4`
+
+This product is **not** listed on the backgrounds library - there is no looping film tile to contribute.
+
+## Responsive Behavior
+
+| BP | Behavior |
+|----|----------|
+| <768 | no clip-path pin; stacked wordmark + can (~52vh) + formula; drag-to-spin |
+| ≥768 | bone paper + pointer circle window + pin `+=120%` + left support column |
+| fine pointer | clip follows cursor; grab enabled on can |
+| coarse / touch | mobile path; drag spin without pin window |
+| reduced-motion | static product pose, readable copy, no long scrub |
+
+## Accessibility
+
+- Semantic `<section id="hero">` + heading hierarchy
+- Wordmark `aria-label` with the spoken brand name
+- Loader `role="status"` during curtain
+- Canvas may stay decorative; support copy remains in the DOM for screen readers
+- `prefers-reduced-motion`: skip long pin scrub and entrance spin
+- Contrast: ink on bone / bone on ink
+
+## Performance Notes
+
+- R3F Canvas `dpr` capped (~1.5 hero); ACES tone mapping
+- `useGLTF.preload` for the can mesh
+- Dispose label textures and materials on unmount
+- HDRI Environment with `background={false}`
+- Lenis only on the shell that owns the pin
+- ContactShadows resolution modest (512)
+
+## AI Tool Instructions
+
+1. Paste this full prompt into Cursor, Claude, Grok Build, Lovable, or Bolt.
+2. Ask for a single React + TypeScript hero component with GSAP ScrollTrigger, React Three Fiber, drei, and Lenis smooth scroll coupled to ScrollTrigger.
+3. Place the GLB, label PNG, and HDRI where the component loads them (default paths above).
+4. Mount the hero inside a smooth-scroll shell so pin scrub stays in sync.
+5. After the default builds, run the **Customization prompts** below until every demo string and sample label is gone.
+
+## What to tell your AI (copy-paste customization)
+
+Use these as-is. Replace brackets. Prefer one request at a time so the AI does not drop motion.
+
+### Brand wordmark
+```
+Change the hero wordmark from ACTUALLY. to [YOUR BRAND].
+Keep heavy geometric weight, giant sizing, and optional accent on the final glyph.
+Update the loader mark and aria-label to match [YOUR BRAND].
+```
+
+### Taglines and meta
+```
+Change "Actually? / Really. Actually." to "[LINE 1] / [LINE 2]".
+Change the bottom-right meta to "[CATEGORY LINE] / [LOCATION LINE]".
+Keep editorial spacing and uppercase tracking on the meta block.
+```
+
+### Formula story
+```
+Rewrite the support index, H2, body paragraph, and two stats for [PRODUCT STORY].
+Keep the left column reveal on scroll past mid pin.
+```
+
+### Product mesh and labels
+```
+Replace /models/can.glb with [YOUR GLB PATH] and the label map with [YOUR LABEL PNG].
+Keep metal vs label material split, studio HDRI, grab spin, and contact shadow.
+```
+
+### Colors
+```
+Change bone #efede6, ink #1a1b1d, and accent #bcd3d8 to [PAPER] / [STAGE] / [ACCENT].
+Keep type readable on both layers.
+```
+
+### Tone of voice pass
+```
+Rewrite every visible string so the voice matches [BRAND VOICE].
+Do not change pin length or 3D math unless I ask.
+```
+
+### Something looks wrong
+```
+Something is broken: [DESCRIBE WHAT YOU SEE].
+Fix it and keep Actually! as a product-first hero with pointer window, living 3D vessel, and scroll formula reveal.
+Do not ask me to write code. Keep reduced-motion support.
+```
+
+## Expected Output
+
+1. Full-viewport hero, no site header/footer required inside the component.
+2. Desktop: bone paper wordmark layer + ink studio with pointer-driven circle window into WebGL can.
+3. Scroll pins ~120% viewport; progress expands the window, soft-locks the can, reveals formula support copy.
+4. Can entrance drop + grab-to-spin + optional float idle.
+5. Loader curtain with brand mark before reveal.
+6. Mobile stacked layout with drag spin.
+7. Reduced-motion static fallback.
+8. All demo strings, mesh, and labels are replaceable via the prompts above.
+9. No backgrounds-film dependency.
+10. Works as a drop-in homepage hero for CPG / beverage / physical product brands.
+
+## Package notes (operators)
+
+- Free listing · opaque package `a9ct7u4l2y1x` · no PaidSalt
+- Client media = GLB + labels + HDRI (not a film)
+- Storefront dual preview + FS full UI capture
+- **NOT** on `/backgrounds`
+

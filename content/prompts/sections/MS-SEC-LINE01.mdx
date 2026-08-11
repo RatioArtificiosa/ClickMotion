@@ -1,0 +1,256 @@
+---
+id: "MS-SEC-LINE01"
+title: "Lineup - Product Line Scroll Reveal Section"
+slug: "lineup-product-line-scroll-reveal-section"
+description: "Your products enter one by one as the visitor scrolls - a living 3D vessel, soft copy, and a quiet stage that can hold any line from two SKUs to a full collection."
+version: "1.0.0"
+created: "2026-08-10"
+updated: "2026-08-10"
+author: "MS Team"
+status: "published"
+type: "section"
+category: "ecommerce"
+subcategory: "food-beverage"
+styleTags: ["editorial", "3d-immersive", "minimal", "organic"]
+technicalTags: ["scroll-trigger", "3d-threejs", "webgl", "text-split"]
+motionIntensity: "extreme"
+difficulty: "advanced"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/lineup-reveal-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/lineup-reveal-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-LINE01.webp"
+liveDemo: "/demo/cleanroom-lineup"
+videoBackgrounds: []
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "three", version: "^0.170.0", required: true }
+  - { name: "@react-three/fiber", version: "^9.0.0", required: true }
+  - { name: "@react-three/drei", version: "^10.0.0", required: true }
+  - { name: "lenis", version: "^1.1.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 16000
+useCases: ["product-line-section", "cpg-sku-carousel", "flavor-lineup", "multi-product-reveal", "ecommerce-midpage"]
+compatibleWith: ["MS-HERO-ACTU01"]
+positionInPage: "middle"
+---
+
+## Promise (buyer-facing)
+
+**Lineup** is a mid-page **product reveal section** where scroll becomes a private tasting of your range. The stage pins. Each scroll segment lands a new SKU: 3D vessel cross-fades, bloom tint shifts, copy card rebuilds, ghost number breathes. Visitors do not swipe a flat carousel of thumbnails. They meet each product with intention.
+
+**Why use it:**
+- Your line (2, 3, 5, or more) feels curated and premium, not grid-dumped
+- Scroll owns the pacing so each product gets a full beat
+- 3D vessel + editorial copy + optional spec sheet read as commerce-ready craft
+- Every string, SKU count, mesh, label map, color, and spec row is meant for your brand
+- Drop-in section after a hero or before shop - not a full homepage
+
+Default demo (ACTUALLY Clear / Dawn / Dusk cans) is only a starting board. Tell your AI to restage products, expand the count, or swap the vessel type until it is unmistakably yours.
+
+**Package PDF:** `/packages/MS-SEC-LINE01/Lineup-package-l7n3e9k2m4p8.pdf`  
+**Live demo:** `/demo/cleanroom-lineup`  
+**Deep AI guide:** `cleanroom/lineup-from-prompt/CUSTOMIZATION.md`
+
+## Design System
+
+**Aesthetic Direction:** **Lineup** - mid-page **product line scroll reveal** (not a full-bleed hero). Bone paper stage `#efede6`. Left: SKU wordmark, giant product name with accent period, italic pair line, pitch, optional spec rows. Right: WebGL product mesh with ghost giant number and soft bloom. Desktop pin ~`N × 100vh` with snap. Mobile: horizontal snap cards.
+
+**Famous-UI craft direction:** premium CPG tasting room × Swiss editorial type × quiet 3D product photography. Calm. Expensive. Readable.
+
+**Typography:**
+- Section H2: light display serif, `clamp(32px, min(4.6vw, 6.5vh), 64px)`
+- Product name: display light, `clamp(52px, min(7.6vw, 12vh), 128px)`, accent period in bloom color
+- Wordmark SKU line: heavy geometric sans 15-17px
+- Spec rows: tabular nums 15px + 12px labels
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage bone | `#efede6` | Your paper |
+| Ink | `#1a1b1d` | Your type |
+| Mist | `#6a6965` | Meta |
+| Per-SKU bloom | per product `bloomColor` | Brand accents |
+
+**Anti-slop hard ban:** purple mesh, emoji, Motionsites pill docks, auto-rotating carousel without scroll pin, leaving ACTUALLY demo copy for another brand, hardcoding "always 3" when the buyer needs 5+.
+
+**Differentiation:**
+| vs | Lineup must not become |
+|----|------------------------|
+| Helix | Mid-page design-card helix gallery |
+| Actually! hero | Full-bleed pointer-window can hero |
+| Folio | Liquid-glass decision sheets |
+| Shop grids | Flat product cards without pin ritual |
+
+## Layout Structure
+
+- **Section only** - no forced site chrome
+- **Desktop:** pin `top top`, end `+= N * 100vh` where N = product count, scrub + snap
+- **Grid:** copy `5fr` / stage `7fr`
+- **Mobile:** horizontal snap cards, swipe to change SKU
+- **Tabs:** SKU numbers (01 02 03…) jump to pin progress
+- **Keyboard:** ArrowLeft / ArrowRight while section in view
+
+## Content slots (every field is replaceable)
+
+All buyer-facing strings live in **`lineup-data.ts`**: `SECTION_META`, `PRODUCTS`, `SPEC_ROWS`.
+
+| Slot | Source | Guidance |
+|------|--------|----------|
+| Eyebrow index | `SECTION_META.sectionIndex` | e.g. 02 |
+| Eyebrow label | `SECTION_META.eyebrowLabel` | Update when N changes |
+| H2 | `SECTION_META.title` | e.g. Five expressions. |
+| Mobile swipe | `SECTION_META.mobileSwipeHint` | Swipe to taste / explore |
+| Total footer | `SECTION_META.totalLabel/Unit/Value` | Industry summary |
+| Spec unit / Lead badge | `SECTION_META.specUnit`, `leadBadge` | mg / Lead → your terms |
+| Product array | `PRODUCTS` | **Any products** - length = N |
+| number | product.number | BRAND.01 wordmark |
+| name | product.name | Display name |
+| descriptor | product.descriptor | Micro role tag |
+| flavorPair | product.flavorPair | Subtitle / pair |
+| pitch | product.pitch | 1 short paragraph |
+| bloomColor | product.bloomColor | Accent + stage bloom |
+| leadIngredient | product.leadIngredient | Spec row id marked Lead |
+| labelPath | product.labelPath | Public UV / label texture |
+| meshPath | product.meshPath | Optional per-SKU GLB |
+| Spec rows | `SPEC_ROWS` | Features, materials, doses… |
+| Mesh default | `/models/can.glb` | Any vessel |
+
+## Expand to more products (critical)
+
+The section is **data-driven** by the `PRODUCTS` array. `LineupSection` uses `COUNT = PRODUCTS.length` for pin, snap, tabs, blooms, ghosts, and mobile cards.
+
+1. **Add a product:** append an object with all `LineupProduct` fields (include `labelPath`).
+2. **Pin length** becomes `N × viewport height` automatically (`end: += N * innerHeight`).
+3. **Snap points** become `0, 1/N, 2/N, …, 1` via `snapPoints(COUNT)`.
+4. **Tabs, ghosts, blooms, 3D stage** map over the array - no hand-edit of magic `3`.
+5. **Recommended range:** 2–6 for comfort; 7–8 possible if copy stays short.
+6. **H2 / eyebrow:** rewrite via `SECTION_META` (helper: `suggestedMetaForCount(n)` in data file).
+7. **Labels:** set `labelPath` per product OR add keys to `LABEL_MAP` in `Can3D.tsx`.
+8. **Reduce products:** delete array entries - pin shortens.
+9. **Never** leave "Three formulations." when N ≠ 3.
+
+Ask your AI: *“Expand Lineup from 3 to 5 products using this data: [list]. Update SECTION_META H2 to Five expressions. Keep pin snap and 3D cross-fade. Add labelPath for each new SKU.”*
+
+## Motion Specification
+
+**Mode:** scroll-scrub pin + snap (desktop). Not free-play film.
+
+| Event | Timing | Notes |
+|-------|--------|-------|
+| Pin | top top → += N·vh | scrub 1 |
+| Snap | 0…1/N…1 | soft 0.25–0.55s |
+| Product change | active index | can x/y/rot/scale/opacity cross-fade ~0.85s |
+| Copy card | out 0.25s / in 0.45s stagger | data-stage-item |
+| Bloom / ghost | 0.7–0.8s | per active SKU |
+| Tabs / arrows | instant jump | keyboard + click |
+
+## Assets (buyer pack)
+
+| Asset | Path | Role |
+|-------|------|------|
+| Vessel mesh | `/models/can.glb` | Default product geometry (swap freely) |
+| Labels 01–03 | `/textures/labels/still-0*-*.png` | Demo UV maps |
+| Studio HDRI | `/hdri/studio_small_03_1k.hdr` | Reflections |
+
+No `/backgrounds` contribution - products are the stage.
+
+## Technical notes for AI tools
+
+Single default-export `LineupSection`. React + TS, GSAP ScrollTrigger, Lenis, three + R3F + drei. `PRODUCTS` + `SECTION_META` drive UI. `prefers-reduced-motion`: static first product, no long scrub.
+
+Cleanroom path: `cleanroom/lineup-from-prompt/`  
+Primary edit file: `lineup-data.ts`  
+Full AI playbook: `CUSTOMIZATION.md`
+
+## Customization law
+
+After default builds, restage brand, product list length, every string, mesh, labels, specs, and colors until the section feels made for that brand alone. Support any industry: beverages, skincare, wine, hardware, apparel drops, multi-SKU CPG.
+
+## What to tell your AI (copy-paste)
+
+### Replace the whole product line
+```
+Replace PRODUCTS and SECTION_META in lineup-data.ts with my brand:
+Brand: [NAME]
+Products:
+1) name: [A], subtitle: […], pitch: […], accent: [#hex], sku: 01, label: [path]
+2) name: [B], …
+3) name: [C], …
+Keep scroll pin, snap, 3D cross-fade, and tabs. H2 and eyebrow must match count N.
+Never leave ACTUALLY demo copy on my brand.
+```
+
+### Expand from 3 to N products
+```
+Expand Lineup from 3 to [N] products. Append [N-3] new PRODUCTS entries using [DATA].
+Pin length must be N * 100vh. Snap points 0…1. Tabs show 01…[N].
+Update SECTION_META.title to "[TITLE]." and eyebrowLabel to match.
+Add labelPath for every new SKU. Do not hardcode N=3 anywhere.
+```
+
+### Reduce products
+```
+Remove products [ids] from PRODUCTS. Update SECTION_META for new count.
+Pin and snap must shrink with PRODUCTS.length.
+```
+
+### Swap the 3D vessel for any product
+```
+Replace can.glb with [MY MESH] and label maps with [MY TEXTURES or generate labels from [ART DIRECTION]].
+Set product.meshPath / labelPath or change Can3D defaults.
+Keep metal vs label materials (or simplify), studio HDRI, and stage cross-fade motion.
+If my product is a bottle/box/device, adjust targetHeight and camera so it frames beautifully.
+```
+
+### Change copy system (not beverages)
+```
+Rewrite all product names, subtitles, pitches, and SPEC_ROWS for [CATEGORY: e.g. skincare / hardware / wine].
+Replace SECTION_META totalLabel / totalUnit / specUnit / leadBadge for my industry.
+dosageMg is just the numeric cell - use prices, ml, SPF, watts as needed.
+```
+
+### Brand + colors
+```
+Change stage bone and ink to [PAPER] / [INK] (CSS vars --color-bone / --color-ink).
+Set each product bloomColor to my palette. Change ACTUALLY.01 wordmarks to [BRAND].01 style.
+```
+
+### Place after Actually! hero
+```
+Mount LineupSection below ActuallyHero on the same page. Shared Lenis + ScrollTrigger.
+Keep both bone stages coherent. Do not nest site chrome inside either component.
+```
+
+### Something looks wrong
+```
+Something is broken: [DESCRIBE]. Fix it and keep Lineup as a scroll-pinned product reveal where each segment introduces a SKU with 3D vessel + copy. Support N products from the array. Do not ask me to write code.
+```
+
+## Expected Output
+
+1. Mid-page section, bone stage, no site header/footer required
+2. Desktop pin with N viewport heights and snap per product
+3. 3D vessel cross-fade + bloom + ghost number per SKU
+4. Copy card transition on change
+5. Tabs + keyboard navigation
+6. Mobile horizontal snap cards
+7. Data-driven product count (expand/contract via array + SECTION_META)
+8. Reduced-motion static fallback
+9. All demo strings/assets replaceable (labelPath / meshPath supported)
+10. Compatible after Actually! hero or alone
+11. No leftover "always 3" hardcoding in chrome copy
+
+## Package notes (operators)
+
+- Free listing · opaque `l7n3e9k2m4p8` · no PaidSalt
+- Client media = GLB + labels + HDRI
+- Storefront dual preview + FS + poster + thumb
+- **NOT** on `/backgrounds`
+- Capture: `node scripts/capture-lineup-preview.mjs`

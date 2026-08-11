@@ -1,0 +1,106 @@
+---
+id: "MS-HERO-PRSM01"
+title: "PRISM - Liquid Glass Multi-Panel Identity Hero"
+slug: "prism-liquid-glass-multi-panel-identity-hero"
+description: "For creative studios. Multi-face film with liquid glass panels that pop on both sides as scroll advances the sculpture - never left-column only."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "agency"
+subcategory: "creative"
+styleTags: ["liquid-glass", "editorial", "artsy", "multi-panel"]
+technicalTags: ["scroll-scrub", "video-background", "liquid-glass", "gsap"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/prism-scroll-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/prism-scroll-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-PRSM01.webp"
+liveDemo: "/demo/cleanroom-prism"
+videoBackgrounds:
+  - file: "/assets/videos/prism-faces-v1.mp4"
+    format: "mp4"
+    duration: "48s"
+    loop: false
+    sizeMb: 18
+    poster: "/assets/posters/prism-faces-v1.webp"
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 9200
+useCases: ["creative-portfolio", "ai-identity-landing", "gallery-hero", "studio-homepage"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **PRISM** - liquid-glass multi-panel identity hero. Soft studio mist behind a centered multi-face sculpture. **Panels of many sizes float on LEFT and RIGHT** (chips, metrics, stats, profiles, quotes, features, CTAs). Scroll owns the film timeline. Material system: SVG distortion + shell + specular + stabilized content plate. Syne display + DM Sans. Prism violet / cyan accents.
+
+**Famous-UI craft direction (not a clone):** Apple Liquid Glass material discipline (layers, light model, readability) × gallery installation pacing. Never a single left H1 column.
+
+**Typography:**
+- Display: Syne 600-700, tracking tight
+- UI: DM Sans 400-600, 11-14px
+- Chips: 10-11px uppercase tracking
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Studio mist | `#E8EAEF` |
+| Ink | `#0E1016` |
+| Violet | `#A78BFA` |
+| Soft violet | `#C4B5FD` |
+| Cyan | `#67E8F9` |
+| Fuchsia | `#F0ABFC` |
+| Glass fill | `rgba(255,255,255,0.10-0.18)` |
+
+**Liquid glass stack (mandatory):**
+1. SVG `#prism-glass-distortion` once (turbulence + blur + displacement)
+2. Shell with backdrop-filter blur + saturate
+3. Specular top edge + hairline rim
+4. Stabilized plate under type
+5. Tiers thin / standard / thick
+6. `prefers-reduced-transparency` solid fallback
+
+**Layout law:** Center faces stay clear. Information lives in **both-side** floating panels. Top-center chapter pill. No left-only body dump.
+
+**Chapters:**
+1. 01 · Spectrum — open feature left, stats right
+2. 02 · Margins — quote right, profile left, chips both sides
+3. 03 · Clarity — feature left, CTA right
+
+**Anti-slop hard ban:** left-column-only heroes, full-viewport frosted slab, purple mesh sludge, emoji, Meridian/Vertex/Neon/Revel clones, Apple trademarks.
+
+**Differentiation:**
+| vs | Prism must not become |
+|----|------------------------|
+| Revel | Pearl fashion left chapters |
+| Meridian | Dark coastal estate |
+| Vertex | Mono security scrub |
+| Apex | Quantum cyan void |
+| Neon | Rain megacity loop |
+
+---
+
+## Implementation notes for AI builders
+
+**Cursor / Claude / Grok Build:** Build `PrismLiquidGlass.tsx` from this brief only. Wire exact video paths. GSAP ScrollTrigger scrub is mandatory. Multi-panel both-side field is the signature. Liquid glass is a stack, not one blur.
+
+### Deliverables
+
+1. Single React component `PrismLiquidGlass.tsx` (`"use client"`)
+2. SVG filter once; tiered glass panels left + right
+3. Scroll track ~520vh, sticky stage, scrub ~0.55
+4. Reduced motion mid-frame; reduced transparency solid plates
+5. No host marketing chrome inside the cleanroom component

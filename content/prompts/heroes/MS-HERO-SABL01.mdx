@@ -1,0 +1,177 @@
+---
+id: "MS-HERO-SABL01"
+title: "SABLE - Holiday Luxury Fashion Walk Hero"
+slug: "sable-holiday-luxury-fashion-walk-hero"
+description: "For luxury fashion houses. A full uncut winter walk film under sparse private-house type. Holiday 2026. Quiet certainty. No scroll scrub."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "ecommerce"
+subcategory: "fashion"
+styleTags: ["luxury", "minimal", "dark-cinematic", "editorial"]
+technicalTags: ["video-background", "scroll-trigger", "parallax", "intersection-observer"]
+motionIntensity: "subtle"
+difficulty: "intermediate"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/sable-holiday-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/sable-holiday-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-SABL01.webp"
+liveDemo: "/demo/cleanroom-sable"
+videoBackgrounds:
+  - file: "/assets/videos/sable-winter-v1.mp4"
+    format: "mp4"
+    duration: "17s"
+    loop: true
+    sizeMb: 35
+    poster: "/assets/posters/sable-winter-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 7800
+useCases: ["luxury-fashion-homepage", "holiday-campaign-hero", "private-collection-launch", "resort-walk-look"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **SABLE** (Maison Sable) - private-house holiday fashion hero. One full-bleed **uncut** winter village walk film. The subject is the product. Type is sparse, quiet, and expensive. Champagne gold on ivory over dark edge veils. No pill nav. No glass card stacks. No mid-frame marketing essays. Forbes-tier restraint: the film carries the emotion; the UI frames it.
+
+**Famous-UI craft direction (not a clone):** The Row / Toteme holiday film discipline × private bank type density × editorial letterbox pacing. Light never kitsch. Holiday without Santa or glitter UI.
+
+**Typography:**
+- Brand / wordmark: Cormorant Garamond (or high-end transitional serif), 0.95rem, tracking `0.42em`, uppercase, gold period
+- Season label: Inter 10px, tracking `0.32em`, gold `#C4A574`
+- House line: Cormorant 0.95-1.15rem, tracking `0.08em`, ivory 72%
+- Progress note: Inter 10px, tracking `0.06em`, ivory 38%
+- CTA: Inter 0.72rem, tracking `0.18em`, uppercase, ink on ivory gradient
+- Nav links: Inter 0.68rem, tracking `0.2em`, uppercase, mist ivory
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Stage ink | `#0C0B0A` |
+| Ivory | `#F7F3EC` / `#FAF7F1` |
+| Champagne gold | `#C4A574` |
+| Warm highlight | `#E8D5B0` |
+| CTA fill | `#F4EFE4` → `#E8DCC8` |
+| Veil | soft charcoal edges only, center clear |
+
+**Anti-slop hard ban:** purple mesh, neon pills, emoji, rainbow type, "AI fashion" glitter, scroll-scrubbing the film, mid-screen multi-paragraph sales copy, Atelier as a default word, Motionsites liquid-glass docks, dense metric cards on the film face.
+
+**Differentiation:**
+| vs | Sable must not become |
+|----|------------------------|
+| Revel | Rose-gold phone-break scroll scrub |
+| Mirage | Desert agency glass cards |
+| Lumina | Film-lot amber production hero |
+| Meridian | Multi-chapter coastal estate scrub |
+
+## Layout Structure
+
+- **Hero:** sticky full-viewport stage inside a short scroll track (~180vh) for pin atmosphere only
+- **Film:** full bleed `object-fit: cover`, `object-position: center 42%`, scale ~1.01
+- **Nav:** absolute top, three-column grid: brand left, links center, private-view CTA right
+- **Intro lockup:** top-left season + house line (stays quiet; never competes with the face)
+- **Center:** intentionally empty - subject walks free
+- **Footer chrome:** Maison Sable label + true film time, hairline gold progress (video clock), holiday line, fixed "Holiday · Private collection", ivory CTA
+- **Safe insets:** horizontal `clamp(1.35rem, 4.5vw, 3.5rem)`; type never flush to edge; soft vignette only
+
+## Content slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| brand | SABLE | 12 |
+| season | Holiday 2026 | 20 |
+| house_line | Maison Sable · Private collection | 48 |
+| progress_note | The holiday season is a time for love and luxury. | 72 |
+| footer_active | Holiday · Private collection | 40 |
+| cta | Discover the collection | 28 |
+| nav_cta | Book private view | 24 |
+| nav | Collection · Look · House · Reserve | - |
+
+No mid-frame chapter titles. No body essays over the film.
+
+## Motion Specification
+
+**Mode:** Free-playing full film (autoPlay muted loop playsInline). **Not** video scrub. Scroll does **not** map to `video.currentTime`.
+
+| Element | Motion |
+|---------|--------|
+| Film | Continuous loop of complete walk; progress bar = `currentTime / duration` |
+| Stage | Sticky pin for ~180vh track |
+| Intro | Optional 8px Y drift on scroll (atmosphere only) |
+| CTA hover | translateY -1px, soft shadow deepen, arrow +3px |
+| Nav links | color to gold 350ms |
+| Reduced motion | static still fallback, no autoplay required, auto height stage |
+
+Scrub intensity: none on film. UI motion subtle only.
+
+## Video / Media Integration
+
+| Role | Path |
+|------|------|
+| Client HD (buyer) | `/assets/videos/sable-winter-v1.mp4` |
+| Backgrounds library (small) | `/assets/videos/backgrounds/sable-winter-bg-v1.mp4` |
+| Storefront preview | `/assets/videos/sable-holiday-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/sable-holiday-preview-fs-v1.mp4` |
+| Pure film poster | `/assets/posters/sable-winter-v1.webp` |
+| Storefront poster / thumb | `/assets/posters/sable-holiday-preview-v1.webp` · `/thumbnails/MS-HERO-SABL01.webp` |
+
+Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover`. Full duration displayed - never cut, never seek for narrative. Forbidden: backgrounds encode as client HD; storefront UI burn as client HD.
+
+**Storefront capture law:** FG plates (nav, intro, footer) transparent; BG film composited as continuous ffmpeg track of the **entire** client HD (no browser seek). Progress bar in capture may show film time mid-walk.
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1100px | Full nav, wide intro, footer row horizontal |
+| ≥860px | Comfortable type |
+| <860px | Hide center nav links, keep brand + private view |
+| <520px | CTA full width |
+| Reduced motion | Static stage, gradient fallback |
+
+## Accessibility
+
+- `prefers-reduced-motion` static path
+- Semantic `section` / `nav` / `footer`
+- Decorative film layers `aria-hidden`
+- Focusable text links and CTA
+- Contrast: ivory on dark veil; gold accents for labels
+
+## Performance Notes
+
+- Single video element, cover scale 1.01
+- Animate transform/opacity only on UI
+- No mid-frame glass blur stack (keeps GPU light)
+- Progress bar updates on `timeupdate` only
+- font-display: swap
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `SableHolidayHero.tsx` from this brief only. Wire the exact client HD path. Free-play full film is mandatory. Do not scroll-scrub. Keep type sparse. Do not invent mid-frame chapter stacks.
+
+**Lovable / Bolt:** Single self-contained hero. Same tokens. Full walk film under quiet private-house chrome.
+
+## Expected Output
+
+1. Single React component `SableHolidayHero.tsx` (`"use client"`, default export)
+2. Sticky stage + free-playing full client HD video under soft edge veils
+3. Minimal text nav: SABLE. · Collection Look House Reserve · Book private view
+4. Intro: Holiday 2026 + Maison Sable · Private collection
+5. Empty center - subject unobstructed
+6. Footer: Maison Sable + true film progress + "The holiday season is a time for love and luxury." + Holiday · Private collection + Discover the collection
+7. Reduced-motion path
+8. Configurable `brand`, `backgroundSrc`
+9. No host marketing shell, no scaffold notes, no "demo only" strings in the component UI

@@ -1,0 +1,187 @@
+---
+id: "MS-HERO-AXIO01"
+title: "AXIOM - Fintech Inverted Markets Hero"
+slug: "axiom-fintech-inverted-markets-hero"
+description: "For institutional fintech. Full free-playing inverted NYC film under true-north chrome. Order when markets flip. No scroll scrub."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "fintech"
+subcategory: "investing"
+styleTags: ["luxury", "dark-cinematic", "minimal", "editorial"]
+technicalTags: ["video-background", "scroll-trigger", "parallax", "intersection-observer"]
+motionIntensity: "subtle"
+difficulty: "intermediate"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/axiom-fintech-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/axiom-fintech-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-AXIO01.webp"
+liveDemo: "/demo/cleanroom-axiom"
+videoBackgrounds:
+  - file: "/assets/videos/axiom-upside-v1.mp4"
+    format: "mp4"
+    duration: "10s"
+    loop: true
+    sizeMb: 34
+    poster: "/assets/posters/axiom-upside-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 8200
+useCases: ["fintech-homepage", "institutional-markets-hero", "trading-platform-launch", "investment-thesis-page"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **AXIOM** - institutional fintech inverted-markets hero. One full-bleed **uncut** inverted NYC golden-hour street film free-plays under private-bank chrome. Signature: a fixed level gold **TRUE NORTH** horizon hairline that never tilts while the city inverts. Serif display + Inter. Champagne gold on cool ivory over deep stage ink. Order when markets flip. No neon crypto kitsch. No scroll scrub.
+
+**Famous-UI craft direction (not a clone):** Private bank product film discipline x Stripe/Bloomberg institutional density x editorial letterbox pacing. Calm authority. Not Motionsites glass docks. Not purple mesh SaaS.
+
+**Typography:**
+- Brand / wordmark: Inter 0.78rem, tracking `0.38em`, weight 700, uppercase
+- Kicker: Inter 10px, tracking `0.28em`, gold `#D4AF6A`
+- H1 display: Instrument Serif (or high-end transitional serif), `clamp(2.35rem, 5vw, 3.85rem)`, line-height 1.05, tracking `-0.03em`, three stacked lines; third line italic cream `#F0E6D0`
+- Lead: Inter 0.92-1.05rem, line-height 1.55, max-width **56ch**, **exactly two lines** (sentence 1 alone; sentences 2-3 on line 2)
+- Proof values: Instrument Serif ~1.25rem, tabular nums
+- Proof labels: Inter 9px, tracking `0.14em`, uppercase
+- Progress note: Inter ~10px, tracking soft, cool mist
+- CTA: Inter 0.72rem, tracking `0.16em`, uppercase, ink on ivory gradient
+- Horizon badge: Inter 9px, tracking `0.24em`, uppercase
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Stage ink | `#07090F` |
+| Cool ivory | `#EEF2F7` / `#F4F7FB` |
+| Champagne gold | `#D4AF6A` |
+| Cream accent | `#F0E6D0` |
+| Veil | deep ink left/right/bottom; center film readable |
+| Proof glass | `rgba(10,14,22,0.48)` + gold 0.5px rim |
+
+**Anti-slop hard ban:** purple mesh, neon crypto chrome, emoji, rainbow type, Motionsites pill docks, scroll-scrubbing the film, mid-frame multi-paragraph sales essays, "demo only" / "scaffold" / "uncut film" product notes in UI, opaque black slabs instead of soft veil.
+
+**Differentiation:**
+| vs | Axiom must not become |
+|----|------------------------|
+| Orbit | Generic neobank amber card grid |
+| Meridian | Multi-chapter coastal estate scrub |
+| Mirage | Desert agency glass pivot cards |
+| Sable | Sparse holiday fashion walk (no proofs / no horizon) |
+| Apex | Quantum cyan lab void |
+
+## Layout Structure
+
+- **Hero:** sticky full-viewport stage inside a short scroll track (~175vh) for pin atmosphere only
+- **Film:** full bleed `object-fit: cover`, `object-position: center`, scale ~1.02
+- **Signature horizon:** absolute level gold hairline at ~48% height + "True north" badge left - never rotates with the film
+- **Nav:** absolute top, three-column grid: brand left, links center, Request access right (underline gold)
+- **Copy lockup:** lower-left - kicker, three-line H1, two-line lead, three proof chips
+- **Footer chrome:** Axiom label + true film time, hairline gold progress (video clock), calm line, "Order in inverted markets", ivory CTA
+- **Safe insets:** horizontal `clamp(1.35rem, 4.5vw, 3.5rem)`; type never flush to edge; soft vignette only
+
+## Content slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| brand | AXIOM | 12 |
+| kicker | Institutional markets · New York | 40 |
+| h1_l1 | When markets | 24 |
+| h1_l2 | turn upside down, | 28 |
+| h1_l3 | we still know up. | 28 |
+| lead_l1 | Axiom turns inverted noise into a single decision path. | 56 |
+| lead_l2 | Chaos stays in the frame. Clarity stays in the system. | 56 |
+| proofs | 12µs Median decision path · 99.99% Matching uptime · 0 noise Signal policy | - |
+| progress_note | Wise, precise and tactical positions maintain the calm. | 72 |
+| footer_active | Order in inverted markets | 40 |
+| cta | Read the thesis | 28 |
+| nav_cta | Request access | 24 |
+| nav | Platform · Markets · Research · Access | - |
+| horizon | True north | 16 |
+
+Lead layout is mandatory: line 1 = first sentence only; line 2 = next two sentences. Do not wrap mid-sentence.
+
+## Motion Specification
+
+**Mode:** Free-playing full film (`autoPlay muted loop playsInline`). **Not** video scrub. Scroll does **not** map to `video.currentTime`.
+
+| Element | Motion |
+|---------|--------|
+| Film | Continuous loop of complete inverted NYC run; progress bar = `currentTime / duration` |
+| Stage | Sticky pin for ~175vh track |
+| Copy | Optional ~14px Y drift + slight opacity on scroll (atmosphere only) |
+| CTA hover | translateY -1px, soft shadow deepen, arrow +3px |
+| Nav links | color to gold 300ms |
+| Reduced motion | static still fallback, no autoplay required, auto height stage |
+
+Scrub intensity: none on film. UI motion subtle only. Horizon never animates rotation.
+
+## Video / Media Integration
+
+| Role | Path |
+|------|------|
+| Client HD (buyer) | `/assets/videos/axiom-upside-v1.mp4` |
+| Backgrounds library (small) | `/assets/videos/backgrounds/axiom-upside-bg-v1.mp4` |
+| Storefront preview | `/assets/videos/axiom-fintech-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/axiom-fintech-preview-fs-v1.mp4` |
+| Pure film poster | `/assets/posters/axiom-upside-v1.webp` |
+| Storefront poster / thumb | `/assets/posters/axiom-fintech-preview-v1.webp` · `/thumbnails/MS-HERO-AXIO01.webp` |
+
+Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover`. Full duration displayed - never cut, never seek for narrative. Forbidden: backgrounds encode as client HD; storefront UI burn as client HD.
+
+**Storefront capture law:** FG plates (nav, horizon, copy, footer) transparent; BG film composited as continuous ffmpeg track of the **entire** client HD (no browser seek). Progress bar in capture may show film time mid-run.
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1100px | Full nav, wide lead (56ch), proofs in a row |
+| ≥860px | Comfortable type |
+| <860px | Hide center nav links, keep brand + Request access |
+| <520px | Proofs wrap; CTA full width; lead may soft-wrap but keep sentence integrity where possible |
+| Reduced motion | Static stage, gradient fallback |
+
+## Accessibility
+
+- `prefers-reduced-motion` static path
+- Semantic `section` / `nav` / `footer`
+- Decorative film layers and horizon `aria-hidden` where appropriate
+- Focusable text links and CTA
+- Contrast: cool ivory on dark veil; gold accents for labels
+
+## Performance Notes
+
+- Single video element, cover scale 1.02
+- Animate transform/opacity only on UI
+- Horizon is CSS only (no canvas)
+- Progress bar updates on `timeupdate` only
+- font-display: swap
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `AxiomFintechHero.tsx` from this brief only. Wire the exact client HD path. Free-play full film is mandatory. Do not scroll-scrub. Keep the TRUE NORTH horizon level. Lead must be two lines as specified. Do not invent mid-frame chapter stacks.
+
+**Lovable / Bolt:** Single self-contained hero. Same tokens. Full inverted city film under institutional chrome.
+
+## Expected Output
+
+1. Single React component `AxiomFintechHero.tsx` (`"use client"`, default export)
+2. Sticky stage + free-playing full client HD video under soft edge veils
+3. Minimal text nav: AXIOM · Platform Markets Research Access · Request access
+4. Level gold TRUE NORTH horizon hairline + badge
+5. Copy: kicker, three-line H1, two-line lead, three proof chips
+6. Footer: Axiom + true film progress + "Wise, precise and tactical positions maintain the calm." + Order in inverted markets + Read the thesis
+7. Reduced-motion path
+8. Configurable `brand`, `backgroundSrc`
+9. No host marketing shell, no scaffold notes, no "demo only" strings in the component UI

@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #000000;
+  --color-bone: #f2f2f2;
+  --color-ink: #0a0a0a;
+  --font-sans: "IBM Plex Mono", ui-monospace, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background: var(--color-void);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-bone);
+  background: var(--color-void);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #fff;
+  color: #000;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}

@@ -1,0 +1,156 @@
+---
+id: "MS-HERO-REVL01"
+title: "REVEL - Scroll Narrative Fashion Commerce Hero"
+slug: "revel-scroll-narrative-fashion-commerce-hero"
+description: "For fashion and social-commerce brands. A light pearl scroll narrative where the iPhone breakout film advances with the scroll - four chapters from feed to freedom."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "ecommerce"
+subcategory: "fashion"
+styleTags: ["editorial", "minimal", "light"]
+technicalTags: ["scroll-scrub", "video-background", "narrative"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/revel-scroll-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/revel-scroll-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-REVL01.webp"
+liveDemo: "/demo/cleanroom-revel"
+videoBackgrounds:
+  - file: "/assets/videos/revel-breakout-v1.mp4"
+    format: "mp4"
+    duration: "20s"
+    loop: false
+    sizeMb: 12
+    poster: "/assets/posters/revel-breakout-v1.webp"
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 7800
+useCases: ["fashion-homepage", "social-commerce-landing", "campaign-scroll-hero"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **REVEL** - fashion commerce scroll narrative. Pearl canvas `#F7F4F1`, charcoal ink `#1A1614`, rose gold `#C4A574`, soft blush `#E8B4B8`. Instrument Serif display + Inter UI. Sticky full-viewport stage; **scroll owns the film timeline** (scrub). Light studio luxury - not dark private-bank Meridian, not mono Vertex security, not neon cyberpunk, not forest climate, not quantum lab.
+
+**Famous-UI craft direction (not a clone):** High-fashion campaign site restraint (Vogue digital calm × Apple product-film pacing). One film. Four chapters. Scroll owns time. Stop.
+
+**Typography:**
+- Display / H1: Instrument Serif, tracking `-0.03em`, line-height `0.98`, size `clamp(2.5rem, 6.4vw, 5.5rem)`
+- Body: Inter 300-400, 15-17px, line-height 1.7
+- Badge / nav: Inter 10-11px, uppercase tracking `0.18-0.28em`
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Pearl | `#F7F4F1` |
+| Ink | `#1A1614` |
+| Rose gold | `#C4A574` |
+| Blush | `#E8B4B8` |
+| Cream on film | `#F7F4F1` with soft shadow |
+| Progress | rose gold → blush → rose gold |
+
+**Radius:** Fashion-sharp buttons (slight or zero). Thin progress line.  
+**Spacing:** 8px grid. Safe horizontal inset minimum `px-8`.
+
+**Anti-slop hard ban:** purple mesh, emoji, rainbow text, Meridian dark gold coastal clone, Vertex zero-radius mono, Neon rain city, glitch H1, host chrome.
+
+**Differentiation:**
+| vs | Revel must not become |
+|----|------------------------|
+| Meridian | Dark coastal multi-chapter gold estate |
+| Vertex | Monochrome security scrub |
+| Verve | Loud Gen-Z social purple/pink kitsch |
+| Neon | Cyberpunk rain megacity |
+| Apex | Quantum void cyan lab |
+
+## Layout Structure
+
+- **Scroll track:** ~480vh (100vh if reduced motion)
+- **Sticky stage:** `h-screen`, video cover, dual scrims (pearl top + dark bottom)
+- **Navbar:** REVEL + Fashion Commerce, center fashion links, Enter atelier frost CTA, rose-gold progress
+- **Chapters:** 4 copy states keyed to progress ranges; right rail indices 01-04
+- **Finale CTAs:** Shop the drop · Watch campaign (chapter 4 only)
+- **Closing band:** `#atelier` pearl section with meta grid
+
+## Content slots
+
+| Slot | Default Text | Max Length |
+|------|--------------|------------|
+| brand | REVEL | 16 |
+| ch1_title | She lived / inside the glow. | 40 |
+| ch2_title | Then something / had to give. | 40 |
+| ch3_title | Shards of / attention fall. | 40 |
+| ch4_title | Now she / owns the room. | 40 |
+| cta_primary | Shop the drop | 18 |
+| cta_secondary | Watch campaign | 18 |
+
+## Motion Specification
+
+GSAP ScrollTrigger on pin track: `start: "top top"`, `end: "bottom bottom"`, `scrub: 0.5`.  
+`video.currentTime = progress * duration` (threshold 16ms).  
+Chapter text CSS fade/rise 0.65-0.85s on change.  
+Progress bar `scaleX(progress)`.  
+Scroll cue until progress > 0.05.  
+**Reduced motion:** no scrub, static ~0.45 progress frame, single chapter view.
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/revel-breakout-v1.mp4` (scrubbed B-roll, no autoplay primary)
+- Poster: `/assets/posters/revel-breakout-v1.webp`
+- Storefront preview: `/assets/videos/revel-scroll-preview-v1.mp4`
+- Storefront FS: `/assets/videos/revel-scroll-preview-fs-v1.mp4`
+- Attributes: muted playsInline preload auto - **not** autoPlay loop as primary mode
+- Subject: gold iPhone social breakout - feed → shatter → freedom
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1024px | Full nav, chapter rail, huge type |
+| ≥768px | Nav links, large type |
+| <768px | Hide center nav, smaller type, stack CTAs, keep scrub |
+
+## Accessibility
+
+- Reduced motion path (static)
+- Focus rings on CTAs
+- Semantic header/section/h1
+- Video aria-hidden when copy complete
+
+## Performance Notes
+
+- GSAP only (no Framer required)
+- Video preload auto for scrub decode readiness
+- will-change avoided on large surfaces
+- font-display: swap
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `RevelScrollNarrative.tsx` from this brief only. Wire exact video paths. GSAP ScrollTrigger scrub is mandatory for the signature.
+
+**Lovable / Bolt:** Single self-contained component; same tokens and chapters. Prefer GSAP if available.
+
+## Expected Output
+
+1. Single React component `RevelScrollNarrative.tsx` (`"use client"`)
+2. Tall scroll track + sticky stage + scrubbed video
+3. Four chapters + progress + scroll cue
+4. Pearl / rose-gold / charcoal system only
+5. Closing atelier band
+6. Reduced-motion path
+7. No host marketing shell

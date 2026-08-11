@@ -1,0 +1,192 @@
+---
+id: "MS-HERO-ELYS01"
+title: "ELYSE - Luxury Wellness Retreat Scroll Hero"
+slug: "elyse-luxury-wellness-retreat-scroll-hero"
+description: "For private wellness retreat houses. Scroll owns a golden-hour sanctuary film through four chapters: call, land, practice, return. Quiet invitation only."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "health"
+subcategory: "wellness"
+styleTags: ["luxury", "dark-cinematic", "editorial", "organic"]
+technicalTags: ["video-background", "scroll-trigger", "parallax", "intersection-observer"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/elyse-scroll-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/elyse-scroll-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-ELYS01.webp"
+liveDemo: "/demo/cleanroom-elyse"
+videoBackgrounds:
+  - file: "/assets/videos/elyse-nature-v1.mp4"
+    format: "mp4"
+    duration: "10s"
+    loop: false
+    sizeMb: 34
+    poster: "/assets/posters/elyse-nature-v1.webp"
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 8600
+useCases: ["wellness-retreat-homepage", "luxury-spa-landing", "private-membership-hero", "sanctuary-scroll-narrative"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **ELYSE** - private luxury wellness retreat house. One sticky full-viewport stage over a golden-hour sanctuary film (dual tree-of-life faces meeting over a valley river). **Scroll owns the film timeline** (scrub). Dark earth ink, cream type, soft gold. Aman / Six Senses restraint. Invitation only. Not cream spa SaaS. Not climate-tech green. Not fashion pearl Revel.
+
+**Famous-UI craft direction (not a clone):** Six Senses / Aman digital quiet × private-bank type density × editorial scroll chapters. One film. Four chapters. Scroll owns time. Stop.
+
+**Typography:**
+- Brand / wordmark: Cormorant Garamond 1rem, tracking `0.34em`, uppercase
+- Brand line: Inter 10px, tracking `0.22em`, soft cream gold
+- Eyebrow: Inter 11px, tracking `0.26em`, gold `#C9A46A`
+- H1 display: Cormorant Garamond, `clamp(2.4rem, 6.2vw, 5.35rem)`, line-height 1.02, tracking `-0.025em`, two stacked lines
+- Body: Inter 300, ~15-17px, line-height 1.7, cream 78%
+- Chapter indices: Inter 10px, tracking `0.22em`
+- CTA: Inter 12px, tracking `0.16em`, uppercase
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Stage ink | `#0B0907` |
+| Cream | `#F4EDE3` / `#F7F1E8` |
+| Gold | `#C9A46A` |
+| Warm highlight | `#F0D9A8` |
+| Veil | deep earth edges; keep center faces + sun luminous |
+
+**Anti-slop hard ban:** purple mesh, neon pills, emoji, rainbow type, Motionsites pill docks, free-play autoplay as primary mode (scroll must own film), mid-frame multi-paragraph sales essays, dense SaaS metric grids on the film face, cream spa Aether clone, climate Terra green tech chrome.
+
+**Differentiation:**
+| vs | Elyse must not become |
+|----|------------------------|
+| Aether | Cream ocean "Breathe. Be." wellness app |
+| Terra | Climate-tech forest / renewable energy |
+| Meridian | Dark coastal private residences |
+| Revel | Light pearl fashion phone-break |
+| Sable | Sparse holiday fashion free-play walk |
+
+## Layout Structure
+
+- **Hero:** sticky full-viewport stage inside tall scroll track (~460vh)
+- **Film:** full bleed `object-fit: cover`, `object-position: center 48%`, scale ~1.02
+- **Nav:** absolute top - brand + Private Wellness Retreats, center links, Request invitation
+- **Progress:** 1px gold gradient under nav, driven by scroll progress (not video free-play clock alone)
+- **Copy:** lower-left chapter eyebrow + two-line H1 + body; right chapter index rail 01-04
+- **Signature:** optional soft gold filament at ~46% height (meeting of the faces)
+- **Finale CTAs:** Begin a private inquiry + View the calendar
+- **Closing band:** Membership - wealth in stillness + stats + Request an introduction
+- **Safe insets:** horizontal `clamp(1.35rem, 4.5vw, 4rem)`; type never flush to edge
+
+## Content slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| brand | ELYSE | 12 |
+| brand_line | Private Wellness Retreats | 36 |
+| nav | Retreats · Places · Practice · Membership | - |
+| nav_cta | Request invitation | 28 |
+| ch1_eyebrow | Chapter one · The call | 40 |
+| ch1_title | The earth is / still waiting. | 40 |
+| ch1_body | Beyond the noise… | 180 |
+| ch2_eyebrow | Chapter two · The land | 40 |
+| ch2_title | Sanctuaries, / not destinations. | 40 |
+| ch2_body | Remote valleys… | 180 |
+| ch3_eyebrow | Chapter three · The practice | 40 |
+| ch3_title | Days shaped / by intention. | 40 |
+| ch3_body | Guided rest… | 180 |
+| ch4_eyebrow | Chapter four · The return | 40 |
+| ch4_title | Leave whole. / Return clear. | 40 |
+| ch4_body | You do not escape… | 180 |
+| cta_primary | Begin a private inquiry | 32 |
+| cta_secondary | View the calendar | 28 |
+| band_kicker | Membership | 20 |
+| band_title | For those who measure wealth in stillness. | 64 |
+| band_cta | Request an introduction | 32 |
+
+Chapter ranges (progress 0-1): call 0-0.24 · land 0.24-0.5 · ritual 0.5-0.76 · return 0.76-1.
+
+## Motion Specification
+
+**Mode:** Scroll-as-narrative. Map scroll progress (0-1) to `video.currentTime` (0-duration) with GSAP ScrollTrigger `scrub: ~0.55`. Pin sticky 100vh stage. **Do not** autoplay-loop as primary.
+
+| Element | Motion |
+|---------|--------|
+| Film | Scrubbed by scroll; pause video; seek on progress |
+| Stage | Sticky pin for ~460vh track |
+| Chapters | Crossfade eyebrow/title/body on active chapter (0.7-0.9s rise/fade) |
+| Progress bar | `scaleX(scrollProgress)` gold gradient |
+| CTA hover | translateY -1px on primary |
+| Reduced motion | 100vh static track, mid-film still (~0.42), no scrub required |
+
+## Video / Media Integration
+
+| Role | Path |
+|------|------|
+| Client HD (buyer) | `/assets/videos/elyse-nature-v1.mp4` |
+| Backgrounds library (small) | `/assets/videos/backgrounds/elyse-nature-bg-v1.mp4` |
+| Storefront preview | `/assets/videos/elyse-scroll-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/elyse-scroll-preview-fs-v1.mp4` |
+| Pure film poster | `/assets/posters/elyse-nature-v1.webp` |
+| Storefront poster / thumb | `/assets/posters/elyse-scroll-preview-v1.webp` · `/thumbnails/MS-HERO-ELYS01.webp` |
+
+Video attrs for scrub: `muted playsInline preload="auto" object-fit: cover` - **no autoPlay as primary**. Forbidden: backgrounds encode as client HD; storefront UI burn as client HD.
+
+**Storefront capture law:** Programmatic scroll of the pin track over full film length; hide `[data-ms-scroll-cue]`; encode page 1440x900 + FS 1920x1080.
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1024px | Full chapter rail + note, two-column copy grid |
+| ≥900px | Full nav links |
+| ≥640px | Brand line visible |
+| <900px | Hide center nav links |
+| <640px | Compact brand; CTAs wrap |
+| Reduced motion | Static stage, mid still |
+
+## Accessibility
+
+- `prefers-reduced-motion` static path
+- Semantic `header` / `nav` / chapter headings
+- Decorative film and filament `aria-hidden`
+- Focusable links and CTAs
+- Contrast: cream on dark veil; gold labels
+
+## Performance Notes
+
+- Single video element; scrub seeks (decode readiness on metadata)
+- Animate transform/opacity only on chapter text
+- Progress bar transform only
+- font-display: swap
+- Tall track is layout only (no extra heavy DOM)
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `ElyseScrollNarrative.tsx` from this brief only. Wire the exact client HD path. GSAP ScrollTrigger scrub is mandatory. Free-play autoplay is forbidden as primary. Keep four chapters and membership band. Keep faces and sun clear of type.
+
+**Lovable / Bolt:** Single self-contained hero. Same tokens. Scroll owns the sanctuary film.
+
+## Expected Output
+
+1. Single React component `ElyseScrollNarrative.tsx` (`"use client"`, default export)
+2. Tall pin track + sticky stage + scroll-scrubbed client HD video
+3. Minimal nav: ELYSE · Private Wellness Retreats · Retreats Places Practice Membership · Request invitation
+4. Four chapters with crossfading copy + right indices 01-04
+5. Gold progress under nav
+6. Finale CTAs + membership band with stats
+7. Reduced-motion path
+8. Configurable `brand`, `backgroundSrc`, `posterSrc`
+9. No host marketing shell, no scaffold notes, no "demo only" strings in the component UI

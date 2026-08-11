@@ -1,0 +1,188 @@
+---
+id: "MS-HERO-MIRA01"
+title: "MIRAGE - Agency Desert Scroll Glass Hero"
+slug: "mirage-agency-desert-scroll-glass-hero"
+description: "For ad agencies and brand studios. Morphic liquid-glass story cards pivot on scroll over free-playing desert film - subject on the right, heat-proof craft."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "agency"
+subcategory: "creative"
+styleTags: ["liquid-glass", "dark-cinematic", "editorial", "luxury"]
+technicalTags: ["scroll-trigger", "video-background", "parallax", "intersection-observer"]
+motionIntensity: "medium"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/mirage-scroll-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/mirage-scroll-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-MIRA01.webp"
+liveDemo: "/demo/cleanroom-mirage"
+videoBackgrounds:
+  - file: "/assets/videos/mirage-desert-v1.mp4"
+    format: "mp4"
+    duration: "18s"
+    loop: true
+    sizeMb: 50
+    poster: "/assets/posters/mirage-desert-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 9000
+useCases: ["ad-agency-homepage", "brand-studio-hero", "creative-services-landing", "campaign-house-intro"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **MIRAGE** - advertising-agency full-viewport hero. Free-playing desert film with the subject held on the **right**. Left rail only: kicker, two-line large headline, five morphic dark liquid-glass pivot cards, centered progress footer. Minimal text nav. Syne (or geometric display) + clean sans. Gold + cyan accents on near-white type.
+
+**Famous-UI craft direction (not a clone):** Triada / M.A.C. morphic glass stack (dark translucent fill + strong blur + saturate) x private-bank pacing x ad-film craft. Not white frost. Not Motionsites pill dock.
+
+**Typography:**
+- Display / H1: Syne 600, tracking `-0.04em`, `clamp(2.15rem, 4.4vw, 3.55rem)`, line-height ~0.92, **exactly two lines**
+- Sheet titles: Syne 600, `clamp(1.18rem, 2.05vw, 1.48rem)`
+- Body / lead: 13px, line-height 1.55
+- Labels / chips: 9-11px uppercase tracking `0.1-0.22em`
+- Metrics: Syne 700, tabular nums
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Stage ink | `#07080F` |
+| Glass fill | `rgba(28, 30, 42, 0.38)` |
+| Glass blur | `blur(36px) saturate(190%)` |
+| Type | `#FAF8F5` / `rgba(255,255,255,0.94)` |
+| Gold accent | `#FDE68A` |
+| Cyan accent | `#7DD3FC` |
+| Chip surface | `rgba(255,255,255,0.08)` |
+
+**Morphic liquid glass stack (mandatory - M.A.C.):**
+1. Shell: radius ~22px, hairline rim, depth shadow
+2. Fill: dark translucent slate + `backdrop-filter: blur(36px) saturate(190%)`
+3. Specular: top-edge catch + diagonal highlight only (not a white wash)
+4. Body content **above** glass layers (never text on the blur node)
+5. Nested chips: light translucent surfaces
+6. Do **not** kill glass via `prefers-reduced-transparency` on this product (Windows transparency-off was producing solid dark slabs). Reduced-motion remains static cards.
+
+**Anti-slop hard ban:** white frosted cards, opaque black plates, purple mesh sludge, emoji, rainbow H1, Motionsites pill nav, left-only sparse marketing fluff, Prism both-side constellation clone, Folio mid-page section framing as if this were a section.
+
+**Differentiation:**
+| vs | Mirage must not become |
+|----|------------------------|
+| Folio | Mid-page section, enterprise decision board |
+| Prism | Multi-face + both-side floating panels |
+| Meridian | Dark coastal multi-chapter scrub estate |
+| Neon Forge | Cyan/pink liquid-glass pill SaaS game studio |
+
+## Layout Structure
+
+- **Hero:** full-viewport sticky stage inside tall scroll track (~`5 x 1.35 x 100vh`)
+- **Grid:** left rail (~1fr, max ~540px visual, optional `zoom: 1.2` composition) + right subject space
+- **Nav:** absolute top, text-only brand + links, no bar
+- **Rail intro:** kicker + two-line H1 (`white-space: nowrap` per line)
+- **Deck:** ~430px / 50vh height absolute stack of five glass sheets
+- **Footer under cards:** centered progress bar, dots, active label, scroll hint
+- **Safe insets:** stage padding `clamp` horizontal; type never flush to edge
+
+## Content slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| brand | MIRAGE | 18 |
+| kicker | Advertising · Brand · Growth | 40 |
+| headline_line_1 | Creative that | 24 |
+| headline_line_2 | survives the heat. | 28 |
+| sheet_01 eyebrow | Brand thesis | 18 |
+| sheet_01 title | Find the idea that outlasts the feed. | 72 |
+| sheet_02 eyebrow | Creative systems | 20 |
+| sheet_03 eyebrow | Media craft | 18 |
+| sheet_04 eyebrow | Always-on | 16 |
+| sheet_05 eyebrow | Growth proof | 18 |
+
+Each sheet: `lead` + dense blocks (`metrics` | `rows` | `list` | `chips` | `quote`). Configurable via `sheets` prop.
+
+## Motion Specification
+
+**Mode:** Scroll-linked glass card pivot (Framer Motion `useScroll` / `useTransform`). **Not** video scrub. Video is free-playing muted loop wallpaper under glass.
+
+| Local t | rotateX | opacity | note |
+|---------|---------|---------|------|
+| 0 | +64° | 0 | edge below |
+| ~0.38-0.55 | ~0° | 1 | face-on plateau |
+| 1 | −64° | 0 | edge above |
+
+- Local progress with soft pad overlap between sheets; smoothstep on segment map
+- Sheet 0 starts near face-on (`from ~0.38`) so open state never empty
+- Dense rotate / opacity / y / scale / contentOpacity keyframes
+- Y travel ~26px; scale 0.975→1→0.975
+- Progress bar `scaleX(scrollYProgress)`
+- **Reduced motion:** static stacked glass cards, gradient fallback (no video)
+
+## Video / Media Integration
+
+| Role | Path |
+|------|------|
+| Client HD (buyer) | `/assets/videos/mirage-desert-v1.mp4` |
+| Backgrounds library (small) | `/assets/videos/backgrounds/mirage-desert-bg-v1.mp4` |
+| Storefront preview | `/assets/videos/mirage-scroll-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/mirage-scroll-preview-fs-v1.mp4` |
+| Pure film poster | `/assets/posters/mirage-desert-v1.webp` |
+| Storefront poster / thumb | `/assets/posters/mirage-scroll-preview-v1.webp` · `/thumbnails/MS-HERO-MIRA01.webp` |
+
+Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover object-position: 72% center`. Soft left + vertical veil for type contrast. Forbidden: using backgrounds small encode as client HD; using storefront UI capture as client HD.
+
+**Storefront capture law:** FG plates (cards/chrome) captured transparent; BG film composited as a **separate continuous ffmpeg track** (no browser seek). Card scroll curve continuous open/face/close (no mid-stall).
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1100px | Full rail + subject space, large H1 two lines |
+| ≥960px | Comfortable type, subject visible |
+| <960px | Single column, hide pure subject spacer, film recentered |
+| <640px | Metrics 2-col, rows stack, nav stacks |
+| Reduced motion | Static stack, no pivot |
+
+## Accessibility
+
+- `prefers-reduced-motion` static path
+- Semantic `section` / `nav` / `article` / headings
+- Decorative glass layers `aria-hidden`
+- Focusable text links in nav
+- Contrast: near-white type on dark glass + scrim
+
+## Performance Notes
+
+- One heavy glass surface face-on at a time (hidden deck)
+- Animate transform/opacity only
+- Video single element, cover scale ~1.02
+- Optional `zoom: 1.2` on rail only (composition scale, not redesign)
+- will-change limited to sheet transform/opacity
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `MirageAgencyHero.tsx` from this brief only. Wire exact client HD path. Framer Motion scroll pivot + morphic M.A.C. glass stack are mandatory. Free-playing film. Five dense agency cards.
+
+**Lovable / Bolt:** Single self-contained hero component; same tokens, five sheets, free-playing desert film under glass.
+
+## Expected Output
+
+1. Single React component `MirageAgencyHero.tsx` (`"use client"`, default export)
+2. Tall scroll track + sticky stage + free-playing client HD video under soft veil
+3. Five one-way pivot morphic glass sheets with dense agency content
+4. Morphic fill rgba(28,30,42,0.38) + blur(36px) saturate(190%) + specular + body above
+5. Two-line H1, minimal text nav, centered progress footer
+6. Reduced-motion path (static)
+7. Configurable `sheets`, `brand`, `tagline`, `vhPerSheet`, `backgroundSrc`
+8. No host marketing shell required

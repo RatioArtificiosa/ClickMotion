@@ -1,0 +1,191 @@
+---
+id: "MS-SEC-STUDIO01"
+title: "Studio Sequence - Camera Pull-Out Billboard Section"
+slug: "studio-sequence-camera-pull-out-billboard-section"
+description: "Start inside a full-bleed film. Scroll pulls the world out until that same film is playing on a street billboard. Any video. Full length. No cuts."
+version: "1.0.0"
+created: "2026-08-10"
+updated: "2026-08-10"
+author: "MS Team"
+status: "published"
+type: "section"
+category: "cinematic"
+subcategory: "scroll-narrative"
+styleTags: ["cinematic", "editorial", "minimal", "film"]
+technicalTags: ["scroll-trigger", "video", "pin-scrub", "lenis"]
+motionIntensity: "extreme"
+difficulty: "advanced"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/studio-sequence-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/studio-sequence-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-STUDIO01.webp"
+liveDemo: "/demo/cleanroom-studio"
+videoBackgrounds:
+  - "/assets/videos/studio-surreal-v1.mp4"
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "lenis", version: "^1.1.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 9000
+useCases: ["cinematic-section", "brand-film-billboard", "campaign-reveal", "studio-manifesto", "product-launch-film"]
+compatibleWith: ["MS-SEC-PHOBIC01", "MS-HERO-LUMI01"]
+positionInPage: "middle-or-hero"
+---
+
+## Promise (buyer-facing)
+
+**Studio Sequence** is a mid-page (or hero) **cinematic camera pull-out**. Visitors open *inside* your film - full bleed, no street, no frame. As they scroll, the world scales out around the billboard center until the same film is still playing on a facade screen in a living street.
+
+**Why use it:**
+- Your film becomes architecture, not a flat `<video>` tag
+- **Any video** drops in - campaign, manifesto, AI b-roll, product film
+- **Full length** - the section never trims or seek-scrubs your file
+- Scroll owns the camera only - film time runs free for the wow factor
+- One React section - not a full homepage
+
+Default demo uses the **Surreal Studio pure film** (no UI chrome) on an NY street plate. Tell your AI to swap the film path and keep the pull-out math.
+
+**Live demo:** `/demo/cleanroom-studio`  
+**Deep AI guide:** `cleanroom/studio-from-prompt/CUSTOMIZATION.md`
+
+## Design System
+
+**Aesthetic Direction:** **Studio Sequence** - world-scale camera, street plate, LED billboard glass. Black stage. No chrome required in production.
+
+**Famous-UI craft direction:** luxury outdoor advertising × film-title open × quiet city still. Expensive. Unhurried. Full film length.
+
+**Anti-slop hard ban:** shrinking free-floating video rect (must be world scale), scroll-scrubbing `currentTime`, CSS color grades without buyer request, UI-framed storefront captures as the billboard film, trimming long films for "performance" without buyer OK.
+
+**Differentiation:**
+| vs | Studio Sequence must not become |
+|----|----------------------------------|
+| Meridian / Elyse | Multi-panel copy scroll narrative |
+| Lumina | Studio-lot hero without billboard lock |
+| Lineup | 3D product SKU pin |
+| Flat hero video | Static full-bleed without pull-out |
+
+## Layout Structure
+
+- **Section only** - no forced site chrome
+- **Pin** `top top` → `end: +=280%` (configurable)
+- **World layer** = plate + video shell locked to billboard rect
+- **Scale** from four-edge cover → 1 around billboard center
+- **Video** `object-fit: cover` inside board - any aspect ratio
+
+## Content slots (every field is replaceable)
+
+All buyer media + feel knobs live in **`studio-data.ts`**: `STUDIO_DEFAULTS`.
+
+| Slot | Source | Guidance |
+|------|--------|----------|
+| Billboard film | `videoSrc` | **Any MP4** - full length |
+| Poster still | `posterSrc` | Optional first paint |
+| Street plate | `plateSrc` | 1920×1080+ still |
+| Plate size | `plateWidth` / `plateHeight` | Natural pixels |
+| Billboard rect | `billboard` | 0–1 fractions of plate (inner screen) |
+| Pin length | `pinEnd` | e.g. `+=280%` |
+| Scrub silk | `scrub` | default 1.15 |
+| Hold in / out | `holdIn` / `holdOut` | full-bleed hold + street settle |
+| Loop | `video.loop` | full file repeat |
+| Appearance | `video.cssFilter` | **off by default** |
+
+## Dynamic video (critical)
+
+The section is **video-agnostic**. Change only `videoSrc` (and optional poster).
+
+1. Drop film at `/assets/videos/[your-film].mp4`
+2. Set `STUDIO_DEFAULTS.videoSrc` or pass `<StudioSequence videoSrc="…" />`
+3. Keep `playFullLength: true` - never trim, never `#t=` fragments, never scroll-linked seek
+4. Prefer H.264 yuv420p + faststart for autoplay
+5. Long films (2+ minutes) are supported and encouraged for premium feel
+
+### Use the included Surreal pure film
+```
+Keep videoSrc = /assets/videos/studio-surreal-v1.mp4
+This is the pure Surreal Studio film (no UI frames), same source as Lab surreal.mp4.
+Play full length with loop. Do not cut or regrade.
+```
+
+### Swap to any custom video
+```
+Set videoSrc to my file at [PATH or URL].
+Optional posterSrc from a still of the same film.
+Keep full-length loop, object-fit cover, camera pull-out math.
+Do not seek video with scroll. Do not add CSS filters.
+```
+
+## Motion Specification
+
+**Mode:** scroll-scrub pin. Film free-runs full length.
+
+| Event | Timing | Notes |
+|-------|--------|-------|
+| Pin | top top → +=280% | scrub ~1.15 |
+| Hold in | first ~6% | full-bleed film |
+| Pull-out | middle | smootherstep scale |
+| Hold out | last ~10% | settle on street |
+| Film time | independent | 0 → duration → loop |
+
+## Assets (buyer pack)
+
+| Asset | Path | Role |
+|-------|------|------|
+| Pure film (client HD) | `/assets/videos/studio-surreal-v1.mp4` | Billboard + package film - **no UI frames** |
+| Pure film poster | `/assets/posters/studio-surreal-v1.webp` | Still from pure film |
+| Street plate | `/assets/images/studio/ny.png` | Stage |
+| Backgrounds tile | `/assets/videos/backgrounds/studio-surreal-bg-v1.mp4` | Small library encode of **same pure film** |
+| Storefront page preview | `/assets/videos/studio-sequence-preview-v1.mp4` | Full-length section capture (small) |
+| Storefront FS preview | `/assets/videos/studio-sequence-preview-fs-v1.mp4` | Full-length section capture (FS) |
+
+**Backgrounds law:** `/backgrounds` serves only the small pure-film encode - never storefront UI captures, never the 273MB client HD path.
+
+## Technical notes for AI tools
+
+Default export `StudioSequence`. React + TS, GSAP ScrollTrigger, optional Lenis. No Three.js. `studio-data.ts` drives media. `prefers-reduced-motion`: street scale 1, film still plays.
+
+Cleanroom path: `cleanroom/studio-from-prompt/`  
+Primary edit file: `studio-data.ts`  
+Full AI playbook: `CUSTOMIZATION.md`
+
+## Customization law
+
+After default builds, restage film, plate, and billboard measure until the section feels made for that brand alone. Support any industry film: fashion, real estate, tech manifesto, CPG, AI-generated cinema.
+
+## What to tell your AI (copy-paste)
+
+### Use the same Surreal film
+```
+Build Studio Sequence from the package. Keep the default Surreal pure film at
+/assets/videos/studio-surreal-v1.mp4 on the NY plate. Full length loop.
+No CSS grade. No scroll-linked video seek.
+```
+
+### Put my custom video on the billboard
+```
+Restage Studio Sequence (MS-SEC-STUDIO01) with my film.
+1) File: [PATH]
+2) studio-data.ts videoSrc = that path
+3) Optional posterSrc
+4) playFullLength true, loop true, muted true
+5) Do not trim, do not #t= fragments, do not seek with scroll
+6) Keep world-scale pull-out and object-fit cover
+```
+
+### Swap the street / facade
+```
+Replace plateSrc with my still. Update plateWidth/Height.
+Re-measure billboard { left, top, width, height } as 0-1 fractions
+of the INNER screen (not the white frame). Keep four-edge cover at t=0.
+```
+
+### Longer or silkier camera
+```
+Set pinEnd to +=320% and scrub to 1.25. Keep film full-length independent.
+```

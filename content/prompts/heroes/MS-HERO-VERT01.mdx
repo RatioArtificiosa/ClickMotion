@@ -1,0 +1,193 @@
+---
+id: "MS-HERO-VERT01"
+title: "VERTEX SECURITY - Brutalist Cybersecurity Scroll Hero"
+slug: "vertex-security-brutalist-cybersecurity-hero"
+description: "For security teams and enterprise vendors. A monochrome narrative that hardens as the visitor scrolls - seriousness you can feel before the first demo."
+version: "3.0.0"
+created: "2026-08-07"
+updated: "2026-08-08"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "tech"
+subcategory: "cybersecurity"
+styleTags: ["brutalist", "minimal", "dark-cinematic"]
+technicalTags: ["video-background", "scroll-scrub"]
+motionIntensity: "aggressive"
+difficulty: "intermediate"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/vertex-preview-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-VERT01.webp"
+liveDemo: "/demo/cleanroom-vertex"
+videoBackgrounds:
+  - file: "/assets/videos/vertex-globe-web-v1.mp4"
+    format: "mp4"
+    duration: "12s"
+    loop: false
+    sizeMb: 6
+    poster: "/assets/posters/vertex-globe-v1.webp"
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 6200
+useCases: ["cybersecurity-homepage", "b2b-security-hero", "scroll-narrative"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **VERTEX SECURITY** - enterprise cybersecurity, monochrome brutalist. Black canvas, pure white type, Space Grotesk display, Inter UI. Wireframe globe video scrubbed by scroll. Feels like a serious SOC vendor, not a SaaS startup kit.
+
+**Famous-UI craft direction (not a clone):** Linear / Stripe enterprise density meets brutalist editorial (no soft glass pills as house chrome). One video system + sharp geometry + scroll-as-narrative chapters.
+
+**Typography:**
+- Display: Space Grotesk 700 for chapter titles
+- Chapter 1 H1: `SECURITY.` white, `clamp(2.35rem, 6vw, 5.5rem)`, leading 0.92, tracking -0.04em
+- Sub: `WITHOUT COMPROMISE.` white/70, smaller clamp
+- Body: Inter 400, 15-17px, white/65, max-width ~36rem
+- Nav / labels: 10-11px uppercase tracking 0.16-0.28em
+
+**Colors:**
+| Token | Value |
+|-------|--------|
+| canvas | `#000000` |
+| text | `#FFFFFF` |
+| muted | white at 40-65% |
+| CTA primary | white fill, black text |
+| CTA secondary | white border outline |
+| scrim | left-heavy black gradient |
+
+**Radius:** **0** on CTAs and chrome (brutalist - no rounded-full pills).  
+**Anti-slop hard ban:** cyan/pink neon kit tokens, aurora mesh, border-beam, shiny text, glass pill dock nav, Magic UI default stacks.
+
+**Safe margins (critical):** Horizontal padding `px-10` to `lg:px-20`. All type and CTAs `shrink-0` / `whitespace-nowrap` where needed. Keep primary copy inside an inner max-width so gallery `object-cover` crop never clips letters.
+
+---
+
+## Layout Structure
+
+```
+[Scroll track ~420vh - NO footer after]
+  [Sticky 100vh stage]
+    video cover (globe) - currentTime = scroll progress * duration
+    dual scrim (diagonal + vertical)
+    fixed-feel nav + progress hairline
+    chapter stack: eyebrow, title, body, (final: dual CTAs + 3 stats)
+    chapter index 01/02/03 right rail
+    scroll cue at start
+```
+
+**Do not add a closing membership / footer band.** The narrative ends when the pin track ends.
+
+**Scrim:**
+```
+linear-gradient(105deg, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.58) 42%, rgba(0,0,0,0.38) 100%)
++ linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 28%, rgba(0,0,0,0.58) 100%)
+```
+
+---
+
+## Chapters (scroll progress)
+
+| Progress | Eyebrow | Titles | Body focus |
+|----------|---------|--------|------------|
+| 0-0.34 | Zero Trust Architecture | SECURITY. / WITHOUT COMPROMISE. | zero-day prevention |
+| 0.34-0.66 | Global Threat Fabric | Every packet / is a signal. | telemetry + intent |
+| 0.66-1.0 | Built for SOC teams | Prevention / is the product. | CTAs + MTTR / Coverage / SOC stats |
+
+---
+
+## Content slots
+
+| Slot | Exact text |
+|------|------------|
+| brand | VERTEX |
+| nav cta | Request Demo |
+| cta_primary | Request Demo |
+| cta_secondary | View Threat Intel |
+| stats | < 4m MTTR · 99.99% Coverage · 2,400+ SOC teams |
+
+---
+
+## Motion Specification
+
+```ts
+// GSAP ScrollTrigger on pin track
+// start: top top, end: bottom bottom, scrub: 0.45
+// onUpdate: video.currentTime = progress * duration
+// Chapter crossfade via key remount + CSS keyframes (vertexFade / vertexRise)
+// reduced-motion: 100vh static, no scrub, chapter 1 only
+```
+
+No magnetic cursor. No 3D library - video only. No autoplay loop - scroll owns time.
+
+---
+
+## Video / Media Integration
+
+| Field | Value |
+|-------|--------|
+| File | `/assets/videos/vertex-globe-web-v1.mp4` |
+| Poster | `/assets/posters/vertex-globe-v1.webp` |
+| Control | Scroll scrub (paused element) |
+| Subject | Dark abstract / wireframe globe - technical, cold, monochrome-friendly |
+
+> **AI Video Generation Prompt:** Cinematic seamless loop 10-14s, no audio, dark abstract wireframe globe or orbital network rotating slowly on pure black, thin white/cyan-gray lines only, no logos, no text, no people. Technical cybersecurity atmosphere, 24fps feel, seamless loop.
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| >=1024px | Full nav, large type, chapter index, corner mark |
+| >=768px | Nav links visible |
+| <768px | Hide center nav; stack CTAs; H1 clamp down; hide corner mark optional |
+
+---
+
+## Accessibility
+
+- Single h1 per chapter (key remount)
+- Video aria-hidden
+- Focus outlines white
+- prefers-reduced-motion: static chapter 1, no scrub
+- Contrast: white on black scrim
+
+---
+
+## Performance Notes
+
+- One video element; poster first paint
+- Pause + seek only (no free-running decode waste)
+- Prefer 1080p web encode under ~12MB
+
+---
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** `VertexHeroSection.tsx` default export, use client, GSAP ScrollTrigger scrub, Space Grotesk + Inter via next/font. Exact strings. Border-radius 0 on CTAs. **No footer section.**
+
+**Lovable / Bolt:** Same structure; keep monochrome brutalist - do not "pretty up" with soft cards or gradients.
+
+Do not apply Liquid Glass host styles. Do not use cyan neon as primary brand.
+
+---
+
+## Expected Output
+
+1. Scroll-as-narrative black brutalist security hero (tall track + sticky stage)
+2. Local globe video scrubbed by scroll
+3. Three chapters ending with dual CTAs + stats
+4. Deep safe insets - no clipped type
+5. Reduced-motion static path
+6. **No footer / closing band**
+7. Reads as enterprise security - not AI SaaS template

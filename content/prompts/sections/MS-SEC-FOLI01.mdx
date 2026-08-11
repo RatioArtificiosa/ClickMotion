@@ -1,0 +1,182 @@
+---
+id: "MS-SEC-FOLI01"
+title: "FOLIO - Scroll Pivot Liquid Glass Decision Section"
+slug: "folio-scroll-pivot-liquid-glass-decision-section"
+description: "For B2B and SaaS growth teams. Five dense liquid-glass decision panels pivot on scroll over motion film - mandate through outcomes, board-ready."
+version: "1.0.0"
+created: "2026-08-09"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "section"
+category: "saas"
+subcategory: "analytics"
+styleTags: ["liquid-glass", "editorial", "corporate", "dark-cinematic"]
+technicalTags: ["scroll-trigger", "video-background", "parallax", "intersection-observer"]
+motionIntensity: "medium"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/folio-scroll-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/folio-scroll-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-FOLI01.webp"
+liveDemo: "/demo/cleanroom-folio"
+videoBackgrounds:
+  - file: "/assets/videos/folio-blurry-v1.mp4"
+    format: "mp4"
+    duration: "15s"
+    loop: true
+    sizeMb: 50
+    poster: "/assets/posters/folio-scroll-preview-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 8600
+useCases: ["saas-growth-page", "b2b-services-midpage", "enterprise-process-section", "board-story-section"]
+compatibleWith: []
+positionInPage: "middle"
+---
+
+## Design System
+
+**Aesthetic Direction:** **FOLIO** - mid-page scroll-pivot liquid glass **decision section** (not a full-bleed hero, not Prism multi-panel constellation). Dark translucent enterprise cards over a looping abstract motion film. Five dense board-ready sheets. One-way paper journey on `rotateX`. Syne display + DM Sans. Cool white type on glass. Soft iridescent rim (cyan / violet / rose).
+
+**Famous-UI craft direction (not a clone):** Linear / Stripe enterprise density × Apple Liquid Glass material discipline (fill + specular + edge only) × private-bank presentation pacing. Serious. Dense. Readable.
+
+**Typography:**
+- Display / H2: Syne 600, tracking `-0.03em`, `clamp(1.55rem, 3.1vw, 2.35rem)`
+- Sheet titles: Syne 600, `clamp(1.3rem, 2.3vw, 1.75rem)`
+- Body / lead: DM Sans 400, 13-15px, line-height 1.55
+- Labels / chips: 9-11px uppercase tracking `0.1-0.22em`
+- Metrics: Syne 700, tabular nums
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Stage veil | `rgba(8,10,16,0.2-0.5)` over film |
+| Glass fill | `rgba(255,255,255,0.08-0.18)` |
+| Ink on glass | `#FFFFFF` + soft shadow |
+| Muted | `rgba(255,255,255,0.48-0.78)` |
+| Accent cool | `#BAD2FF` / `#7DD3FC` |
+| Success mute | `#C8F5E4` |
+| Progress | violet → cyan → mint |
+
+**Liquid glass stack (mandatory - Super Frontend / LG):**
+1. Translucent fill + `backdrop-filter: blur(26px) saturate(185%)` so film shows through
+2. Iridescent rim wash (cyan / violet / rose - edge, not full wash)
+3. Specular top-edge catch + hairline porcelain rim
+4. Soft outer glow depth shadow
+5. `prefers-reduced-transparency` → solid elevated slate card
+
+**Anti-slop hard ban:** opaque white cards on white canvas, empty sparse marketing fluff, toy bar charts as the only content, purple mesh sludge, emoji, rainbow H1, left-only essay, Prism both-side constellation clone, Meridian dark-gold coastal clone.
+
+**Differentiation:**
+| vs | Folio must not become |
+|----|------------------------|
+| Prism | Multi-face hero + both-side floating panels |
+| Meridian | Dark coastal multi-chapter estate scrub |
+| Revel | Pearl fashion scroll scrub |
+| Apex | Quantum lab cyan void |
+
+## Layout Structure
+
+- **Section only** - no forced page intro/outro in the component
+- **Scroll track:** ~`5 × 1.55 × 100vh` (sticky stage inside)
+- **Sticky stage:** `100vh`, video cover + soft veil
+- **Header:** kicker + heading above deck
+- **Deck:** ~980×560 large glass sheet (absolute stack, hidden deck)
+- **Footer chrome:** step label, dots, progress bar, quiet scroll hint
+- **Safe insets:** stage column `min(1080px, 94vw)`; sheet pad `clamp(1.4rem, 2.8vw, 2.35rem)`
+
+## Content slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| kicker | Enterprise growth system | 32 |
+| heading | Five decisions that turn strategy into revenue. | 72 |
+| sheet_01 eyebrow | Mandate | 16 |
+| sheet_01 title | Align the enterprise on a single growth thesis. | 72 |
+| sheet_02 eyebrow | Insight | 16 |
+| sheet_03 eyebrow | System | 16 |
+| sheet_04 eyebrow | Execution | 16 |
+| sheet_05 eyebrow | Outcomes | 16 |
+
+Each sheet: `lead` paragraph + dense blocks (`metrics` | `rows` | `list` | `chips` | `quote` | `split`). Configurable via `sheets` prop.
+
+## Motion Specification
+
+**Mode:** Scroll-linked paper pivot (Framer Motion `useScroll` / `useTransform`). **Not** video scrub. Video is muted loop wallpaper under glass.
+
+| Local t | rotateX | opacity | note |
+|---------|---------|---------|------|
+| 0 | +72° | 0 | edge below |
+| 0.22-0.78 | ~0° | 1 | face-on plateau |
+| 1 | −72° | 0 | edge above |
+
+- Local progress: ~18% overlap between sheets; **smoothstep** easing on segment map
+- Dense rotate / opacity / y / scale keyframes (no hard jump)
+- Y travel ~36px; scale 0.96→1→0.96
+- Last sheet holds face longer then soft exit
+- Progress bar `scaleX(scrollYProgress)`
+- **Reduced motion:** static stacked glass cards, gradient fallback (no video), auto height
+
+## Video / Media Integration
+
+| Role | Path |
+|------|------|
+| Client HD (buyer) | `/assets/videos/folio-blurry-v1.mp4` |
+| Backgrounds library (small) | `/assets/videos/backgrounds/folio-blurry-bg-v1.mp4` |
+| Storefront preview | `/assets/videos/folio-scroll-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/folio-scroll-preview-fs-v1.mp4` |
+| Poster / thumb | `/assets/posters/folio-scroll-preview-v1.webp` · `/thumbnails/MS-SEC-FOLI01.webp` |
+
+Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover`. Soft dual veil for type contrast. Forbidden: using backgrounds small encode as client HD.
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1100px | Full deck, 4-col metrics, split columns |
+| ≥900px | Full deck, comfortable type |
+| <900px | Metrics 2-col, split stacks, taller deck, scrollable sheet content |
+| <640px | Compact padding, chips wrap |
+| Reduced motion | Static stack, no pivot |
+
+## Accessibility
+
+- `prefers-reduced-motion` static path
+- `prefers-reduced-transparency` solid cards
+- Semantic `section` / `article` / headings
+- Step label `aria-live="polite"`
+- Focus not trapped; decorative layers `aria-hidden`
+
+## Performance Notes
+
+- One heavy glass surface face-on at a time (hidden deck)
+- Animate transform/opacity only (no layout thrash)
+- Video single element, cover scale 1.04 to hide edges
+- font-display: swap
+- will-change limited to sheet transform/opacity
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `FolioPivotSection.tsx` from this brief only. Wire exact video paths. Framer Motion scroll pivot + liquid glass stack are mandatory. Dense enterprise content blocks, not empty marketing cards.
+
+**Lovable / Bolt:** Single self-contained section component; same tokens, five sheets, video loop under glass.
+
+## Expected Output
+
+1. Single React component `FolioPivotSection.tsx` (`"use client"`, default export)
+2. Tall scroll track + sticky stage + looping client HD video under veil
+3. Five one-way pivot glass sheets with dense board-ready content
+4. Liquid glass fill + iridescence + specular + edge
+5. Progress + dots + step label
+6. Reduced-motion and reduced-transparency paths
+7. Configurable `sheets`, `kicker`, `heading`, `vhPerSheet`, `backgroundSrc`
+8. No host marketing shell, no intro/outro forced by the component

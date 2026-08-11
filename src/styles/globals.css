@@ -1,0 +1,519 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Super Frontend — Token System (Triada Liquid Glass, Mode C/D for MS) ──
+   Dark is the hero. Light fallback kept for system respect.
+   MS canvas is pure black #0A0A0A (motionsites density) mapped to --canvas.
+   All glass materials are layered: fill (blur+saturate) + specular (top edge).
+   Keep hsl shadcn vars for component compat, but source from tokens.
+*/
+@layer base {
+  :root,
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    --canvas: #0A0A0A;
+    --elevated: #121214;
+    --elevated-2: #18181B;
+    --well: #070708;
+    --void: #030408;
+    --atmosphere: #07080f;
+
+    --text-primary: #F4F6FB;
+    --text-secondary: #A8B0C0;
+    --text-tertiary: #7A8499;
+    --text-quaternary: #5C6578;
+
+    /* Compass = focus / links only (Tier 4) — never primary CTA fill */
+    --compass: #5b8def;
+
+    /* Beta 4 black primary CTA tokens (triada-os-chrome §3.3) */
+    --color-btn-primary: #0a0c12;
+    --color-btn-primary-hover: #141822;
+    --color-btn-primary-pressed: #030408;
+    --color-btn-primary-border: #2a3042;
+    --color-btn-primary-text: #eef1f8;
+
+    --hairline: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.08);
+
+    /* shadcn bridge — hsl kept for Tailwind compatibility */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 6% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 6% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.75rem;
+
+    --glass-thin-bg: rgba(10, 10, 10, 0.55);
+    --glass-standard-bg: rgba(24, 24, 28, 0.62);
+    --glass-thick-bg: rgba(18, 20, 28, 0.78);
+    --overlay: rgba(0, 0, 0, 0.45);
+
+    --font-os: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* next/font injects --font-sans / --font-display on body; fall back to OS stack */
+    --font-sans-stack: var(--font-sans), var(--font-os);
+    --font-display-stack: var(--font-display), var(--font-os);
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+    --space-5: 20px; --space-6: 24px; --space-8: 32px;
+
+    --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 18px; --r-2xl: 24px; --r-3xl: 28px;
+
+    --z-base: 10; --z-sticky: 20; --z-dock: 40; --z-popover: 50; --z-modal: 60; --z-toast: 70;
+
+    --motion-1: 100ms; --motion-2: 160ms; --motion-3: 220ms; --motion-4: 320ms;
+    --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+    --shadow-e1: 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-e2: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-e3: 0 12px 40px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-e4: 0 24px 80px rgba(0, 0, 0, 0.28);
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+    --canvas: #F3F4F8;
+    --elevated: #FFFFFF;
+    --elevated-2: #F8F9FC;
+    --well: #E8EAF0;
+    --text-primary: #0F1219;
+    --text-secondary: #4B5568;
+    --text-tertiary: #6B7280;
+    --text-quaternary: #9CA3AF;
+    --hairline: rgba(0, 0, 0, 0.08);
+    --border: #E2E5EE;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --glass-thin-bg: rgba(255, 255, 255, 0.55);
+    --glass-standard-bg: rgba(255, 255, 255, 0.62);
+    --glass-thick-bg: rgba(255, 255, 255, 0.78);
+    --overlay: rgba(15, 18, 25, 0.35);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans-stack);
+    background: var(--canvas);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible { @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background; }
+}
+
+/* ── Materials ──
+   MODE: C (marketing) + D hybrid — glass ONLY on chrome/cards.
+   Tables, long text, and feeds would be opaque — gallery grid is the product,
+   so cards legitimately use glass-standard as focused product chrome (budgeted).
+   Motion on transform/opacity only. ≤2 heavy blurs visible at once.
+*/
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display-stack);
+    font-feature-settings: "ss01" on, "kern" on;
+  }
+  /* Product glass — Mode C/D chrome only (menubar / panels / modals) */
+  .glass-thin {
+    position: relative;
+    isolation: isolate;
+    background: rgba(18, 20, 28, 0.28);
+    backdrop-filter: blur(20px) saturate(190%);
+    -webkit-backdrop-filter: blur(20px) saturate(190%);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .glass-standard {
+    position: relative;
+    isolation: isolate;
+    background: rgba(22, 24, 32, 0.42);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 0.5px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+      var(--shadow-e2);
+  }
+  .glass-thick {
+    position: relative;
+    isolation: isolate;
+    background: rgba(16, 18, 26, 0.55);
+    backdrop-filter: blur(40px) saturate(170%);
+    -webkit-backdrop-filter: blur(40px) saturate(170%);
+    border: 0.5px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      var(--shadow-e4);
+    border-radius: var(--r-2xl);
+  }
+  /* Legacy aliases used by earlier patches — remapped to standard */
+  .glass-dark {
+    background: var(--glass-standard-bg);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid var(--hairline);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .glass-header {
+    background: rgba(10, 10, 10, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .glass-frosted {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .canvas-opaque {
+    background: var(--canvas);
+    backdrop-filter: none;
+  }
+  .scrim-for-text {
+    background: linear-gradient(to bottom, rgba(10,10,10,0.0) 0%, rgba(10,10,10,0.55) 100%);
+  }
+  .hairline-border { border: 1px solid var(--hairline); }
+  .specular-edge {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  /* Polymorphic 3D highlight — top light catch for depth */
+  .glass-3d { position: relative; }
+  .glass-3d::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 45%);
+    pointer-events: none;
+  }
+}
+
+/* ── 3D Buttons — Triada Beta 4 dual system (triada-os-chrome §3) ──
+   .btn-primary = BLACK ink CTA (Tier 3) — never slate-as-primary
+   .btn-glass   = slate Liquid Glass secondary
+   .btn-ghost   = quiet tertiary
+*/
+@layer components {
+  .btn-primary,
+  .btn-glass {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 12px;
+    padding: 0.7rem 1.15rem;
+    min-height: 40px;
+    font-weight: 650;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition:
+      transform var(--motion-2) var(--ease-standard),
+      box-shadow var(--motion-2) var(--ease-standard),
+      filter var(--motion-2) var(--ease-standard),
+      background var(--motion-2) var(--ease-standard);
+  }
+  .btn-primary > *,
+  .btn-glass > *,
+  .btn-ghost > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* —— BLACK primary (exact Beta 4 stack) —— */
+  .btn-primary {
+    border: 0.5px solid var(--color-btn-primary-border, #2a3042);
+    color: var(--color-btn-primary-text, #eef1f8);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(
+      180deg,
+      #1c2030 0%,
+      var(--color-btn-primary, #0a0c12) 48%,
+      #05060a 100%
+    );
+    box-shadow:
+      0 10px 26px rgba(0, 0, 0, 0.45),
+      0 2px 6px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+  }
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    left: 1px; right: 1px; top: 1px;
+    height: 46%;
+    border-radius: 11px 11px 40% 40%;
+    pointer-events: none;
+    z-index: 0;
+    /* Dimmer sheen than glass — black stays ink, not chrome */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.04) 55%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    color: #fff;
+    background: linear-gradient(
+      180deg,
+      #242938 0%,
+      var(--color-btn-primary-hover, #141822) 50%,
+      #0a0c12 100%
+    );
+    box-shadow:
+      0 14px 34px rgba(0, 0, 0, 0.48),
+      0 4px 10px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  }
+  .btn-primary:active {
+    transform: translateY(1px) scale(0.985);
+    filter: brightness(0.98);
+    background: var(--color-btn-primary-pressed, #030408);
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.4),
+      inset 0 2px 4px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  .btn-primary:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--compass) 70%, white);
+    outline-offset: 3px;
+  }
+
+  /* —— Slate glass secondary —— */
+  .btn-glass {
+    border: 0.5px solid rgba(255, 255, 255, 0.22);
+    color: #f4f6fb;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(
+      180deg,
+      rgba(78, 90, 118, 0.75) 0%,
+      rgba(42, 48, 64, 0.9) 48%,
+      rgba(24, 28, 40, 0.96) 100%
+    );
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.4),
+      0 2px 6px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+  }
+  .btn-glass::before {
+    content: "";
+    position: absolute;
+    left: 1px; right: 1px; top: 1px;
+    height: 46%;
+    border-radius: 11px 11px 40% 40%;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.08) 55%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  .btn-glass:hover {
+    filter: brightness(1.07);
+    color: #fff;
+    box-shadow:
+      0 14px 34px rgba(0, 0, 0, 0.45),
+      0 4px 10px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+  }
+  .btn-glass:active {
+    transform: translateY(1px) scale(0.985);
+    filter: brightness(0.98);
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.35),
+      inset 0 2px 4px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .btn-glass:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--compass) 70%, white);
+    outline-offset: 3px;
+  }
+
+  /* —— Ghost tertiary —— */
+  .btn-ghost {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 0.5px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    padding: 0.7rem 1.15rem;
+    min-height: 40px;
+    font-weight: 550;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    background: linear-gradient(
+      180deg,
+      rgba(40, 46, 60, 0.55) 0%,
+      rgba(22, 26, 36, 0.75) 100%
+    );
+    color: var(--text-primary);
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition:
+      transform var(--motion-2) var(--ease-standard),
+      filter var(--motion-2) var(--ease-standard),
+      background var(--motion-2) var(--ease-standard);
+  }
+  .btn-ghost::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 50%
+    );
+  }
+  .btn-ghost:hover {
+    filter: brightness(1.08);
+    color: #fff;
+    background: linear-gradient(
+      180deg,
+      rgba(48, 56, 74, 0.65) 0%,
+      rgba(28, 32, 44, 0.85) 100%
+    );
+  }
+  .btn-ghost:active {
+    transform: translateY(1px) scale(0.985);
+  }
+  .btn-ghost:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--compass) 70%, white);
+    outline-offset: 3px;
+  }
+
+  .btn-sm {
+    min-height: 32px;
+    padding: 0.4rem 0.85rem;
+    font-size: 12.5px;
+    border-radius: 10px;
+  }
+  .btn-sm.btn-primary::before,
+  .btn-sm.btn-glass::before {
+    border-radius: 9px 9px 40% 40%;
+  }
+
+  /* NOTE: do not use capsule/pill CTAs — black 3D stays 12px rounded-rect (Beta 4 / Triada image) */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn-primary:hover, .btn-primary:active,
+  .btn-glass:hover, .btn-glass:active,
+  .btn-ghost:hover, .btn-ghost:active {
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-thin,
+  .glass-standard,
+  .glass-thick,
+  .glass-dark,
+  .glass-header,
+  .glass-frosted {
+    background: rgba(18, 20, 28, 0.94) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-thin, .glass-standard, .glass-thick, .glass-dark, .glass-header, .glass-frosted {
+    background: rgba(18, 20, 28, 0.92);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+}
+
+/* ── Home intro (MarkData-style sticky stage) ──
+   Scroll MUST work — never lock overflow during intro (that caused the jump).
+   Footer stays quiet until chrome reveals; stage height is driven in JSX. */
+body.is-ms-intro footer {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden;
+}
+.ms-hero-stage {
+  position: relative;
+  z-index: 1;
+  background: #000;
+}
+
+@keyframes ms-gallery-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes ms-gallery-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}

@@ -1,0 +1,184 @@
+---
+id: "MS-HERO-NEXU01"
+title: "NEXUS AI - Enterprise Intelligence Layer Hero"
+slug: "nexus-ai-enterprise-intelligence-layer-hero"
+description: "For enterprise AI platforms. A confident full-bleed homepage that frames intelligence as infrastructure - clear hierarchy, quiet authority, room for the product to speak."
+version: "2.0.0"
+created: "2026-08-07"
+updated: "2026-08-10"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "saas"
+subcategory: "ai-product"
+styleTags: ["dark-cinematic", "minimal", "editorial", "luxury"]
+technicalTags: ["video-background", "gsap", "framer-motion", "intersection-observer"]
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/nexus-enterprise-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/nexus-enterprise-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-NEXU01.webp"
+liveDemo: "/demo/cleanroom-nexus"
+videoBackgrounds:
+  - file: "/assets/videos/nexus-neural-v1.mp4"
+    format: "mp4"
+    duration: "59s"
+    loop: true
+    sizeMb: 41
+    poster: "/assets/posters/nexus-neural-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 9000
+useCases: ["enterprise-ai-homepage", "ai-platform-launch", "intelligence-layer-landing", "model-ops-hero"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **NEXUS AI** - enterprise intelligence layer hero. One full-bleed **uncut** neural lattice film free-plays under restrained cyan/magenta chrome. Signature: left **decision path rail** (Sense → Route → Compound) with a light that travels the line, fills each node on contact, then the next word in the headline melts letter-by-letter. Space Grotesk display + Inter. Stage ink `#07080F`, cool type `#E8F0FF`, cyan `#00D4FF`, magenta `#FF006E`. Institutional density. Not liquid-glass kitsch. Not purple mesh SaaS. No scroll scrub.
+
+**Famous-UI craft direction (not a clone):** Anthropic/OpenAI launch restraint × institutional product density × neural void cinema. Calm authority. Not Motionsites pill docks. Not Apex quantum lab chrome. Not Neon rain city.
+
+**Typography:**
+- Brand wordmark: Space Grotesk / Inter, tracking wide, weight 600-700, uppercase + small "AI" accent
+- Kicker: Inter 10px, tracking `0.18em`, uppercase, cool mist + cyan mono id `NX / 01`
+- H1 main: Space Grotesk, `clamp(2.75rem, 7.4vw, 5.6rem)`, weight 600, tracking `-0.045em`, line-height 0.96, cool white
+- H1 sub: same family lighter weight, `clamp(2.15rem, 5.6vw, 4.15rem)`, "That " static + rotating verb with period attached to the word
+- Lead: Inter 300, `clamp(0.98rem, 1.15vw, 1.08rem)`, line-height 1.7, max-width ~30rem, mist
+- Path labels: mono micro steps; display names; soft notes
+- CTA primary: solid cool type on soft fill / border cyan rim optional
+- System tape: mono keys + values, live pulse
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Stage ink | `#07080F` |
+| Cool type | `#E8F0FF` / `#F2F6FF` |
+| Cyan | `#00D4FF` |
+| Magenta | `#FF006E` |
+| Veil | deep ink left/bottom; film readable center-right |
+| Path line | cyan → magenta vertical gradient |
+
+**Anti-slop hard ban:** purple mesh, emoji, rainbow gradient headlines, Motionsites pill docks, scroll-scrubbing the film, mid-frame multi-paragraph sales essays, liquid-glass card stacks as the hero signature, Three.js particle spam as the product, "demo only" / scaffold strings in UI, opaque black slabs instead of soft veil.
+
+**Differentiation:**
+| vs | Nexus must not become |
+|----|------------------------|
+| Apex | Quantum lab cyan void |
+| Neon | Rain city cyberpunk |
+| Axiom | Inverted NYC fintech true-north |
+| Mirage | Desert agency glass pivot cards |
+| Old NEXU draft | Liquid-glass + aurora particle kitsch |
+
+## Layout Structure
+
+- **Hero:** full-viewport stage (`100vh` / `100dvh`, min-height ~700px), overflow hidden
+- **Film:** full bleed `object-fit: cover`, `object-position: ~58% center`, scale ~1.015
+- **Veil + vignette:** soft edge gradients; film remains readable
+- **Nav:** absolute top - brand left, links center (desktop), docs + primary CTA right
+- **Signature path rail (desktop ≥960px):** left column - Path label, vertical line, three nodes (Sense / Route / Compound), travel pulse
+- **Copy lockup:** center-left - kicker, H1 (Intelligence. / That [verb].), lead, CTA row
+- **Constellation plate (wide desktop):** floating film-field label (Active graph)
+- **System tape footer:** live pulse + GRAPH / NODES / ROUTES / EVAL / REGION
+- **Safe insets:** horizontal clamp; type never flush to edge
+
+## Content slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| brand | NEXUS | 12 |
+| kicker_id | NX / 01 | 12 |
+| kicker | Intelligence layer for production systems | 48 |
+| h1_main | Intelligence. | 18 |
+| h1_prefix | That | 8 |
+| cycle_words | compounds · decides · scales · routes · multiplies | 5 words |
+| lead | One stack for models, agents, and evaluation - built for teams that put AI on the critical path, not the slide deck. | 140 |
+| cta_primary | Begin with Nexus | 24 |
+| cta_secondary | Read the architecture | 28 |
+| path | 01 Sense · 02 Route · 03 Compound | - |
+| tape | GRAPH LIVE · NODES 14.2k · ROUTES 48 · EVAL CONT. · REGION GLOBAL | - |
+| nav | Platform · Models · Safety · Research | - |
+| constellation | Active graph · Inference lattice · multi-region | 40 |
+
+## Motion Specification
+
+**Mode:** Free-playing full film (`autoPlay muted loop playsInline`). **Not** video scrub. Scroll does **not** map to `video.currentTime`. Optional subtle scale scrub on the video wrap only (atmosphere).
+
+| Element | Motion |
+|---------|--------|
+| Film | Continuous loop of complete neural lattice run; IntersectionObserver pause offscreen |
+| Path travel | Light pulse rides the vertical line (centered); small between nodes, larger on hit; z above bullets |
+| Path nodes | Each bullet fills/brightens only when the pulse arrives (synced linear cycle) |
+| Headline cycle | Sequential: word A letters melt out (random per letter) → fully gone → word B letters melt in (random). Period is part of each word. Hold ~3s sharp. |
+| Copy entrance | Soft fade + Y on load (Framer Motion); respect reduced motion |
+| Reduced motion | Static poster, no autoplay required, first cycle word only, path static |
+
+## Video / Media Integration
+
+| Role | Path |
+|------|------|
+| Client HD (buyer) | `/assets/videos/nexus-neural-v1.mp4` |
+| Backgrounds library (small) | `/assets/videos/backgrounds/nexus-neural-bg-v1.mp4` |
+| Storefront preview | `/assets/videos/nexus-enterprise-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/nexus-enterprise-preview-fs-v1.mp4` |
+| Pure film poster | `/assets/posters/nexus-neural-v1.webp` |
+| Storefront poster / thumb | `/assets/posters/nexus-enterprise-preview-v1.webp` · `/thumbnails/MS-HERO-NEXU01.webp` |
+
+Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover`. Full duration displayed - never cut, never seek for narrative. Forbidden: backgrounds encode as client HD; storefront UI burn as client HD.
+
+**Storefront capture law:** FG plates (nav, path, copy, tape, constellation) transparent; BG film composited as continuous ffmpeg track of client HD (no browser seek).
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1100px | Constellation plate visible; full nav |
+| ≥960px | Path rail visible |
+| <960px | Path rail hidden; copy full width |
+| <768px | Center nav links may compress; CTAs stack gracefully |
+| Reduced motion | Static stage, poster fallback |
+
+## Accessibility
+
+- `prefers-reduced-motion` static path
+- Semantic `section` / `nav` / `header` / live region for cycle word
+- Decorative film layers and path travel `aria-hidden`
+- Focusable text links and CTA
+- Contrast: cool type on dark veil; cyan accents for labels
+
+## Performance Notes
+
+- Single video element
+- GSAP only for letter melt + optional scroll scale
+- Animate transform/opacity/filter on letters only
+- font-display: swap
+- Kill GSAP timelines on unmount
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `NexusAiHero.tsx` from this brief only. Wire the exact client HD path. Free-play full film is mandatory. Do not scroll-scrub. Keep the path rail and sequential letter-melt cycle (exit complete before enter). Do not invent liquid-glass card stacks or Three.js particles as the signature.
+
+**Lovable / Bolt:** Single self-contained hero. Same tokens. Full neural film under enterprise chrome. Path + letter cycle required.
+
+## Expected Output
+
+1. Single React component `NexusAiHero.tsx` (`"use client"`, default export)
+2. Full-viewport stage + free-playing full client HD under soft veils
+3. Minimal nav: NEXUS AI · Platform Models Safety Research · Docs + Begin with Nexus
+4. Left path rail Sense → Route → Compound with travel pulse that fills nodes
+5. H1: Intelligence. / That [rotating verb with period]
+6. Lead + dual CTAs + system tape footer
+7. Reduced-motion path
+8. Configurable `brand`, `backgroundSrc`, `posterSrc`
+9. No host marketing shell, no scaffold notes, no "demo only" strings in the component UI

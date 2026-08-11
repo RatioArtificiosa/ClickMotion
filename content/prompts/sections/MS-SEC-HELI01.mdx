@@ -1,0 +1,280 @@
+---
+id: "MS-SEC-HELI01"
+title: "HELIX - Helical Design Gallery Carousel Section"
+slug: "helix-helical-design-gallery-carousel-section"
+description: "A spatial mid-page gallery where your work rides a 3D helix as titles cross the stage. Fully customizable cards, copy, and color so it feels made for your brand."
+version: "1.1.0"
+created: "2026-08-10"
+updated: "2026-08-10"
+author: "MS Team"
+status: "published"
+type: "section"
+category: "agency"
+subcategory: "design-studio"
+styleTags: ["editorial", "minimal", "3d-immersive", "luxury"]
+technicalTags: ["scroll-trigger", "3d-threejs", "webgl", "text-split"]
+motionIntensity: "extreme"
+difficulty: "advanced"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/helix-gallery-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/helix-gallery-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-HELI01.webp"
+liveDemo: "/demo/cleanroom-helix"
+videoBackgrounds: []
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "three", version: "^0.170.0", required: true }
+  - { name: "@react-three/fiber", version: "^9.0.0", required: true }
+  - { name: "lenis", version: "^1.1.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 11000
+useCases: ["design-studio-midpage", "agency-gallery-section", "portfolio-carousel", "dribbble-style-showcase"]
+compatibleWith: []
+positionInPage: "middle"
+---
+
+## Promise (buyer-facing)
+
+HELIX is a mid-page **gallery carousel section** that turns scroll into a spatial presentation. Nine of **your** design pieces ride a WebGL cylindrical helix while giant titles cross the frame and a quiet center lockup holds the brand. Visitors do not skim a flat grid. They move through a crafted arc of work.
+
+**Why use it:**
+- Your portfolio or case studies feel like a private viewing, not a stock carousel
+- Scroll owns the motion, so the section stays intentional and calm under the user's hand
+- Every image, title, wordmark, body line, and stage color is meant to be replaced with your brand system
+- Drop-in section (not a full homepage), so it sits cleanly after a hero or before contact
+- Built for design studios, creative agencies, and brands that sell craft with space and pacing
+
+Default demo content (ClickMotion wordmark, sample mock cards, "Design in / motion") is only a starting board. Tell your AI to restage everything until it reads as you alone.
+
+## Design System
+
+**Aesthetic Direction:** **HELIX** - mid-page **carousel / gallery section** (not a full-bleed hero). Cool gray stage `#C3C3C3` by default (fully recolorable). Nine design stills ride a WebGL cylindrical helix while giant type **"Design in"** and **"motion"** cross the frame. Center lockup: brand wordmark (Birthstone or your script) above a quiet uppercase line. Stage is solid color by default so **your cards own the focus**. Scroll owns the pin.
+
+**Famous-UI craft direction (not a clone):** editorial Dribbble showcase × Swiss gray board × private-studio restraint. Serious. Spatial. Readable under cards.
+
+**Typography:**
+- Giant titles: geometric sans (Neue Haas / Inter / Helvetica Neue), uppercase, `clamp(3.25rem, 13vw, 9.5rem)`, tracking `-0.04em`, line-height `0.8`, ink `#1a1a1a`
+- Wordmark: **Birthstone** (Google Fonts) or your brand script, `clamp(1.85rem, 3.6vw, 2.75rem)`, near-black on light stage (no white glow on light gray)
+- Center line: 12-13px uppercase tracking `0.08em`
+- Concepts body: 13-14px, max-width ~16rem, bottom-left, opacity ~0.8
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#C3C3C3` | Your board color (keep type readable) |
+| Ink | `#0a0a0a` / `#1a1a1a` | Your primary type |
+| Rails | `#9E9E9E` ~50% | Soft guide lines on stage |
+| Pin spacer | match stage | Never flash white under pin |
+
+**Anti-slop hard ban:** purple mesh, emoji, rainbow H1, Motionsites pill docks, required third-party Dribbble CTA, footer stripe wipe as the product signature, auto-rotating carousel without scroll pin, leaving demo ClickMotion copy if the buyer brand is different.
+
+**Differentiation:**
+| vs | Helix must not become |
+|----|------------------------|
+| Folio | Liquid-glass decision sheets + underlay film |
+| Prism | Multi-face hero constellation |
+| Nexus | Enterprise AI free-play film hero |
+| Meridian | Coastal scroll-scrub narrative |
+
+## Layout Structure
+
+- **Section only** - no forced page intro/outro in the component
+- **Pin stage:** `100dvh`, solid stage color
+- **Scroll length:** ~`5 × 100vh` desktop / `3 × 100vh` mobile (helix phase only; titles exit at end)
+- **Stack:** z-0 titles + concepts; z-1 WebGL canvas full viewport
+- **Safe insets:** concepts `px-5 md:px-10`, bottom pad `pb-10 md:pb-14`
+- **No** site chrome, no runway, no footer handoff inside the product component
+
+## Content slots (every string is replaceable)
+
+| Slot | Default (demo only) | Guidance | Max |
+|------|---------------------|----------|-----|
+| Title A | Design in | Giant uppercase, enters from left | ~14 chars preferred |
+| Title B | motion | Giant uppercase, enters from right | ~14 chars preferred |
+| Wordmark | ClickMotion | Your brand name in script or display | 1 line |
+| Center line L1 | Exploring ideas through | Quiet uppercase | ~28 chars |
+| Center line L2 | daily design practice. | Quiet uppercase | ~28 chars |
+| Concepts L1-L3 | Concepts, explorations… | Bottom-left, three short lines | ~40 chars/line |
+| Card images 1-9 | orbit-01 … orbit-09 | Your work, UI mocks, campaign stills | 9 images |
+| Stage color | `#C3C3C3` | Board that makes cards and type read | hex |
+| Type color | `#1a1a1a` | High contrast on stage | hex |
+
+## Motion Specification
+
+**Mode:** scroll-scrub pin (GSAP ScrollTrigger + Lenis). Cards and titles are driven by scroll progress, not a free-play film.
+
+| Event | Timing | Ease / notes |
+|-------|--------|--------------|
+| Pin engage | start `top top` | pinType fixed, scrub true |
+| Helix phase `g` | 0→1 over full pin | maps card path offset |
+| Title A | g maps x from `-100vw` to `+100vw` | peak center ~g=0.18 |
+| Title B | g maps x from `+100vw` to `-100vw` | mirror of A |
+| Center lockup fade | after g≈0.55 | opacity falls toward 0 by ~g=0.8 |
+| Cards enter | g from 0 | ease in from off-path (no seeded mid-arc) |
+| Rails draw | with P = min(1, g/(400/600)) | guide lines grow with helix |
+
+**Reduced motion:** show static mid pose (g≈0.45), titles near center, no long scrub track required.
+
+## Media Integration (gallery stills - fully yours)
+
+This section is a **card gallery**, not a full-bleed video hero. The default pack ships nine stills:
+
+```
+/assets/images/orbit/orbit-01.jpg … orbit-09.jpg
+```
+
+Load order on the helix is **reversed** (09 → 01). Each card is a rounded-rect shader plane on a helical ribbon (radius 12, pitch climb 28 over 2 turns, spacing 6.2).
+
+**What buyers put on the cards:** product shots, UI frames, campaign boards, editorial photography, case-study covers. Prefer portrait-ish boards (rough aspect near 568/812). High resolution. No watermarks. Consistent lighting reads best as a set.
+
+**Optional stage treatment:** keep solid stage color (recommended for focus), or ask your AI to add a very soft texture/gradient behind cards if your brand needs it. Do not bury the cards under a loud background film unless you deliberately want that.
+
+Storefront previews on ClickMotion (presentation only):
+- Page: `/assets/videos/helix-gallery-preview-v1.mp4`
+- Fullscreen: `/assets/videos/helix-gallery-preview-fs-v1.mp4`
+
+## Responsive Behavior
+
+| BP | Behavior |
+|----|----------|
+| <768 | pin ~3vh units; FOV ~58; camera z~28 |
+| 768-1199 | FOV ~54; z~24 |
+| ≥1200 | FOV ~52; z~22; pin ~5vh units |
+| tall mobile | titles clamp; concepts still bottom-left |
+| reduced-motion | static mid helix |
+
+## Accessibility
+
+- Semantic `<section>` + heading hierarchy
+- Wordmark `aria-label` with the spoken brand name
+- Canvas `aria-hidden`
+- `prefers-reduced-motion`: no long scrub required
+- Contrast: dark type on light stage (or invert if you recolor)
+
+## Performance Notes
+
+- R3F Canvas `dpr` capped at 2; transparent clear
+- Textures: LinearFilter, no mipmaps, SRGB
+- Dispose geos/mats/textures on unmount
+- Lenis only on the shell that owns the pin
+- Do not load drei unless you add controls later
+
+## AI Tool Instructions
+
+1. Paste this full prompt into Cursor, Claude, Grok Build, Lovable, or Bolt.
+2. Ask for a single React + TypeScript section component with GSAP ScrollTrigger, React Three Fiber, and Lenis smooth scroll coupled to ScrollTrigger.
+3. Place your nine images where the component loads them (default paths `orbit-01`…`orbit-09`).
+4. Load Birthstone (or your brand script font) for the wordmark.
+5. Mount the section inside a smooth-scroll shell so pin scrub stays in sync.
+6. After the default builds, run the **Customization prompts** below until every demo string and sample image is gone.
+
+## What to tell your AI (copy-paste customization)
+
+Use these as-is. Replace brackets. Prefer one request at a time so the AI does not drop motion.
+
+### Brand wordmark
+```
+Change the center wordmark from ClickMotion to [YOUR BRAND NAME].
+Keep it one line, elegant script or brand font, centered above the small uppercase lines.
+Update any aria-label to match [YOUR BRAND NAME].
+```
+
+### Giant crossing titles
+```
+Change the left-entering giant title from "Design in" to "[TITLE A]".
+Change the right-entering giant title from "motion" to "[TITLE B]".
+Keep both uppercase, huge clamp sizing, and the left-to-right / right-to-left cross as scroll progresses.
+Prefer short lines so they stay elegant.
+```
+
+### Center supporting lines
+```
+Change the two center uppercase lines to:
+Line 1: "[YOUR LINE 1]"
+Line 2: "[YOUR LINE 2]"
+Keep small tracking, centered under the wordmark, and the late-scroll fade.
+```
+
+### Bottom-left concepts copy
+```
+Replace the bottom-left three-line concepts paragraph with:
+"[LINE 1]"
+"[LINE 2]"
+"[LINE 3]"
+Keep left-aligned, modest size, under the cards in z-order (never on top of the WebGL layer).
+```
+
+### All nine gallery cards (your work)
+```
+Replace orbit-01.jpg through orbit-09.jpg with my images:
+1: [PATH OR DESCRIPTION OF IMAGE 1]
+2: [PATH OR DESCRIPTION OF IMAGE 2]
+3: [PATH OR DESCRIPTION OF IMAGE 3]
+4: [PATH OR DESCRIPTION OF IMAGE 4]
+5: [PATH OR DESCRIPTION OF IMAGE 5]
+6: [PATH OR DESCRIPTION OF IMAGE 6]
+7: [PATH OR DESCRIPTION OF IMAGE 7]
+8: [PATH OR DESCRIPTION OF IMAGE 8]
+9: [PATH OR DESCRIPTION OF IMAGE 9]
+Keep rounded card shader, helix path, reverse load order if needed, and high-quality textures.
+If I only give descriptions, generate tasteful mock UI / campaign stills that match my brand [BRAND TONE].
+```
+
+### Stage and type color
+```
+Change the stage gray #C3C3C3 to [STAGE HEX].
+Change title and body ink to [INK HEX].
+Keep pin-spacer background matched to the stage so there is no white flash on pin engage.
+Ensure wordmark and small type stay readable.
+```
+
+### Tone of voice pass
+```
+Rewrite every visible string so the voice matches [BRAND VOICE: e.g. quiet luxury / bold studio / technical product].
+Do not change motion math, helix radius, or scroll pin behavior unless I ask.
+```
+
+### Optional soft stage treatment
+```
+Keep cards as the hero. If useful, add a very subtle stage texture or soft gradient behind the helix in [COLOR NOTES].
+Do not add a loud full-bleed background video that competes with the cards unless I explicitly request it.
+```
+
+### Something looks wrong
+```
+Something is broken: [DESCRIBE WHAT YOU SEE].
+Fix it and keep Helix as a spatial mid-page gallery carousel with scroll-pinned helix cards and crossing titles.
+Do not ask me to write code. Keep reduced-motion support.
+```
+
+## Expected Output
+
+1. Mid-page section, full-viewport stage, no site header/footer required inside the component.
+2. Scroll pins the stage; progress drives helix + titles.
+3. Nine cards travel a cylindrical helix with thin guide rails.
+4. Title A enters from left; Title B from right; they cross and exit by pin end.
+5. Brand wordmark sits above the center lines at rest, then fades late in the journey.
+6. Concepts copy bottom-left under cards (z below canvas).
+7. No required third-party CTA, no stripe wipe, no footer pull as part of the section product.
+8. Reduced-motion static fallback.
+9. All demo strings and sample images are replaceable via the prompts above.
+10. Works as a drop-in section on a marketing page.
+
+## Package notes (operators)
+
+| Role | Path |
+|------|------|
+| Gallery stills (client media) | `/assets/images/orbit/orbit-0N.jpg` |
+| Storefront preview | `/assets/videos/helix-gallery-preview-v1.mp4` |
+| Storefront FS | `/assets/videos/helix-gallery-preview-fs-v1.mp4` |
+| Poster / thumb | `/assets/posters/helix-gallery-preview-v1.webp` · `/thumbnails/MS-SEC-HELI01.webp` |
+| Live demo | `/demo/cleanroom-helix` |
+| Package PDF | `/packages/MS-SEC-HELI01/Helix-package-h3l1x9k2m7p4.pdf` |
+| Backgrounds page | N/A (gallery cards, not a bg-film SKU) |

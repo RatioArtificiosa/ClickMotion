@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/* ─── Fonts (lab minimum) ─── */
+@font-face {
+  font-family: "neueHaas";
+  src: url("/fonts/NeueHaasDisplay_Roman-s.p.0ykdwddnvy5f_.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "martianMono";
+  src: url("/fonts/MartianMono_Light-s.p.0htes.s6weu9-.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+/* Local fallback for ClickMotion wordmark (primary: Google Fonts Birthstone) */
+@font-face {
+  font-family: "Birthstone";
+  src: url("/fonts/Birthstone-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design tokens ─── */
+@theme {
+  --color-void: #040508;
+  --color-hero: #0c0c0c;
+  --color-ink: #0a0a0a;
+  --color-mist: #d8d8d8;
+  --color-mist-dim: #d8d8d8bf;
+  --color-panel: #c8c8c8;
+  --color-line: #434343;
+  --color-glass: #ffffff2e;
+  --color-ember: #ff4a1a;
+  --color-gray-100: #f7f7f7;
+  --color-gray-200: #d2d2d2;
+  --color-gray-300: #c3c3c3;
+  --font-neue: "neueHaas", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "martianMono", ui-monospace, monospace;
+  --font-wordmark: "Birthstone", cursive;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --bg: #040508;
+  --hero-bg: #0c0c0c;
+  --text-light: #d8d8d8;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-neue: "neueHaas", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "martianMono", ui-monospace, monospace;
+  --font-wordmark: "Birthstone", cursive;
+}
+
+/* ClickMotion wordmark on light gray (near-black, no white glow)
+   https://fonts.google.com/specimen/Birthstone */
+.wordmark-clickmotion {
+  font-family: "Birthstone", cursive !important;
+  font-weight: 400;
+  color: #0a0a0a;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  /* Product-demo gray — matches section, no void flash */
+  background: #c3c3c3;
+  color: #0a0a0a;
+  font-family: var(--font-neue);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--text-light) 25%, transparent);
+  color: #fff;
+}
+
+/* Text split helpers (CharHoverLink) */
+.char,
+.word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+.text-layer {
+  display: inline-flex;
+}
+.text-layer .char {
+  will-change: transform, opacity, filter;
+}
+
+/* Pin spacer — Design in Motion must stay gray under pinType:fixed */
+.pin-spacer {
+  background: transparent !important;
+}
+#design-in-motion > .pin-spacer,
+.pin-spacer-design-in-motion-pin {
+  background: #c3c3c3 !important;
+}
+
+.mrquee-text {
+  backface-visibility: hidden;
+}
+
+#design-in-motion .dribble-title {
+  pointer-events: none;
+}
+
+/* Screen-reader only (CharHover dual-layer) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

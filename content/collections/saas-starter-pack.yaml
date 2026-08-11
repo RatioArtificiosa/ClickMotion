@@ -1,0 +1,14 @@
+# Example collection  -  curated bundle
+id: saas-starter-pack
+title: "SaaS Starter Pack"
+slug: saas-starter-pack
+description: "Everything you need to ship a SaaS homepage  -  hero, features, pricing, testimonial, and CTA."
+cover: "/thumbnails/collection-saas-starter.webp"
+promptIds:
+  - MS-HERO-001
+  - MS-SEC-FEAT-001
+  - MS-SEC-PRICE-001
+  - MS-SEC-TEST-001
+  - MS-SEC-CTA-001
+isFeatured: true
+priceTier: pro

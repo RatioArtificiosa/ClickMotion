@@ -1,0 +1,177 @@
+---
+id: "MS-HERO-AETH01"
+title: "AETHER - Serene Wellness & Meditation Hero"
+slug: "aether-serene-wellness-meditation-hero"
+description: "For wellness brands and meditation products. A serene full-bleed welcome that centers the visitor in one breath - calm confidence without noise or clutter."
+version: "2.1.0"
+created: "2026-08-07"
+updated: "2026-08-08"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "health"
+subcategory: "wellness"
+styleTags: ["organic", "minimal"]
+technicalTags: ["video-background"]
+motionIntensity: "medium"
+difficulty: "beginner"
+priceTier: "free"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/aether-preview-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-AETH01.webp"
+liveDemo: "/demo/cleanroom-aether"
+videoBackgrounds:
+  - file: "/assets/videos/aether-waves-web-v1.mp4"
+    format: "mp4"
+    duration: "12s"
+    loop: true
+    sizeMb: 8
+    poster: "/assets/posters/aether-waves-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 5200
+useCases: ["health-wellness-homepage", "meditation-app-hero"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** Premium wellness brand **AETHER**. Biophilic full-viewport hero over golden-hour ocean waves. Cream wash, sage and warm gold accents, Playfair Display headlines, Inter body. Apple mindfulness x Aesop calm - never neon, never aviation, never fintech chrome.
+
+**Famous-UI craft direction (not a clone):** Calm product marketing (Headspace / Calm class restraint) with editorial serif hierarchy. One soft video system only.
+
+**Typography:**
+- Display: Playfair Display 600 for `Breathe.` and `Be.`
+- H1 `Breathe.`: dark sage `#2D3E35`, `clamp(2.8rem, 7.5vw, 6.75rem)`, line-height 1.05, tracking tight
+- Subline `Be.`: sage `#7BA58F`, **0.58x H1** via `clamp(1.62rem, 4.35vw, 3.9rem)`, margin-top `-0.18em` - never larger than H1
+- Body / nav: Inter 400-500, description 16-18px, muted `#5C6B63`, max-width ~36rem
+
+**Colors:**
+| Token | Hex |
+|-------|-----|
+| cream | `#FDFBF7` |
+| dark sage | `#2D3E35` |
+| sage | `#7BA58F` |
+| warm gold | `#D4A373` |
+| muted | `#5C6B63` |
+| glass nav | `rgba(255,255,255,0.42)` + backdrop-blur |
+
+**Radius:** pills on badge and CTAs (`rounded-full`).  
+**Anti-slop:** no aurora mesh, no border-beam, no shiny gradient text, no purple SaaS kit stack.
+
+---
+
+## Layout Structure
+
+```
+[Fixed glass nav h-16]
+  AETHER + sage dot | Meditate Sleep Breathe Stories Pricing | Start Free Trial
+[Hero 100vh]
+  video cover + light cream wash
+  centered: badge, Breathe., Be., description, CTA
+```
+
+**Wash (critical - waves must stay visible):**
+```
+linear-gradient(180deg, rgba(253,251,247,0.15) 0%, rgba(253,251,247,0.35) 55%, rgba(253,251,247,0.5) 100%)
+```
+
+**No floating side labels** - calm centered composition only. Nav CTA must stay fully visible (shrink-0, whitespace-nowrap, safe horizontal padding px-8 to lg:px-16).
+
+---
+
+## Content Slots
+
+| Slot | Exact text |
+|------|------------|
+| brand | AETHER |
+| badge | FIND YOUR CENTER (optional leading star) |
+| h1 | Breathe. |
+| sub | Be. |
+| description | Guided meditations, sleep stories, and breathwork designed to help you find calm in a chaotic world. |
+| cta | Start Your Journey |
+| nav cta | Start Free Trial |
+
+---
+
+## Motion Specification
+
+```ts
+staggerChildren: 0.12
+delayChildren: 0.3
+ease: [0.25, 0.46, 0.45, 0.94]
+// Badge y:-20; H1 y:40 duration 0.8; Be y:40 delay 0.1; body y:30; CTA y:20
+// Optional GSAP: video wrap scale 1->1.05 scrub 1.2 (off mobile + reduced-motion)
+```
+
+Video: `autoPlay muted loop playsInline`, IntersectionObserver pause offscreen.
+
+---
+
+## Video / Media Integration
+
+| Field | Value |
+|-------|--------|
+| File | `/assets/videos/aether-waves-web-v1.mp4` |
+| Poster | `/assets/posters/aether-waves-v1.webp` |
+| Attributes | autoPlay muted loop playsInline preload metadata |
+| Subject | Golden-hour shoreline waves - calm, natural, no people, no aircraft |
+
+> **AI Video Generation Prompt:** Cinematic 4K seamless loop, 10-14 seconds, no audio. Camera just above a calm shoreline at golden hour. Slow turquoise waves, soft foam, warm low sun, creamy highlights. No people, boats, aircraft, text, or UI. Pure wellness nature atmosphere. Seamless loop.
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| >=1024px | Full nav, large type, safe nav insets |
+| >=768px | Nav links visible |
+| <768px | Hide center nav; H1 min 2.8rem; CTA max-width 280px centered |
+
+---
+
+## Accessibility
+
+- Single h1; video aria-hidden
+- Focus rings on controls
+- prefers-reduced-motion: opacity fades only, no parallax
+- Contrast: dark sage on cream/light wash
+
+---
+
+## Performance Notes
+
+- One muted loop video; poster first
+- Pause when offscreen
+- Fonts: display swap
+- Prefer web-encoded 1080p under ~15MB over raw 4K
+
+---
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Single `AetherHeroSection.tsx`, use client, Framer Motion stagger, optional GSAP parallax. Exact copy and hex tokens. Load Playfair + Inter via next/font on page wrapper.
+
+**Lovable / Bolt:** Same layout without GSAP if needed - keep Framer entrance.
+
+Do not install Magic UI / Aceternity skins. Do not invent a dark cyber palette.
+
+---
+
+## Expected Output
+
+1. Full-viewport wellness hero with local video path
+2. Glass nav + exact Breathe. / Be. hierarchy (no floating side cards)
+3. Light cream wash, waves still legible
+4. Reduced-motion path
+5. Looks like a premium meditation product - not a generic AI landing kit

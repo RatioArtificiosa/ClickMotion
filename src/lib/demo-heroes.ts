@@ -1,0 +1,173 @@
+export interface DemoHero {
+ id: string;
+ slug: string;
+ title: string;
+ headline: string;
+ subheadline: string;
+ description: string;
+ badge: string;
+ ctas: [string, string];
+ colors: { bg: string; fg: string; primary: string; accent: string };
+ video: string | null;
+ poster: string;
+ fontHead: string;
+ category: string;
+ intensity: string;
+}
+
+export const demoHeroes: DemoHero[] = [
+ {
+ id: "MS-HERO-NEON01",
+ slug: "neon-forge",
+ title: "NEON FORGE - Cyberpunk Gaming Studio",
+ headline: "BUILD WORLDS.",
+ subheadline: "PLAY GOD.",
+ badge: "✦ GAME DEVELOPMENT STUDIO",
+ description: "We craft immersive gaming experiences that push the boundaries of interactive entertainment. From concept to launch, we build worlds players never want to leave.",
+ ctas: ["View Our Work", "Join The Team"],
+ colors: { bg: "#000000", fg: "#FFFFFF", primary: "#00F0FF", accent: "#FF006E" },
+ video: "/assets/videos/neon-forge-city-v1.mp4",
+ poster: "/assets/posters/neon-forge-city-v1.webp",
+ fontHead: "Space Grotesk",
+ category: "agency", intensity: "aggressive",
+ },
+ {
+ id: "MS-HERO-AETH01",
+ slug: "aether",
+ title: "AETHER - Serene Wellness Hero",
+ headline: "Breathe.",
+ subheadline: "Be.",
+ badge: "✦ FIND YOUR CENTER",
+ description: "Guided meditations, sleep stories, and breathwork designed to help you find calm in a chaotic world.",
+ ctas: ["Start Your Journey", ""],
+ colors: { bg: "#FDFBF7", fg: "#2D3E35", primary: "#7BA58F", accent: "#D4A373" },
+ video: "/assets/videos/aether-waves-web-v1.mp4",
+ poster: "/assets/posters/aether-waves-v1.webp",
+ fontHead: "Playfair Display",
+ category: "health", intensity: "medium",
+ },
+ {
+ id: "MS-HERO-VERT01",
+ slug: "vertex",
+ title: "VERTEX SECURITY - Brutalist Cybersecurity",
+ headline: "SECURITY.",
+ subheadline: "WITHOUT COMPROMISE.",
+ badge: "✦ ZERO TRUST ARCHITECTURE",
+ description: "From zero-day threats to nation-state actors, we don't just detect intrusions - we prevent them.",
+ ctas: ["Request Demo", "View Threat Intel"],
+ colors: { bg: "#000000", fg: "#FFFFFF", primary: "#FFFFFF", accent: "#334155" },
+ video: "/assets/videos/vertex-globe-web-v1.mp4",
+ poster: "/assets/posters/vertex-globe-v1.webp",
+ fontHead: "Space Grotesk",
+ category: "tech", intensity: "aggressive",
+ },
+ {
+ id: "MS-HERO-LUMI01",
+ slug: "lumina",
+ title: "LUMINA STUDIOS - Cinematic Film Production",
+ headline: "STORIES THAT MOVE.",
+ subheadline: "Crafted in light.",
+ badge: "✦ INDEPENDENT FILM STUDIO",
+ description: "An independent film studio crafting award-winning stories for the world's most demanding audiences.",
+ ctas: ["View Showreel", "Our Films"],
+ colors: { bg: "#1E140A", fg: "#FEF3C7", primary: "#F59E0B", accent: "#FEF3C7" },
+ video: null,
+ poster: "/thumbnails/MS-HERO-LUMI01.webp",
+ fontHead: "Playfair Display",
+ category: "agency", intensity: "aggressive",
+ },
+ {
+ id: "MS-HERO-TERR01",
+ slug: "terra",
+ title: "TERRA NOVA - Clean Energy Platform",
+ headline: "Power the future.",
+ subheadline: "Clean. Abundant.",
+ badge: "✦ CLEAN ENERGY INFRASTRUCTURE",
+ description: "The next generation of clean energy infrastructure - built for scale, designed for the planet.",
+ ctas: ["Explore Solutions", "Watch Film"],
+ colors: { bg: "#0B1A14", fg: "#EDF5F0", primary: "#7BA58F", accent: "#E8B86D" },
+ video: "/assets/videos/terra-aerial-v1.mp4",
+ poster: "/assets/posters/terra-aerial-v1.webp",
+ fontHead: "Fraunces",
+ category: "tech", intensity: "medium",
+ },
+ {
+ id: "MS-HERO-APEX01",
+ slug: "apex",
+ title: "APEX QUANTUM - Deep Tech Quantum",
+ headline: "Quantum. Real.",
+ subheadline: "Beyond classical.",
+ badge: "✦ QUANTUM COMPUTING PLATFORM",
+ description: "The quantum computing platform that makes the impossible, computable.",
+ ctas: ["Access Quantum", "Read Paper"],
+ colors: { bg: "#070A1A", fg: "#E8F0FF", primary: "#00D4FF", accent: "#A855F7" },
+ video: "/assets/videos/apex-quantum-v1.mp4",
+ poster: "/assets/posters/apex-quantum-v1.webp",
+ fontHead: "JetBrains Mono",
+ category: "saas", intensity: "extreme",
+ },
+ {
+ id: "MS-HERO-VERV01",
+ slug: "verve",
+ title: "VERVE SOCIAL - Vibrant Gen-Z Platform",
+ headline: "BE SEEN.",
+ subheadline: "BE HEARD.",
+ badge: "✦ SOCIAL WITHOUT ALGORITHMS",
+ description: "The social platform where your voice actually matters. No algorithms, just audience.",
+ ctas: ["Join Verve", "See What's Trending"],
+ colors: { bg: "#1A0A14", fg: "#FFFFFF", primary: "#EC4899", accent: "#F59E0B" },
+ video: null,
+ poster: "/thumbnails/MS-HERO-VERV01.webp",
+ fontHead: "Space Grotesk",
+ category: "saas", intensity: "aggressive",
+ },
+ {
+ id: "MS-HERO-ORBI01",
+ slug: "orbit",
+ title: "ORBIT FINANCE - Trustworthy Neobank",
+ headline: "Money, elevated.",
+ subheadline: "Banking without borders.",
+ badge: "✦ TRUSTED BY 2M+ PEOPLE",
+ description: "The neobank trusted by over 2 million people to manage, move, and multiply their wealth.",
+ ctas: ["Open Account", "How It Works"],
+ colors: { bg: "#0F172A", fg: "#FEF9E7", primary: "#F59E0B", accent: "#334155" },
+ video: null,
+ poster: "/thumbnails/MS-HERO-ORBI01.webp",
+ fontHead: "DM Serif Display",
+ category: "fintech", intensity: "medium",
+ },
+ {
+ id: "MS-HERO-NOMA01",
+ slug: "nomad",
+ title: "NOMAD TRAVEL - Luxury Travel Platform",
+ headline: "Go beyond.",
+ subheadline: "Stay forever.",
+ badge: "✦ CURATED LUXURY STAYS",
+ description: "Curated luxury stays in the world's most extraordinary places. Your next chapter starts here.",
+ ctas: ["Explore Stays", "Watch Journey"],
+ colors: { bg: "#1C140A", fg: "#FEF3C7", primary: "#C17A4A", accent: "#FEF3C7" },
+ video: null,
+ poster: "/thumbnails/MS-HERO-NOMA01.webp",
+ fontHead: "Playfair Display",
+ category: "travel", intensity: "medium",
+ },
+ {
+ id: "MS-HERO-NEXU01",
+ slug: "nexus",
+ title: "NEXUS AI - Enterprise AI Platform",
+ headline: "Intelligence",
+ subheadline: "unleashed.",
+ badge: "✦ ENTERPRISE AI PLATFORM",
+ description: "Deploy custom AI models at scale. Secure, private, and built for the most demanding enterprise workloads.",
+ ctas: ["Get Early Access", "View Demo"],
+ colors: { bg: "#07080F", fg: "#F0F4FF", primary: "#00D4FF", accent: "#FF006E" },
+ video: null,
+ poster: "/thumbnails/MS-HERO-NEXU01.webp",
+ fontHead: "Space Grotesk",
+ category: "saas", intensity: "extreme",
+ },
+];
+
+export function getDemoHero(slug: string) {
+ return demoHeroes.find((h) => h.slug === slug);
+}

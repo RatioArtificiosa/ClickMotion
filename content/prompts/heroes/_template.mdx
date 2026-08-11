@@ -1,0 +1,182 @@
+---
+id: "MS-HERO-000"
+title: "Template Hero Title"
+slug: "template-hero-title"
+description: "Brief compelling description of what this hero section creates"
+version: "1.0.0"
+created: "2026-08-07"
+updated: "2026-08-07"
+author: "MS Team"
+status: "draft"
+
+type: "hero"
+category: "saas"
+subcategory: "ai-product"
+styleTags: ["dark-cinematic", "gradient-mesh"]
+motionIntensity: "aggressive"
+difficulty: "intermediate"
+priceTier: "pro"
+
+aiToolsRating:
+ cursor: 5
+ lovable: 4
+ bolt: 4
+ claude: 3
+ grok-build: 4
+frameworksSupported: ["react", "html"]
+
+previewVideo: "/previews/MS-HERO-000.mp4"
+previewGif: "/previews/MS-HERO-000.gif"
+thumbnail: "/thumbnails/MS-HERO-000.webp"
+liveDemo: "/demos/MS-HERO-000"
+
+videoBackgrounds:
+ - file: "/assets/videos/bg-example.mp4"
+ format: "mp4"
+ duration: "12s"
+ loop: true
+ sizeMb: 2.4
+
+dependencies:
+ - name: "framer-motion"
+ version: "^11.0.0"
+ - name: "gsap"
+ version: "^3.12.0"
+ - name: "tailwindcss"
+ version: "^4.0.0"
+
+estimatedTokens: 3500
+useCases: ["product-launch", "saas-homepage", "waitlist"]
+compatibleWith: ["MS-SEC-FEAT-001", "MS-SEC-PRICE-001"]
+positionInPage: "top"
+---
+
+## Design System
+
+**Colors:**
+- Background: `#0A0A0F` (deep space black)
+- Primary: `#6366F1` (indigo)
+- Accent: `#22D3EE` (cyan glow)
+- Text Primary: `#F8FAFC` (near white)
+- Text Secondary: `#94A3B8` (slate 400)
+- Gradient: `linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #22D3EE 100%)`
+
+**Typography:**
+- Heading: `Inter, system-ui, sans-serif` - 72px / 800 weight / -0.02em tracking
+- Subheading: `Inter` - 20px / 400 weight / 1.6 line-height
+- CTA: `Inter` - 16px / 600 weight
+
+**Spacing:** 8px base unit. Section padding: 120px top/bottom. Max content width: 1280px.
+
+---
+
+## Layout Structure
+
+[Describe exact layout with measurements - header area, content area, visual elements, CTA placement]
+
+---
+
+## Content Slots
+
+| Slot | Default Text | Max Length | Notes |
+|------|-------------|------------|-------|
+| headline | "Build the Future" | 60 chars | Main H1 |
+| subheadline | "Description text" | 160 chars | Below H1 |
+| cta_primary | "Get Started" | 20 chars | Main button |
+| cta_secondary | "Watch Demo" | 20 chars | Secondary button |
+
+---
+
+## Motion Specification
+
+### Entrance Sequence (Framer Motion)
+```js
+// Stagger container
+const container = {
+ hidden: { opacity: 0 },
+ show: {
+ opacity: 1,
+ transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+ }
+};
+
+// Child items
+const item = {
+ hidden: { opacity: 0, y: 30 },
+ show: {
+ opacity: 1, y: 0,
+ transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
+ }
+};
+```
+
+### Scroll Animations (GSAP ScrollTrigger)
+```js
+// Parallax background
+gsap.to('.bg-element', {
+ y: -100,
+ scrollTrigger: {
+ trigger: '.hero-section',
+ start: 'top top',
+ end: 'bottom top',
+ scrub: 1.5
+ }
+});
+```
+
+---
+
+## Video / Media Integration
+
+[Format specs, poster image, autoplay rules, fallback behavior]
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|--------|
+| ≥1536px (2xl) | Full layout, max visual effects |
+| ≥1280px (xl) | Default layout |
+| ≥1024px (lg) | Reduce parallax intensity |
+| ≥768px (md) | Stack layout, reduce animations |
+| <768px (sm) | Single column, minimal motion, touch-optimized |
+
+---
+
+## Accessibility
+
+- `prefers-reduced-motion`: Disable all animations, show static layout
+- All images: descriptive alt text
+- CTA buttons: proper focus rings, keyboard navigable
+- Color contrast: minimum 4.5:1 ratio
+- Semantic HTML: `<section>`, `<h1>`, `<nav>`, `<button>`
+
+---
+
+## Performance Notes
+
+- Total bundle: < 50KB JS (excluding shared deps)
+- Images: WebP format, lazy loaded below fold
+- Video: poster image shown immediately, video loads async
+- Fonts: preloaded, font-display: swap
+
+---
+
+## AI Tool Instructions
+
+**For Cursor/Claude:** Generate as a single React component file with Tailwind classes. Include all Framer Motion variants inline.
+
+**For Lovable/Bolt:** Generate as a complete page component. Ensure all imports are at the top.
+
+---
+
+## Expected Output
+
+A single React component (`HeroSection.tsx`) that:
+1. Exports a default function component
+2. Uses Tailwind CSS for styling
+3. Uses Framer Motion for entrance animations
+4. Uses GSAP ScrollTrigger for scroll-based effects
+5. Is fully responsive
+6. Handles reduced-motion preferences

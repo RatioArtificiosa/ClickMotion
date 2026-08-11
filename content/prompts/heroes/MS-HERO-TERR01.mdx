@@ -1,0 +1,153 @@
+---
+id: "MS-HERO-TERR01"
+title: "TERRA NOVA - Clean Energy Platform Hero"
+slug: "terra-nova-clean-energy-platform-hero"
+description: "For climate-tech and clean power brands. A deep-forest aerial hero with sage glass, solar gold type, and a living renewable landscape loop."
+version: "2.0.0"
+created: "2026-08-07"
+updated: "2026-08-09"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "tech"
+subcategory: "cloud"
+styleTags: ["organic", "dark-cinematic", "editorial"]
+technicalTags: ["video-background", "parallax"]
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/terra-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/terra-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-TERR01.webp"
+liveDemo: "/demo/cleanroom-terra"
+videoBackgrounds:
+  - file: "/assets/videos/terra-aerial-v1.mp4"
+    format: "mp4"
+    duration: "60s"
+    loop: true
+    sizeMb: 19
+    poster: "/assets/posters/terra-aerial-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 6200
+useCases: ["climate-tech-homepage", "clean-energy-landing", "utility-renewables-hero"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **TERRA NOVA** - clean energy / climate-tech platform. Deep forest canvas `#0B1A14`, living sage `#7BA58F`, soft solar gold `#E8B86D`, cream headlines `#F4F7F2`. Fraunces display + DM Sans UI. Full-viewport aerial renewable landscape, soft green glass nav, unhurried entrances. Feels like serious climate brand craft - not wellness cream spa, not neon cyberpunk, not film-lot amber, not brutalist security, not luxury coastal scroll.
+
+**Famous-UI craft direction (not a clone):** Climate-tech launch restraint (National Geographic calm + product precision). One video system. Soft entrances. Stop.
+
+**Typography:**
+- Display / H1: Fraunces 600-700, tracking `-0.02em`, line-height `0.95`, size `clamp(2.75rem, 8vw, 7rem)`
+- Body: DM Sans 300-400, 15-17px, line-height 1.65, cream at ~68%
+- Badge / nav: DM Sans 10-12px, uppercase tracking `0.16-0.22em` on badge
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Canvas | `#0B1A14` |
+| Sage | `#7BA58F` |
+| Solar gold | `#E8B86D` |
+| Cream | `#F4F7F2` |
+| Muted | `rgba(244,247,242,0.68)` |
+| Glass | sage-tinted blur |
+| Scrim | left-heavy forest gradients |
+
+**Radius:** `rounded-full` on pills.  
+**Spacing:** 8px grid. Safe horizontal inset minimum `px-8`.
+
+**Anti-slop hard ban:** cyan/pink neon kits, purple mesh, shiny gradient text, emoji, Aether cream wellness, Lumina film-lot amber system, Meridian multi-chapter scrub, Vertex zero-radius mono.
+
+**Differentiation:**
+| vs | Terra Nova must not become |
+|----|----------------------------|
+| Aether | Cream wellness ocean / meditation spa |
+| Lumina | Amber espresso studio lot |
+| Neon | Cyan-pink rain megacity glitch |
+| Meridian | Gold coast multi-chapter scrub |
+| Vertex | Monochrome security scrub |
+
+## Layout Structure
+
+- **Navbar:** Fixed, soft green glass, brand TERRA NOVA + sage dot, center links Solutions/Impact/Technology/About/Contact, pills Our Impact + Talk to Us
+- **Hero:** `100vh`, video cover, dual forest scrims, left-aligned copy stack
+- **Copy:** Badge CLEAN ENERGY PLATFORM · H1 POWER THE · solar gold PLANET. · body · Explore Solutions + See the Impact
+
+## Content slots
+
+| Slot | Default Text | Max Length |
+|------|--------------|------------|
+| brand | TERRA NOVA | 20 |
+| badge | CLEAN ENERGY PLATFORM | 28 |
+| headline | POWER THE | 20 |
+| subheadline | PLANET. | 12 |
+| description | Utility-scale renewables and intelligent grids. We build clean power that communities can feel in the air they breathe. | 180 |
+| cta_primary | Explore Solutions | 22 |
+| cta_secondary | See the Impact | 20 |
+
+## Motion Specification
+
+Staggered Framer entrance (if not reduced motion): badge 0.55s, H1 0.75s delay 0.18, gold line 0.7s delay 0.28, body 0.6s delay 0.38, CTAs 0.55s delay 0.48. Ease `[0.25, 0.46, 0.45, 0.94]`. **No glitch.**
+
+GSAP: video scale 1→1.05, scrub 1.2, desktop only. Reduced motion: fade only.
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/terra-aerial-v1.mp4` (clean B-roll only)
+- Poster: `/assets/posters/terra-aerial-v1.webp`
+- Storefront preview: `/assets/videos/terra-preview-v1.mp4`
+- Storefront FS: `/assets/videos/terra-preview-fs-v1.mp4`
+- Attributes: autoPlay muted loop playsInline preload metadata, object-cover
+- Offscreen: IntersectionObserver pause/resume
+- Subject: aerial wind/solar/living ridge - see VIDEO_GEN_PROMPT.md
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| ≥1024px | Full nav, large type, parallax OK |
+| ≥768px | Nav links, large type |
+| <768px | Hide center nav, smaller type, stack CTAs, no parallax |
+
+## Accessibility
+
+- Reduced motion: no parallax, simple fade
+- Focus rings sage
+- Semantic header/section/h1
+- Video aria-hidden when copy is complete
+
+## Performance Notes
+
+- JS budget: Framer + GSAP + React under ~45KB incremental
+- Poster first; preload metadata
+- will-change only during motion
+- font-display: swap
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Build `TerraNovaHeroSection.tsx` from this brief only. Wire the exact video paths. Use Tailwind + Framer Motion + optional GSAP parallax.
+
+**Lovable / Bolt:** Single self-contained component; same tokens and copy.
+
+## Expected Output
+
+1. Single React component `TerraNovaHeroSection.tsx` (`"use client"`)
+2. Fixed soft green-glass navbar with TERRA NOVA brand and two pills
+3. Full-viewport muted looping video with poster and IntersectionObserver
+4. Staggered entrance (no glitch) + desktop parallax
+5. Sage / solar gold / deep forest system only
+6. Responsive and reduced-motion paths
+7. No host marketing shell inside the component

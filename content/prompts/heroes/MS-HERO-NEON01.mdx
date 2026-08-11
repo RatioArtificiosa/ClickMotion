@@ -1,0 +1,223 @@
+---
+id: "MS-HERO-NEON01"
+title: "NEON FORGE - Cyberpunk Gaming Studio Hero"
+slug: "neon-forge-cyberpunk-gaming-studio-hero"
+description: "For game studios and creative agencies. A black-canvas neon hero that hits like a trailer - glitch type, liquid glass, and a rain-soaked megacity loop."
+version: "2.0.0"
+created: "2026-08-07"
+updated: "2026-08-08"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "agency"
+subcategory: "creative"
+styleTags: ["neon-glow", "dark-cinematic", "editorial"]
+technicalTags: ["video-background", "parallax"]
+motionIntensity: "aggressive"
+difficulty: "intermediate"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/neon-forge-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/neon-forge-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-NEON01.webp"
+liveDemo: "/demo/cleanroom-neon"
+videoBackgrounds:
+  - file: "/assets/videos/neon-forge-city-v1.mp4"
+    format: "mp4"
+    duration: "60s"
+    loop: true
+    sizeMb: 43
+    poster: "/assets/posters/neon-forge-city-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: true }
+estimatedTokens: 6400
+useCases: ["game-studio-homepage", "agency-creative-landing", "esports-brand-hero"]
+compatibleWith: []
+positionInPage: "top"
+---
+
+## Design System
+
+**Aesthetic Direction:** **NEON FORGE** - AAA game development studio. Pure black canvas, electric cyan `#00F0FF`, hot pink `#FF006E`, Space Grotesk display, Inter UI. Full-viewport rain-city film, liquid-glass nav, glitch H1 on load. Feels like a studio launch film under precise type - not a purple SaaS kit, not anime, not cheap stock cyberpunk.
+
+**Famous-UI craft direction (not a clone):** High-end studio event page restraint (trailer calm + one signature motion) meets left-weighted editorial lockups. One video system. One glitch moment. Stop.
+
+**Typography:**
+- Display / H1: Space Grotesk 800-900, tracking `-0.04em`, line-height `0.85-0.9`, size `clamp(2.75rem, 8vw, 7.5rem)`
+- Sub lockup: Space Grotesk, pink, slightly smaller clamp, slight negative margin under H1
+- Body: Inter 300-400, 15-17px, line-height 1.65, white at ~65%
+- Badge / nav: Inter 10-12px, uppercase tracking `0.16-0.22em` on badge
+
+**Color tokens:**
+| Token | Value |
+|-------|--------|
+| Canvas | `#000000` |
+| Cyan | `#00F0FF` |
+| Pink | `#FF006E` |
+| White | `#FFFFFF` |
+| Muted | `rgba(255,255,255,0.65)` |
+| Glass | `rgba(255,255,255,0.04)` + blur |
+| Scrim | left-heavy black gradients (see Layout) |
+
+**Radius:** `rounded-full` on pills (intentional for this brand).  
+**Spacing:** 8px grid. Safe horizontal inset minimum `px-8` / prefer `md:px-12` `lg:px-16`.
+
+**Anti-slop hard ban:** purple mesh/aurora UI fills, shiny gradient text, emoji, marquee, bento clutter, border-beam kits, wellness cream, brutalist zero-radius system (Vertex), Meridian gold estate language.
+
+**Differentiation:**
+| vs | Neon Forge must not become |
+|----|----------------------------|
+| Meridian | Gold coast luxury scroll chapters |
+| Vertex | Monochrome asteroid scroll-scrub |
+| Aether | Cream wellness ocean |
+
+---
+
+## Layout Structure
+
+```
+[100vh hero stage]
+  video cover (absolute inset-0, object-cover)
+  dual scrim (horizontal + vertical)
+  optional scanline (opacity ~0.02)
+  fixed nav: NEON FORGE · links · Play Demo · Get Started
+  left content stack: badge · H1 · H2 · body · dual CTAs
+```
+
+**Navbar:** Fixed, z-50, liquid-glass edge. Wordmark cyan with glow dot. Desktop links Work / Games / Studio / Careers / Contact. Dual right pills.
+
+**Hero content:** Left-aligned, vertically centered. Max type width ~42rem. CTAs row with gap 16px.
+
+**Scrim (do not black out the film):**
+```
+linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 48%, rgba(0,0,0,0.25) 100%)
++ linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 32%, rgba(0,0,0,0.55) 100%)
+```
+
+---
+
+## Content slots
+
+| Slot | Default | Notes |
+|------|---------|-------|
+| brand | NEON FORGE | Cyan wordmark |
+| badge | GAME DEVELOPMENT STUDIO | Uppercase cyan |
+| headline | BUILD WORLDS. | White; glitch on mount |
+| subheadline | PLAY GOD. | Pink |
+| description | We craft immersive gaming experiences that push interactive entertainment. From concept to launch, we build worlds players never want to leave. | ≤ ~180 for storefront card use |
+| cta_primary | View Our Work | Cyan fill |
+| cta_secondary | Join The Team | Glass |
+| nav_cta_a | Play Demo | Glass |
+| nav_cta_b | Get Started | Cyan fill |
+
+---
+
+## Motion Specification
+
+**Mode honesty:** `video-background` + entrance glitch + desktop parallax. **Not** scroll-scrub chapters.
+
+**Framer (if not reduced motion):**
+- Badge: y -16→0, 0.55s  
+- H1: y 36→0, 0.75s, delay 0.18s, then glitch (~3 micro jitters)  
+- H2: y 36→0, delay 0.28s  
+- Body: y 24→0, delay 0.38s  
+- CTAs: y 16→0, delay 0.48s  
+- Ease: `[0.25, 0.46, 0.45, 0.94]`
+
+**Glitch (H1):** opacity / x / optional 1px blur pulses, settle clean.
+
+**GSAP:** video wrapper scale 1→1.06, ScrollTrigger scrub 1.2, desktop only.
+
+**Reduced motion:** fade only; no glitch; no parallax.
+
+---
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/neon-forge-city-v1.mp4` (MP4 H.264, 16:9, ~10-14s, silent, loop)  
+- Poster: `/assets/posters/neon-forge-city-v1.webp`  
+- Implementation: `<video autoPlay muted loop playsInline preload="metadata" poster={poster} className="object-cover w-full h-full" />`  
+- Offscreen: IntersectionObserver pause/resume  
+
+**REQUIRED film subject:** night rain megacity / wet neon canyon; cyan + magenta practicals; pure black voids; no people; no readable text.
+
+**FORBIDDEN film subject:** daytime, wellness ocean, luxury estate coast, monochrome space asteroid as primary identity, watermarks, UI burn-ins.
+
+> **AI Video Generation Prompt (short):**  
+> Cinematic 4K seamless 12s loop, silent. Night rain-soaked cyberpunk megacity canyon, slow aerial glide, cyan and magenta neon practicals, wet reflections, volumetric fog, pure black voids, no people, no readable text, no logos, no UI. Premium AAA trailer look. Seamless loop.
+
+**Full director prompt:** `cleanroom/neon-from-prompt/VIDEO_GEN_PROMPT.md`
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Layout and motion |
+|------------|-------------------|
+| ≥1024px | Full nav; large type; CTAs row; parallax OK |
+| ≥768px | Nav links; large type |
+| &lt;768px | Center nav hidden; H1 ~2.6-3.4rem; CTAs may stack; no parallax |
+
+---
+
+## Accessibility
+
+- Reduced motion: disable glitch + parallax; simple fade  
+- Focus rings on controls  
+- Semantic header / section / h1  
+- Contrast: white/cyan on black scrim ≥ 4.5:1 for body  
+
+---
+
+## Performance Notes
+
+- Framer + GSAP only as needed; kill ScrollTrigger on unmount  
+- Video poster first; preload metadata  
+- will-change only during entrance  
+
+---
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** One `NeonForgeHeroSection.tsx` with imports, Tailwind, Framer glitch, GSAP parallax, IntersectionObserver.  
+**Lovable / Bolt:** Self-contained component; motion divs; local video path only.  
+**Codex / Smart AI Agent:** Same single-file deliverable; honor reduced-motion.
+
+**Customize without coding (buyer language):**  
+Ask your AI to change X to Y for brand, headlines, colors, video path, mobile clipping.
+
+---
+
+## Expected Output
+
+1. Single React component full-viewport hero  
+2. Liquid-glass nav + dual CTAs  
+3. Looping client HD video + poster  
+4. Glitch H1 + staggered entrance  
+5. Desktop parallax; mobile safe  
+6. Accessible reduced-motion path  
+
+---
+
+## Production status (operator)
+
+| Item | Status |
+|------|--------|
+| Sold prompt density | v2.0 (this file) |
+| Buyer cleanroom prompt | `cleanroom/neon-from-prompt/BUYER_PROMPT.md` |
+| Video gen brief | `cleanroom/neon-from-prompt/VIDEO_GEN_PROMPT.md` |
+| Client HD binary | **Locked** `neon-forge-city-v1.mp4` (from Neon-City.mp4, 60s 1080p) |
+| Poster / thumb | **Locked** |
+| Backgrounds small | **Locked** `backgrounds/neon-forge-bg-v1.mp4` |
+| Cleanroom demo | `/demo/cleanroom-neon` |
+| Storefront burnt-UI capture | **Pending** (interim uses client film) |
+| Package PDF | **Pending** |
+| Admin registries | packages review · designs flagship · backgrounds live |
