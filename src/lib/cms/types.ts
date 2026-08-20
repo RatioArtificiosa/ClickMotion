@@ -23,7 +23,15 @@ export type CmsProduct = {
   slug: string;
   title: string;
   description: string;
+  /** Primary type (card label / related scoring). */
   type: ProductType;
+  /**
+   * Optional extra type memberships for browse filters.
+   * When set, product matches Hero AND Landing Page (etc.) the same way
+   * type+genre already allows Hero + Agency across two axes.
+   * Always includes `type` when present; filter matches type or types[].
+   */
+  types?: ProductType[];
   /** Genre id (was category). */
   genreId: string;
   styleTags: string[];
@@ -35,8 +43,10 @@ export type CmsProduct = {
   body: string;
   thumbnail: string;
   poster: string;
-  /** Non-interactive capture of the real design. */
+  /** Non-interactive capture of the real design (page + gallery). */
   previewVideo: string;
+  /** Fullscreen overlay capture (often a separate 1080p file). */
+  previewVideoFullscreen?: string;
   aiTools: string[];
   sortOrder: number;
   likes: number;

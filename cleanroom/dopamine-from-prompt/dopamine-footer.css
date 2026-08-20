@@ -1,0 +1,628 @@
+/* Dopamine footer — buyer / cleanroom CSS (fluid rem + section)
+ * Import once in host app. Paths assume assets under /assets/dopamine/
+ */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;600;800&display=swap");
+
+:root {
+  --White-Main: #fff;
+  --Red-Main: #ed3833;
+  --Cream: #fff9f7;
+  --inner-vh: 100vh;
+  --lvh: 100vh;
+  font-size: 2.6666666667vw;
+  color-scheme: light;
+}
+@media (min-width: 768px) {
+  :root { font-size: 1.3020833333vw; }
+}
+@media (min-width: 1024px) {
+  :root { font-size: 0.6944444444vw; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+button, input { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+/* MUST use this — never Tailwind .container */
+.dop-container { width: 100%; max-width: none; padding: 0 1.6rem; }
+@media (min-width: 768px) {
+  .dop-container { padding: 0 3.2rem; }
+}
+@media (min-width: 1024px) {
+  .dop-container { padding: 0 3.5rem; }
+}
+
+/* ───────── Footer ───────── */
+
+.footer {
+  -webkit-mask-image: url(/assets/dopamine/footer_bg_mob.webp);
+  mask-image: url(/assets/dopamine/footer_bg_mob.webp);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  overflow: hidden;
+  padding: 5.6rem 0 2.5rem;
+  position: relative;
+  z-index: 15;
+  background: #1a1a1a;
+  color: #fff;
+  min-height: min(90vh, 90rem);
+}
+
+.footer .char {
+  opacity: 0;
+  display: inline-block;
+}
+
+.footer__bg {
+  position: absolute;
+  inset: -1px;
+  z-index: -3;
+}
+
+.footer__bg img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.footer__img {
+  bottom: -5px;
+  left: 6rem;
+  position: absolute;
+  /* Height-driven — Woman1 is taller/wider than old cutout */
+  width: auto;
+  height: 42rem;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.footer__img img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+}
+
+.footer__discount {
+  height: auto;
+  left: -1.8rem;
+  overflow: hidden;
+  position: absolute;
+  top: 10rem;
+  width: 18rem;
+  z-index: 2;
+}
+
+.footer__discount canvas {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.footer__discount button {
+  color: #fff;
+  font-size: 2.0195rem;
+  font-style: normal;
+  font-weight: 800;
+  height: 4.5rem;
+  left: 3rem;
+  line-height: 100%;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 2.5rem;
+  width: 12.5rem;
+  z-index: 3;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.footer__discount-lottie {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer__discount-lottie canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.footer__top {
+  display: flex;
+  flex-direction: column;
+  gap: 10.8rem;
+  margin-bottom: 15.5rem;
+}
+
+.footer__nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.3rem 2.2rem;
+}
+
+.footer__nav li > a {
+  color: var(--White-Main, #fff);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 1.3rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.12rem;
+  line-height: 1.3rem;
+  position: relative;
+  text-transform: uppercase;
+  text-wrap: nowrap;
+  transition: opacity 0.25s;
+}
+
+.footer__nav li > a:hover:not(.disable) {
+  opacity: 0.7;
+}
+
+.footer__nav li > a.disable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.footer__nav li > a span:first-of-type.hover-lottie {
+  height: 60%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 100%;
+  z-index: 5;
+}
+
+.footer__mid {
+  margin-bottom: 2.3rem;
+}
+
+.footer__logo {
+  display: flex;
+  margin-bottom: 5.5rem;
+  mix-blend-mode: exclusion;
+  width: 100%;
+}
+
+.footer__logo img,
+.footer__logo svg {
+  width: 100%;
+  height: auto;
+}
+
+.footer__title {
+  align-items: flex-end;
+  color: var(--White-Main, #fff);
+  display: flex;
+  font-size: 6.4rem;
+  font-style: normal;
+  font-weight: 800;
+  gap: 0.2rem;
+  line-height: 5.1rem;
+  margin-bottom: 3rem;
+  pointer-events: none;
+  text-transform: uppercase;
+  transform-origin: 50% 100%;
+}
+
+.footer__title span {
+  display: block;
+  font-size: 2.8rem;
+  line-height: 2.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.footer__title span strong {
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 2.4rem;
+}
+
+.footer__form {
+  align-items: flex-end;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.footer__label {
+  color: #fff;
+  width: 27.5rem;
+  position: relative;
+  display: block;
+}
+
+.footer__label .input__label {
+  pointer-events: none;
+  width: 100%;
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateY(10%);
+  transition: transform 0.3s;
+  z-index: 5;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+.footer__label:focus-within .input__label,
+.footer__label:has(input:not(:placeholder-shown)) .input__label {
+  transform: translateY(-90%);
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+.footer__label .input__error {
+  color: #ed3833;
+  font-size: 1rem;
+  margin-top: 0.4rem;
+  display: none;
+}
+
+.footer__label input {
+  border: none;
+  border-bottom: 1px solid #b9b8b8;
+  caret-color: red;
+  display: flex;
+  height: 2.2rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.4rem;
+  position: relative;
+  transition: border 0.3s;
+  width: 100%;
+  background: transparent;
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 1.2rem;
+  outline: none;
+}
+
+.footer__label:focus-within input {
+  border-bottom-color: red;
+}
+
+.footer__label:has(input:not(:placeholder-shown)):not(:focus-within) input {
+  border-bottom-color: #fff;
+}
+
+.footer__submit {
+  color: #fff;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.6rem;
+  position: relative;
+  text-transform: uppercase;
+  text-wrap: nowrap;
+  width: auto;
+  min-width: 6rem;
+  padding-bottom: 0.3rem;
+}
+
+.footer__submit span {
+  position: relative;
+  width: max-content;
+}
+
+.footer__submit .submit-label {
+  position: relative;
+}
+
+.footer__submit .submit-label::after {
+  background: currentColor;
+  bottom: 0;
+  content: "";
+  height: 0.1rem;
+  left: 0;
+  position: absolute;
+  right: 0;
+  transform-origin: left;
+  transition: transform 0.4s;
+  transform: scaleX(1);
+}
+
+.footer__submit:hover .submit-label::after {
+  transform: scaleX(0.4);
+}
+
+.footer__bottom {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: 18rem 1fr;
+}
+
+.footer__bottom a,
+.footer__bottom button,
+.footer__bottom p,
+.footer__bottom > span,
+.footer__bottom-item {
+  color: #fff;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 1.3rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.12rem;
+  line-height: 1.3rem;
+  text-transform: uppercase;
+}
+
+.footer__bottom a,
+.footer__bottom button,
+.footer__bottom-item {
+  position: relative;
+  width: max-content;
+}
+
+.footer__bottom a:nth-child(2),
+.footer__bottom a:nth-child(4) {
+  text-align: right;
+  width: 100%;
+  justify-self: end;
+}
+
+.footer__bottom a:hover,
+.footer__bottom button:hover {
+  opacity: 0.7;
+}
+
+/* Credits panel */
+.footer__credits-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+  backdrop-filter: blur(8px);
+}
+
+.footer__credits-panel.open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.footer__credits-inner {
+  text-align: center;
+  color: #fff;
+  font-family: Inter, sans-serif;
+  max-width: 40rem;
+  padding: 2rem;
+}
+
+.footer__credits-inner h3 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.04em;
+}
+
+.footer__credits-inner p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  opacity: 0.85;
+}
+
+.footer__credits-inner a,
+.footer__credit-name {
+  color: #ed3833;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Non-link bottom items (e.g. IG) keep footer typography */
+.footer__bottom-item {
+  position: relative;
+  width: max-content;
+  color: #fff;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: -0.12rem;
+  line-height: 1.3rem;
+  text-transform: uppercase;
+}
+
+.footer__credits-close {
+  margin-top: 2rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.2rem;
+  letter-spacing: -0.08rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 0.2rem;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    -webkit-mask-image: url(/assets/dopamine/footer_bg_tablet.webp);
+    mask-image: url(/assets/dopamine/footer_bg_tablet.webp);
+    padding: 6.4rem 0 3.4rem;
+  }
+
+  .footer__img {
+    left: 18rem;
+    width: auto;
+    height: 52rem;
+  }
+
+  .footer__discount {
+    bottom: 11.8rem;
+    left: 45rem;
+    overflow: hidden;
+    top: auto;
+    width: 25rem;
+  }
+
+  .footer__discount button {
+    height: 6.5rem;
+    left: 3.5rem;
+    top: 3rem;
+    width: 18rem;
+  }
+
+  .footer__top {
+    align-items: flex-start;
+    display: grid;
+    gap: 8.6rem;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    margin-bottom: 24.9rem;
+  }
+
+  .footer__nav {
+    gap: 2.1rem;
+  }
+
+  .footer__mid {
+    margin-bottom: 3.2rem;
+  }
+
+  .footer__logo {
+    margin-bottom: 6.4rem;
+  }
+
+  .footer__title {
+    font-size: 8rem;
+    line-height: 6.4rem;
+    margin-bottom: 3.2rem;
+  }
+
+  .footer__title span {
+    font-size: 3rem;
+    line-height: 2.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer__form {
+    gap: 1.6rem;
+  }
+
+  .footer__label {
+    width: 30rem;
+  }
+
+  .footer__bottom {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    grid-template-columns: none;
+  }
+
+  .footer__bottom a:nth-child(2),
+  .footer__bottom a:nth-child(4) {
+    text-align: inherit;
+    width: max-content;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    -webkit-mask-image: url(/assets/dopamine/footer_bg_desk.webp);
+    mask-image: url(/assets/dopamine/footer_bg_desk.webp);
+    padding: 9rem 0 2.1rem;
+    min-height: min(95vh, 95rem);
+  }
+
+  .footer__img {
+    bottom: -4rem;
+    left: 38rem;
+    width: auto;
+    height: 65rem;
+  }
+
+  .footer__discount {
+    bottom: 18.5rem;
+    left: 84rem;
+    overflow: hidden;
+    width: 26rem;
+  }
+
+  .footer__discount button {
+    height: 7rem;
+    left: 4rem;
+    top: 3rem;
+    width: 18rem;
+  }
+
+  .footer__top {
+    gap: 53.5rem;
+    grid-template-columns: 31.5rem 1fr;
+    margin-bottom: 9.7rem;
+    width: 100%;
+  }
+
+  .footer__nav {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 6.8rem 8.1rem 8rem 1fr;
+  }
+
+  .footer__nav:last-child {
+    grid-template-columns: 1fr 13.2rem 22rem 1.6rem;
+  }
+
+  .footer__mid {
+    align-items: flex-end;
+    display: grid;
+    grid-template-columns: 68.4rem 1fr;
+    margin-bottom: 3.4rem;
+  }
+
+  .footer__logo {
+    margin-bottom: 6.1rem;
+    grid-column: 1 / -1;
+  }
+
+  .footer__title {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    margin-bottom: 0;
+  }
+
+  .footer__form {
+    gap: 1.6rem;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    margin-bottom: 0.3rem;
+    margin-left: auto;
+  }
+
+  .footer__label {
+    width: 44.3rem;
+  }
+
+  .footer__bottom {
+    display: grid;
+    grid-template-columns: 84.5rem 28.9rem 1fr 1.9rem;
+  }
+
+  .footer__bottom a:last-child,
+  .footer__bottom-item:last-child {
+    text-align: right;
+    width: 100%;
+  }
+}
+

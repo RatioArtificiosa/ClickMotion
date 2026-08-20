@@ -1,0 +1,181 @@
+---
+id: "MS-SEC-PRIC01"
+title: "LEDGER - Investment Board Pricing Section"
+slug: "ledger-investment-board-pricing-section"
+description: "A pinned investment board where your pricing writes itself. One recommended seat holds the page while ledger lines stamp in. Restage names, figures, and terms until it reads as your house."
+version: "0.1.0"
+created: "2026-08-13"
+updated: "2026-08-13"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "pricing"
+category: "fintech"
+subcategory: "payments"
+styleTags: ["corporate", "minimal", "editorial"]
+technicalTags: ["scroll-trigger"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+designLanguage: "calm-fintech"
+tokenTheme: "print-ledger"
+motionPrimitive: "pin-until-complete"
+enterRecipe: "stamp-settle"
+compatibleWith: ["MS-HERO-AXIO01", "MS-HERO-ORBI01", "MS-HERO-NEXU01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+previewVideoFullscreen: ""
+thumbnail: ""
+# Operator proof only. Never the public catalog. Public = video.
+liveDemo: "/demo/cleanroom-ledger"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 9000
+useCases: ["fintech-pricing", "enterprise-seats", "neobank-plans"]
+---
+
+## Promise (buyer-facing)
+
+LEDGER is a mid-page **pricing section** that behaves like a private investment board, not a SaaS card row. Scroll pins the stage. Virtual progress writes the house: Studio, Firm, Seat, House. The recommended seat holds the largest type. Line items stamp onto a paper ledger. Visitors do not compare three equal tiles. They sit with one figure at a time.
+
+**Why use it:**
+- Your pricing feels like terms on letterhead, not a template grid
+- Scroll owns the motion, so the section stays intentional under the user's hand
+- Every name, figure, row, and CTA is meant to be replaced with your house system
+- Drop-in section (not a full homepage), so it sits cleanly after a calm fintech hero
+- Built for banks, desks, and operators who sell trust with paper and type
+
+Default demo content (Ledger wordmark, seat schedule, clearing copy) is only a starting board. Tell your AI to restage everything until it reads as you alone.
+
+## Design System
+
+**Aesthetic Direction:** **LEDGER** - mid-page **pricing / investment board** (not a hero, not three cards). Warm paper stage `#EFE8DC`. Warm ink `#14110C`. Bronze `#7A6248` as hairline and recommended mark only. Giant italic serif names. Tabular serif figures. Mono labels. Radius 0.
+
+**Famous-UI craft direction (not a clone):** financial print × Stripe restraint × Linear density. Boardroom paper. No glass. No mesh.
+
+**Design language:** `calm-fintech`  
+**Token theme:** `print-ledger`  
+**Motion primitive:** `pin-until-complete` (virtual viewports **3.2**, spring lag ≈ Meridian **0.45**)
+
+**Typography:**
+- Display name: Instrument Serif italic, `clamp(2.4rem, 7vw, 5.25rem)`, tracking `-0.03em`, line-height `0.9`
+- Figure: Instrument Serif roman, `clamp(3.2rem, 11vw, 8.5rem)`, tabular-nums, tracking `-0.045em`
+- Body / period: Inter 13px, muted
+- Labels / masthead / CTA: IBM Plex Mono, 10–11px, uppercase tracking `0.14–0.28em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#EFE8DC` | Your paper |
+| Ink | `#14110C` | Your primary type |
+| Muted | `#6B6458` | Captions |
+| Line | `#C9BFAE` | Rules |
+| Accent | `#7A6248` | Hairline / recommended only |
+
+**Anti-slop hard ban:** purple mesh, indigo buttons, three equal rounded cards, toggle leftover, shiny H1, pill docks, aurora, number ticker as identity, glassmorphism as trust theater, Magic UI / v0 default pricing.
+
+**Differentiation:**
+| vs | Ledger must not become |
+|----|------------------------|
+| Kit pricing | Three equal cards, checkmarks, popular ribbon |
+| Folio | Glass sheets and video. Ledger is dry paper, one board |
+| Stripe.com pricing | Marketing grid. Ledger is a pinned typeset plate |
+
+## Layout Structure
+
+Pinned `100dvh` stage. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~1180px.
+
+1. Top bronze progress hairline (scaleX from virtual progress)
+2. Masthead rule: LEDGER left, chapter meta right
+3. Desktop left index (01 Studio … 04 House), clickable
+4. Main plate: kicker, display name, figure, period
+5. Horizontal ink rule
+6. Definition-list ledger rows (label mono / value sans)
+7. Foot: four plan names with small figures + solid ink CTA
+
+No page scrollbar as the method. Wheel / trackpad / touch / arrows drive virtual progress 0→1. At 0 + scroll up, or 1 + scroll down, release so a host page can continue.
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Ledger | 24 | Masthead |
+| introLine | What it costs to sit here. | 48 | Opening plate |
+| kicker | Investment | 24 | |
+| plans[0–3].name | Studio / Firm / Seat / House | 20 | |
+| plans[0–3].price | 0 / 480 / 2,400 / Letter | 16 | |
+| plans[0–3].period | | 90 | |
+| plans[].rows | label + value | 6 rows | Seat has 6 |
+| ctaLabel | Ask about a seat | 28 | Not Get Started |
+
+Recommended plan is Seat (index 03). Do not mark all plans recommended.
+
+## Motion Specification
+
+**Signature (one):** pin-until-complete
+
+**Enter (support, once on view):** `stamp-settle` (elegant / letterpress). Duration 720ms, stagger 70ms, ease `[0.16, 1, 0.3, 1]`. Interaction (wheel, index, rail, CTA press) starts after land (~980ms). Reduced motion skips enter.
+
+**Engine:** Motion (Framer lineage). `useMotionValue` + `useSpring` lag (stiffness 88, damping 28).
+
+**Numbers:**
+- Virtual effort: **3.2 viewports**
+- Spring lag approximates scrub **0.45**
+- Chapter windows: intro 0–0.10 · Studio 0.10–0.30 · Firm 0.30–0.50 · Seat 0.50–0.78 (longer dwell) · House 0.78–1
+- Plate crossfade: 480ms, ease `[0.22, 1, 0.36, 1]`
+- Rows stamp with chapter local progress after 0.22
+- Capture API: `window.__msScrollNarrative` `{ setProgress, getProgress, productId: "MS-SEC-PRIC01" }`
+
+**Reduced motion:** static Seat plate, all rows visible, no pin, no wheel capture.
+
+**Pin-until-complete:** required. Virtual progress. No tall multi-vh sticky track.
+
+## Video / Media Integration
+
+None. Paper board. No background film. No particles.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥960px | Left index visible |
+| ≥768px | Full figure scale |
+| <768px | Index hidden. Rail + CTA wrap. Figure still owns the plate. Pin remains. |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static Seat
+- Contrast on paper ≥ 4.5:1
+- Keyboard: arrows, PageUp/Down, Space advance the board; index and rail are buttons
+- Semantic `<section>`, `<h2>`, `<dl>`, rail `role="tablist"`
+- `aria-live="polite"` on the display plate
+
+## Performance Notes
+
+- No video, no WebGL, no extra kits
+- One spring, one pin listener
+- Grain is a CSS overlay SVG, not a canvas
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`LedgerPricingSection.tsx`) plus CSS. Motion for pin + crossfade. Reimplement the mechanic. Do not install Magic UI, shadcnblocks, or a pricing-card kit. Do not add a billing toggle unless the buyer asks.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's brand. Keep pin-until-complete. Keep one recommended seat.
+
+## Expected Output
+
+A single React section that:
+1. Is a **section**, not a site shell
+2. Pins and writes the board from virtual progress
+3. Uses print-ledger tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

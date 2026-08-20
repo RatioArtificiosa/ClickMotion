@@ -1,0 +1,150 @@
+---
+id: "MS-SEC-STAT02"
+title: "PRESS - Scale Crash Stats"
+slug: "press-scale-crash-stats"
+description: "Night paper. One yellow figure slams to size. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "stats"
+category: "creative"
+subcategory: "print"
+styleTags: ["brutalist", "playful"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "kinetic-poster"
+tokenTheme: "poster-night"
+motionPrimitive: "scale-crash"
+enterRecipe: "offset-print"
+compatibleWith: ["MS-HERO-REVL01", "MS-SEC-HELI01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-press"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["print-shop-stats", "poster-proof", "night-figures"]
+---
+
+## Promise (buyer-facing)
+
+PRESS is a mid-page **stats** board that reads as a night poster, not a dashboard. One figure. It arrives too big, then slams to reading size.
+
+**Why use it:**
+- The crash is the design. The board never says scale
+- Stage is ink black. School-bus yellow is the signal
+- Figures are slots
+- Sits after Revel, Helix, or Verve without copying Kern
+
+## Design System
+
+**Aesthetic Direction:** **PRESS** - mid-page **stats**. Stage `#0A0A0A`. Ink `#F5F0E6`. Accent `#FFE600`. Archivo Black display. Inter UI.
+
+**Famous-UI craft direction (not a clone):** experimental poster. Colliding type scale. Not a mesh.
+
+**Design language:** `kinetic-poster` (wow register)  
+**Token theme:** `poster-night`  
+**Motion primitive:** `scale-crash` (from 2.4, 380ms)
+
+**Enter (support, once on view):** `offset-print`. Land ~700ms. Crash after land.
+
+**Typography:**
+- Wordmark: IBM Plex Mono tracked
+- Figure: Archivo Black `clamp(5.4rem, 28vw, 18rem)`
+- Name: Archivo Black uppercase
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#0A0A0A` | Night paper |
+| Ink | `#F5F0E6` | Ivory |
+| Accent | `#FFE600` | Your signal |
+
+**Anti-slop hard ban:** four stat cards, bouncing ticker, counting kit, RGB split.
+
+**Differentiation:**
+| vs | Press must not become |
+|----|----------------------|
+| Tally | Desk count. Press is a slam |
+| Kern | Two-word collision. Press is one figure |
+
+## Layout Structure
+
+`100dvh` pinned stage. Figure hugs the floor of the lockup.
+
+1. Masthead: Press left, index readout right
+2. Giant figure, name, period
+3. Foot: neighborhood
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Press | 24 | |
+| place | Third Ward, Milwaukee | 40 | Real place |
+| metrics[].figure | 1,200 | 8 | Big type, short |
+| metrics[].name | Sheets last Friday | 32 | What it is |
+| metrics[].period | We ran until the yellow ran out. The floor still smelled like ink on Saturday... | 160 | What happened |
+
+## Motion Specification
+
+**Signature (one):** scale-crash. Giant type slams to reading size once per figure.
+
+**Enter (support, once on view):** `offset-print`.
+
+**Engine:** CSS enter. CSS transform crash.
+
+**Reduced motion:** first figure at rest. Wheel is not captured.
+
+**Pin-until-complete:** yes. Wheel / trackpad / touch / arrows. Hairline `--pin-p`. Index is readout, not a hit target.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Figure still bleeds the lockup |
+
+## Accessibility
+
+- `prefers-reduced-motion`: rest scale, first plate
+- Keyboard: arrows after land
+- Contrast yellow on black
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL
+- Overflow hidden on the lockup
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not lay out four cards. Do not count up.
+
+**Lovable / Bolt:** Same section. Replace figures and the neighborhood. Keep one crash.
+
+## Expected Output
+
+A single React stats section that:
+1. Is a **night poster**, not a hero
+2. Offsets in, then the figure slams
+3. Uses poster-night tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

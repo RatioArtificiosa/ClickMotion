@@ -1,0 +1,80 @@
+---
+id: "MS-SEC-FOOT03"
+title: "VESPER - Velvet Crush Footer"
+slug: "vesper-velvet-crush-footer"
+description: "Ultraviolet listening close. The name crushes like cloth. Restage the rooms until they read as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "footer"
+category: "lifestyle"
+subcategory: "nightlife"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "velvet-nocturne"
+tokenTheme: "ultraviolet-silk"
+motionPrimitive: "velvet-crush"
+enterRecipe: "curtain-part"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-SABL01", "MS-SEC-DOPA01"]
+positionInPage: "end"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-vesper"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["listening-footer", "night-close", "velvet-end"]
+---
+
+## Promise (buyer-facing)
+
+VESPER is a **footer** that reads as a listening room, not a link dump. Three rooms. The name presses like velvet, once.
+
+**Why use it:**
+- The crush is the design. The board never says velvet
+- Stage is pigment violet. Champagne is the jewel
+- Sits after Revel, Sable, or Dopamine without copying Port, Veil, or Brine
+
+## Design System
+
+Stage `#12081C`. Ink `#EDE6F7`. Accent `#E8D5A3`. Fraunces italic display. Outfit UI.
+
+**Primitive:** `velvet-crush` (scaleY 0.97, 280ms, shadow 28px). **Enter:** `curtain-part`.
+
+**Anti-slop:** four-column footer, neon city, last-call clone.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, room, nav, legal.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| rooms[].name | Nine | 20 |
+| rooms[].period | You're not late. Nothing much happens here until the boats quit... | 180 |
+| ctaLabel | I'm coming tonight | 24 |
+| place | North Water Street, Edgartown | 40 |
+| legal | Closed Mondays. Doors at nine. | 48 |
+
+## Motion Specification
+
+Curtain parts, then pin. Crush once per room. Reduced: rest, first room, no press.
+
+## AI Tool Instructions
+
+Single React footer plus CSS. Do not clone Brine's tube. Do not clone Port's last call.

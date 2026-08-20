@@ -1,0 +1,164 @@
+---
+id: "MS-SEC-CONT01"
+title: "DATUM - Swiss Inquiry Contact"
+slug: "datum-swiss-inquiry-contact"
+description: "A letter on a rule. Labels sit as type. The hairline lifts on focus. Restage the desk until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "contact"
+category: "tech"
+subcategory: "inquiry"
+styleTags: ["minimal", "corporate"]
+technicalTags: []
+motionIntensity: "low"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "swiss-minimal"
+tokenTheme: "swiss-light"
+motionPrimitive: "field-focus-lift"
+enterRecipe: "rule-draw"
+compatibleWith: ["MS-HERO-TERR01", "MS-HERO-APEX01", "MS-HERO-VERT01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-datum"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5400
+useCases: ["hardware-inquiry", "studio-letter", "swiss-contact"]
+---
+
+## Promise (buyer-facing)
+
+DATUM is a mid-page **contact section** that reads as a letter, not a booking widget. Labels are type. The rule is the field. Visitors do not chase a fleeing cursor. They write a name, a mail, and a note.
+
+**Why use it:**
+- The form is the layout. No cards, no icons, no map
+- Focus lifts a hairline. That is the design
+- Every line is a slot for your desk
+- Sits after Terra Nova, Apex, or Vertex without copying their film
+- Built for rooms that take drawings, not pitches
+
+## Design System
+
+**Aesthetic Direction:** **DATUM** - mid-page **inquiry / contact** (not a hero, not Phobia). Stage `#FAFAFA`. Ink `#111111`. Radius 0. Inter display. IBM Plex Mono labels.
+
+**Famous-UI craft direction (not a clone):** Apple marketing restraint × modernist grid × a survey letterhead. Dry paper. No glass.
+
+**Design language:** `swiss-minimal`  
+**Token theme:** `swiss-light`  
+**Motion primitive:** `field-focus-lift` (label 180ms, ink rule 220ms, origin left)
+
+**Enter (support, once on view):** `rule-draw`. Hairlines scaleX 0 → 1. Land ~820ms. Interaction after land. Reduced motion skips enter.
+
+**Typography:**
+- Headline: Inter 400, `clamp(2.35rem, 6.2vw, 4.5rem)`, tracking `-0.045em`
+- Period: Inter ~15px, muted
+- Labels / masthead / place / CTA: IBM Plex Mono, 10–11px, uppercase tracking `0.2em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#FAFAFA` | Your board |
+| Ink | `#111111` | Your type |
+| Muted | `#6B6B6B` | Rest labels |
+| Line | `#E8E8E8` | Rest rules |
+
+**Anti-slop hard ban:** Phobia flee, floating labels as identity, icon-prefixed inputs, Material outlined box as the whole section, Calendly embed, map pin + hours card, exploding waitlist input, dual Book a call / Let's Chat.
+
+**Differentiation:**
+| vs | Datum must not become |
+|----|------------------------|
+| Atlas | Spec board with figures. Datum is a letter |
+| Phobia | Fields flee. Datum holds still |
+| Dew | Hold-to-confirm close. Datum is a form |
+| Collect UI Sign Up | Rounded kit fields. Datum is rules |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~1180px.
+
+1. Masthead: Datum left, Inquiry right, ink rule
+2. Copy: headline, period, place
+3. Form: Name, Mail, Note as labeled rules
+4. One send plate
+
+≥900px: copy and form sit as two columns, form aligned to the foot of the copy.
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Datum | 24 | Masthead |
+| kicker | The lot | 24 | |
+| headline | Send the survey, not a pitch. | 48 | |
+| period | If you have a lot in Troy and a sketch on tracing paper, we will read it... | 160 | No how-to |
+| place | Troy, New York | 40 | Real place, restage |
+| fields[].label | Name / Mail / Note | 16 | Label is type, always visible |
+| ctaLabel | Send the drawings | 24 | Not Get Started |
+| doneLabel | We have it | 16 | Quiet confirm |
+
+## Motion Specification
+
+**Signature (one):** field-focus-lift. After land, focus inks the label (180ms) and draws an ink hairline over the rest rule (220ms, origin left). Blur returns the rest rule. Reduced: color only, no draw.
+
+**Enter (support, once on view):** `rule-draw`. Masthead and field rest rules scaleX from the left. Type fades 240ms. No caption.
+
+**Engine:** CSS.
+
+**Reduced motion:** full board at rest. Label color on focus. No rule travel.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section.
+
+## Video / Media Integration
+
+None. Paper board. No map. No stock office photo.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥900px | Copy left, form right |
+| <900px | Stack. Form under copy |
+| <640px | CTA full width |
+
+## Accessibility
+
+- `prefers-reduced-motion`: rest + color on focus
+- Contrast on `#FAFAFA` ≥ 4.5:1
+- Native `<label>` wrapping each control
+- Keyboard: tab through fields after land
+- Semantic `<section>`, `<h2>`, `<form>`
+- `aria-pressed` after send
+- Visible labels. No placeholder-as-label
+
+## Performance Notes
+
+- No video, no WebGL, no extra kits
+- CSS focus only
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`DatumContactSection.tsx`) plus CSS. Labels stay visible. Do not float them. Do not install a form kit. Do not make fields flee the cursor.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's desk and place. Keep three fields. Keep the hairline as the signature.
+
+## Expected Output
+
+A single React section that:
+1. Is a **section**, not a site shell
+2. Draws rules on enter, then lifts a hairline on focus
+3. Uses swiss-light tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

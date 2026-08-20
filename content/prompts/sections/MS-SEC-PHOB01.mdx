@@ -1,0 +1,167 @@
+---
+id: "MS-SEC-PHOB01"
+title: "Phobia - Cursor-Fleeing Forms Section"
+slug: "phobia-cursor-fleeing-forms-section"
+description: "Black void. Photo cutouts and letter debris scatter, then flee your pointer with elastic return. A premium white-glow cursor turns the stage into a living field of forms you restage for any brand."
+version: "1.0.0"
+created: "2026-08-11"
+updated: "2026-08-11"
+author: "MS Team"
+status: "published"
+type: "section"
+category: "agency"
+subcategory: "design-studio"
+styleTags: ["dark-cinematic", "editorial", "minimal", "playful"]
+technicalTags: ["magnetic-cursor", "text-split"]
+motionIntensity: "extreme"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/phobia-forms-preview-v1.webm"
+previewVideoFullscreen: "/assets/videos/phobia-forms-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-PHOB01.webp"
+liveDemo: "/demo/cleanroom-phobia"
+videoBackgrounds: []
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 9000
+useCases: ["agency-interactive-section", "brand-playground", "cursor-reactive-stage", "editorial-void", "product-launch-teaser"]
+compatibleWith: ["MS-SEC-STUDIO01", "MS-SEC-HELI01"]
+positionInPage: "middle"
+---
+
+## Promise (buyer-facing)
+
+**Phobia** is a full-viewport (or mid-page) **cursor-fleeing forms** section. On a pure black void, photo cutouts and letter debris rest in a crafted cluster. When the pointer is away, they **spread**. When the pointer approaches, they **flee radially** from their homes with rotation and scale, then **elastic return** when clear. A premium white-glow cursor with a soft trail makes the interaction feel expensive, not gimmicky.
+
+**Why use it:**
+- Your brand objects become alive without a 3D pipeline
+- Pointer ownership feels intimate and memorable on agency and campaign pages
+- Every cutout, letter, rest pose, and influence radius is meant to be yours
+- One self-contained section with no required site chrome
+
+**How you build it:** download the product pack (prompt + source + cutouts). Tell your AI: *Build Phobia using the files in this folder. Read PROMPT.md.*
+
+## Design System
+
+**Aesthetic Direction:** pure black void, photo cutouts, white letter debris, crystalline white cursor bloom. No UI chrome required.
+
+**Craft direction:** gallery installation x playful editorial x high-end digital toy. Calm when idle, electric when approached.
+
+**Do not:**
+- Use Club GSAP InertiaPlugin (vanilla GSAP tweens only)
+- Measure flee distance from the live offset position (must use **rest center**)
+- Ship olive or system default cursors as the signature
+- Burn MS storefront chrome into the section
+- Require scroll pin for the core interaction (this is pointer-first)
+
+**Differentiation:**
+
+| vs | Phobia must not become |
+|----|------------------------|
+| Helix | Scroll-pinned WebGL helix gallery |
+| Studio Sequence | Scroll camera pull-out with film |
+| Actually! / Lineup | 3D product vessel + pin |
+| Generic hover float | Uniform CSS hover without rest-based radial flee |
+
+## Layout Structure
+
+- **Section only** - full viewport height (`h-dvh`), black background, overflow hidden
+- **Stage** centered layer (~1872×1056 max) holding absolute rest poses
+- **Objects** = images + optional letter spans; GSAP `x`/`y` are offsets from rest
+- **Cursor** + trail as HTML overlays (custom, not OS cursor)
+- No forced header or footer
+
+## Content slots
+
+All buyer media and poses live in **`phobia-data.ts`** inside the pack.
+
+| Slot | Guidance |
+|------|----------|
+| Cutout images | Transparent PNG/WebP; brand objects, props, product silhouettes |
+| Letters | Optional debris string (default M O T I O N !) |
+| Rest poses | `left` / `top` % of stage, `width` %, `rot`, `z` |
+| Influence / flee | Desktop 460 / 380 / 30 / 0.2; mobile softer set |
+| Cursor | White glow trail (can restyle; keep premium) |
+
+## Motion Specification
+
+**Mode:** pointer-reactive (not scroll-scrub, not free-play film).
+
+| Event | Feel |
+|-------|------|
+| No pointer in section | Treat pointer as viewport **center** → objects **spread** |
+| Pointer enters / moves | Real coords; far from rest → settle home; near rest → radial flee |
+| Clear of influence | Elastic return to x:0 y:0, base rotation, scale 1 |
+| Reduced motion | No flee tweens |
+
+**Desktop params:** influenceRadius **460**, maxDistance **380**, rotForce **30**, scaleForce **0.2**, flee ease `power4.out` 0.45s, return `elastic.out(1, 0.35)` 1.2s.  
+**Mobile (≤767):** 260 / 110 / 12 / 0.1.
+
+**Math (non-negotiable):** distance and angle use **rest center** = visual center minus current GSAP offset. Flee: `L = ((R-d)/R)^1.6`, `U = L * maxDistance`, offset `(-cosθ·U, -sinθ·U)`.
+
+## Responsive Behavior
+
+- Desktop: full influence, custom cursor hidden OS cursor
+- Tablet / phone: softer params; touch still drives flee via pointer events
+- Reduced motion: static rest composition
+- Ultrawide: stage capped so cluster stays intentional
+
+## Accessibility
+
+- Section `aria-label` describing decorative interactive forms
+- Images decorative (`alt=""`) unless buyer supplies meaningful alts
+- Respect `prefers-reduced-motion`
+- Do not trap keyboard focus; interaction is pointer-optional
+
+## Performance Notes
+
+- GSAP transforms only (`x`, `y`, `rotation`, `scale`, `force3D`)
+- `overwrite: "auto"` on tweens to avoid pile-up
+- Optimize cutouts (WebP preferred); avoid huge unoptimized PNGs
+- No Three.js required
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place `assets/*` under `public/assets/phobia/`.
+4. Use `source/PhobiaSection.tsx` and `source/phobia-data.ts`.
+5. Install `gsap`.
+6. Mount the section; verify idle spread, flee, elastic return, white-glow cursor.
+7. Restage with **CUSTOMIZATION.md**.
+
+## Expected Output
+
+1. Full-viewport black section, no required site chrome  
+2. Idle: objects spread from center  
+3. Pointer near rest: radial flee with rotation and scale  
+4. Pointer clear: elastic home  
+5. Premium white-glow cursor + trail when pointer is inside  
+6. All cutouts and letters replaceable via data  
+7. Reduced-motion safe  
+
+## What to tell your AI
+
+```
+Build Phobia using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+```
+
+To restage later, open CUSTOMIZATION.md and ask for new cutouts, letters, or influence feel.
+
+## Package notes (operators)
+
+- Paid listing · opaque `p8h0b2a9k1m4` · PaidSalt `f3n8k2`
+- Client media = cutout images (not a film)
+- Storefront dual preview + FS = pointer choreography capture (UI of the section)
+- **NOT** on `/backgrounds`
+- Demo: `/demo/cleanroom-phobia`
+- Lab origin: `Lab/nothin` · `/lab/phobic-objects`

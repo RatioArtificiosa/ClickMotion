@@ -4,15 +4,10 @@ import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { MutableRefObject } from "react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const pe = (35 * Math.PI) / 180;
 const pt = -((Math.PI / 180) * 540);
-const pn = 1.4 * Math.PI;
 
 /**
  * Default label textures by skuNumber.
@@ -199,23 +194,6 @@ export function Can3D({
   const scaleS = useRef(1);
   const lastYaw = useRef(0);
   const smoothPtrYaw = useRef(0);
-
-  useEffect(() => {
-    if (!heroMotion || !scrollTriggerEl || externalScrollRotRef) return;
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: scrollTriggerEl,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (e) => {
-          if (!dragging.current) scrollRot.current = e.progress * pn;
-        },
-      });
-    });
-    return () => ctx.revert();
-  }, [heroMotion, scrollTriggerEl, externalScrollRotRef]);
 
   useEffect(() => {
     if (heroMotion && startEntrance) {

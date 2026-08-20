@@ -1,0 +1,27 @@
+/* Pin-until-complete progress hairline. Fill color via --ms-pin-fill on the section. */
+
+.ms-chapter-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.ms-chapter-progress > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(var(--pin-p, 0));
+  transform-origin: 0 50%;
+  background: var(--ms-pin-fill, currentColor);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-chapter-progress > span {
+    transform: none;
+    width: 0;
+  }
+}

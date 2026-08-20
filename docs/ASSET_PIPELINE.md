@@ -1,8 +1,8 @@
 # MS Asset Pipeline
 
-**Related law:** [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) (media vault summary) · [`PRODUCTION_PROCESS.md`](./PRODUCTION_PROCESS.md) · [`CMS_ADMIN.md`](./CMS_ADMIN.md)
+**Related law:** [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md) (open first when shipping) · [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) (media vault summary) · [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) (product folder + zip + PDF) · [`PRODUCTION_PROCESS.md`](./PRODUCTION_PROCESS.md) · [`CMS_ADMIN.md`](./CMS_ADMIN.md)
 
-**Status:** Living vault law · Updated 2026-08-09 (backgrounds posters = pure film only)  
+**Status:** Living vault law · Updated 2026-08-11  
 
 This file is the **authoritative map** of *where every video lives*, *what it is for*, *how new files are named*, and *what must never be touched*. If PRODUCT_LAW and this file disagree on storage detail, **this file wins for paths/names**; PRODUCT_LAW wins for product/UX behavior.
 
@@ -27,8 +27,8 @@ This file is the **authoritative map** of *where every video lives*, *what it is
 |-----------|---------|-----------------|---------------|---------------------|
 | **`master`** | Highest-quality source (gen export, camera, raw encode) | Operators only | May be large; may have audio temporarily | **Never overwrite**; new master = new file |
 | **`client`** | Buyer pack + sold prompt `videoBackgrounds` + cleanroom B-roll `src` | **Buyers** + our live design | Clean film **only** — **no** burnt MS UI, Scroll badge, cursor, product shell | **Never edit in place** after prep |
-| **`preview-page`** | In-page MS product player + gallery loop | Public MS storefront | Burnt UI capture of the **built** design; muted | Recapture OK → **new** storefront file |
-| **`preview-fs`** | Product “fullscreen” glass overlay | Public MS storefront | Same class as page; often 1920×1080 | Same as page |
+| **`preview-page`** | In-page product player + **home/browse/gallery** loop | Public MS storefront | Burnt UI capture of the **built** design; muted. See **§1A Operator screenshot WebM law** | Recapture OK → **new** storefront file |
+| **`preview-fs`** | Product “fullscreen” glass overlay | Public MS storefront | Same class as page; often 1920×1080; **mp4 OK** | Same as page |
 | **`poster`** | Still for client film or load fallback | Prompt + sometimes product | From **client** film preferred for B-roll poster | New poster = new file if published |
 | **`thumb`** | Gallery face still | Public gallery | WebP card art | New thumb = new file if published |
 | **`backgrounds`** | `/backgrounds` library hover + free Copy URL | Public marketing page only | **Small** pure-film loop (default **640×360**); not buyer HD | New version = new `*-bg-v*.mp4` |
@@ -42,7 +42,48 @@ This file is the **authoritative map** of *where every video lives*, *what it is
 - Do **not** put storefront captures in the **client** folder or client naming form.  
 - Do **not** put client HD in the **storefront** folder or `previewVideo` CMS field.  
 - Do **not** point `src/config/backgrounds.ts` **`src`** at client HD, masters, site hero (`hero-bg-*`), watermarked stock tests, or full web HD used as buyer pack.  
-- Do **not** point `src/config/backgrounds.ts` **`poster`** at storefront UI-burned stills (`*-scroll-preview-*.webp`, gallery thumbs with product chrome). Poster must be a **pure film** frame.
+- Do **not** point `src/config/backgrounds.ts` **`poster`** at storefront UI-burned stills (`*-scroll-preview-*.webp`, gallery thumbs with product chrome). Poster must be a **pure film** frame.  
+- Do **not** re-encode an **operator-provided screenshot WebM** to mp4 for the **page / browse / gallery** role (see §1A).
+
+### 1A. Operator screenshot WebM law (page + browse only)
+
+**Scope:** Only products where the **operator** delivers a screenshot / Premiere export for storefront proof (e.g. `StillMindfullness_small2.webm`). Does **not** force every agent-captured SKU onto WebM.
+
+| Role | Format when operator supplies screenshot WebM | Why |
+|------|-----------------------------------------------|-----|
+| **`preview-page`** (CMS/MDX `previewVideo`) | **Keep `.webm`** | Home, browse library, gallery cards, product page main player. Progressive WebM decode does not freeze the site the way some H.264 progressive mp4 loops do. |
+| **Browse / gallery loop** (`REAL_PREVIEW_VIDEOS` / same path as page) | **Same WebM** as `previewVideo` | One page-role file; do not split page=mp4 and gallery=webm for operator screenshots. |
+| **`preview-fs`** (`previewVideoFullscreen`) | **mp4 OK** (and preferred for FS) | Fullscreen overlay may stay H.264. |
+
+**Agent rules**
+
+1. When the operator hands you a screenshot **WebM**, **copy it** into the vault as the page preview (e.g. `public/assets/videos/{slug}-preview-v1.webm`).  
+2. Wire **MDX + CMS `previewVideo`**, **`REAL_PREVIEW_VIDEOS`**, **`owner-designs.previewPage`**, and **`product-packages.previewVideo`** to that **WebM**.  
+3. **Never** “helpfully” re-encode that WebM to mp4 and point `previewVideo` at the mp4. That causes freeze regressions on the site.  
+4. Fullscreen may remain a separate agent/operator **mp4** (`*-preview-fs-v1.mp4`).  
+5. If the operator did **not** supply a screenshot WebM (agent Playwright capture only), mp4 page previews remain allowed until an operator WebM arrives — then switch page+browse to WebM and leave FS as mp4.
+
+**Canonical STILL example:** operator `StillMindfullness_small2.webm` → `still-preview-v1.webm` for page+browse; `still-preview-fs-v1.mp4` for FS.
+
+### 1B. Keyframes vs storefront (operator lock 2026-08-15)
+
+Two different videos. Do not mix their encode jobs.
+
+| Video | Plays reverse? | GOP 3 / dense I-frames? | When |
+|-------|----------------|-------------------------|------|
+| **`client`** full-size film (demo + buyer pack) | **Yes** on PSAVE (up-scroll walks the live picture) | **Yes.** Encode GOP 3 / no B-frames **while making the demo**, not as a later surprise remaster | Before feel lock |
+| **`preview-page` / `preview-fs`** shop clip | **No.** It only plays forward on home / browse / product | **No.** Never remaster a storefront file for reverse | Leave existing files |
+
+**Future factory (new SKUs):**
+
+1. Remaster the **original full-size client film** to GOP 3 **as you build the demo**.  
+2. The demo then reverse-plays that already-keyframed file.  
+3. The storefront screenshot is a **forward recording of that demo replaying**. It is proof of the experience, not a second reverse engine.  
+4. Do **not** GOP-encode the shop/product preview for reverse. It never plays backwards.
+
+**Prism (locked):** leave `prism-scroll-preview-v1.mp4` + FS as they are. Do not recapture. Do not add keyframes. They work.
+
+**Hard ban:** treating a storefront `*-preview*` as a PSAVE film, or running the GOP 3 recipe onto a shop clip “to be safe.”
 
 ---
 
@@ -61,7 +102,10 @@ public/assets/videos/
 public/assets/posters/   # role: poster (WebP/JPG)
 public/thumbnails/       # role: thumb  (WebP)
 public/packages/
-  {productId}/           # role: package PDF (client delivery manual)
+  {productId}/           # role: package PDF + files zip (client delivery)
+    {Product}-package-{OpaqueId}[-{PaidSalt}].pdf
+    {Product}-files-{OpaqueId}[-{PaidSalt}].zip   # rebuild pack (when required)
+    files/               # staging tree for zip (START-HERE, PROMPT, source/, assets/)
 
 tmp/                     # role: work only
   {product}/             # optional subfolder per SKU for frames / scratch encodes
@@ -138,17 +182,28 @@ Existing flagship files may remain **flat** under `public/assets/videos/` or und
 | `poster` | poster still | `posters/` |
 | `thumb` | gallery thumbnail | `thumbnails/` (optional protocol; product-id thumbs still OK) |
 | `package` | Product Package PDF | `packages/{productId}/` |
+| `files` | Buyer rebuild **zip** (prompt + source + assets) | `packages/{productId}/` |
 | `work` | scratch | `tmp/` only |
 
-**Package PDF naming (new files):** `{Product}-package-{OpaqueId}[-{PaidSalt}].pdf` — PaidSalt only for paid tiers (same idea as client video). Law + section order: [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md).
+**Package PDF naming (new files):** `{Product}-package-{OpaqueId}[-{PaidSalt}].pdf` — PaidSalt only for paid tiers (same idea as client video).
+
+**Files zip naming (new files):** `{Product}-files-{OpaqueId}[-{PaidSalt}].zip` — same OpaqueId family as the PDF when possible; PaidSalt only for paid tiers.
+
+**Full zip tree, allowlist, download preference, registries:** [`PRODUCT_PACKAGE.md` §10](./PRODUCT_PACKAGE.md) (authoritative). Summary:
+
+- Staging: `public/packages/{productId}/files/` with `START-HERE.md`, `PROMPT.md`, `CUSTOMIZATION.md`, `source/`, `assets/`.  
+- Zip root = **contents of `files/`** (buyer sees START-HERE at top level).  
+- Get Full Prompt API prefers zip over PDF when `checklist.filesZip` is true.  
+- Gold zip structure: Studio Sequence `Studio-files-s7u2d1o9q4x1-p8k2m1.zip`.  
+- Never put storefront `*-preview*` or thumbs inside the zip.
 
 ### Paid salt rules (detail)
 
-1. Apply **only** to **`client`** purpose files for products with **paid** price tier (pro / starter / agency — not free).  
-2. Salt is **independent** of OpaqueId; regenerate both if you intentionally issue a new client release.  
+1. Apply to **`client`** purpose files **and** paid delivery packages (**`package` PDF** + **`files` zip**) for products with **paid** price tier (pro / starter / agency — not free).  
+2. Salt is **independent** of OpaqueId; regenerate both if you intentionally issue a new client or package release. Prefer matching salt across PDF + zip for one SKU generation.  
 3. **Never** put PaidSalt on storefront previews (public files must not share the paid-pack suffix pattern).  
-4. Free listings: `Product-client-{OpaqueId}.mp4` **without** the final `-{PaidSalt}`.  
-5. Operators store the full filename in MDX / CMS / `owner-designs` — humans look up the **registry**, not invent paths from memory.
+4. Free listings: `Product-client-{OpaqueId}.mp4` / `Product-package-{OpaqueId}.pdf` / `Product-files-{OpaqueId}.zip` **without** the final `-{PaidSalt}`.  
+5. Operators store the full filename in MDX / CMS / `owner-designs` / `product-packages.ts` — humans look up the **registry**, not invent paths from memory.
 
 ### What “initial changes” means for client HD
 
@@ -213,7 +268,7 @@ Every shipped SKU must list paths in **all** applicable registries:
 | Naming paid | `{Product}-client-{OpaqueId}-{PaidSalt}.mp4` |
 | Format | MP4 H.264; audio stripped (`-an`) |
 | Resolution | 1920×1080 (16:9) preferred |
-| Duration | 8–14s typical; scroll-scrub may match narrative length |
+| Duration | 8–14s typical; scroll-scrub / pin-journey may match narrative length |
 | Size | Prefer web-friendly (often under ~15–20MB); masters stay fat in `masters/` |
 | Content | **No burnt UI** |
 | Referenced by | `videoBackgrounds`, cleanroom `src`, buyer download |
@@ -227,6 +282,7 @@ Every shipped SKU must list paths in **all** applicable registries:
 | Capture res | ~1600×900 class | **1920×1080** target |
 | Display on MS | Product template **~960×540** contain | 90% glass stage |
 | Content | Burnt design UI; hide `[data-ms-scroll-cue]` in capture | Same; product page re-adds Scroll/cursor as **HTML** |
+| Scroll-narrative | Capture full **pin-until-complete** journey (prefer virtual progress drive; stage stays pinned) — PRODUCT_LAW | Same |
 | CMS | `previewVideo` | fullscreen map / `previewVideoFullscreen` |
 
 ```bash
@@ -286,13 +342,109 @@ These remain valid. New protocol does **not** require migration.
 | Meridian | prompt | `content/prompts/heroes/MS-HERO-MERI01.mdx` | — |
 | Meridian | package PDF | `/packages/MS-HERO-MERI01/Meridian-package-p4ltcy7t4p0c-pd1w65.pdf` | product-packages + owner-designs (opaque; golden-rule layout) |
 | Aether | package PDF | `/packages/MS-HERO-AETH01/Aether-package-8rgb4zhx7zrd.pdf` | product-packages + owner-designs |
-| Vertex | package PDF | `/packages/MS-HERO-VERT01/Vertex-package-b352guxju0ic.pdf` | product-packages + owner-designs |
+| Vertex | package PDF | `/packages/MS-HERO-VERT01/Vertex-package-b352guxju0ic.pdf` | product-packages + owner-designs (PDF-only pack, free, no PaidSalt) |
 | Aether | client | `/assets/videos/aether-waves-web-v1.mp4` | MDX + owner-designs |
 | Aether | master-ish / large | `/assets/videos/aether-waves-v1.mp4` (+ originals) | internal |
 | Aether | preview-page / fs | `aether-preview-v1.mp4` / `aether-preview-fs-v1.mp4` | MDX / owner-designs |
-| Vertex | client | `/assets/videos/vertex-globe-web-v1.mp4` | MDX + owner-designs |
+| Vertex | client | `/assets/videos/vertex-globe-web-v1.mp4` | MDX + cleanroom + owner-designs `broll` · **PSAVE GOP 3 / no B-frames / 97 I-frames** (see [`PSAVE.md`](./PSAVE.md) §14 / §5C). Backup: `tmp/vertex-globe-web-v1.pre-gop.mp4` |
 | Vertex | larger / globe | `vertex-globe-v1.mp4` (+ originals) | internal |
-| Vertex | preview-page / fs | `vertex-preview-v1.mp4` / `vertex-preview-fs-v1.mp4` | MDX / owner-designs |
+| Vertex | preview-page / fs | `vertex-preview-v1.mp4` / `vertex-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · do not recapture unless asked |
+| Vertex | prompt | `content/prompts/heroes/MS-HERO-VERT01.mdx` | CMS body v4.0.0 · pin-until-complete · **PSAVE** 3.6 vh + 0.55 dest floor · GOP 3 · PDF-only · no footer band |
+| Vertex | demo | `/demo/cleanroom-vertex` | cleanroom `vertex-from-prompt` · do not overflow-hidden |
+| Revel | client | `/assets/videos/revel-breakout-v1.mp4` | MDX + cleanroom + owner-designs `broll` · **PSAVE GOP 3 / no B-frames / 161 I-frames** (see [`PSAVE.md`](./PSAVE.md) §14). Backup: `tmp/revel-breakout-v1.pre-gop.mp4` |
+| Revel | poster | `/assets/posters/revel-breakout-v1.webp` | MDX (this still **is** frame 0) |
+| Revel | preview-page / fs | `revel-scroll-preview-v1.mp4` / `revel-scroll-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs |
+| Revel | backgrounds | `/assets/videos/backgrounds/revel-breakout-bg-v1.mp4` | product-packages |
+| Revel | demo | `/demo/cleanroom-revel` | cleanroom `revel-from-prompt` |
+| Revel | prompt | `content/prompts/heroes/MS-HERO-REVL01.mdx` | CMS body v1.3.0 · pin-until-complete · **PSAVE** 12 vh · 0.55s dest floor · GOP 3 · PDF-only |
+| Revel | package PDF | `/packages/MS-HERO-REVL01/Revel-package-r7v3l9k2mx4q-rv8n3p.pdf` | product-packages + owner-designs (PDF-only pack) |
+| Elyse | client | `/assets/videos/elyse-nature-v1.mp4` | MDX + cleanroom + owner-designs `broll` · **PSAVE GOP 3 / no B-frames / 81 I-frames** (see [`PSAVE.md`](./PSAVE.md) §14). Backup of pre-GOP file: `tmp/elyse-nature-v1.pre-gop.mp4` |
+| Elyse | poster | `/assets/posters/elyse-nature-v1.webp` | MDX |
+| Elyse | preview-page / fs | `elyse-scroll-preview-v1.mp4` / `elyse-scroll-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs |
+| Elyse | backgrounds | `/assets/videos/backgrounds/elyse-nature-bg-v1.mp4` | product-packages |
+| Elyse | demo | `/demo/cleanroom-elyse` | cleanroom `elyse-from-prompt` |
+| Elyse | prompt | `content/prompts/heroes/MS-HERO-ELYS01.mdx` | CMS body v1.1.6 · pin-until-complete · **PSAVE** (see [`PSAVE.md`](./PSAVE.md)) · 3.6 vh leftover dest · 1.2x fwd/rev · 3-frame reverse · GOP 3 · PDF-only |
+| Elyse | package PDF | `/packages/MS-HERO-ELYS01/Elyse-package-e9l7s3e2k4m1-el5n8q.pdf` | product-packages + owner-designs (PDF-only pack) |
+| Still | client | `/assets/videos/still-cosmos-v1.mp4` | MDX + cleanroom + owner-designs `broll` · **PSAVE GOP 3 / no B-frames / 240 I-frames** (see [`PSAVE.md`](./PSAVE.md) §14 / §5D). Backup: `tmp/still-cosmos-v1.pre-gop.mp4` |
+| Still | poster | `/assets/posters/still-cosmos-v1.webp` | MDX |
+| Still | preview-page / fs | `still-preview-v1.webm` (keep WebM) / `still-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · do not recapture unless asked |
+| Still | demo | `/demo/cleanroom-still` | cleanroom `still-from-prompt` · do not overflow-hidden |
+| Still | prompt | `content/prompts/heroes/MS-HERO-STIL01.mdx` | CMS body v2.0.0 · pin-until-complete · **PSAVE** 12 vh · 0.55s dest floor · GOP 3 · files zip + PDF |
+| Still | package | `/packages/MS-HERO-STIL01/Still-package-s7i1l9m4ndf0-sk3p8w.pdf` + files zip | product-packages + owner-designs |
+| Prism | client | `/assets/videos/prism-faces-v1.mp4` | MDX + cleanroom + owner-designs `broll` · **PSAVE GOP 3 / no B-frames / 381 I-frames** (see [`PSAVE.md`](./PSAVE.md) §14 / §5E). Backup: `tmp/prism-faces-v1.pre-gop.mp4` |
+| Prism | poster | `/assets/posters/prism-faces-v1.webp` | MDX |
+| Prism | preview-page / fs | `prism-scroll-preview-v1.mp4` / `prism-scroll-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · **leave as-is** (operator 2026-08-15). No recapture. No GOP 3. Shop clip never plays reverse. |
+| Prism | backgrounds | `/assets/videos/backgrounds/prism-faces-bg-v1.mp4` | product-packages |
+| Prism | demo | `/demo/cleanroom-prism` | cleanroom `prism-from-prompt` · do not overflow-hidden |
+| Prism | prompt | `content/prompts/heroes/MS-HERO-PRSM01.mdx` | CMS body v2.0.0 · pin-until-complete · **PSAVE** 12 vh · 0.55s dest floor · GOP 3 · files zip + PDF |
+| Prism | package | `/packages/MS-HERO-PRSM01/Prism-package-p8r3sm7k2n4q-pr5m2x.pdf` + files zip | product-packages + owner-designs |
+| Mirage | client | `/assets/videos/mirage-desert-v1.mp4` | MDX + cleanroom + pack `assets/` · free-play desert film. **Not PSAVE. No GOP 3.** Do not reverse. |
+| Mirage | poster (film) | `/assets/posters/mirage-desert-v1.webp` | Pure film still. Pack `assets/`. Never a storefront UI burn. |
+| Mirage | preview-page / fs | `mirage-scroll-preview-v1.mp4` / `mirage-scroll-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · **leave as-is**. No recapture. No GOP 3. Shop clip never plays reverse. |
+| Mirage | poster / thumb | `/assets/posters/mirage-scroll-preview-v1.webp` · `/thumbnails/MS-HERO-MIRA01.webp` | product-packages storefront poster + MDX thumb |
+| Mirage | backgrounds | `/assets/videos/backgrounds/mirage-desert-bg-v1.mp4` | Small encode of client HD. Poster = `mirage-desert-v1.webp`. Never stream full client HD here. |
+| Mirage | demo | `/demo/cleanroom-mirage` | cleanroom `mirage-from-prompt` · do not overflow-hidden · `#mirage-after` is demo-only runway |
+| Mirage | prompt | `content/prompts/heroes/MS-HERO-MIRA01.mdx` | CMS body v2.0.0 · pin-until-complete · **No Scroller only** (not PSAVE) · earn 5 × 1.55 vh · pin freeing (page owns until dock) · files zip + PDF |
+| Mirage | package | `/packages/MS-HERO-MIRA01/Mirage-package-m1r4ge8k2n9x-mg7k3p.pdf` + files zip | product-packages + owner-designs |
+| Helix | client | `/assets/images/orbit/orbit-01.jpg` … `orbit-09.jpg` | MDX + cleanroom + pack `assets/` · nine stills, no film |
+| Helix | preview-page / fs | `helix-gallery-preview-v1.mp4` / `helix-gallery-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · **leave as-is**. No recapture. No GOP 3. Shop clip never plays reverse. |
+| Helix | poster / thumb | `/assets/posters/helix-gallery-preview-v1.webp` · `/thumbnails/MS-SEC-HELI01.webp` | MDX + CMS |
+| Helix | demo | `/demo/cleanroom-helix` | cleanroom `helix-from-prompt` · do not overflow-hidden · `#helix-after` is demo-only runway · no SmoothScroll / gsap-register |
+| Helix | prompt | `content/prompts/sections/MS-SEC-HELI01.mdx` | CMS body **v2.2.0** · pin-until-complete · **No Scroller only** (not PSAVE) · earn 5/3 vh · pin freeing (page owns until dock) · PaidSalt `t2v8c6` · Platinum backend 2026-08-15 |
+| Helix | package | `/packages/MS-SEC-HELI01/Helix-package-h3l1x9k2m7p4-t2v8c6.pdf` + files zip | product-packages + owner-designs |
+| Helix | backgrounds | **N/A** (gallery cards, not a film tile) | do not list on `/backgrounds` |
+| Studio Sequence | client | `/assets/videos/studio-surreal-v1.mp4` | MDX + cleanroom + pack `assets/billboard-film.mp4` · free-play board cinema. **Not PSAVE. No GOP 3.** Do not reverse. Do not seek. |
+| Studio Sequence | plate | `/assets/images/studio/ny.png` | Demo plate. Pack `assets/street-plate.png`. |
+| Studio Sequence | preview-page / fs | `studio-sequence-preview-v1.webm` (keep WebM) / `studio-sequence-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · **leave as-is**. No recapture. Operator screenshot WebM (ASSET_PIPELINE §1A). |
+| Studio Sequence | poster / thumb | `/assets/posters/studio-sequence-preview-v1.webp` · `/thumbnails/MS-SEC-STUDIO01.webp` | MDX + CMS |
+| Studio Sequence | backgrounds | `/assets/videos/backgrounds/studio-surreal-bg-v1.mp4` | Small encode of client HD. Never stream full client HD here. |
+| Studio Sequence | demo | `/demo/cleanroom-studio` | cleanroom `studio-from-prompt` · do not overflow-hidden · `#studio-after` is demo-only runway · no SmoothScroll / gsap-register |
+| Studio Sequence | prompt | `content/prompts/sections/MS-SEC-STUDIO01.mdx` | CMS body **v2.1.0** · pin-until-complete · **No Scroller only** (not PSAVE) · earn 4/3 vh · pin freeing (page owns until dock) · PaidSalt `p8k2m1` · Platinum backend 2026-08-15 |
+| Studio Sequence | package | `/packages/MS-SEC-STUDIO01/Studio-package-s7u2d1o9q4x1-p8k2m1.pdf` + files zip | product-packages + owner-designs |
+| Lineup | client | `/models/can.glb` + labels + HDRI | MDX + cleanroom + pack `assets/` · 3D pack, no film |
+| Lineup | preview-page / fs | `lineup-reveal-preview-v1.webm` (keep WebM) / `lineup-reveal-preview-fs-v1.mp4` | MDX / gallery-utils / owner-designs · **leave as-is**. No recapture. |
+| Lineup | poster / thumb | `/assets/posters/lineup-reveal-preview-v1.webp` · `/thumbnails/MS-SEC-LINE01.webp` | MDX + CMS |
+| Lineup | demo | `/demo/cleanroom-lineup` | cleanroom `lineup-from-prompt` · do not overflow-hidden · `#lineup-after` is demo-only runway · no SmoothScroll / lenis |
+| Lineup | prompt | `content/prompts/sections/MS-SEC-LINE01.mdx` | CMS body **v2.1.0** · pin-until-complete · **No Scroller only** (not PSAVE) · earn N vh · snap on lift · pin freeing · PaidSalt `q3n7w2` · Platinum backend 2026-08-16 |
+| Lineup | package | `/packages/MS-SEC-LINE01/Lineup-package-l7n3e9k2m4p8-q3n7w2.pdf` + files zip | product-packages + owner-designs |
+| Lineup | backgrounds | **N/A** (3D pack, not a film tile) | do not list on `/backgrounds` |
+| Actually! | client | `/models/can.glb` + labels + HDRI | MDX + cleanroom + pack `assets/` · 3D pack, no film |
+| Actually! | preview-page / fs | `actually-hero-preview-v1.mp4` / `actually-hero-preview-fs-v1.mp4` | MDX / gallery-utils · **leave as-is**. No recapture. |
+| Actually! | poster / thumb | `/assets/posters/actually-hero-preview-v1.webp` · `/thumbnails/MS-HERO-ACTU01.webp` | MDX + CMS |
+| Actually! | demo | `/demo/cleanroom-actually` | cleanroom `actually-from-prompt` · do not overflow-hidden · `#actually-after` · no SmoothScroll / lenis |
+| Actually! | prompt | `content/prompts/heroes/MS-HERO-ACTU01.mdx` | CMS body **v2.1.0** · pin-until-complete · **No Scroller only** · earn 1.2 vh · pin freeing · PaidSalt `r5m4x9` · Platinum backend 2026-08-16 |
+| Actually! | package | `/packages/MS-HERO-ACTU01/Actually-package-a9ct7u4l2y1x-r5m4x9.pdf` + files zip | product-packages + owner-designs |
+| Actually! | backgrounds | **N/A** | do not list on `/backgrounds` |
+| Roadster | client | `/assets/roadster/studio-drive.mp4` + `roadster.glb` | MDX + cleanroom + pack `assets/` · loop film, never seek |
+| Roadster | preview-page / fs | `roadster-studio-drive-preview-v1.mp4` / `roadster-studio-drive-preview-fs-v1.mp4` | MDX / gallery-utils · **leave as-is**. No recapture. |
+| Roadster | poster / thumb | `/assets/posters/roadster-studio-drive-v1.webp` · `/thumbnails/MS-HERO-ROAD01.webp` | MDX + CMS |
+| Roadster | demo | `/demo/cleanroom-roadster` (+ `/demo/tesla-roadster`) | cleanroom `tesla-roadster` · do not overflow-hidden · `#roadster-after` · no gsap / ScrollTrigger |
+| Roadster | prompt | `content/prompts/heroes/MS-HERO-ROAD01.mdx` | CMS body **v2.1.0** · pin-until-complete · **No Scroller only** · earn 13.3 vh · pin freeing · PaidSalt `rd7n4x` · Platinum backend 2026-08-16 |
+| Roadster | package | `/packages/MS-HERO-ROAD01/Roadster-package-r0ad8t3r5k2m-rd7n4x.pdf` + files zip | product-packages + owner-designs |
+| Roadster | backgrounds | **N/A** as a browse tile | client film is pack-only |
+| Grok Bot | client | `/assets/videos/grokbot-sphere-v1.mp4` | MDX + cleanroom + pack `assets/` · **PSAVE GOP 3 / no B-frames / 521 I-frames** · 62.52s 25fps |
+| Grok Bot | poster (film) | `/assets/posters/grokbot-sphere-v1.webp` | Pure film still. Pack `assets/`. |
+| Grok Bot | preview-page / gallery | `grokbot-preview-v1.webm` (keep WebM) | Operator `GrokBot-VEGAS.webm` · **full 63.76s** on product page AND gallery. Never re-encode to mp4. Never use client HD as preview. |
+| Grok Bot | preview-fs | `grokbot-preview-fs-v1.mp4` | Operator `GrokBot-VEGAS_FS.mp4` · full 63.76s 1080p |
+| Grok Bot | poster / thumb (shop) | `/assets/posters/grokbot-preview-v1.webp` · `/thumbnails/MS-HERO-GROK01.webp` | Cut from operator WebM |
+| Grok Bot | backgrounds | `/assets/videos/backgrounds/grokbot-sphere-bg-v1.mp4` | Small encode of client HD. Poster = `grokbot-sphere-v1.webp`. |
+| Grok Bot | demo | `/demo/cleanroom-grokbot` | cleanroom `grokbot-from-prompt` · do not overflow-hidden · `#grokbot-after` |
+| Grok Bot | prompt | `content/prompts/heroes/MS-HERO-GROK01.mdx` | CMS body **v2.1.0** · pin-until-complete · **PSAVE + No Scroller** · earn 12 vh · PaidSalt `gk4n8x` · Platinum backend 2026-08-16 |
+| Grok Bot | package | `/packages/MS-HERO-GROK01/GrokBot-package-g7k0b8t4vg2n-gk4n8x.pdf` + files zip | product-packages + owner-designs |
+| SkySpires | client | `/assets/videos/skyspires-sunrise-v1.mp4` | GOP 3 / 24fps / 201 I / 25.04s · pack `assets/` |
+| SkySpires | poster (film) | `/assets/posters/skyspires-sunrise-v1.webp` | Pure film still |
+| SkySpires | preview-page / fs | `skyspires-preview-v1.mp4` / `skyspires-preview-fs-v1.mp4` | Agent capture until operator Premiere. Switch page+gallery to WebM if operator WebM arrives. |
+| SkySpires | poster / thumb (shop) | `/assets/posters/skyspires-preview-v1.webp` · `/thumbnails/MS-HERO-SKYS01.webp` | HUD still |
+| SkySpires | backgrounds | `/assets/videos/backgrounds/skyspires-sunrise-bg-v1.mp4` | Small encode of client HD |
+| SkySpires | demo | `/demo/cleanroom-skyspires` | cleanroom `skyspires-from-prompt` · `#skyspires-after` |
+| SkySpires | prompt | `content/prompts/heroes/MS-HERO-SKYS01.mdx` | v2.1.0 · PSAVE + No Scroller · 12 vh · PaidSalt `sk5n2q` · Platinum backend 2026-08-16 |
+| SkySpires | package | `/packages/MS-HERO-SKYS01/SkySpires-package-s4y8p1r3sk7n-sk5n2q.pdf` + files zip | product-packages + owner-designs |
+| Zero Energy | client (3D pack) | `/assets/zero-energy/webgl/can.glb` (+ labels, HDRI, fonts) | MDX empty `videoBackgrounds` + owner-designs `broll` + pack `assets/` |
+| Zero Energy | preview-page | `/assets/videos/zero-energy-preview-v1.webm` | MDX `previewVideo` · operator WebM · keep WebM |
+| Zero Energy | preview-fs | `/assets/videos/zero-energy-preview-fs-v1.mp4` | gallery-utils / owner-designs |
+| Zero Energy | poster / thumb | `/assets/posters/zero-energy-preview-v1.webp` · `/thumbnails/MS-HERO-ZERO01.webp` | MDX + CMS |
+| Zero Energy | package | `/packages/MS-HERO-ZERO01/ZeroEnergy-package-q8w3n6k2xm5r-n4k8p2.pdf` + files zip | product-packages + owner-designs |
+| Zero Energy | backgrounds | **N/A** (3D pack, not a film tile) | do not list on `/backgrounds` |
 
 Add a row here (or always in `owner-designs.ts`) for every new flagship.
 
@@ -305,6 +457,13 @@ Add a row here (or always in `owner-designs.ts`) for every new flagship.
 ffmpeg -i public/assets/videos/masters/Meridian-master-OPAQUE.mp4 \
   -vf "scale=1920:1080:flags=lanczos" -c:v libx264 -crf 23 -preset slow -an -movflags +faststart \
   public/assets/videos/client/Meridian-client-OPAQUE2-SALTED.mp4
+
+# PSAVE client HD (Elyse / Revel / Vertex / Still / Prism / any Perfect Scroll Video Engine film) — dense keyframes, no B-frames
+# Do NOT use the generic crf 23 long-GOP encode above for a PSAVE hero. Reverse will stall.
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset slow -crf 16 \
+  -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart \
+  your-film-psave.mp4
+# Full law: docs/PSAVE.md §14
 
 # Poster from client
 ffmpeg -i public/assets/videos/client/Meridian-client-OPAQUE2-SALTED.mp4 \
@@ -332,6 +491,8 @@ ffmpeg -i public/assets/videos/client/Meridian-client-OPAQUE2-SALTED.mp4 \
 - [ ] Capture scripts write only to **storefront/**  
 - [ ] Each path opens successfully  
 - [ ] Grandfather table or owner-designs updated for new SKUs  
+- [ ] After first production post: **Platinum Second Revision** permission asked + media matrix re-smoked ([`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md))  
+- [ ] PSAVE: GOP 3 only on **client** full-size film, encoded **while making the demo**. Never GOP a storefront preview (it never plays reverse). See **§1B**.  
 
 ---
 

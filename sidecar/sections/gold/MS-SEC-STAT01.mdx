@@ -1,0 +1,165 @@
+---
+id: "MS-SEC-STAT01"
+title: "TALLY - Desk Proof Stats Section"
+slug: "tally-desk-proof-stats-section"
+description: "A desk blotter of proof. One figure counts. The rest wait on the tape. Restage the venues until they read as your book."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "stats"
+category: "fintech"
+subcategory: "markets"
+styleTags: ["corporate", "minimal"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "calm-fintech"
+tokenTheme: "stripe-trust-light"
+motionPrimitive: "count-on-scroll"
+enterRecipe: "settle-trade"
+compatibleWith: ["MS-HERO-AXIO01", "MS-HERO-ORBI01", "MS-HERO-NEXU01", "MS-HERO-ZERO01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-tally"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 6800
+useCases: ["fintech-stats", "desk-proof", "clearing-metrics"]
+---
+
+## Promise (buyer-facing)
+
+TALLY is a mid-page **stats section** that reads as a desk blotter, not four tiles. One figure holds the page and counts. Visitors do not scan a kit of bouncing numbers. They sit with a path, an uptime, a notional, or a floor.
+
+**Why use it:**
+- Your proof feels written, not animated for show
+- One figure at a time. The tape holds the rest
+- Every venue, clock, and figure is a slot for your book
+- Sits after Axiom, Orbit, or Nexus without copying their film
+- Built for desks that measure before they announce
+
+## Design System
+
+**Aesthetic Direction:** **TALLY** - mid-page **proof / stats** (not a hero, not four cards). Stage white `#FFFFFF`. Ink `#0A2540`. One accent `#635BFF` as the count hairline only. Never a fill. Inter display. IBM Plex Mono labels.
+
+**Famous-UI craft direction (not a clone):** Stripe dashboard restraint × a clearing blotter × Axiom density. Quiet chrome. Tables welcome. No purple glass.
+
+**Design language:** `calm-fintech`  
+**Token theme:** `stripe-trust-light`  
+**Motion primitive:** `count-on-scroll` (900ms, ease-out cubic, once per restage)
+
+**Enter (support, once on view):** `settle-trade`. High damping. Land ~820ms. Interaction after land. Reduced motion skips enter.
+
+**Typography:**
+- Figure: Inter 500, `clamp(3.25rem, 11vw, 7.5rem)`, tabular-nums, tracking `-0.055em`
+- Unit: IBM Plex Mono, 12–16px, uppercase
+- Name: Inter 500, `clamp(1.15rem, 2.2vw, 1.5rem)`
+- Labels / masthead / tape / CTA: IBM Plex Mono, 9–11px, uppercase tracking `0.14–0.2em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#FFFFFF` | Your desk |
+| Ink | `#0A2540` | Your type |
+| Muted | `#425466` | Captions |
+| Line | `#E3E8EE` | Rules |
+| Accent | `#635BFF` | Count hairline only |
+
+**Anti-slop hard ban:** four equal rounded stat cards, bouncing number ticker as identity, aurora counters, indigo mesh, pill chrome, Magic UI / v0 metrics grid.
+
+**Differentiation:**
+| vs | Tally must not become |
+|----|------------------------|
+| Kit stats | Four tiles counting at once |
+| Ledger | Pin and seats. Tally counts one figure. No pin |
+| Docket | Questions. Tally is proof |
+| Atlas | Swiss spec plate. Tally is a blotter on white |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~1180px.
+
+1. Masthead: TALLY left, folio right, ink rule
+2. Kicker PROOF
+3. Plate: counted figure, accent hairline, name, period, three rows
+4. Tape: four metrics as blotter columns (not cards)
+5. Solid navy CTA, radius 6
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Tally | 24 | Masthead |
+| kicker | Proof | 24 | |
+| metrics[0–3].name | Decision path / Match uptime / Notional / Floor seats | 28 | |
+| metrics[0–3].target | 12 / 99.99 / 4.2 / 18 | | Number the count uses |
+| metrics[0–3].suffix | µs / % / B / desks | 12 | |
+| metrics[0–3].period | | 120 | Common real places, original to the desk |
+| metrics[].rows | label + value | 3 rows | |
+| ctaLabel | Send me last quarter | 28 | Not Get Started |
+
+## Motion Specification
+
+**Signature (one):** count-on-scroll. After land, the active figure counts 0 → target in 900ms, ease-out cubic. The accent hairline `scaleX` follows. Retriggers when the tape changes. Not a forever ticker.
+
+**Enter (support, once on view):** `settle-trade`. Type settles 14px. CSS cubic standing in for the high-damping spring. Interaction (tape, CTA, arrows) starts after land.
+
+**Engine:** CSS enter. RequestAnimationFrame count.
+
+**Reduced motion:** final number immediately. Hairline full. No settle.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section. Count is once on view / restage, not a tall scrub.
+
+## Video / Media Integration
+
+None. Desk board. No background film.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥800px | Tape is four columns |
+| <800px | Tape is two columns |
+| <640px | CTA full width. Figure still owns the plate |
+
+## Accessibility
+
+- `prefers-reduced-motion`: final figures, no count
+- Contrast on white ≥ 4.5:1
+- Keyboard: tape buttons, arrows after land
+- Semantic `<section>`, `<h2>`, `<dl>`, tape `role="tablist"`
+- `aria-live="polite"` on the plate
+- Accent is a 2px hairline, not the only meaning
+
+## Performance Notes
+
+- No video, no WebGL, no extra kits
+- One rAF count at a time
+- Four metrics, one plate
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`TallyStatsSection.tsx`) plus CSS. Count with requestAnimationFrame. Do not install a ticker kit. Do not lay out four equal cards. One figure holds the page.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's venues. Keep one figure on the plate. Keep the accent as a hairline.
+
+## Expected Output
+
+A single React section that:
+1. Is a **section**, not a site shell
+2. Counts one figure after land, then again when the tape changes
+3. Uses stripe-trust-light tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Bloom } from "./Bloom";
 import { LetterStack } from "./LetterStack";
 import { Loader } from "./Loader";
@@ -18,8 +17,6 @@ import {
 } from "./Can3D";
 import { canvasDpr, useIsMobile } from "./hooks";
 import * as THREE from "three";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CLEAR = "#bcd3d8";
 const BLEND = 1150;
@@ -43,7 +40,7 @@ function HeroCanvas({
   lockBlendRef,
   dollyRef,
   scrollEl,
-  // STILL hero sits ~2.2–2.3 world units; 2.5 read large vs ACTUALLY. wordmark
+  // STILL hero sits ~2.2-2.3 world units; 2.5 read large vs ACTUALLY. wordmark
   targetHeight = 2.2,
   onDragStart,
   dprCap = 1.5,
@@ -94,8 +91,8 @@ function HeroCanvas({
 }
 
 /**
- * #hero — pin +=120% desktop, circle clip wipe, Can3D, support copy.
- * MS-HERO-ACTU01 — Actually! product can hero.
+ * #hero - No Scroller desktop pin (1.2 vh earn), circle clip wipe, Can3D, support copy.
+ * MS-HERO-ACTU01 - Actually! product can hero. Not PSAVE.
  */
 export default function ActuallyHero() {
   const mobile = useIsMobile();
@@ -128,6 +125,10 @@ export default function ActuallyHero() {
   const dolly = useRef<number | null>(0);
   const rotHold = useRef(0);
   const rotLocked = useRef(false);
+  const destRef = useRef(0);
+  const progressRef = useRef(0);
+  const pageOwnsRef = useRef(false);
+  const touchYRef = useRef<number | null>(null);
 
   // Clip-path + pointer + breath (desktop fine pointer)
   useEffect(() => {
@@ -298,7 +299,7 @@ export default function ActuallyHero() {
     };
   }, [revealed, mobile]);
 
-  // pin + scrub timeline
+  // No Scroller: virtual progress on 1.2 viewports drives the same reveal art.
   useEffect(() => {
     if (
       !revealed ||
@@ -310,131 +311,243 @@ export default function ActuallyHero() {
     const support = supportRef.current;
     if (!section) return;
 
-    const ctx = gsap.context(() => {
-      const items = support
-        ? support.querySelectorAll("[data-support-item]")
-        : null;
-      if (items) gsap.set(items, { y: 26, opacity: 0 });
-      const rule = support?.querySelector(
-        "[data-support-rule]",
-      ) as HTMLElement | null;
-      if (rule) gsap.set(rule, { scaleX: 0, transformOrigin: "left center" });
+    const items = support
+      ? support.querySelectorAll("[data-support-item]")
+      : null;
+    if (items) gsap.set(items, { y: 26, opacity: 0 });
+    const rule = support?.querySelector(
+      "[data-support-rule]",
+    ) as HTMLElement | null;
+    if (rule) gsap.set(rule, { scaleX: 0, transformOrigin: "left center" });
 
-      const k = clipK.current;
-      const main = gsap.timeline({
-        defaults: { ease: "power2.inOut" },
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=120%",
-          pin: true,
-          pinSpacing: true,
-          scrub: true,
-          invalidateOnRefresh: true,
-          refreshPriority: 3,
-        },
+    const k = clipK.current;
+    const main = gsap.timeline({
+      paused: true,
+      defaults: { ease: "power2.inOut" },
+    });
+
+    main.to(
+      k,
+      {
+        scrollBoost: () =>
+          1.2 * Math.hypot(window.innerWidth, window.innerHeight),
+        ease: "power2.in",
+        duration: 0.55,
+      },
+      0,
+    );
+    if (boneRef.current) {
+      main.to(
+        boneRef.current,
+        { opacity: 0, ease: "none", duration: 0.15 },
+        0.48,
+      );
+    }
+    if (haloWrapRef.current) {
+      main.to(
+        haloWrapRef.current,
+        { scale: 1.09, duration: 1, ease: "none" },
+        0,
+      );
+    }
+    if (hintRef.current) {
+      main.to(
+        hintRef.current,
+        { opacity: 0, duration: 0.15, ease: "power1.out" },
+        0,
+      );
+    }
+
+    const supportTl = gsap.timeline({ paused: true });
+    if (items && items.length) {
+      supportTl.to(items, {
+        y: 0,
+        opacity: 1,
+        duration: 0.55,
+        stagger: 0.08,
+        ease: "power2.out",
       });
+    }
+    if (rule) supportTl.to(rule, { scaleX: 1, duration: 0.5 }, 0.2);
 
-      main.to(
-        k,
-        {
-          scrollBoost: () =>
-            1.2 * Math.hypot(window.innerWidth, window.innerHeight),
-          ease: "power2.in",
-          duration: 0.55,
-        },
-        0,
-      );
-      main.to(
-        {},
-        {
-          duration: 0.6,
-          ease: "power1.inOut",
-          onUpdate: function () {
-            lockBlend.current = this.progress();
-          },
-        },
-        0,
-      );
-      if (boneRef.current) {
-        main.to(
-          boneRef.current,
-          { opacity: 0, ease: "none", duration: 0.15 },
-          0.48,
-        );
-      }
-      if (haloWrapRef.current) {
-        main.to(
-          haloWrapRef.current,
-          { scale: 1.09, duration: 1, ease: "none" },
-          0,
-        );
-      }
-      main.to(
-        {},
-        {
-          duration: 1,
-          ease: "none",
-          onUpdate: function () {
-            dolly.current = 0.09 * this.progress();
-          },
-        },
-        0,
-      );
-      if (hintRef.current) {
-        main.to(
-          hintRef.current,
-          { opacity: 0, duration: 0.15, ease: "power1.out" },
-          0,
-        );
-      }
+    let shown = false;
 
-      const supportTl = gsap.timeline({ paused: true });
-      if (items && items.length) {
-        supportTl.to(items, {
-          y: 0,
-          opacity: 1,
-          duration: 0.55,
-          stagger: 0.08,
-          ease: "power2.out",
-        });
-      }
-      if (rule) supportTl.to(rule, { scaleX: 1, duration: 0.5 }, 0.2);
+    const clamp01 = (n: number) => {
+      if (!Number.isFinite(n)) return 0;
+      return Math.max(0, Math.min(1, n));
+    };
 
-      let shown = false;
-      main.eventCallback("onUpdate", () => {
-        const p = main.progress();
-        lockBlend.current = p;
-        if (!shown && p > 0.58) {
-          shown = true;
-          supportTl.restart();
+    const applyVisual = (g: number) => {
+      const p = clamp01(g);
+      destRef.current = p;
+      progressRef.current = p;
+      main.progress(p);
+      lockBlend.current = p;
+      dolly.current = 0.09 * p;
+      if (!shown && p > 0.58) {
+        shown = true;
+        supportTl.restart();
+      }
+      if (shown && p < 0.35) {
+        shown = false;
+        if (support) {
+          gsap.to(support, {
+            opacity: 0,
+            duration: 0.25,
+            ease: "power1.out",
+            overwrite: "auto",
+            onComplete: () => {
+              supportTl.pause(0);
+              if (items) gsap.set(items, { y: 26, opacity: 0 });
+              if (rule) gsap.set(rule, { scaleX: 0 });
+              gsap.set(support, { opacity: 1 });
+            },
+          });
         }
-        if (shown && p < 0.35) {
-          shown = false;
-          if (support) {
-            gsap.to(support, {
-              opacity: 0,
-              duration: 0.25,
-              ease: "power1.out",
-              overwrite: "auto",
-              onComplete: () => {
-                supportTl.pause(0);
-                if (items) gsap.set(items, { y: 26, opacity: 0 });
-                if (rule) gsap.set(rule, { scaleX: 0 });
-                gsap.set(support, { opacity: 1 });
-              },
-            });
-          }
-        }
-      });
-    }, section);
+      }
+    };
 
-    return () => ctx.revert();
+    const setPageOwns = (owns: boolean) => {
+      pageOwnsRef.current = owns;
+      section.dataset.actuallyOwns = owns ? "page" : "pin";
+    };
+    setPageOwns(false);
+    section.dataset.actuallyDrive = "pin";
+    section.dataset.product = "MS-HERO-ACTU01";
+
+    const api = {
+      setProgress: (p: number) => applyVisual(p),
+      getProgress: () => progressRef.current,
+      getTarget: () => destRef.current,
+      pageOwns: () => pageOwnsRef.current,
+      productId: "MS-HERO-ACTU01",
+    };
+    const w = window as Window & { __msScrollNarrative?: typeof api };
+    w.__msScrollNarrative = api;
+
+    applyVisual(0);
+
+    const virtualDistance = () => 1.2 * (window.innerHeight || 800);
+    const sectionInView = () => {
+      const r = section.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+    const pinDocked = () => section.getBoundingClientRect().top >= -2;
+    const journeyAtEnd = () => destRef.current >= 0.9995;
+
+    const eventOnStage = (e: Event) => {
+      if (e.target instanceof Node && section.contains(e.target)) return true;
+      if (e instanceof WheelEvent) {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && section.contains(el)) return true;
+      }
+      return false;
+    };
+    const touchOnStage = (e: TouchEvent) => {
+      const t = e.touches[0] || e.changedTouches[0];
+      if (!t) return false;
+      if (e.target instanceof Node && section.contains(e.target)) return true;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      return Boolean(el && section.contains(el));
+    };
+
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const p = destRef.current;
+      if (p <= 0.0005 && deltaPx < 0) return false;
+      if (p >= 0.9995 && deltaPx > 0) return false;
+      applyVisual(p + deltaPx / virtualDistance());
+      return true;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current) return;
+      if (!sectionInView()) return;
+      if (!eventOnStage(e)) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const consumed = applyDelta(e.deltaY);
+      if (!consumed && journeyAtEnd() && e.deltaY > 0) setPageOwns(true);
+      if (consumed) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      const consumed = applyDelta(prev - y);
+      if (!consumed && journeyAtEnd() && prev - y > 0) setPageOwns(true);
+      if (consumed) e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView()) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        el.closest(
+          "a, button, input, textarea, select, [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (!consumed && journeyAtEnd() && delta > 0) setPageOwns(true);
+      if (consumed) e.preventDefault();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      main.kill();
+      supportTl.kill();
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+    };
   }, [revealed, mobile]);
-
-  useEffect(() => {
-    if (revealed) ScrollTrigger.refresh();
-  }, [revealed]);
 
   return (
     <section
@@ -443,7 +556,10 @@ export default function ActuallyHero() {
         if (el && el !== sectionEl) setSectionEl(el);
       }}
       id="hero"
-      className="relative w-full min-h-screen overflow-hidden bg-ink"
+      className="relative w-full min-h-dvh overflow-hidden bg-ink"
+      data-actually-hero
+      data-actually-drive="pin"
+      data-product="MS-HERO-ACTU01"
     >
       <Loader onReveal={() => setRevealed(true)} assetsReady />
 

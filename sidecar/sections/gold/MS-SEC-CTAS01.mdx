@@ -1,0 +1,160 @@
+---
+id: "MS-SEC-CTAS01"
+title: "DEW - Organic Waitlist CTA"
+slug: "dew-organic-waitlist-cta"
+description: "A warm close. One line of place. One holdable action. Restage the valley until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "wellness"
+subcategory: "waitlist"
+styleTags: ["organic", "minimal"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "organic"
+tokenTheme: "wellness-warm"
+motionPrimitive: "hold-to-confirm"
+enterRecipe: "hem-lift"
+compatibleWith: ["MS-HERO-ACNE01", "MS-HERO-AETH01", "MS-HERO-STIL01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-dew"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["waitlist-close", "organic-cta", "wellness-list"]
+---
+
+## Promise (buyer-facing)
+
+DEW is a mid-page **close** that reads as a list, not a launch. One headline. One place. One button. Visitors do not pick between three pills. They hold until the name is taken.
+
+**Why use it:**
+- The close is a single verb, not a kit
+- Hold-to-confirm is the design. The board never says hold
+- Every line is a slot for your house
+- Sits after Acne Secret, Aether, or STILL without copying their film
+- Built for rooms that take names quietly
+
+## Design System
+
+**Aesthetic Direction:** **DEW** - mid-page **waitlist / CTA** (not a hero, not an email bar). Stage `#F4EFE6`. Ink `#2C241C`. Accent `#8C6A4A` unused as fill. Newsreader display. Figtree UI.
+
+**Famous-UI craft direction (not a clone):** Acne Secret restraint × Aether air × Aesop paper. Warm field. Hard-ish button (2px). No spa photograph. No blob.
+
+**Design language:** `organic`  
+**Token theme:** `wellness-warm`  
+**Motion primitive:** `hold-to-confirm` (850ms, linear fill, cancel on release)
+
+**Enter (support, once on view):** `hem-lift`. Cloth lifts from the hem. CSS clip `inset(0% 0% 100% 0%)` → `inset(0% 0% 0% 0%)`. Same units. Land ~1100ms. Interaction after land. Reduced motion skips enter.
+
+**Typography:**
+- Wordmark: Newsreader italic, `clamp(1.85rem, 3.4vw, 2.35rem)`
+- Headline: Newsreader 400, `clamp(2.6rem, 8vw, 5.25rem)`, tracking `-0.035em`
+- Period: Figtree, ~17px, muted, leading 1.55
+- Place / meta / button: Figtree, 10–11px, uppercase tracking `0.18–0.22em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#F4EFE6` | Your paper |
+| Ink | `#2C241C` | Your type |
+| Muted | `#6E6458` | Period |
+| Line | `#E4D8C8` | Rules if needed |
+| Accent | `#8C6A4A` | Hairline only if you add one |
+
+**Anti-slop hard ban:** three equal pills, Mailchimp email + Subscribe, App Store badge row, blob / clip-path organic button, stock spa or flower photo, Get Started on a gradient banner, exploding waitlist input.
+
+**Differentiation:**
+| vs | Dew must not become |
+|----|---------------------|
+| Collect UI CTA wall | Dual pills, Download App, Get started |
+| Tally | Proof blotter. Dew is a close |
+| Issue | Gray board, turning sheet. Dew is paper and one hold |
+| Phobia | Fleeing fields. Dew does not play |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~980px. Type column max ~34rem.
+
+1. Masthead: Dew left, List right, ink rule
+2. Body: headline, period, place
+3. Foot: one holdable button, ink rule above
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Dew | 24 | Masthead |
+| kicker | This week | 24 | |
+| headline | We only take twelve a week. | 48 | |
+| period | That is how many faces we can actually do well... | 140 | No how-to |
+| place | Ojai, California | 40 | Real place, restage |
+| ctaLabel | Put my name down | 24 | Not Hold, not Get Started |
+| doneLabel | You're on the list | 24 | Quiet confirm |
+
+## Motion Specification
+
+**Signature (one):** hold-to-confirm. After land, pointer or Space/Enter held for 850ms fills the button from the left. Release before 850ms returns the fill. At 850ms the label becomes On the list and stays. Reduced motion: one click.
+
+**Enter (support, once on view):** `hem-lift`. Whole board lifts from the hem. No caption.
+
+**Engine:** CSS clip enter. Interval fill (32ms) with a timeout snap, same pattern as Tally's count (rAF throttles under CDP).
+
+**Reduced motion:** full board at rest. Click confirms. No hem. No fill travel.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section.
+
+## Video / Media Integration
+
+None. Paper board. No background film. No stock wellness photo.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥640px | Button is a modest plate, not full width |
+| <640px | Button full width. Headline still owns the body |
+
+## Accessibility
+
+- `prefers-reduced-motion`: rest + single click
+- Contrast on cream ≥ 4.5:1
+- Keyboard: Space / Enter hold (or click when reduced)
+- Semantic `<section>`, `<h2>`, one `<button>`
+- `aria-pressed` after confirm, `aria-live="polite"` on the control
+- Label over the fill is clipped, not a second meaning
+
+## Performance Notes
+
+- No video, no WebGL, no extra kits
+- One hold timer at a time
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`DewCtaSection.tsx`) plus CSS. Hold with interval + timeout snap. Do not print Hold on the board. Do not add an email field. Do not lay out three CTAs.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's house and place. Keep one button. Keep the fill as the signature.
+
+## Expected Output
+
+A single React section that:
+1. Is a **section**, not a site shell
+2. Lifts from the hem, then holds to confirm
+3. Uses wellness-warm tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

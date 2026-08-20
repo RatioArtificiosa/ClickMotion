@@ -25,6 +25,15 @@ npm run dev # http://localhost:3000
 
 ## Docs
 
+### Shipping products for sale (start here)
+
+- [**Ship for sale**](docs/SHIP_FOR_SALE.md) — **mandatory entry gate** for production/sale
+- [**Production-ready checklist**](docs/PRODUCTION_READY_CHECKLIST.md) — full phase checklist
+- [**Product package law**](docs/PRODUCT_PACKAGE.md) — product folder + zip + PDF (§10)
+- [**Agent instructions**](AGENTS.md) — AI must open ship docs before claiming ready
+
+### Core law
+
 - [**Product Law (current)**](docs/PRODUCT_LAW.md) - living source of truth (scaffolding + post-scaffold changes)
 - [Prompt visual QA loop](docs/PROMPT_VISUAL_QA_LOOP.md) - see build → fix **prompt** (+ assets), not only code
 - Screenshot helper: `node scripts/cleanroom-screenshot.mjs <url> [out.png]`

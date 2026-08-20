@@ -78,25 +78,34 @@ Internal repo may still use folder names like `MS`; **customer-facing** name is 
 | Spatial, calm, specific craft language | Tech stack laundry lists (GSAP, ScrollTrigger, Three…) |
 | What the visitor experiences + what the buyer gains | Negative-only framing (“no background film”) when a positive reframe exists |
 | Brand ownership / customization (“your work”, “made for your brand”) | Hype clichés (“wow”, “stunning”, “next-level”) |
-| Soft ≤160 / hard ≤180 characters | Em dash; scaffold or internal notes |
+| Soft ≤200 / hard ≤230 characters | Em dash; scaffold or internal notes |
 
 Canonical rule: [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) · gate: [`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md) §1C.12.
 
 ---
 
-## Product package PDF (summary)
+## Product package (PDF + files zip — summary)
 
-See [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md). Customer package includes:
+See [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) (full law; **§10 = files zip protocol**). Customer delivery includes:
 
+### Product Package PDF
 1. ClickMotion wordmark + www.ClickMotion.dev  
 2. Simple steps  
-3. Video link alone + video inside each AI prompt  
+3. Video link alone + video inside each AI prompt (when film product)  
 4. One ready-to-paste prompt per tool (Cursor, Claude, Grok Build, Lovable, Codex / ChatGPT, Bolt, Your Smart AI Agent), adjusted per tool if needed  
 5. Customize by telling the AI what to change  
 6. Optional video recreation prompt for a video AI  
 
-**Meridian package PDF is the gold standard** — clone structure and quality for every later SKU.  
-**Full sale-ready gate:** [`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md).
+### Files zip (rebuild flagships)
+1. `START-HERE.md` — ClickMotion steps; what is / is not in the pack  
+2. `PROMPT.md` + `CUSTOMIZATION.md` — buyer voice, no backend leaks  
+3. `source/` + `assets/` — production code + **client** rebuild media only  
+4. Opaque name: `{Product}-files-{OpaqueId}[-{PaidSalt}].zip`  
+5. **Get Full Prompt** prefers zip over PDF when registered  
+
+**Meridian package PDF is the gold standard** for PDF layout.  
+**Studio Sequence product folder + files zip is the gold standard** for rebuild tree shape.  
+**Ship entry:** [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md) · **Full gate:** [`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md).
 
 ---
 

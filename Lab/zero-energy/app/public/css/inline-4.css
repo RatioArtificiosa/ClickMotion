@@ -1,0 +1,149 @@
+
+  @property --color-scheme-1--taste-primary {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #959492;
+  }
+
+  @property --color-scheme-1--taste-secondary {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #eeeeee;
+  }
+
+  @property --loader-reveal {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 100vh;
+  }
+
+  :root {
+    transition:
+      --color-scheme-1--taste-primary 0.6s ease-in-out,
+      --color-scheme-1--taste-secondary 0.6s ease-in-out;
+  }
+
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    transition: opacity 0.4s;
+  }
+
+  body::before {
+    height: 100vh;
+    top: 0;
+    background: linear-gradient(9.02deg, #eeeeee -30%, #959492 15%, #000000 65%);
+    transform: translateY(var(--loader-reveal, 100vh));
+    will-change: transform;
+  }
+
+  body::after {
+    background: radial-gradient(88.85% 121.19% at 43.49% 112.49%, var(--color-scheme-1--taste-secondary) 4.96%, var(--color-scheme-1--taste-primary) 54.38%, #000 93.49%);
+    opacity: 0;
+  }
+
+  body.is-profile-active::after {
+    opacity: 1;
+  }
+
+  h2[data-anim='chars-mask'],
+  .heading-style-h2 [data-anim='chars-mask'] {
+    line-height: 1.2;
+  }
+
+  h2[data-anim='chars-mask'] .line-mask:not(:first-child),
+  .heading-style-h2 [data-anim='chars-mask']:not(:first-child) .line-mask {
+    margin-top: -0.35em;
+  }
+
+  .carousel_title-bis-collection div[data-anim='chars-mask'] {
+    width: 100%;
+  }
+
+  .carousel_title-bis-collection .line {
+    display: flex !important;
+    justify-content: space-between;
+  }
+
+  .benefits_text .subhead_text::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: var(--_spacing-sizing---element-padding--xxs);
+    width: calc(100% - var(--_spacing-sizing---element-padding--xs));
+    height: 1px;
+    background: var(--_primitives---colors--neutral-darkest);
+    transform: scaleX(var(--benefits-line, 0));
+    transform-origin: left center;
+  }
+
+  .scroll_indicator {
+    width: calc(var(--p, 0) * 100%);
+  }
+
+  .scroll_indicator__core {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.35) 55%, rgba(255, 255, 255, 1) 100%);
+  }
+
+  .scroll_indicator__mid {
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.25) 60%, rgba(255, 255, 255, 0.95) 100%);
+  }
+
+  .scroll_indicator__halo {
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 65%, rgba(255, 255, 255, 0.5) 100%);
+  }
+
+  .scroll_indicator__hotspot {
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 35%, transparent 70%);
+  }
+
+  .gamme_gradient {
+    background: conic-gradient(from 17deg at 50% 50%, #00a6e2 0deg, #71bd96 72.67335891723633deg, #eeb169 142.75845050811768deg, #e59de6 214.67583417892456deg, #ff659d 287.05129623413086deg, #9089d3 360deg);
+  }
+
+  .argument_svg svg * {
+    fill: var(--color-scheme-1--taste-secondary);
+    will-change: transform;
+  }
+
+  .argument_svg-blur {
+    mask-image: url('/img/zero-bullshit-mask.svg');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url('/img/zero-bullshit-mask.svg');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+
+  @media screen and (min-width: 991px) {
+    .section {
+      min-height: 125svh;
+    }
+
+    .argument_video video {
+      object-fit: fill;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    .section {
+      min-height: 125svh;
+    }
+
+    .argument_video video {
+      object-fit: cover;
+    }
+  }
+
+  /* hack WebKit : ne s'applique qu'à Safari */
+  @supports (-webkit-hyphens: none) {
+    .gradient_overlay,
+    .navbar_overlay {
+      filter: none;
+    }
+  }

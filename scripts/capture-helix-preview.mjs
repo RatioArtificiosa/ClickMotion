@@ -105,36 +105,26 @@ async function capturePass(viewport, outDir) {
 
   console.log(`→ ${URL} @ ${viewport.width}×${viewport.height}`);
   await page.goto(URL, { waitUntil: "networkidle", timeout: 120000 });
-  // Let R3F + textures + Lenis settle
+  // Let R3F + textures settle
   await page.waitForTimeout(2500);
   await page.waitForSelector("#helix-gallery", { timeout: 30000 });
   await page.waitForSelector("canvas", { timeout: 30000 });
 
-  // Pin distance ≈ 5 * vh desktop (matches section pinMetrics)
-  const scrollMax = await page.evaluate(() => {
-    const pin = document.querySelector("#helix-gallery [class*='h-dvh'], #helix-gallery > div");
-    const vh = window.innerHeight;
-    // scroll height after pin spacer
-    return Math.max(
-      document.documentElement.scrollHeight - vh,
-      vh * 5,
-    );
+  const hasApi = await page.evaluate(() => {
+    const api = window.__msScrollNarrative;
+    return !!(api && typeof api.setProgress === "function");
   });
+  if (!hasApi) {
+    throw new Error("Helix capture requires window.__msScrollNarrative.setProgress");
+  }
 
-  console.log(`  scrollMax≈${Math.round(scrollMax)}px  frames=${TOTAL_FRAMES}`);
+  console.log(`  virtual progress  frames=${TOTAL_FRAMES}`);
 
   for (let i = 0; i < TOTAL_FRAMES; i++) {
     const p = progressForFrame(i, TOTAL_FRAMES);
-    const y = Math.round(p * scrollMax);
-    await page.evaluate((yy) => {
-      window.scrollTo(0, yy);
-      // nudge Lenis if present
-      const l = window.__msLenis;
-      if (l && typeof l.scrollTo === "function") {
-        l.scrollTo(yy, { immediate: true });
-      }
-    }, y);
-    // allow ScrollTrigger + R3F frame
+    await page.evaluate((pp) => {
+      window.__msScrollNarrative?.setProgress(pp);
+    }, p);
     await page.waitForTimeout(i === 0 ? 400 : 55);
     const file = path.join(outDir, `f-${String(i).padStart(5, "0")}.png`);
     await page.screenshot({ path: file, type: "png" });

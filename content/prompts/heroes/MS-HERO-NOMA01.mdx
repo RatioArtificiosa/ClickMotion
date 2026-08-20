@@ -2,17 +2,17 @@
 id: "MS-HERO-NOMA01"
 title: "NOMAD TRAVEL - Luxury Travel Platform Hero"
 slug: "nomad-travel-luxury-travel-platform-hero"
-description: "An aspirational hero for a luxury travel platform with warm terracotta tones, a cinematic drone montage, and a compass icon animation."
-version: "1.0.0"
+description: "For luxury travel and private-stay brands. A warm terracotta editorial hero with empty-destination cinema, cream type, and unhurried entrances."
+version: "1.0.2"
 created: "2026-08-07"
-updated: "2026-08-07"
+updated: "2026-08-12"
 author: "MS Team"
-status: "draft"
+status: "published"
 type: "hero"
 category: "travel"
 subcategory: "hotels"
-styleTags: ["editorial", "organic"]
-technicalTags: ["video-background", "parallax"]
+styleTags: ["editorial", "organic", "dark-cinematic"]
+technicalTags: ["video-background", "parallax", "framer-motion"]
 motionIntensity: "medium"
 difficulty: "intermediate"
 priceTier: "pro"
@@ -20,133 +20,217 @@ aiToolsRating:
   cursor: 5
   lovable: 4
   bolt: 4
-  claude: 4
+  claude: 5
   grok-build: 5
-frameworksSupported: ["react", "html"]
-previewVideo: "/previews/MS-HERO-NOMA01.mp4"
-previewGif: "/previews/MS-HERO-NOMA01.gif"
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/nomad-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/nomad-preview-fs-v1.mp4"
 thumbnail: "/thumbnails/MS-HERO-NOMA01.webp"
-liveDemo: "/demos/MS-HERO-NOMA01"
+liveDemo: "/demo/cleanroom-nomad"
 videoBackgrounds:
   - file: "/assets/videos/nomad-montage-v1.mp4"
     format: "mp4"
-    duration: "14s"
+    duration: "30s"
     loop: true
-    sizeMb: 3.6
     poster: "/assets/posters/nomad-montage-v1.webp"
 dependencies:
   - { name: "framer-motion", version: "^11.0.0", required: true }
   - { name: "gsap", version: "^3.12.0", required: true }
-  - { name: "tailwindcss", version: "^4.0.0", required: true }
-estimatedTokens: 4200
-useCases: ["travel-hotels-homepage", "landing-page"]
-compatibleWith: ["MS-SEC-FEAT-003", "MS-SEC-PRICE-001"]
+  - { name: "lucide-react", version: "^0.400.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 9800
+useCases: ["travel-hotels-homepage", "luxury-stays-landing", "private-club-launch", "destination-brand"]
+compatibleWith: ["MS-HERO-AETH01", "MS-HERO-TERR01"]
 positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**Nomad Travel** is a full-viewport **luxury travel platform hero**: warm espresso canvas, terracotta accent, cream editorial type, and a looping cinematic film of extraordinary empty places. Visitors feel private-club aspiration before the first booking form.
+
+**Why use it:**
+- Travel / hospitality brands that sell **stays**, not backpacks
+- One film world + soft entrances - no multi-chapter scrub complexity
+- Playfair + Inter system restages cleanly for any luxury stay brand
+- Client HD is pure B-roll (no burnt UI); storefront dual previews are separate
+
+Default copy (**Go beyond. / Stay forever.**) is a starting board. Restage destinations, stats, and CTAs until it is unmistakably yours.
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build Nomad Travel using the files in this folder. Read PROMPT.md.*
+
 ---
 
 ## Design System
 
-**Aesthetic Direction:** Premium editorial + organic - NOMAD TRAVEL - Luxury Travel Platform Hero rendered with #1C140A, #C17A4A, #FEF3C7 and Playfair Display typography. High-contrast, production-ready.
+**Aesthetic Direction:** Premium editorial travel - espresso `#1C140A`, terracotta `#C17A4A`, cream `#FEF3C7`. Playfair Display headlines, Inter UI. Soft cream glass. Quiet proof stats. Aman × Condé Nast Traveler launch craft - **not** backpacker, neon, fintech chrome, or spa-white wellness.
+
+**Famous-UI craft direction (not a clone):** Private travel club editorial calm + prestige resort brand-film pacing. One signature system: free-play film under warm type, never scroll-scrub chapters.
 
 **Typography:**
-- Headings: `Playfair Display` - font-weight: 700-900, letter-spacing: -0.04em, line-height: 0.85, sizes: clamp(3rem, 8vw, 8rem)
-- Body: `Inter` - font-weight: 300-600, letter-spacing: 0, line-height: 1.6, sizes: clamp(1rem, 1.2vw, 1.25rem)
+- Display / H1: Playfair Display 500-700, tracking `-0.03em`, line-height `0.9`, size `clamp(3rem, 9vw, 7.5rem)`
+- Accent line: same face, terracotta
+- Body: Inter 300-400, 15-16px, line-height 1.7, cream at ~68%
+- Badge / nav: Inter 10-12px, uppercase tracking on badge
 
-**Spacing:** 8px grid: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128
-**Max-Width:** 1280px container
-**Border Radius:** `--radius: 9999px` (fully rounded pills)
-**Shadows:** `shadow-2xl` for glass, `shadow-primary/30` for glow
+**Color tokens:**
 
-**Color Tokens (HSL, dark-only):**
-- `--background: 0 0% 0%` / foreground near-white
-- `--primary: 187 100% 47%` (cyan) / `--secondary: 340 100% 50%` (pink)
-- `--muted: 0 0% 12%` / `--border: 0 0% 100% / 0.08`
+| Token | Value |
+|-------|--------|
+| Canvas | `#1C140A` |
+| Cream | `#FEF3C7` |
+| Terracotta | `#C17A4A` |
+| Glass | cream 8% + blur 48px |
+
+**Spacing:** 8px grid · content max ~44rem · full-bleed video · safe horizontal inset min ~2rem
+
+**Anti-slop hard ban:** neon cyan/pink, purple mesh, pill glass SaaS dock as the only identity, grey full-frame wash, multi-chapter video scrub, backpacker hostel energy.
+
+**Differentiation:**
+
+| vs | Nomad must not become |
+|----|------------------------|
+| Meridian | Scroll-scrub multi-chapter estate film |
+| Studio Sequence | World-scale camera pull-out billboard |
+| Terra / Aether | Different palette and signature motion |
+| Generic dark SaaS hero | Inter-only bold H1 + mesh + neon |
+
+---
 
 ## Layout Structure
 
-- **Navbar:** Fixed top, height `64px`, padding `0 32px`, flex space-between, z-50
-- **Hero Container:** `100vh`, relative, overflow hidden
-- **Video Background:** absolute inset-0, 100% / 100%, object-cover
-- **Content Overlay:** relative z-10, flex column justify-center, padding `80px 32px 32px 32px`, max-width `1280px`
-- **Content Split:** Text ~60% width, right side breathing room; CTA gap `16px`
+- Fixed nav: Compass mark + NOMAD wordmark, desktop links, Sign in glass, Book a Stay solid
+- Hero: `100dvh`, video absolute cover, dual gradients (left type field + bottom vignette + terracotta horizon glow)
+- Content left column: badge → H1 → accent → body → CTAs → proof rail
+- Scroll cue (desktop, motion OK)
+- No forced site chrome beyond the product nav
+
+---
 
 ## Content Slots
 
-| Slot | Default Text | Max Length | Notes |
-|------|--------------|------------|-------|
-| headline | "Go beyond." | 25 chars | Primary H1 |
-| subheadline | "Second line" | 20 chars | Secondary color |
-| description | "Production-ready hero for travel - built for hotels." | 180 chars | Supports markdown |
-| cta_primary | "Get Started" | 20 chars | Primary pill |
-| cta_secondary | "Learn More" | 20 chars | Glass pill |
+| Slot | Default | Notes |
+|------|---------|--------|
+| badge | Curated luxury stays | Uppercase micro |
+| headline | Go beyond. | Primary H1 cream |
+| accent | Stay forever. | Terracotta display |
+| description | Curated luxury stays in the world's most extraordinary places. Private villas, cliffside hideaways, and journeys written for the few who never settle for ordinary. | Max ~200 chars for tight restages |
+| cta_primary | Explore Stays | Solid terracotta |
+| cta_secondary | Watch Journey | Glass |
+| nav_links | Destinations · Stays · Journeys · Concierge · Journal | Desktop only |
+| nav_cta_ghost | Sign in | Glass |
+| nav_cta_solid | Book a Stay | Solid |
+| stats | 48 Countries · 120+ Private stays · 24/7 Concierge | Three quiet proofs |
+
+---
 
 ## Motion Specification
 
-**Framer Motion Container + Item Variants:**
-```tsx
-const containerVariants = {
- hidden: { opacity: 0 },
- visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
-};
-const itemVariants = {
- hidden: { y: 30, opacity: 0 },
- visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
-};
-```
-Child overrides: Badge y:-20 duration 0.6 / Headline y:40 duration 0.8 / Subheadline y:40 delay 0.1 / Description y:30 duration 0.6 / CTAs y:20 stagger 0.05
+**Mode:** free-play film + entrance + desktop film parallax. **Not** scroll-scrub video.
 
-**GSAP Parallax:**
-```tsx
-gsap.to(videoRef.current, { scale: 1.05, scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.2 } });
-```
+| Layer | Spec |
+|-------|------|
+| Entrance | Framer staggered fade/up (badge → H1 → accent → body → CTAs → stats) |
+| Ease | `[0.25, 0.46, 0.45, 0.94]` · ~0.75s with staggered delays |
+| Parallax | GSAP: video wrap scale `1 → 1.06`, scrub `1.25`, desktop only (`start: top top` / `end: bottom top`) |
+| Video time | **Never** scrub `video.currentTime` |
+| Reduced motion | Opacity only; no parallax; hide scroll cue |
+
+---
 
 ## Video / Media Integration
 
-- File: `/assets/videos/nomad-montage-v1.mp4` (MP4 H.264, 1920x1080, 14s, <5MB, no audio)
-- Poster: `/assets/posters/nomad-montage-v1.webp` (1920x1080, <150KB WebP)
-- Implementation: `<video autoPlay muted loop playsInline preload="metadata" poster={poster} className="object-cover w-full h-full" />`
-- Offscreen: IntersectionObserver pauses/resumes video
+- Client HD: `/assets/videos/nomad-montage-v1.mp4` (~30s silent loop)
+- Poster: `/assets/posters/nomad-montage-v1.webp`
+- Storefront page (presentation only): `/assets/videos/nomad-preview-v1.mp4`
+- Storefront FS (presentation only): `/assets/videos/nomad-preview-fs-v1.mp4`
+- Attributes: autoPlay muted loop playsInline preload auto
+- Offscreen: IntersectionObserver pause/resume
+- Object-fit: cover
 
-> **AI Video Generation Prompt:** Cinematic 4K video, 30 seconds, seamless loop. Premium NOMAD TRAVEL - Luxury Travel Platform Hero background - An aspirational hero for a luxury travel platform with warm terracotta tones, a cinematic drone montage, and a compass icon animation. Color grading: cinematic, volumetric light, 24fps, no people, no text, no UI. Seamless loop.
+**Buyer film generation:** pack file `VIDEO_GEN_PROMPT.md` (pure world, no UI).
+
+**Forbidden film subjects:** people as heroes, logos/text/UI, neon cyberpunk, backpacker energy, cold fintech chrome.
+
+---
 
 ## Responsive Behavior
 
-| Breakpoint | Layout & Motion Changes |
-|------------|--------------------------|
-| ≥1536px (2xl) | Full scale; text 8rem; padding 64px; all motion |
-| ≥1280px (xl) | Text 7rem; padding 48px |
-| ≥1024px (lg) | Nav visible; text 6rem; CTAs side-by-side |
-| ≥768px (md) | Nav visible; text 4rem; padding 32px |
-| <768px (mobile) | Nav hidden; text 2.8rem; CTAs stack; parallax disabled |
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, large display type, side-by-side CTAs, parallax on |
+| ≥1024px | Full nav, large display type, side-by-side CTAs, parallax on |
+| ≥768px | Nav links visible; CTAs may sit side-by-side |
+| <768px | Hide center nav links; stack CTAs; disable parallax |
+| ≤390px | Tighter type clamp; keep safe insets; film still cover |
+
+---
 
 ## Accessibility
 
-- Reduced Motion: `@media (prefers-reduced-motion: reduce)` disables parallax and stagger; simple fade-in
-- Alt Text: Video poster has descriptive alt
-- Focus Ring: `focus:ring-2 focus:ring-primary focus:ring-offset-2`
-- Contrast: White text on dark overlay meets 4.5:1
-- Semantic: `<header>`, `<section>`, `<h1>`, `<p>`
+- Semantic header / section / h1
+- Focus rings terracotta
+- Cream on espresso overlays meet body contrast intent
+- `prefers-reduced-motion` respected
+- Video decorative (`aria-hidden`)
+- Do not trap keyboard focus
+
+---
 
 ## Performance Notes
 
-- JS Budget: <45KB (Framer + GSAP + React)
-- Font Loading: `font-display: swap`
-- will-change: Applied only to animated elements (transform, opacity), removed after entrance
-- Video: Poster loaded first; preload="metadata"
-- Lazy: IntersectionObserver controls video play/pause offscreen
+- Preload auto on film for smooth start; pause offscreen
+- will-change only on parallax wrap during scroll
+- Fonts: `display: swap` (Playfair Display + Inter)
+- No Three.js; single hero component budget
+- Prefer WebP poster
+
+---
 
 ## AI Tool Instructions
 
-**Cursor / Claude:** Provide HeroSection.tsx with all imports, Tailwind classes, Framer Motion variants, and GSAP parallax. Use React 19. Include useEffect for scrollTrigger.
-**Lovable / Bolt:** Self-contained component; use motion divs with inline variants. Video uses <video> tag with specified src. Add prefers-reduced-motion via custom hook.
-**v0:** Single file with imports. Use useState/useEffect for IntersectionObserver.
+1. Open the downloaded pack folder.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place film + poster at the public paths above (see START-HERE).
+4. Use `source/NomadTravelHero.tsx`.
+5. Install `framer-motion`, `gsap`, `lucide-react`.
+6. Load Playfair Display + Inter (`--font-nomad-display` / `--font-nomad-body` preferred).
+7. Mount the hero; verify loop film, entrance, desktop parallax, mobile stack.
+8. Restage with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**.
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite.  
+**Lovable / Bolt:** Single file OK if paths and reduced-motion branch stay intact.
+
+---
 
 ## Expected Output
 
-1. A single React component HeroSection.tsx that renders a full-screen hero
-2. Fixed navbar with liquid-glass effect, responsive links, and two CTAs
-3. Looping video background with poster fallback and IntersectionObserver
-4. Staggered entrance animations per specification
-5. GSAP parallax on video
-6. Responsive across all 5 breakpoints with distinct layout changes
-7. Accessible with reduced-motion support, focus rings, and semantic HTML
+1. Full-viewport luxury travel hero with loop film  
+2. Fixed warm editorial nav with dual nav CTAs  
+3. Exact default copy slots unless restaged  
+4. Staggered entrances with specified ease  
+5. Optional desktop film parallax only (never video scrub)  
+6. Responsive: stack CTAs + hide nav links on small screens  
+7. Reduced-motion safe  
+8. Local film + poster paths resolve  
+9. No storefront chrome burned into the client build  
+
+---
+
+## What to tell your AI
+
+```
+Build Nomad Travel using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+```
+
+To restage later, open CUSTOMIZATION.md. To generate a new film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `n0m4d7tr4v3l` · PaidSalt: `nm8k4p`
+- Files zip root = START-HERE.md
+- Client media only under package `assets/` (no storefront previews)
+- Mode: free-play film + entrance + parallax - **not** scroll-scrub
+- Platinum Second Revision: 2026-08-12 (wiring + pack density; no visual restyle)

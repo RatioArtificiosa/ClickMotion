@@ -83,7 +83,23 @@ await page.mouse.up();
 
 Works for R3F `onPointerDown` drag, carousels, knobs — anything that listens to pointer capture.
 
-### 4. Act: scroll pin journey
+### 4. Act: scroll / pin journey
+
+**Product law (2026-08-13):** scroll-narrative SKUs use **pin-until-complete** (virtual progress), not tall multi-vh document scroll. Prefer driving progress on the product API:
+
+```js
+// Preferred — pin-until-complete products expose a progress setter
+for (let i = 0; i <= steps; i++) {
+  const p = i / steps; // 0 → 1
+  await page.evaluate((prog) => {
+    window.__msScrollNarrative?.setProgress?.(prog);
+    // or dispatch wheel deltas against the pinned stage
+  }, p);
+  await sleep(60–80);
+}
+```
+
+Legacy tall-track demos only (migrate when touching the SKU):
 
 ```js
 const scrollMax = await page.evaluate(() =>
@@ -96,14 +112,13 @@ for (let i = 0; i <= steps; i++) {
   const y = Math.round(scrollMax * (i / steps));
   await page.evaluate((yy) => {
     window.scrollTo(0, yy);
-    window.__msLenis?.scrollTo?.(yy, { immediate: true }); // or your app’s Lenis
+    window.__msLenis?.scrollTo?.(yy, { immediate: true });
   }, y);
-  await page.mouse.move(/* optional companion pointer */);
   await sleep(60–80);
 }
 ```
 
-Expose Lenis (or equivalent) on `window` during demo builds if you need immediate scrub without lerp lag.
+Expose `window.__msScrollNarrative.setProgress(0..1)` (or equivalent) on cleanroom demos for capture reliability.
 
 ### 5. Encode
 
@@ -136,7 +151,7 @@ If ffmpeg fails, keep the WebM as fallback; do not delete the only take.
 | Client HD | film under `public/assets/videos/` **or** model pack (`/models`, textures) | Never interactive chrome |
 | Backgrounds library | only if product has a film contribution | **Actually! / Helix-style 3D-as-product: omit** |
 
-Frame-scrub storefront scripts (`scripts/capture-*-preview.mjs`) remain the default for **scroll-scrub** products. Interactive record is complementary when the product signature is **pointer + drag**, not only scroll progress.
+Frame-scrub / progress-drive storefront scripts (`scripts/capture-*-preview.mjs`) remain the default for **scroll-scrub / pin-journey** products — advance **virtual progress** while the stage stays pinned when the SKU obeys pin-until-complete. Interactive record is complementary when the product signature is **pointer + drag**, not only progress.
 
 ---
 

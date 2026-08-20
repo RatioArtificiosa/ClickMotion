@@ -44,7 +44,9 @@ export default async function PromptProductPage({
   const product = loadProductBySlug(slug);
   if (!product) notFound();
 
-  const related = loadRelatedProducts(product, 12);
+  // Rail takes top 2 by score; bottom gallery uses the rest (no overlap).
+  // Load enough unique cards for both regions (2 rail + up to 12 below).
+  const related = loadRelatedProducts(product, 14);
 
   return <PromptProductView product={product} related={related} />;
 }

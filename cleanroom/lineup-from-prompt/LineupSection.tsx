@@ -8,7 +8,6 @@ import {
   type MutableRefObject,
 } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Bloom } from "./Bloom";
 import { FlavorsCanStage, InlineCan } from "./InlineCan";
 import type { StageMotion } from "./Can3D";
@@ -25,11 +24,8 @@ import {
   type SpecRow,
 } from "./lineup-data";
 import { useIsMobile, usePrefersReducedMotion } from "./hooks";
-import { getLenis } from "./lenis-bridge";
 
-gsap.registerPlugin(ScrollTrigger);
-
-/** Catalog length — pin, snap, tabs, and stage all follow this. */
+/** Catalog length - pin, snap, tabs, and stage all follow this. */
 const COUNT = Math.max(1, PRODUCT_COUNT || FLAVORS.length || PRODUCTS.length);
 
 /**
@@ -81,6 +77,25 @@ function indexFromProgress(t: number, n: number): number {
   return Math.min(n - 1, Math.max(0, Math.floor(t * n + 1e-4)));
 }
 
+function clamp01(n: number) {
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(1, n));
+}
+
+function nearestSnap(p: number, n: number): number {
+  const pts = snapPoints(n);
+  let best = pts[0] ?? 0;
+  let bestD = Math.abs(p - best);
+  for (const pt of pts) {
+    const d = Math.abs(p - pt);
+    if (d < bestD) {
+      best = pt;
+      bestD = d;
+    }
+  }
+  return best;
+}
+
 /* ───────────────────────────────────────────── Desktop ───────────────────────────────────────────── */
 
 function FlavorsDesktop() {
@@ -90,7 +105,11 @@ function FlavorsDesktop() {
   const eyebrowRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
-  const stRef = useRef<ScrollTrigger | null>(null);
+  const destRef = useRef(0);
+  const progressRef = useRef(0);
+  const pageOwnsRef = useRef(false);
+  const touchYRef = useRef<number | null>(null);
+  const snapTimerRef = useRef<number | null>(null);
 
   const bloomRefs = useRef<(HTMLDivElement | null)[]>([]);
   const haloRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -125,7 +144,7 @@ function FlavorsDesktop() {
           m.scale = 0.86 + 0.14 * e;
           m.opacity = e;
         } else {
-          // Fully hidden cans stay hidden — never wake SKU 03 during 01→02, etc.
+          // Fully hidden cans stay hidden - never wake SKU 03 during 01 to 02, etc.
           const wasHidden = (m.opacity ?? 0) < 0.05;
           if (wasHidden) {
             m.opacity = 0;
@@ -162,78 +181,220 @@ function FlavorsDesktop() {
     };
   }, [motionRefs]);
 
-  // Pin + snap + entrance
+  // Title entrance (once). Not a ScrollTrigger pin.
+  useEffect(() => {
+    const eye = eyebrowRef.current;
+    const tit = titleRef.current;
+    if (reduce) {
+      gsap.set([eye, tit].filter(Boolean), { opacity: 1, y: 0 });
+      return;
+    }
+    if (!eye || !tit) return;
+    gsap.set([eye, tit], { opacity: 0, y: 70 });
+    gsap.fromTo(
+      [eye, tit],
+      { y: 70, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.12,
+      },
+    );
+    return () => {
+      gsap.killTweensOf([eye, tit]);
+    };
+  }, [reduce]);
+
+  // No Scroller: virtual progress on N viewports + snap on lift + pin freeing.
   useEffect(() => {
     const section = sectionRef.current;
     const pin = pinRef.current;
     if (!section || !pin) return;
 
+    const setPageOwns = (owns: boolean) => {
+      pageOwnsRef.current = owns;
+      section.dataset.lineupOwns = owns ? "page" : "pin";
+    };
+    setPageOwns(false);
+    section.dataset.lineupDrive = "pin";
+    section.dataset.product = "MS-SEC-LINE01";
+
+    const applyVisual = (g: number) => {
+      const p = clamp01(g);
+      destRef.current = p;
+      progressRef.current = p;
+      const next = indexFromProgress(p, COUNT);
+      setActiveIndex((prev) => (prev === next ? prev : next));
+    };
+
+    const api = {
+      setProgress: (p: number) => applyVisual(p),
+      getProgress: () => progressRef.current,
+      getTarget: () => destRef.current,
+      pageOwns: () => pageOwnsRef.current,
+      productId: "MS-SEC-LINE01",
+    };
+    const w = window as Window & { __msScrollNarrative?: typeof api };
+    w.__msScrollNarrative = api;
+
     if (reduce) {
-      gsap.set([eyebrowRef.current, titleRef.current].filter(Boolean), {
-        opacity: 1,
-        y: 0,
-      });
-      return;
+      applyVisual(0);
+      return () => {
+        if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+      };
     }
 
-    const cleanups: Array<() => void> = [];
-    const ctx = gsap.context(() => {
-      const eye = eyebrowRef.current;
-      const tit = titleRef.current;
-      if (eye && tit) {
-        gsap.set([eye, tit], { opacity: 0, y: 70 });
-        gsap.fromTo(
-          [eye, tit],
-          { y: 70, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out",
-            stagger: 0.12,
-            scrollTrigger: {
-              trigger: section,
-              start: "top 55%",
-              once: true,
-            },
-          },
-        );
+    applyVisual(0);
+
+    const virtualDistance = () =>
+      COUNT * (window.innerHeight || 800);
+
+    const sectionInView = () => {
+      const r = section.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+    const pinDocked = () => section.getBoundingClientRect().top >= -2;
+    const journeyAtEnd = () => destRef.current >= 0.9995;
+
+    const eventOnStage = (e: Event) => {
+      if (e.target instanceof Node && section.contains(e.target)) return true;
+      if (e instanceof WheelEvent) {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && section.contains(el)) return true;
       }
+      return false;
+    };
+    const touchOnStage = (e: TouchEvent) => {
+      const t = e.touches[0] || e.changedTouches[0];
+      if (!t) return false;
+      if (e.target instanceof Node && section.contains(e.target)) return true;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      return Boolean(el && section.contains(el));
+    };
 
-      const record = isRecordMode();
-      stRef.current = ScrollTrigger.create({
-        trigger: pin,
-        start: "top top",
-        end: () => `+=${COUNT * window.innerHeight}`,
-        pin: true,
-        pinSpacing: true,
-        // Smoother scrub lag in record mode so can cross-fades read clearly
-        scrub: record ? 0.65 : 1,
-        // Snap fights continuous capture scroll — off while recording
-        ...(record
-          ? {}
-          : {
-              snap: {
-                snapTo: snapPoints(COUNT),
-                duration: { min: 0.25, max: 0.55 },
-                ease: "power2.inOut",
-                directional: false,
-                delay: 0.1,
-              },
-            }),
-        invalidateOnRefresh: true,
-        refreshPriority: 1,
-        onUpdate: (self) => {
-          const next = indexFromProgress(self.progress, COUNT);
-          setActiveIndex((prev) => (prev === next ? prev : next));
-        },
-      });
-    }, section);
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const p = destRef.current;
+      if (p <= 0.0005 && deltaPx < 0) return false;
+      if (p >= 0.9995 && deltaPx > 0) return false;
+      applyVisual(p + deltaPx / virtualDistance());
+      return true;
+    };
 
-    cleanups.push(() => ctx.revert());
+    const scheduleSnap = () => {
+      if (isRecordMode()) return;
+      if (snapTimerRef.current != null) window.clearTimeout(snapTimerRef.current);
+      snapTimerRef.current = window.setTimeout(() => {
+        snapTimerRef.current = null;
+        if (pageOwnsRef.current) return;
+        applyVisual(nearestSnap(destRef.current, COUNT));
+      }, 140);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current) return;
+      if (!sectionInView()) return;
+      if (!eventOnStage(e)) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const consumed = applyDelta(e.deltaY);
+      if (!consumed && journeyAtEnd() && e.deltaY > 0) setPageOwns(true);
+      if (consumed) {
+        e.preventDefault();
+        e.stopPropagation();
+        scheduleSnap();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      const consumed = applyDelta(prev - y);
+      if (!consumed && journeyAtEnd() && prev - y > 0) setPageOwns(true);
+      if (consumed) {
+        e.preventDefault();
+        scheduleSnap();
+      }
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView()) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        el.closest(
+          "a, button, input, textarea, select, [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        const dir = e.key === "ArrowRight" ? 1 : -1;
+        const next = Math.min(
+          COUNT - 1,
+          Math.max(0, indexFromProgress(destRef.current, COUNT) + dir),
+        );
+        applyVisual(next / COUNT);
+        e.preventDefault();
+        return;
+      }
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (!consumed && journeyAtEnd() && delta > 0) setPageOwns(true);
+      if (consumed) {
+        e.preventDefault();
+        scheduleSnap();
+      }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+
     return () => {
-      cleanups.forEach((fn) => fn());
-      stRef.current = null;
+      if (snapTimerRef.current != null) window.clearTimeout(snapTimerRef.current);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
     };
   }, [reduce]);
 
@@ -397,34 +558,13 @@ function FlavorsDesktop() {
 
   const goTo = useCallback(
     (i: number) => {
-      const st = stRef.current;
-      if (!st || reduce) {
-        setActiveIndex(i);
-        return;
-      }
-      const target = st.start + (st.end - st.start) * (i / COUNT);
-      const lenis = getLenis();
-      if (lenis) lenis.scrollTo(target, { duration: 1 });
-      else window.scrollTo({ top: target, behavior: "smooth" });
+      const next = Math.min(COUNT - 1, Math.max(0, i));
+      destRef.current = next / COUNT;
+      progressRef.current = destRef.current;
+      setActiveIndex(next);
     },
-    [reduce],
+    [],
   );
-
-  // Keyboard arrows while section in view
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-      const section = sectionRef.current;
-      if (!section) return;
-      const r = section.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return;
-      e.preventDefault();
-      if (e.key === "ArrowRight") goTo(Math.min(COUNT - 1, activeIndex + 1));
-      else goTo(Math.max(0, activeIndex - 1));
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [activeIndex, goTo]);
 
   const flavor = FLAVORS[displayIndex] ?? FLAVORS[0];
   const rows = orderedSpecs(flavor.leadIngredient);
@@ -434,8 +574,11 @@ function FlavorsDesktop() {
       ref={sectionRef}
       id="flavors"
       className="relative w-full bg-bone overflow-hidden"
+      data-lineup-sequence
+      data-lineup-drive="pin"
+      data-product="MS-SEC-LINE01"
     >
-      <div ref={pinRef} className="relative h-screen flex flex-col">
+      <div ref={pinRef} className="relative flex h-dvh w-full flex-col">
         {FLAVORS.map((f, i) => (
           <div
             key={f.id}
@@ -747,17 +890,18 @@ function FlavorsMobile() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const st = ScrollTrigger.create({
-      trigger: track,
-      start: "top 85%",
-      once: true,
-      onEnter: () => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
         if (entered.current) return;
         entered.current = true;
         animateCardIn(0);
+        io.disconnect();
       },
-    });
-    return () => st.kill();
+      { threshold: 0.15, rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(track);
+    return () => io.disconnect();
   }, [animateCardIn]);
 
   // Horizontal snap → active index
@@ -1041,8 +1185,9 @@ function CharSplit({ text }: { text: string }) {
 /* ───────────────────────────────────────────── Export ───────────────────────────────────────────── */
 
 /**
- * LINEUP — scroll-pinned product reveal section (MS-SEC-LINE01).
- * Desktop: pin scrub + snap through PRODUCTS. Mobile: horizontal snap cards.
+ * LINEUP - No Scroller product reveal (MS-SEC-LINE01).
+ * Desktop: pin-until-complete virtual progress + snap through PRODUCTS.
+ * Mobile: horizontal snap cards. Not PSAVE. Not a tall multi-vh track.
  */
 export default function LineupSection() {
   const mobile = useIsMobile();

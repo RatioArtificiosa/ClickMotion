@@ -1,0 +1,401 @@
+/* LEDGER — print investment board. Radius 0. One bronze. No kit chrome. */
+
+.ledger-root {
+  --ledger-stage: #efe8dc;
+  --ledger-ink: #14110c;
+  --ledger-muted: #6b6458;
+  --ledger-line: #c9bfae;
+  --ledger-accent: #7a6248;
+  --ledger-paper: #f4efe4;
+  color: var(--ledger-ink);
+  background: var(--ledger-stage);
+  font-family: var(--font-ledger-sans), Inter, system-ui, sans-serif;
+}
+
+.ledger-root--pin {
+  position: relative;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.ledger-root--static {
+  min-height: 100dvh;
+}
+
+.ledger-grain {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.ledger-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.75rem 2rem 1.5rem;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .ledger-stage {
+    padding: 2.25rem 3.5rem 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ledger-stage {
+    padding: 2.5rem 4.5rem 2rem;
+  }
+}
+
+.ledger-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ledger-line);
+  z-index: 3;
+}
+
+.ledger-progress-fill {
+  display: block;
+  height: 100%;
+  transform-origin: 0 50%;
+  background: var(--ledger-accent);
+}
+
+.ledger-masthead {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  flex-shrink: 0;
+}
+
+.ledger-masthead-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--ledger-ink);
+  transform-origin: 0 50%;
+  display: block;
+}
+
+.ledger-brand {
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.ledger-meta {
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ledger-muted);
+  text-align: right;
+}
+
+.ledger-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  flex: 1;
+  min-height: 0;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .ledger-body {
+    grid-template-columns: 5.5rem 1fr;
+    gap: 2.5rem;
+    padding-top: 2rem;
+  }
+}
+
+.ledger-index {
+  display: none;
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ledger-muted);
+}
+
+@media (min-width: 960px) {
+  .ledger-index {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding-top: 0.35rem;
+  }
+}
+
+.ledger-index button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  transition: color 180ms ease;
+}
+
+.ledger-index button::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 1px;
+  background: var(--ledger-accent);
+  margin-right: 0;
+  vertical-align: middle;
+  transition: width 220ms ease, margin 220ms ease;
+}
+
+.ledger-index button:hover::before,
+.ledger-index button:focus-visible::before,
+.ledger-index button[data-active="true"]::before {
+  width: 0.55rem;
+  margin-right: 0.45rem;
+}
+
+.ledger-index button[data-active="true"] {
+  color: var(--ledger-ink);
+  font-weight: 500;
+}
+
+.ledger-index button:hover,
+.ledger-index button:focus-visible {
+  color: var(--ledger-ink);
+}
+
+.ledger-index button:focus-visible {
+  outline: 1px solid var(--ledger-accent);
+  outline-offset: 4px;
+}
+
+.ledger-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.ledger-kicker {
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ledger-muted);
+  margin-bottom: 0.75rem;
+}
+
+.ledger-display {
+  position: relative;
+  display: grid;
+  min-height: 0;
+}
+
+.ledger-plan-slot {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.ledger-plan-slot[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ledger-name {
+  font-family: var(--font-ledger-serif), "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 5.25rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.ledger-price {
+  font-family: var(--font-ledger-serif), "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 11vw, 8.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.15em;
+}
+
+.ledger-period {
+  margin-top: 0.55rem;
+  margin-bottom: 0.15rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--ledger-muted);
+  max-width: 32rem;
+  line-height: 1.45;
+}
+
+.ledger-recommended {
+  display: inline-block;
+  margin-left: 1rem;
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.5625rem;
+  font-style: normal;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ledger-accent);
+  vertical-align: 0.55em;
+}
+
+.ledger-price-sym {
+  font-size: 0.42em;
+  vertical-align: 0.55em;
+  margin-right: 0.12em;
+  letter-spacing: 0;
+}
+
+.ledger-rule {
+  height: 1px;
+  background: var(--ledger-ink);
+  margin: 1.5rem 0 0.35rem;
+  transform-origin: 0 50%;
+  flex-shrink: 0;
+}
+
+.ledger-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.ledger-row {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 28%) 1fr;
+  gap: 1rem;
+  padding: 0.62rem 0;
+  border-bottom: 1px solid var(--ledger-line);
+  font-size: 0.8125rem;
+}
+
+.ledger-row dt {
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ledger-muted);
+  padding-top: 0.2rem;
+}
+
+.ledger-row dd {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.ledger-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+  flex-shrink: 0;
+}
+
+.ledger-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.35rem;
+}
+
+.ledger-rail button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--ledger-muted);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.ledger-rail button:hover,
+.ledger-rail button:focus-visible,
+.ledger-rail button[data-active="true"] {
+  color: var(--ledger-ink);
+}
+
+.ledger-rail button:focus-visible {
+  outline: 1px solid var(--ledger-accent);
+  outline-offset: 3px;
+}
+
+.ledger-rail-price {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-ledger-serif), serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.ledger-cta {
+  appearance: none;
+  border: 1px solid var(--ledger-ink);
+  background: var(--ledger-ink);
+  color: var(--ledger-stage);
+  padding: 0.85rem 1.35rem;
+  font-family: var(--font-ledger-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  opacity: 1;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.ledger-cta:hover,
+.ledger-cta:focus-visible {
+  background: transparent;
+  color: var(--ledger-ink);
+}
+
+.ledger-cta:focus-visible {
+  outline: 1px solid var(--ledger-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ledger-plan-slot {
+    position: relative;
+  }
+}

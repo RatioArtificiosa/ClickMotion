@@ -1,0 +1,149 @@
+---
+id: "MS-SEC-CONT02"
+title: "EMBER - Lacquer Pour Contact"
+slug: "ember-lacquer-pour-contact"
+description: "Oxblood kiln. One cream pour on send. Restage the note until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "contact"
+category: "lifestyle"
+subcategory: "studio"
+styleTags: ["organic", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ceramic-gloss"
+tokenTheme: "oxblood-glaze"
+motionPrimitive: "lacquer-pour"
+enterRecipe: "silk-slip"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-STIL01", "MS-HERO-AETH01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-ember"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["studio-inquiry", "kiln-waitlist", "ceramic-contact"]
+---
+
+## Promise (buyer-facing)
+
+EMBER is a mid-page **contact** that reads as a kiln note, not a SaaS form. Hairline fields. Send pours cream glaze from the top.
+
+**Why use it:**
+- The pour is the design. The board never says lacquer
+- Stage is oxblood. Cream is the catch
+- Labels are slots
+- Sits after Elyse, STILL, or Aether without copying Kiln
+
+## Design System
+
+**Aesthetic Direction:** **EMBER** - mid-page **contact**. Stage `#5C1218`. Ink `#F6E6D8`. Accent `#E8C4A8`. Fraunces display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** wet ceramic, object photography. Generous radius on the send only.
+
+**Design language:** `ceramic-gloss` (wow register)  
+**Token theme:** `oxblood-glaze`  
+**Motion primitive:** `lacquer-pour` (clip from bottom, 780ms)
+
+**Enter (support, once on view):** `silk-slip`. Land ~1320ms. Pour on send.
+
+**Typography:**
+- Wordmark: Fraunces 600
+- Headline: Fraunces `clamp(2.4rem, 6.5vw, 4.4rem)`
+- Fields: Outfit ~17px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#5C1218` | Your glaze |
+| Ink | `#F6E6D8` | Cream |
+| Accent | `#E8C4A8` | Pour |
+
+**Anti-slop hard ban:** floating labels, three-column form, mint wellness kit, drip blob parked on the type.
+
+**Differentiation:**
+| vs | Ember must not become |
+|----|----------------------|
+| Datum | Swiss inquiry. Ember is a kiln note |
+| Kiln | Piece drip. Ember is a pour on send |
+
+## Layout Structure
+
+`100dvh` stage. Copy left, form right on wide.
+
+1. Masthead: Ember left, kicker right
+2. Headline, period, street
+3. Name, mail, what to fire, send
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Ember | 24 | |
+| headline | Tell us what to fire. | 40 | |
+| period | The kiln is booked... | 140 | Named hours or wait |
+| place | Lexington Avenue, Asheville | 40 | Real place |
+| ctaLabel | Send the note | 24 | |
+| doneLabel | We'll write back | 24 | After pour |
+
+## Motion Specification
+
+**Signature (one):** lacquer-pour. Cream fills the send from the top on submit. Once.
+
+**Enter (support, once on view):** `silk-slip`. Matching transform units.
+
+**Engine:** CSS enter. CSS clip-path pour.
+
+**Reduced motion:** fields at rest. One click confirms. No pour travel.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <860px | Copy stacks above the form |
+
+## Accessibility
+
+- `prefers-reduced-motion`: instant filled send
+- Keyboard: tab fields, enter to send
+- Contrast cream on oxblood
+- Semantic `<section>`, `<form>`, labels
+
+## Performance Notes
+
+- No video, no WebGL
+- One pour
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not clone Datum rules. Do not park a glaze blob.
+
+**Lovable / Bolt:** Same section. Replace the note and the street. Keep one pour on send.
+
+## Expected Output
+
+A single React contact section that:
+1. Is a **kiln note**, not a hero
+2. Slips in, then cream pours the send
+3. Uses oxblood-glaze tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

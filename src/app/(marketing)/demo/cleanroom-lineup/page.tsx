@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import LineupSection from "../../../../../cleanroom/lineup-from-prompt/LineupSection";
-import { SmoothScroll } from "../../../../../cleanroom/lineup-from-prompt/SmoothScroll";
 
 const display = Inter({
   subsets: ["latin"],
@@ -13,14 +12,18 @@ const display = Inter({
 export const metadata: Metadata = {
   title: "Lineup · Product Line Scroll Reveal Section",
   description:
-    "MS-SEC-LINE01 free listing. Scroll-pinned product lineup: each scroll lands a new SKU with 3D vessel, copy, and specs - fully customizable for any brand.",
+    "Pin-until-complete product lineup: each scroll lands a new SKU with 3D vessel, copy, and specs.",
 };
 
-/** Production cleanroom demo for MS-SEC-LINE01 (Lineup product reveal section). */
+/**
+ * Production cleanroom demo for MS-SEC-LINE01 (Lineup).
+ * No Scroller: do not overflow-hidden the page. After progress 1,
+ * the next sibling may scroll in. Not PSAVE.
+ */
 export default function CleanroomLineupPage() {
   return (
     <div
-      className={`${display.variable} min-h-screen bg-[#efede6] text-[#1a1b1d]`}
+      className={`${display.variable} bg-[#efede6] text-[#1a1b1d]`}
       data-demo-root
       style={{
         fontFamily: "var(--font-lineup-sans), system-ui, sans-serif",
@@ -37,8 +40,6 @@ export default function CleanroomLineupPage() {
       }}
     >
       <style>{`
-        html.lenis, html.lenis body { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto !important; }
         .bg-bone { background-color: #efede6 !important; }
         .bg-ink { background-color: #1a1b1d !important; }
         .text-bone { color: #efede6 !important; }
@@ -62,20 +63,16 @@ export default function CleanroomLineupPage() {
         .font-serif {
           font-family: Georgia, 'Times New Roman', serif !important;
         }
-        .sr-only {
-          position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-          overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-        }
-        #flavors .pin-spacer,
-        .pin-spacer {
-          background: #efede6 !important;
-        }
       `}</style>
-      <SmoothScroll>
-        <LineupSection />
-        {/* Small bone tail only — pin spacing already provides scrub room */}
-        <div className="h-[10vh] bg-[#efede6]" aria-hidden />
-      </SmoothScroll>
+      <LineupSection />
+      <section
+        id="lineup-after"
+        className="flex min-h-[40dvh] items-center justify-center bg-[#efede6] px-6 py-16 text-[#6a6965]"
+      >
+        <p className="max-w-md text-center text-[13px] uppercase tracking-[0.12em]">
+          After the lineup
+        </p>
+      </section>
     </div>
   );
 }

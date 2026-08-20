@@ -1,0 +1,149 @@
+---
+id: "MS-SEC-FEAT07"
+title: "NIX - Ice Bubble Features"
+slug: "nix-ice-bubble-features"
+description: "An ice block. One bubble. Restage the objects until they read as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "lifestyle"
+subcategory: "objects"
+styleTags: ["playful", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "resin-object"
+tokenTheme: "resin-ice"
+motionPrimitive: "bubble-loom"
+enterRecipe: "fade-hold"
+compatibleWith: ["MS-HERO-PRSM01", "MS-HERO-MIRA01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-nix"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["object-shop", "resin-features", "ice-board"]
+---
+
+## Promise (buyer-facing)
+
+NIX is a mid-page **features** section that reads as an ice resin shop, not a bento. One object at a time. One bubble grows in the block, then stays.
+
+**Why use it:**
+- The bubble is the design. The board never says loom
+- Stage is ice. White is the catch
+- Object names are slots
+- Sits after Prism, Mirage, or Verve without copying Cast
+
+## Design System
+
+**Aesthetic Direction:** **NIX** - mid-page **features**. Stage `#B8E4F0`. Ink `#0A2030`. Accent `#FFFFFF`. Unbounded display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** design-object plastic. Translucent ice. Not cyan neon.
+
+**Design language:** `resin-object` (wow register)  
+**Token theme:** `resin-ice`  
+**Motion primitive:** `bubble-loom` (scale from 0, 560ms). One bubble. Not a soda field.
+
+**Enter (support, once on view):** `fade-hold`. Land ~1400ms. Bubble after land.
+
+**Typography:**
+- Wordmark: Unbounded 700
+- Object: Unbounded 800 `clamp(2.8rem, 10vw, 6.4rem)`
+- Period: Outfit ~18px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#B8E4F0` | Your ice |
+| Ink | `#0A2030` | Navy |
+| Accent | `#FFFFFF` | Bubble |
+
+**Anti-slop hard ban:** three equal tiles, soda particle field, cheap acrylic neon, amber clone of Cast.
+
+**Differentiation:**
+| vs | Nix must not become |
+|----|---------------------|
+| Cast | Amber lid. Nix is ice and one bubble |
+| Kiln | Wet drip. Nix is a trapped air |
+
+## Layout Structure
+
+`100dvh` pinned stage.
+
+1. Masthead: Nix left, index readout right
+2. Ice block with one bubble, object name, period
+3. Foot: street
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Nix | 24 | |
+| place | Commercial Street, Portland, Maine | 48 | Real place |
+| pieces[].name | Cuff | 16 | Object |
+| pieces[].period | I wear it to the office. Security asked if it was glass... | 160 | How it lives |
+
+## Motion Specification
+
+**Signature (one):** bubble-loom. One circle grows in the ice once per object.
+
+**Enter (support, once on view):** `fade-hold`.
+
+**Engine:** CSS enter. CSS transform bubble.
+
+**Reduced motion:** first object at rest, bubble already there. Wheel is not captured.
+
+**Pin-until-complete:** yes. Wheel / trackpad / touch / arrows. Hairline `--pin-p`. Index is readout, not a hit target.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <860px | Ice stacks above the name |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static bubble, first plate
+- Keyboard: arrows after land
+- Contrast navy on ice
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL
+- One bubble
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not lay out a bento. Do not fill the ice with bubbles.
+
+**Lovable / Bolt:** Same section. Replace objects and the street. Keep one bubble.
+
+## Expected Output
+
+A single React features section that:
+1. Is a **shop board**, not a hero
+2. Fades in, then one bubble grows
+3. Uses resin-ice tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

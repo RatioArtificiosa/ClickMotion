@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "catalog": "composition-rules",
+  "items": [
+    {
+      "id": "one-signature-motion",
+      "status": "canonical",
+      "label": "One signature motion per section",
+      "rule": "allow",
+      "notes": "Support motion (enter, stagger, fade) may exist. Only one named primitive is the design after land."
+    },
+    {
+      "id": "enter-on-view",
+      "status": "canonical",
+      "label": "Enter once on view, then interact",
+      "rule": "require",
+      "notes": "Every section plays one temperament-matched enter from enter-recipes.json (56 recipes) once when it meets the viewport. Click/hover/pin/accordion start after land. No how-to copy. Reduced motion skips enter. Pick from ENTER.md, do not invent a unnamed fade."
+    },
+    {
+      "id": "enter-matches-temperament",
+      "status": "canonical",
+      "label": "Enter matches language temperament",
+      "rule": "require",
+      "notes": "elegant: stamp-settle, drop-drape, typeset-rise, silk-slip, iris-open. aggressive: click-in, stomp-in, tick-print, bolt-down. rebellion: slap-in, shear-slice, skew-slam, offset-print. fun: pop-in, snap-elastic, hop-in, wobble-land. Full map in ENTER.md. Never pop or slap on fintech or editorial."
+    },
+    {
+      "id": "one-language-one-theme",
+      "status": "canonical",
+      "label": "One language + one theme",
+      "rule": "allow",
+      "notes": "Do not mix liquid-glass type with brutalist radius with Material color."
+    },
+    {
+      "id": "cite-three-ids",
+      "status": "canonical",
+      "label": "Cite language, theme, primitive",
+      "rule": "require",
+      "notes": "Frontmatter: designLanguage, tokenTheme, motionPrimitive."
+    },
+    {
+      "id": "pair-with-hero",
+      "status": "canonical",
+      "label": "Pair with a live hero",
+      "rule": "require",
+      "notes": "compatibleWith min 1. See pairing.md."
+    },
+    {
+      "id": "fintech-plus-magnetic-pricing",
+      "status": "canonical",
+      "label": "Calm fintech + magnetic recommended pricing",
+      "rule": "allow",
+      "kinds": ["pricing"],
+      "languages": ["calm-fintech"],
+      "primitives": ["magnetic-recommended"]
+    },
+    {
+      "id": "editorial-plus-pin-features",
+      "status": "canonical",
+      "label": "Editorial + pin features",
+      "rule": "allow",
+      "kinds": ["features"],
+      "languages": ["luxury-editorial", "dark-cinematic"],
+      "primitives": ["pin-until-complete", "paper-pivot", "card-takeover"]
+    },
+    {
+      "id": "organic-plus-breathe",
+      "status": "canonical",
+      "label": "Organic + type breathe / fade",
+      "rule": "allow",
+      "languages": ["organic"],
+      "primitives": ["type-breathe", "fade-blur-in", "stagger-enter"]
+    },
+    {
+      "id": "glass-plus-refract",
+      "status": "canonical",
+      "label": "Liquid glass + refract / magnetic",
+      "rule": "allow",
+      "languages": ["liquid-glass"],
+      "primitives": ["liquid-refract", "magnetic-hover", "paper-pivot"]
+    },
+    {
+      "id": "brutalist-plus-view-timeline",
+      "status": "canonical",
+      "label": "Brutalist + CSS view timeline",
+      "rule": "allow",
+      "languages": ["brutalist", "swiss-minimal"],
+      "primitives": ["css-view-timeline", "accordion-stage"]
+    },
+    {
+      "id": "faq-accordion-stage",
+      "status": "canonical",
+      "label": "FAQ uses staged accordion",
+      "rule": "prefer",
+      "kinds": ["faq"],
+      "primitives": ["accordion-stage"]
+    },
+    {
+      "id": "stats-count-on-scroll",
+      "status": "canonical",
+      "label": "Stats use count-on-scroll",
+      "rule": "prefer",
+      "kinds": ["stats"],
+      "primitives": ["count-on-scroll"]
+    },
+    {
+      "id": "no-kit-stack",
+      "status": "canonical",
+      "label": "No kit stack",
+      "rule": "ban",
+      "notes": "Marquee + bento + shiny text + aurora + border beam in one section."
+    },
+    {
+      "id": "no-aurora-default",
+      "status": "canonical",
+      "label": "No aurora/mesh as identity",
+      "rule": "ban",
+      "primitives": ["aurora-mesh-bg", "shiny-text", "border-glow"]
+    },
+    {
+      "id": "no-indigo-template",
+      "status": "canonical",
+      "label": "No kit indigo aurora theme",
+      "rule": "ban",
+      "themes": ["kit-indigo-aurora"]
+    },
+    {
+      "id": "no-glass-on-fintech-default",
+      "status": "canonical",
+      "label": "Do not default glass onto fintech",
+      "rule": "ban",
+      "notes": "Orbit/Axiom trust is chrome-quiet. Glass only if the SKU is explicitly Prism-paired."
+    },
+    {
+      "id": "no-neon-on-organic",
+      "status": "canonical",
+      "label": "No neon on organic",
+      "rule": "ban",
+      "languages": ["organic"]
+    },
+    {
+      "id": "no-helix-as-features-default",
+      "status": "canonical",
+      "label": "Do not reuse Helix orbit as Features",
+      "rule": "ban",
+      "primitives": ["helix-orbit"]
+    },
+    {
+      "id": "no-phobia-as-default-contact",
+      "status": "canonical",
+      "label": "Cursor-flee is not default contact",
+      "rule": "ban",
+      "notes": "Allowed only when the brand can be playful (Phobia-class)."
+    },
+    {
+      "id": "no-magicui-install",
+      "status": "canonical",
+      "label": "No registry install as the product",
+      "rule": "ban",
+      "notes": "Reimplement the mechanic. Coverage checklist only for shadcn/Magic UI/Oxygen/Amicro/shadcnblocks."
+    },
+    {
+      "id": "scroll-narrative-must-pin",
+      "status": "canonical",
+      "label": "Scroll narrative must pin-until-complete",
+      "rule": "require",
+      "primitives": ["pin-until-complete"]
+    },
+    {
+      "id": "reduced-motion-required",
+      "status": "canonical",
+      "label": "Reduced motion specified",
+      "rule": "require"
+    },
+    {
+      "id": "one-background-system",
+      "status": "canonical",
+      "label": "One background system",
+      "rule": "require"
+    },
+    {
+      "id": "safe-inset",
+      "status": "canonical",
+      "label": "Safe inset type",
+      "rule": "require",
+      "notes": "px-8 / 2rem min. Prefer md:px-14+."
+    },
+    {
+      "id": "stub-primitive-not-shippable",
+      "status": "canonical",
+      "label": "Stub primitives cannot ship",
+      "rule": "ban",
+      "notes": "Fill numbers in motion-primitives.json before a SKU cites a stub id."
+    },
+    {
+      "id": "marquee-quiet-only",
+      "status": "canonical",
+      "label": "Marquee only as quiet proof",
+      "rule": "allow",
+      "primitives": ["infinite-marquee"],
+      "notes": "Never the section identity."
+    },
+    {
+      "id": "wow-register-opt-in",
+      "status": "canonical",
+      "label": "Wow register is opt-in",
+      "rule": "allow",
+      "notes": "jewel-chrome, velvet-nocturne, candy-couture, kinetic-poster, ceramic-gloss, resin-object, ink-riot, solar-gilt, op-signal, arcade-atelier. Pair with a wow theme and one wow primitive. See WOW.md."
+    },
+    {
+      "id": "wow-not-default-fintech",
+      "status": "canonical",
+      "label": "Wow is not default fintech or Swiss",
+      "rule": "ban",
+      "notes": "Do not put candy-couture, arcade-atelier, or strobe on calm-fintech / swiss-minimal unless the operator explicitly asks."
+    },
+    {
+      "id": "wow-one-signature",
+      "status": "canonical",
+      "label": "One wow primitive per section",
+      "rule": "require",
+      "notes": "No jelly + strobe + sequin + chrome drip stacked. Enter is separate."
+    },
+    {
+      "id": "wow-not-kit",
+      "status": "canonical",
+      "label": "Wow is not Magic UI",
+      "rule": "ban",
+      "notes": "Aurora mesh, shiny H1, border beam, emoji confetti, neon city, rainbow chrome still fail even on the wow register."
+    },
+    {
+      "id": "material-you-not-ios-glass",
+      "status": "canonical",
+      "label": "Material You is not iOS glass",
+      "rule": "ban"
+    },
+    {
+      "id": "footer-complete-not-linkdump",
+      "status": "canonical",
+      "label": "Footer must be complete",
+      "rule": "require",
+      "kinds": ["footer"],
+      "notes": "Dopamine-class: brand, nav, legal, motion. Not four gray columns."
+    },
+    {
+      "id": "pricing-not-three-equal-cards",
+      "status": "canonical",
+      "label": "Pricing is not three equal kit cards",
+      "rule": "ban",
+      "kinds": ["pricing"]
+    },
+    {
+      "id": "features-not-default-bento",
+      "status": "canonical",
+      "label": "Features is not default bento",
+      "rule": "ban",
+      "kinds": ["features"]
+    },
+    {
+      "id": "no-em-dash-buyer-copy",
+      "status": "canonical",
+      "label": "No em dash in buyer copy",
+      "rule": "ban"
+    }
+  ]
+}

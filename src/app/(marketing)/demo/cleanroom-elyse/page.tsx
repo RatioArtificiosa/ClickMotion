@@ -17,19 +17,20 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ELYSE · Luxury Wellness Retreat Scroll Hero",
+  title: "ELYSE Cleanroom · Scroll Narrative",
   description:
-    "Cleanroom reference for MS-HERO-ELYS01. Private wellness retreats: scroll owns the sanctuary film. Sanctuaries, ritual, return.",
+    "Pin-until-complete PSAVE wellness scroll narrative: scroll aims, film plays forward and reverse. Golden-hour earth, cream type.",
 };
 
 /**
- * Cleanroom reference for MS-HERO-ELYS01.
- * Storefront uses scroll-scrub capture of this build + client HD film.
+ * Cleanroom demo - MS-HERO-ELYS01 ELYSE.
+ * Pin-until-complete on the film stage; membership band after the pin releases.
+ * Do not lock the page to overflow-hidden (the closing band must be reachable).
  */
 export default function CleanroomElysePage() {
   return (
     <div
-      className={`${display.variable} ${sans.variable} min-h-screen bg-[#0b0907] text-[#f4ede3]`}
+      className={`${display.variable} ${sans.variable} bg-[#0b0907] text-[#f4ede3]`}
       style={{ fontFamily: "var(--font-elyse-sans), system-ui, sans-serif" }}
     >
       <ElyseScrollNarrative />

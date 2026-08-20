@@ -1,0 +1,78 @@
+---
+id: "MS-SEC-FEAT09"
+title: "PIKE - Kaleido Fold Features"
+slug: "pike-kaleido-fold-features"
+description: "Boardwalk machines. One fold. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "lifestyle"
+subcategory: "arcade"
+styleTags: ["playful"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "arcade-atelier"
+tokenTheme: "chrome-bubblegum"
+motionPrimitive: "kaleido-fold"
+enterRecipe: "wobble-land"
+compatibleWith: ["MS-HERO-VERV01", "MS-HERO-ACTU01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-pike"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["arcade-features", "boardwalk-shop", "machine-list"]
+---
+
+## Promise (buyer-facing)
+
+PIKE is a mid-page **features** board that reads as a boardwalk room, not a bento. One machine name. It folds 60 degrees and lands.
+
+**Why use it:**
+- The fold is the design. The board never says kaleidoscope
+- Stage is bubblegum. Chrome is the catch
+- Sits after Verve, Actually!, or Dopamine without copying Tilt or Brine
+
+## Design System
+
+Stage `#F7C6D8`. Ink `#1A1A1A`. Unbounded display. Syne UI.
+
+**Primitive:** `kaleido-fold` (60deg, 0.88, 520ms). **Enter:** `wobble-land`.
+
+**Anti-slop:** HitCounter, Comic Sans, infinite kaleidoscope loop, three icon cards.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, name, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| pieces[].name | Gottlieb | 24 |
+| pieces[].period | The Gottlieb on the boardwalk side still tilts... | 180 |
+| place | Boardwalk, Asbury Park | 40 |
+
+## Motion Specification
+
+Pin-until-complete. Fold once per machine. Reduced: static name, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. One fold. Never a looping kaleidoscope.

@@ -1,0 +1,59 @@
+---
+id: "MS-SEC-TEST01"
+title: "WITNESS - Editorial Statements Section"
+slug: "witness-editorial-statements-section"
+description: "A board of statements. One voice holds the page. Not a row of avatar cards. Restage the voices until they sound like your rooms."
+version: "0.1.0"
+created: "2026-08-13"
+updated: "2026-08-13"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "testimonials"
+category: "agency"
+subcategory: "design-studio"
+styleTags: ["editorial", "luxury", "minimal"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "luxury-editorial"
+tokenTheme: "fashion-ink-light"
+motionPrimitive: "card-takeover"
+enterRecipe: "drop-drape"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-SABL01", "MS-SEC-HELI01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+liveDemo: "/demo/cleanroom-witness"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 6500
+useCases: ["fashion-proof", "studio-statements", "editorial-testimonials"]
+---
+
+## Promise (buyer-facing)
+
+WITNESS is a mid-page **statements section**. A name is chosen. The line takes the board. Visitors do not skim three avatar cards. They sit with one voice.
+
+## Design System
+
+**Famous-UI craft direction (not a clone):** magazine pull quote × SSENSE restraint × Helix board manners. Paper, not glass.
+
+**Design language:** `luxury-editorial`  
+**Token theme:** `fashion-ink-light`  
+**Motion primitive:** `card-takeover` (crossfade 480ms, ease `[0.22, 1, 0.36, 1]`)
+
+**Enter (support, once on view):** `drop-drape` (elegant). Duration 900ms, stagger 90ms. Names and quote land, then a name click still takes the plate.
+
+**Anti-slop hard ban:** circular avatars, 5-star rows, logo marquee as proof, three equal quote cards, Inter italics on a gray tile.
+
+## Expected Output
+
+A single React section. Index of names. One quote owns the plate. No portraits required.

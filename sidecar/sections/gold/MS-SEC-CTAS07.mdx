@@ -1,0 +1,80 @@
+---
+id: "MS-SEC-CTAS07"
+title: "SOL - Noon Flash CTA"
+slug: "sol-noon-flash-cta"
+description: "Bleached noon. One photography flash. Restage the porch until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "lifestyle"
+subcategory: "waitlist"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "solar-gilt"
+tokenTheme: "noon-bleach"
+motionPrimitive: "flash-pop"
+enterRecipe: "fade-hold"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-NOMA01", "MS-HERO-MERI01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-sol"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 4800
+useCases: ["porch-close", "noon-reservation", "desert-cta"]
+---
+
+## Promise (buyer-facing)
+
+SOL is a mid-page **close** that reads as noon on a porch, not a checkout bar. One flash. One chair.
+
+**Why use it:**
+- The flash is the design. The board never says flash
+- Stage is bleached noon. Rust is the type
+- Sits after Elyse, Nomad, or Meridian without copying Heat
+
+## Design System
+
+Stage `#F7F1DC`. Ink `#C45A12`. Accent `#E8A317`. Cinzel display. Outfit UI.
+
+**Primitive:** `flash-pop` (80ms, count 1). **Enter:** `fade-hold`.
+
+**Anti-slop:** crypto foil, aurora gold, three pills.
+
+## Layout Structure
+
+Masthead, headline, period, street, one button.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| headline | Come in before the heat does. | 48 |
+| period | Iced coffee until we run out, which in July is about 1:40... | 160 |
+| place | Congress Street, Tucson | 40 |
+| ctaLabel | What's on lunch | 24 |
+| doneLabel | Sent you today's card | 28 |
+
+## Motion Specification
+
+One photography flash after land. Click confirms. No second flash. Reduced: no flash.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not clone Heat's foil stamp.

@@ -1,0 +1,156 @@
+---
+id: "MS-SEC-FEAT03"
+title: "KERN - Kinetic Poster Features"
+slug: "kern-kinetic-poster-features"
+description: "Two inks hit the sheet. Giant type collides and overprints. Restage the lockup until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "fashion"
+subcategory: "poster"
+styleTags: ["editorial", "brutalist", "playful"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "kinetic-poster"
+tokenTheme: "poster-day"
+motionPrimitive: "type-collision"
+enterRecipe: "offset-print"
+compatibleWith: ["MS-HERO-REVL01", "MS-SEC-HELI01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-kern"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5800
+useCases: ["fashion-poster-features", "campaign-lockup", "two-ink-board"]
+---
+
+## Promise (buyer-facing)
+
+KERN is a mid-page **features section** that reads as a pasted poster, not a bento. Two words slam from opposite sides and lock as overprint. Visitors do not scan six icon tiles. They take a wall.
+
+**Why use it:**
+- The lockup is the capability. Crop is the layout
+- Two inks only. Vermilion multiplies through black
+- Hover or click a sheet. The next pair collides
+- Sits after Revel, Helix, or Verve without copying the helix
+- Built for houses that paste a season, not a grid
+
+## Design System
+
+**Aesthetic Direction:** **KERN** - mid-page **kinetic poster** (not a hero, not Issue, not a type kit). Stage `#F2EFE4`. Ink `#111111`. Accent `#FF3B00` as the second ink only. Archivo Black display. Inter period. IBM Plex Mono labels.
+
+**Famous-UI craft direction (not a clone):** experimental poster × Helix crop × a wheatpaste wall. Two type roles. No glow. No mesh.
+
+**Design language:** `kinetic-poster` (wow register)  
+**Token theme:** `poster-day`  
+**Motion primitive:** `type-collision` (120px from each side, 380ms, ease `[0.55, 0, 0.15, 1]`)
+
+**Enter (support, once on view):** `offset-print`. Misregister `-7px / 7px` that locks. Land ~700ms. Collision after land. Reduced motion skips enter and shows the composed lockup.
+
+**Typography:**
+- Collision words: Archivo Black, `clamp(4.6rem, 22vw, 13.25rem)`, tracking `-0.07em`, line `0.74`, uppercase
+- Period: Inter ~15px, muted
+- Masthead / indexes / place: IBM Plex Mono, 10–11px, uppercase tracking `0.2em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#F2EFE4` | Your paper |
+| Ink | `#111111` | First ink |
+| Muted | `#3A3A3A` | Period |
+| Accent | `#FF3B00` | Second ink |
+| Overprint | multiply blend | Do not add a third ink |
+
+**Anti-slop hard ban:** three equal cards, icon bento, shiny H1, glow on every word, RGB chromatic-aberration kit, school-bus rave, mesh, Issue gray board clone, Helix orbit.
+
+**Differentiation:**
+| vs | Kern must not become |
+|----|----------------------|
+| Issue | Gray spread that turns. Kern is a pasted collision |
+| Atlas | Swiss name rise. Kern overprints two inks |
+| Helix | Spatial gallery. Kern is one lockup on a wall |
+| Magic UI | Split-flap / shiny text. Kern is print |
+
+## Layout Structure
+
+`100dvh` poster. Overflow hidden. Type is allowed to crop.
+
+1. Masthead: Kern left, sheet index right
+2. Lockup: two words, same cell, opposite slam, multiply overprint
+3. Foot: job name, place, period, three indexes
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Kern | 24 | Masthead |
+| lockups[0–2].name | On the avenue / At the press / In the shop | 28 | Plain job line |
+| lockups[0–2].a / .b | Tuesday Night / Black Red / Hand Set | 12 each | Collision pair. English a visitor can read |
+| lockups[].place | Echo Park, Los Angeles / … | 40 | Real places, restage |
+| lockups[].period | New posters went up on the avenue this week. They come down Sunday... | 160 | Site copy. Not print slang |
+
+## Motion Specification
+
+**Signature (one):** type-collision. After land, the pair slams 120px from each side in 380ms. Hover or click an index (or arrows) restages and slams again. Final pose is a slight misregister. Not a marquee. Not three cards rising.
+
+**Enter (support, once on view):** `offset-print`. CSS translate. Interaction starts after land.
+
+**Engine:** CSS enter. CSS collision.
+
+**Reduced motion:** composed rest. Words already overlapped. Instant sheet swap. No slam.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section.
+
+## Video / Media Integration
+
+None. Paper and type. No vault film.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥768px | Indexes sit on the right of the foot |
+| <640px | Type scales down. Indexes share the row |
+
+## Accessibility
+
+- `prefers-reduced-motion`: composed lockup, instant swap
+- Contrast on cream ≥ 4.5:1 for ink. Vermilion is the second ink, not the only text
+- Keyboard: sheet tabs, arrows after land
+- Semantic `<section>`, `role="tablist"`, `aria-live="polite"` on the lockup
+
+## Performance Notes
+
+- No video, no WebGL, no Lottie
+- One slam at a time. `will-change` only on the two words
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`KernFeaturesSection.tsx`) plus CSS. Do not install a poster kit. Do not lay out three feature cards. Do not copy Issue or Helix.
+
+**Lovable / Bolt:** Same section as a mid-page poster. Imports at top. Replace lockup words and places. Keep two inks. Keep multiply on the second word.
+
+## Expected Output
+
+A single React features section that:
+1. Is a **poster**, not a bento
+2. Offsets in, then collides two words
+3. Uses poster-day tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

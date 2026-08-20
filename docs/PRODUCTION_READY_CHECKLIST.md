@@ -1,8 +1,12 @@
 # ClickMotion — Production-Ready Product Checklist
 
-**Status:** Master publish gate · Canonical protocol · 2026-08-08  
+**Status:** Master publish gate · Canonical protocol · 2026-08-11  
 **Audience:** Operators + any AI agent shipping a SKU for sale  
 **Brand:** ClickMotion (customer-facing) · internal repo may still say MS  
+
+**MANDATORY START:** Read [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md) first, then work this file top → bottom.  
+Do **not** claim production/sale ready from memory. Do **not** skip product folder + zip for rebuild flagships.  
+**After first production post:** Phase **12** = first pass complete → **tell the operator you are finished** → **ask permission** for **Platinum Second Revision** → Phase **13** ([`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md)). Never skip Phase 13 on a new production SKU.
 
 This is the **single ultra-thorough checklist** for a product that is **complete, sellable, and package-excellent**. Do **not** mark `status: published` until every **applicable** box is checked. Flagships must clear **every** section; simple sections may skip video/PDF-gen steps only where noted “N/A if…”.
 
@@ -12,7 +16,7 @@ This is the **single ultra-thorough checklist** for a product that is **complete
 |-------|------|
 | Paths, roles, naming, vault immutability | [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md) |
 | Product UX, product page layout, storefront behavior | [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) |
-| Buyer package PDF structure + voice | [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) |
+| Buyer package PDF + **files zip** structure + voice | [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) (**§10 = full zip protocol**) |
 | Brand wordmark + voice | [`BRAND.md`](./BRAND.md) |
 | Factory velocity / factory steps | [`PRODUCTION_PROCESS.md`](./PRODUCTION_PROCESS.md) |
 | Prompt density / Deepseek phases | [`DEEPSEEK_PROMPT_PIPELINE.md`](./DEEPSEEK_PROMPT_PIPELINE.md) |
@@ -20,22 +24,28 @@ This is the **single ultra-thorough checklist** for a product that is **complete
 | Motion / code scorecard detail | [`QUALITY_CHECKLIST.md`](./QUALITY_CHECKLIST.md) (40 pts nested below) |
 | Taxonomy IDs | [`TAXONOMY.md`](./TAXONOMY.md) + `src/config/taxonomy.ts` |
 
-**Golden prompt + package standard (do not regress):** Meridian Product Package PDF (layout + prompt quality).  
-Current opaque path is registered in `src/lib/product-packages.ts` (example:  
-`public/packages/MS-HERO-MERI01/Meridian-package-p4ltcy7t4p0c-pd1w65.pdf`).  
-Generator: `scripts/generate-product-package-pdf.py` (builds Meridian + Aether + Vertex).  
-**All package PDFs use opaque suffix codes** (`{Product}-package-{OpaqueId}[-PaidSalt].pdf`) so shoppers cannot guess paid/free pack filenames from slugs.  
-**Meridian layout + prompt density is the gold standard.** Clone structure, voice, tool set, and quality bar for every later SKU.
+**Golden prompt + package standard (do not regress):**  
+- **PDF layout + prompt density:** Meridian Product Package PDF.  
+- **Files zip tree:** Studio Sequence (`Studio-files-…zip` under `MS-SEC-STUDIO01`).  
+
+Current opaque paths are registered in `src/lib/product-packages.ts`.  
+Generator (PDF): `scripts/generate-product-package-pdf.py` (Meridian + Aether + Vertex).  
+**All package PDFs and files zips use opaque suffix codes**  
+(`{Product}-package-{OpaqueId}[-PaidSalt].pdf` · `{Product}-files-{OpaqueId}[-PaidSalt].zip`)  
+so shoppers cannot guess paid/free pack filenames from slugs.  
+**Meridian PDF + Studio zip structure are the gold standards.** Clone them for later SKUs.
 
 ---
 
 ## How to use this document
 
-1. Copy the **SKU header** below into a ticket / PR / admin note.  
-2. Work top → bottom (factory order).  
-3. Check every box. Write **N/A + why** only when the mode truly does not apply.  
-4. Final sign-off requires **operator + optional second eyes** on package PDF and storefront capture.  
-5. AIs must re-read this checklist before claiming “ready for production.”
+1. Open [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md) (entry gate + gold standards).  
+2. Copy the **SKU header** below into a ticket / PR / admin note.  
+3. Work top → bottom (factory order).  
+4. Check every box. Write **N/A + why** only when the mode truly does not apply.  
+5. Final sign-off requires **operator + optional second eyes** on package PDF, **product folder**, and storefront capture.  
+6. AIs must re-read **SHIP_FOR_SALE + this checklist** before claiming “ready for production” or “sale ready.”  
+7. After Phase 12 (first post), agents **must ask** to run **Phase 13 Platinum Second Revision** before claiming ultra-premium / fully complete.
 
 ### SKU header (fill first)
 
@@ -50,7 +60,9 @@ Differentiator:    (vs last 5 published SKUs)
 Operator:          
 Date:              
 Cleanroom route:   /demo/…
-Package PDF path:  /packages/{id}/…
+Product folder:    public/packages/{id}/files/
+Files zip path:    /packages/{id}/{Product}-files-{OpaqueId}[-PaidSalt].zip
+Package PDF path:  /packages/{id}/{Product}-package-{OpaqueId}[-PaidSalt].pdf
 ```
 
 ---
@@ -62,6 +74,8 @@ Package PDF path:  /packages/{id}/…
 - [ ] **0.3** **Differentiation matrix** filled: layout pattern, type system, palette temp, material, signature move, “must not clone.”  
 - [ ] **0.4** Batch anti-samey rules respected (no two heroes share full font pair + near-black + liquid-glass + pill nav; max pill-nav / mesh-bg in batch per PRODUCTION_PROCESS).  
 - [ ] **0.5** **Interaction mode** chosen and honest (V / S / M / 3D / hybrid).  
+- [ ] **0.5a** If mode is **scroll narrative / scroll-scrub / scroll-pivot** or **hybrid with a scroll-narrative leg:** **pin-until-complete is mandatory (100%)** — see [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) **Scroll narrative pin law**. Do **not** plan a tall multi-vh traditional scrollbar track as the product UX.  
+- [ ] **0.5b** If the operator named **PSAVE** (Elyse gold, live Revel, live Vertex, live Still, live Prism): open [`PSAVE.md`](./PSAVE.md) and plan two clocks, product earn track, 1.2x play, 3-frame reverse, leftover dest on lift, picture-gated release, GOP 3 client film. Do **not** plan old Vertex / old Revel seek-scrub, old Still hybrid, or old Prism 520vh GSAP.  
 - [ ] **0.6** **UI reference direction** named (Stripe / Linear / editorial / Swiss / industrial / private bank / etc.). Apple optional, never mandatory for all.  
 - [ ] **0.7** Authority test intent written: “Would a careful human product designer ship this UI?”  
 - [ ] **0.8** Forbidden house chrome listed for this SKU (e.g. Motionsites pill nav, purple mesh, emoji, rainbow text).  
@@ -75,6 +89,8 @@ Package PDF path:  /packages/{id}/…
 - [ ] **1A.1** One-line promise (buyer-facing).  
 - [ ] **1A.2** Who it is for + desire/problem.  
 - [ ] **1A.3** Signature behavior stated in plain English (scroll owns film / mouse follow / 3D orbit / loop film / …).  
+- [ ] **1A.3a** If scroll narrative or hybrid-with-scroll: plain English includes **pin stage until journey complete**, then release; **no traditional long-page scroll** as the method.  
+- [ ] **1A.3b** If PSAVE: prompt teaches destination vs playhead, product earn track, 1.2x forward, reverse every 3rd frame, leftover dest on lift, picture-gated release, page-owns runway, and GOP 3 encode for a replacement film ([`PSAVE.md`](./PSAVE.md)).  
 - [ ] **1A.4** If video: subject required + subject forbidden (no wrong film ever).  
 - [ ] **1A.5** No temporary infrastructure notes in concept that will age (no “DNS not ready,” no internal-only hacks).  
 
@@ -88,6 +104,7 @@ All **applicable** sections present with real content (not TBD):
 - [ ] **1B.2** Layout Structure (nav, regions, dimensions, safe insets).  
 - [ ] **1B.3** Content Slots (default copy → change to; max lengths).  
 - [ ] **1B.4** Motion Specification (**quantified**: duration, ease/bezier/spring, delay, stagger, scrub if scroll, reduced-motion).  
+- [ ] **1B.4a** Scroll-narrative / hybrid-with-scroll: motion spec states **pin-until-complete + virtual progress** (wheel/trackpad/touch drive 0→1; client embed pin + release). **Not** “section height = N × 100vh sticky track” as the default method.  
 - [ ] **1B.5** Video / Media Integration (paths, attrs, overlays, poster, object-fit, forbidden subjects).  
 - [ ] **1B.6** Responsive Behavior (**5 breakpoints**, distinct behavior).  
 - [ ] **1B.7** Accessibility (reduced motion, focus, contrast intent, semantic structure).  
@@ -116,7 +133,7 @@ Density floor (heroes / LPs):
 - [ ] **1C.10** `compatibleWith` IDs exist if set.  
 - [ ] **1C.11** `useCases` / `positionInPage` set if used.  
 - [ ] **1C.12** Storefront **description** (sales, not technical):  
-  - Soft **≤160**, hard **≤180** chars; **no em dash**; **no** GSAP/ScrollTrigger/Three laundry list  
+  - Soft **≤200**, hard **≤230** chars; **no em dash**; **no** GSAP/ScrollTrigger/Three laundry list  
   - **Ultra-premium bar (mandatory from 2026-08-10):** match **Helix (MS-SEC-HELI01)** quality — beautiful craft language; what the visitor feels + what the buyer gains; customization / brand ownership over negative absences (“no film…”); no hype clichés  
   - See `PRODUCT_LAW.md` → Meta panel → Storefront description (reference line + bans)  
 - [ ] **1C.13** Title / short title display clean (dash split rules).  
@@ -143,6 +160,7 @@ Run the full table in [`QUALITY_CHECKLIST.md`](./QUALITY_CHECKLIST.md). Summary 
 - [ ] Easing variety (not easeOut everywhere)  
 - [ ] Stagger 0.05–0.2s  
 - [ ] Scrub true or 0.5–2 (not ~5) when scroll  
+- [ ] **Pin-until-complete** when scroll narrative / hybrid-with-scroll (PRODUCT_LAW)  
 - [ ] Parallax 0.2–0.8, never >1  
 - [ ] `prefers-reduced-motion` covered  
 - [ ] Transform/opacity only (no CLS-y layout anims)  
@@ -196,7 +214,7 @@ Run the full table in [`QUALITY_CHECKLIST.md`](./QUALITY_CHECKLIST.md). Summary 
 - [ ] Paths in MDX + CMS + owner-designs  
 - [ ] Package PDF gate (Phase 8)  
 - [ ] Price tier fair  
-- [ ] Description ≤180  
+- [ ] Description ≤230  
 - [ ] License / commercial note  
 
 ---
@@ -266,10 +284,11 @@ Read [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md) first.
 ## 2E. Storefront previews (MS site proof)
 
 - [ ] **2E.1** Page preview capture (~1600×900 class preferred) → `previewVideo` / storefront role.  
+- [ ] **2E.1b Operator screenshot WebM (when applicable):** If the operator delivered a Premiere/screenshot **WebM**, `previewVideo` for **home + browse + product page** is that **`.webm`** (never re-encode page role to mp4). Fullscreen may remain **mp4**. See [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md) §1A. N/A when only agent capture exists and no operator WebM was provided.  
 - [ ] **2E.2** Fullscreen preview target **1920×1080** when dual-preview required / flagship.  
 - [ ] **2E.3** Capture scripts write **only** storefront paths; never client/master.  
 - [ ] **2E.4** Hide `[data-ms-scroll-cue]` (and similar) in capture so badges are not double-burnt.  
-- [ ] **2E.5** Recording shows **signature interaction** (scroll the scrub, move mouse, orbit 3D).  
+- [ ] **2E.5** Recording shows **signature interaction** (advance pin journey / scrub, move mouse, orbit 3D). For scroll-narrative SKUs, capture may drive **virtual progress** while the stage stays pinned (prefer this over faking a tall page).  
 - [ ] **2E.6** Always **muted** on MS.  
 - [ ] **2E.7** Prefer `controlsList="nodownload"`, no PiP abuse; context-menu blocked on public site (not DRM).  
 - [ ] **2E.8** Display law independent of capture resolution: product main player **~960×540** contain.  
@@ -302,6 +321,7 @@ Every path listed in **all** that apply:
 - [ ] **3.2** Cleanroom lives under `cleanroom/{name}/` with runnable demo route `/demo/...`.  
 - [ ] **3.3** Cleanroom uses **client HD**, not storefront preview.  
 - [ ] **3.4** Scroll/cursor badges on demos are **HTML overlays only**, never baked into client film.  
+- [ ] **3.4a** Scroll-narrative / hybrid-with-scroll cleanroom: **pin-until-complete** — one fixed stage, **no traditional page scrollbar** through a tall multi-vh track; gestures advance virtual/scene progress; animation curves unchanged. Client embed: pin until complete, then release.  
 - [ ] **3.5** First-pass success preferred; if build needs “tribal knowledge,” prompt is incomplete → fix prompt.  
 - [ ] **3.6** Reduced-motion path works (still frame / chapter 1 only for scrub heroes as specified).  
 - [ ] **3.7** Mobile check: no clipped type, tappable CTAs, premium feel retained.  
@@ -384,7 +404,7 @@ Component: `PromptProductView` / `PRODUCT_PAGE_LAYOUT`.
 
 ---
 
-# PHASE 8 — Product Package PDF (buyer delivery gold standard)
+# PHASE 8 — Product package (PDF + product folder + files zip)
 
 **Law:** [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) · **Gold standard:** Meridian `Meridian-package-GOLDEN-RULE.pdf`
 
@@ -432,6 +452,8 @@ Each tool prompt:
 - [ ] **8D.2** Full design brief **inside the PDF** (not “open this path”).  
 - [ ] **8D.3** **Client video URL inside** every tool prompt.  
 - [ ] **8D.4** Scroll/scrub or mode specs quantified for the AI implementer.  
+- [ ] **8D.4a** If scroll-narrative / hybrid-with-scroll: package PROMPT + source encode **pin-until-complete** (not tall sticky multi-vh track as the method). After release at the end, **page owns** scroll until the stage docks (`top >= -2`). Pointer on the next sibling never drives the journey. See PRODUCT_LAW rule **4a**.  
+- [ ] **8D.4b** If PSAVE: package PDF / sold prompt carry the full PSAVE algorithm (including leftover dest on lift, earn track, replacement-film GOP 3). No leftover wheel-gain / GSAP lag / swipe-cap numbers from old Vertex / old Revel / old Still hybrid / old Prism 520vh. (Live Vertex / live Revel / live Still / live Prism `PSAVE_COAST_SEC 0.55` is leftover dest, not that lag.)  
 - [ ] **8D.5** Look & feel + forbidden AI-slop listed.  
 - [ ] **8D.6** Layout + chapters/content exact enough to rebuild.  
 - [ ] **8D.7** Technical note speaks to the AI; human need not know React.  
@@ -458,7 +480,7 @@ Each tool prompt:
 - [ ] **8F.4** No comic fonts, rainbow chrome, “AI generated” watermark.  
 - [ ] **8F.5** Do not change product-page CTA labels as part of PDF work.  
 
-## 8G. Storage & approval
+## 8G. Storage & approval (PDF)
 
 - [ ] **8G.1** File under `public/packages/{productId}/`.  
 - [ ] **8G.2** Naming new: `{Product}-package-{OpaqueId}[-{PaidSalt}].pdf`.  
@@ -472,6 +494,44 @@ Each tool prompt:
 ```bash
 python scripts/generate-product-package-pdf.py
 # → public/packages/{id}/{Product}-package-{OpaqueId}[-PaidSalt].pdf
+```
+
+## 8H. Product folder + files zip (rebuild pack — required for cleanroom flagships)
+
+**Full law:** [`PRODUCT_PACKAGE.md` §10](./PRODUCT_PACKAGE.md) · entry: [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md).  
+**Model (do not forget):** each product has a **product folder** with every file needed to build the end product with AI, **and** a **zip of that same folder** for Get Full Prompt.
+
+```text
+public/packages/{productId}/
+  files/                         ← product folder (edit here)
+  {Product}-files-….zip          ← same contents, downloadable
+  {Product}-package-….pdf        ← buyer manual
+```
+
+- [ ] **8H.1** Product needs a rebuild pack (cleanroom/source flagship) **or** N/A documented why PDF-only is enough.  
+- [ ] **8H.2** **Product folder** exists: `public/packages/{productId}/files/`.  
+- [ ] **8H.3** Product folder contains **all** of: `START-HERE.md`, `PROMPT.md`, `CUSTOMIZATION.md`, `source/`, `assets/` (assets N/A only if pure code with no media).  
+- [ ] **8H.4** START-HERE: buyer steps + “what is / is not in this pack” + ClickMotion · www.ClickMotion.dev.  
+- [ ] **8H.5** PROMPT.md: rebuild from this folder only; no CMS/MDX/admin/storefront paths.  
+- [ ] **8H.6** CUSTOMIZATION.md: ask-AI restage lines (brand, copy, colors, media, pace, mobile, fix).  
+- [ ] **8H.7** `source/` is production-ready; no MS shell, lab-only hacks, or vault path comments.  
+- [ ] **8H.8** `assets/` is **client rebuild media only** (film / GLB / plates / product stills).  
+- [ ] **8H.9** **Banned from product folder and zip:** storefront `*-preview*`, thumbs, CMS, MDX, admin, masters dump, secrets, second-product junk.  
+- [ ] **8H.10** Zip naming: `{Product}-files-{OpaqueId}[-{PaidSalt}].zip` (PaidSalt only if paid). Same OpaqueId family as PDF when possible.  
+- [ ] **8H.11** Zip root = **contents of product folder `files/`** (START-HERE at top level — not nested under `files/`).  
+- [ ] **8H.12** Zip file on disk at `public/packages/{productId}/…files….zip` **and** product folder kept in sync.  
+- [ ] **8H.13** Registered: `filesZipHref`, `filesZipRepoPath`, `checklist.filesZip: true` in `product-packages.ts`.  
+- [ ] **8H.14** Download smoke: signed-in **Get Full Prompt** receives **zip** (not PDF) when zip registered.  
+- [ ] **8H.15** Product folder **kept** after zipping (edit folder → re-zip; never zip-only without folder).  
+- [ ] **8H.16** Gold shape matched to Studio Sequence product folder + zip (structure, not brand copy).  
+
+### Files zip rebuild (reference)
+
+```bash
+# Edit public/packages/{productId}/files/ then:
+cd public/packages/{productId}/files
+zip -r ../{Product}-files-{OpaqueId}[-{PaidSalt}].zip .
+# Windows: Compress-Archive must put START-HERE.md at archive root (not files/START-HERE.md)
 ```
 
 ---
@@ -504,13 +564,17 @@ python scripts/generate-product-package-pdf.py
 - [ ] **11.1** Price tier matches plan matrix (`src/config/plans.ts` / Stripe).  
 - [ ] **11.2** Free vs paid entitlements understood (copy vs unlock).  
 - [ ] **11.3** Paid client filenames use PaidSalt when new protocol applies.  
+- [ ] **11.3b** Paid **package PDF** and **files zip** also use PaidSalt; free packages omit it.  
 - [ ] **11.4** License / commercial-use note in prompt or package as required.  
 - [ ] **11.5** Do not redistribute prompt as buyer’s own product (language present if policy requires).  
 - [ ] **11.6** Checkout / webhook paths unaffected by this SKU (or tested if new).  
+- [ ] **11.7** Get Full Prompt delivery path understood: zip preferred → PDF fallback; free vs paid entitlement.  
 
 ---
 
-# PHASE 12 — Final sign-off (definition of “ready for sale”)
+# PHASE 12 — Final sign-off (definition of “first production ready”)
+
+This phase is **first production post / first sale wiring**. It is **not** the end of the factory.
 
 Print or paste this block into the PR:
 
@@ -528,6 +592,7 @@ Operator: _______________
 [ ] Phase 6 Owner vault + live demo
 [ ] Phase 7 CMS published fields complete
 [ ] Phase 8 Package PDF gold-standard (tools + video URL + no leaks)
+[ ] Phase 8H Files zip (rebuild flagships) or N/A documented
 [ ] Phase 9 Brand / nav if affected
 [ ] Phase 10 Machine gates green
 [ ] Phase 11 Commerce / license
@@ -535,13 +600,67 @@ Operator: _______________
 [ ] Spot-check: product page main ~960×540, muted
 [ ] Spot-check: client pack video ≠ storefront preview
 [ ] Spot-check: open package PDF and paste one tool prompt mentally “would a non-coder succeed?”
+[ ] Spot-check: Get Full Prompt downloads zip when registered; zip root has START-HERE.md
+[ ] Spot-check: zip assets are client rebuild media only (no *-preview*)
+[ ] Spot-check: if scroll-narrative or hybrid-with-scroll → pin-until-complete (no tall multi-vh scrollbar UX) — PRODUCT_LAW
 [ ] No em dashes in public surfaces
 [ ] No temporary “coming soon DNS” language in buyer docs
 
-SIGNED READY FOR SALE: _______________
+SIGNED FIRST PRODUCTION PASS: _______________
 ```
 
-**Publish action:** set `status: published` only after the block is complete.
+**Publish action:** `status: published` may be set when Phase 12 is complete **and** the agent has **told the operator** the first pass is finished and **asked permission** for Phase 13.
+
+**Required agent speech (do not skip):**
+
+> First production pass for {productId} is complete.  
+> May I run the **Platinum Second Revision** to make sure that all is perfectly ultra premium?
+
+---
+
+# PHASE 13 — Platinum Second Revision (mandatory after every new product post)
+
+**Full law + detailed boxes:** [`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md)
+
+**When:** After Phase 12 / first production post of **every** new SKU (and after major re-posts that change package/media/source).  
+**Permission:** Agent must **ask** before running (unless the operator already ordered platinum/second revision in the same message).
+
+### 13A. Permission
+
+- [ ] **13A.1** Operator was told first production pass is **finished**.  
+- [ ] **13A.2** Operator was asked: *“May I run the Platinum Second Revision to make sure that all is perfectly ultra premium?”*  
+- [ ] **13A.3** Operator approved (or explicitly ordered platinum in this turn).  
+
+### 13B. Forensic re-audit (evidence, not vibes)
+
+- [ ] **13B.1** Package folder tree vs gold (Studio / last paid peer).  
+- [ ] **13B.2** Zip flat root + full contents; rebuild after any source fix.  
+- [ ] **13B.3** Cleanroom ↔ package source/asset **hash sync**.  
+- [ ] **13B.4** Dual storefront video + poster + thumb + client media HTTP **200**.  
+- [ ] **13B.5** MDX body **density** ≥ paid peer (all standard sections).  
+- [ ] **13B.6** CMS body matches MDX; description soft ≤200 / hard ≤230; `priceTier` / crown honest.  
+- [ ] **13B.7** Registries: `product-packages`, `owner-designs`, `gallery-utils`, prep doc.  
+- [ ] **13B.8** Demo **200** + product browse **200** + download unauth **401** + zip preferred when registered.  
+- [ ] **13B.9** Source quality: no lab leaks, layout law (`dop-container` etc.), reduced-motion when motion-heavy, cleanup.  
+- [ ] **13B.10** Gallery/product: **no poster flash** (still only on video error).  
+
+### 13C. Fix + re-smoke + verdict
+
+- [ ] **13C.1** Every CRITICAL/HIGH gap fixed in this pass.  
+- [ ] **13C.2** Zip/PDF/CMS re-synced after fixes.  
+- [ ] **13C.3** Final smoke matrix recorded.  
+- [ ] **13C.4** Residuals durable if any (`RESIDUAL_BACKLOG.md` / prep).  
+- [ ] **13C.5** **VERDICT: PASS** reported to operator (or FAIL with blockers).  
+
+```text
+PLATINUM SECOND REVISION — {productId}
+Permission: yes
+VERDICT: PASS | FAIL
+Fixes: …
+Smoke: demo ___ browse ___ zip ___ download ___
+```
+
+**Ultra-premium sale complete** only after Phase 13 PASS.
 
 ---
 
@@ -555,12 +674,13 @@ SIGNED READY FOR SALE: _______________
 4 CLEAN-ROOM     Build from prompt only
 5 VISUAL QA      Screenshot → fix prompt → rebuild
 6 PROOF CAPTURE  Muted storefront page (+ fs)
-7 PACKAGE PDF    Golden-rule PDF + registries
-8 CMS            All media fields + description + tags
-9 PUBLISH        status published → gallery + product
+7 PACKAGE        Golden-rule PDF + files zip staging + zip + registries
+8 CMS            All media fields + description + tags + priceTier
+9 PUBLISH        First production wiring (Phase 12)
+10 PLATINUM      Ask permission → Phase 13 Platinum Second Revision → fix → PASS
 ```
 
-Steady-state target: **2–4 h** video hero; **1–2 h** simple section; **4–8 h** special/3D/mouse.
+Steady-state target: **2–4 h** video hero; **1–2 h** simple section; **4–8 h** special/3D/mouse · **+ Platinum Second Revision** after every post.
 
 ---
 
@@ -580,6 +700,10 @@ Steady-state target: **2–4 h** video hero; **1–2 h** simple section; **4–8
 12. Temporary infrastructure language locked into buyer PDFs.  
 13. Wordmark truncated/clipped or non-white (cream brand) on package.  
 14. AI-kit default look sold as “premium” without real UI reference.  
+15. Files zip ships storefront previews, thumbs, CMS/MDX/admin paths, or secrets.  
+16. Files zip nested under a useless top-level `files/` folder (buyer must see START-HERE at root).  
+17. Rebuild flagship published without registered files zip when cleanroom source is the product.  
+18. `checklist.filesZip: true` without the zip file on disk (API 404).  
 
 ---
 
@@ -588,15 +712,19 @@ Steady-state target: **2–4 h** video hero; **1–2 h** simple section; **4–8
 | Artifact | Path / note |
 |----------|-------------|
 | Meridian package PDF (prompt gold standard) | See `product-packages.ts` · opaque under `public/packages/MS-HERO-MERI01/` |
+| Studio Sequence product folder + zip (rebuild gold) | Folder: `public/packages/MS-SEC-STUDIO01/files/` · Zip: `Studio-files-s7u2d1o9q4x1-p8k2m1.zip` |
+| Ship entry gate | [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md) |
 | Aether / Vertex packages | Opaque PDFs under `public/packages/MS-HERO-AETH01/` and `…VERT01/` |
 | PDF generator | `scripts/generate-product-package-pdf.py` |
+| Files zip law | [`PRODUCT_PACKAGE.md` §10](./PRODUCT_PACKAGE.md) |
 | Meridian cleanroom | `cleanroom/meridian-scroll/` · `/demo/scroll-narrative` |
 | Meridian client HD | `/assets/videos/sequence-01.mp4` (grandfathered; do not rename) |
 | Brand | [`BRAND.md`](./BRAND.md) · Birthstone · FitWordmark |
 | Product page law | [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) · `PromptProductView` |
 | Asset vault | [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md) |
+| Download API | `GET /api/packages/[productId]/download` · zip preferred then PDF |
 
-**Rule:** When improving package prompts, raise the bar to match or beat Meridian gold — never ship thinner buyer packages.
+**Rule:** When improving package prompts, raise the bar to match or beat Meridian PDF gold and Studio zip structure — never ship thinner buyer packages.
 
 ---
 
@@ -621,4 +749,4 @@ Steady-state target: **2–4 h** video hero; **1–2 h** simple section; **4–8
 
 ---
 
-*This checklist is the production protocol. Update it when product law, package gold standard, or vault rules change — and keep Meridian PDF quality as the non-negotiable floor for buyer packages.*
+*This checklist is the production protocol. Update it when product law, package gold standard, or vault rules change — and keep Meridian PDF quality + Studio files-zip structure as the non-negotiable floors for buyer packages.*

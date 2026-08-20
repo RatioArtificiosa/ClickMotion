@@ -1,0 +1,186 @@
+/* WITNESS — editorial pull quotes. Not avatar cards. */
+
+.witness-root {
+  --witness-stage: #f6f4f0;
+  --witness-ink: #111111;
+  --witness-muted: #5c5c5c;
+  --witness-line: #e4dfd6;
+  --ms-pin-fill: #111111;
+  position: relative;
+  color: var(--witness-ink);
+  background: var(--witness-stage);
+  font-family: var(--font-witness-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.witness-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.witness-stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .witness-stage {
+    padding: 2.5rem 3.5rem 3.25rem;
+  }
+}
+
+.witness-masthead {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.85rem;
+}
+
+.witness-masthead-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--witness-ink);
+  transform-origin: 0 50%;
+  display: block;
+}
+
+.witness-brand,
+.witness-meta,
+.witness-kicker,
+.witness-who-role {
+  font-family: var(--font-witness-mono), ui-monospace, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.witness-brand {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.witness-meta,
+.witness-kicker,
+.witness-who-role {
+  font-size: 0.625rem;
+  color: var(--witness-muted);
+}
+
+.witness-kicker {
+  margin: 1.35rem 0 1.25rem;
+}
+
+.witness-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (min-width: 900px) {
+  .witness-body {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.witness-index {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  border-top: 1px solid var(--witness-line);
+}
+
+.witness-index button {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--witness-line);
+  padding: 0.7rem 0;
+  margin: 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--witness-muted);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  letter-spacing: -0.02em;
+  transition: color 220ms ease;
+}
+
+.witness-index button:hover,
+.witness-index button:focus-visible,
+.witness-index button[data-active="true"] {
+  color: var(--witness-ink);
+}
+
+.witness-index button:focus-visible {
+  outline: 1px solid var(--witness-ink);
+  outline-offset: 3px;
+}
+
+.witness-index-house {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-witness-mono), ui-monospace, monospace;
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.witness-plate {
+  display: grid;
+  min-height: 22rem;
+}
+
+.witness-quote-slot {
+  grid-area: 1 / 1;
+}
+
+.witness-quote-slot[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.witness-mark {
+  font-family: var(--font-witness-serif), "Times New Roman", serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  line-height: 0.7;
+  letter-spacing: -0.06em;
+  color: var(--witness-ink);
+  opacity: 0.18;
+  margin: 0 0 0.35rem;
+}
+
+.witness-quote {
+  font-family: var(--font-witness-serif), "Times New Roman", serif;
+  font-size: clamp(1.65rem, 4.2vw, 3.15rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  margin: 0;
+  max-width: 16ch;
+}
+
+.witness-who {
+  margin-top: 2rem;
+}
+
+.witness-who-name {
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.witness-who-role {
+  display: block;
+  margin-top: 0.35rem;
+}

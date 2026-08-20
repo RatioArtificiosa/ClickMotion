@@ -2,9 +2,6 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
   children: ReactNode;
@@ -12,7 +9,7 @@ type Props = {
   className?: string;
 };
 
-/** Simple fade-up — NOT word scrub (that is ScrollIlluminate). */
+/** Simple fade-up. Not word scrub. */
 export function ScrollReveal({ children, delay = 0, className = "" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -23,7 +20,7 @@ export function ScrollReveal({ children, delay = 0, className = "" }: Props) {
       gsap.set(el, { opacity: 1, y: 0 });
       return;
     }
-    const ctx = gsap.context(() => {
+    const play = () => {
       gsap.fromTo(
         el,
         { opacity: 0, y: 12 },
@@ -33,15 +30,23 @@ export function ScrollReveal({ children, delay = 0, className = "" }: Props) {
           duration: 0.6,
           ease: "power2.out",
           delay,
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
+          overwrite: "auto",
         },
       );
-    }, el);
-    return () => ctx.revert();
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        play();
+        io.disconnect();
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      gsap.killTweensOf(el);
+    };
   }, [delay]);
 
   return (

@@ -1,0 +1,153 @@
+---
+id: "MS-SEC-CTAS05"
+title: "HEAT - Sundown Dinner CTA"
+slug: "heat-sundown-dinner-cta"
+description: "Hot sand. The line stamps down. Restage the table until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "hospitality"
+subcategory: "waitlist"
+styleTags: ["luxury", "editorial"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "solar-gilt"
+tokenTheme: "desert-leaf"
+motionPrimitive: "foil-stamp"
+enterRecipe: "fade-hold"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-NOMA01", "MS-HERO-MERI01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-heat"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["dinner-reserve", "desert-close", "gilt-cta"]
+---
+
+## Promise (buyer-facing)
+
+HEAT is a mid-page **close** that reads as a stamped menu, not a gold filter. The line hits oversized, then locks. Click the table to stamp the button.
+
+**Why use it:**
+- The hit is the design. The board never says foil
+- Stage is sand. Leaf gold is the first ink
+- Every line is a slot
+- Sits after Elyse, Nomad, or Meridian without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **HEAT** - mid-page **waitlist / CTA**. Stage `#E8C97A`. Ink `#2A1808`. Leaf `#C9A227`. Cinzel display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** desert couture, hot foil. Radius 4px. No crypto foil.
+
+**Design language:** `solar-gilt` (wow register)  
+**Token theme:** `desert-leaf`  
+**Motion primitive:** `foil-stamp` (scale 1.18, rotate -4deg, 320ms)
+
+**Enter (support, once on view):** `fade-hold`. Land ~1400ms. Stamp after land.
+
+**Typography:**
+- Wordmark: Cinzel 700, uppercase tracking `0.12em`
+- Headline: Cinzel 700, `clamp(2.6rem, 8.2vw, 5.6rem)`
+- Period: Outfit ~17px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#E8C97A` | Your sand |
+| Ink | `#2A1808` | Your dark |
+| Muted | `#7A5A28` | Period |
+| Accent | `#C9A227` | Leaf gold |
+
+**Anti-slop hard ban:** crypto foil, aurora gold, stock desert photo, Facet jewel clone.
+
+**Differentiation:**
+| vs | Heat must not become |
+|----|------------------------|
+| Facet | Swinging stone. Heat is a stamp |
+| Rouge | Lacquer. Heat is sand |
+| Elyse | Sanctuary hero. Heat is a table |
+
+## Layout Structure
+
+`100dvh` stage.
+
+1. Masthead: Heat left, Tonight right
+2. Headline, period, place
+3. Foot: one button
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Heat | 24 | |
+| kicker | Sundown | 24 | |
+| headline | We cook for twenty-two. | 48 | Site copy. Not a caption of the stamp |
+| period | Sundown seating on Canyon Road. If you are driving up from Albuquerque, leave by four... | 160 | |
+| place | Santa Fe, New Mexico | 40 | Real place, restage |
+| ctaLabel | Hold a table | 28 | |
+| doneLabel | We'll hold it | 28 | |
+
+## Motion Specification
+
+**Signature (one):** foil-stamp. After land, the headline scales from 1.18 / -4deg to rest in 320ms. Click stamps the button the same way.
+
+**Enter (support, once on view):** `fade-hold`.
+
+**Engine:** CSS enter. CSS transform stamp.
+
+**Reduced motion:** static mark. One click confirms.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Button full width |
+
+## Accessibility
+
+- `prefers-reduced-motion`: rest, no stamp travel
+- Contrast dark on sand
+- Keyboard: button after land
+
+## Performance Notes
+
+- No video, no WebGL
+- One stamp
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not invent crypto foil. Do not copy Facet.
+
+**Lovable / Bolt:** Same section. Replace the table and the town. Keep the stamp. Keep one button.
+
+## Expected Output
+
+A single React CTA that:
+1. Is a **close**, not a hero
+2. Fades in, then the line stamps
+3. Uses desert-leaf tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

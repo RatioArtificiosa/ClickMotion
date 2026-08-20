@@ -4,9 +4,10 @@
 **SKU:** `MS-SEC-FOLI01`  
 **Type:** `section` (not hero)  
 **Mode:** One-way paper journey (edge-below → face → edge-above)  
+**Drive:** **Pin-until-complete** (PRODUCT_LAW) — virtual progress, not tall multi-vh page scroll  
 **Deck:** Hidden — only the active sheet is visible  
 **Panels:** **5** large dense enterprise glass cards  
-**Background:** Looping client HD motion film under glass (not scroll scrub)  
+**Background:** Looping client HD motion film under glass (not video scrub)  
 **Cleanroom:** `/demo/cleanroom-folio`  
 **Component:** `FolioPivotSection.tsx` (`"use client"`, default export)  
 **Canonical prompt:** `content/prompts/sections/MS-SEC-FOLI01.mdx`
@@ -15,7 +16,9 @@
 
 ## Signature
 
-Sticky `100vh` stage inside a tall section track. **Looping video** under a soft veil. Large **dark translucent liquid glass** sheets take a continuous `rotateX` journey as the user scrolls. Each sheet is a **dense board-ready decision panel** (metrics, rows, lists, quotes). Glass refracts the film. One-way journey - sheets do not reverse.
+**Pinned `100dvh` stage** (one viewport). Wheel / trackpad / touch / keys advance **virtual journey progress 0→1**. **No traditional long-page scrollbar** through a multi-vh track. **Looping video** under a soft veil. Large **dark translucent liquid glass** sheets take a continuous `rotateX` journey as progress advances. Each sheet is a **dense board-ready decision panel**. Glass refracts the film. Animation art is the same paper pivot; only the **method** is pin-until-complete.
+
+**Client embed:** section pins while the journey runs; at progress 0 scrolling up (or progress 1 scrolling down) **releases** so the host page can continue.
 
 ---
 
@@ -27,9 +30,10 @@ Sticky `100vh` stage inside a tall section track. **Looping video** under a soft
 | 0.22-0.78 | ~0° | Full face plateau |
 | 1 | −72° | Edge above |
 
-- Track height ≈ `sheets × 1.55 × 100vh`
+- Journey length effort ≈ `sheets × 1.55` viewports of wheel/trackpad (virtual, not document height)
 - ~18% local-progress overlap + smoothstep for soft handoffs
 - Dense keyframes; mild Y/scale; last sheet holds face longer
+- Capture API: `window.__msScrollNarrative.setProgress(0..1)`
 - `prefers-reduced-motion`: static stacked cards, gradient fallback
 
 ---
@@ -75,15 +79,19 @@ Sticky `100vh` stage inside a tall section track. **Looping video** under a soft
 
 ## Stack
 
-React + TypeScript + Framer Motion (`useScroll` / `useTransform`) + CSS liquid glass. No chart library required.
+React + TypeScript + Framer Motion (`useMotionValue` / `useTransform` / `useReducedMotion`) + CSS liquid glass.  
+**Not** document `useScroll` on a tall multi-vh track. No chart library required.
 
 ---
 
 ## Deliverable
 
-1. `FolioPivotSection.tsx` - configurable sheets / kicker / heading / backgroundSrc  
+1. `FolioPivotSection.tsx` - pin-until-complete + configurable sheets / kicker / heading / vhPerSheet / backgroundSrc  
 2. Five dense pivot glass panels  
 3. Client HD loop under glass  
 4. Reduced motion + reduced transparency  
 5. Demo `/demo/cleanroom-folio`  
-6. Sale wiring: store, MDX, packages, backgrounds, owner designs, gallery maps  
+6. Product folder + files zip + package PDF  
+7. Sale wiring: store, MDX, packages, backgrounds, owner designs, gallery maps  
+
+**Buyer AI must prefer pack `source/FolioPivotSection.tsx` and keep pin-until-complete.**

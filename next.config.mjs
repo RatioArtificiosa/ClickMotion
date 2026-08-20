@@ -1,3 +1,21 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ZERO_THREE = path.resolve(
+  __dirname,
+  "cleanroom/zero-energy-from-prompt/vendor/three"
+);
+
+function isZeroEnergyIssuer(data) {
+  const ctx = String(data.context || "").replace(/\\/g, "/");
+  const issuer = String(data.contextInfo?.issuer || "").replace(/\\/g, "/");
+  return (
+    ctx.includes("zero-energy-from-prompt") ||
+    issuer.includes("zero-energy-from-prompt")
+  );
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -18,6 +36,31 @@ const nextConfig = {
   },
   experimental: {
     mdxRs: true,
+  },
+  webpack: (config) => {
+    // Isolate Zero Energy on three@0.161.0. Never alias the rest of MS (R3F / 0.185).
+    config.plugins.push({
+      apply(compiler) {
+        compiler.hooks.normalModuleFactory.tap(
+          "ZeroEnergyThreeAlias",
+          (nmf) => {
+            nmf.hooks.beforeResolve.tap("ZeroEnergyThreeAlias", (data) => {
+              if (!data || !isZeroEnergyIssuer(data)) return;
+              const req = data.request;
+              if (req === "three") {
+                data.request = path.join(ZERO_THREE, "build/three.module.js");
+              } else if (typeof req === "string" && req.startsWith("three/")) {
+                data.request = path.join(
+                  ZERO_THREE,
+                  req.slice("three/".length)
+                );
+              }
+            });
+          }
+        );
+      },
+    });
+    return config;
   },
   async headers() {
     return [

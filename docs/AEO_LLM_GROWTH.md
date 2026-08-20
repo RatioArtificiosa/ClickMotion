@@ -42,7 +42,7 @@ MCP is documented as **live** at `https://www.ClickMotion.dev/api/mcp` (server n
 - **Own FAQ / blog (markdown):** “How to build a GSAP hero with AI”, “Scroll narrative pattern”, each ending with a product link + free SKU.
 - **GitHub:** Public `awesome-clickmotion` examples, MCP client snippets, `llms.txt` in README.
 - **Directories:** MCP server registries, Product Hunt, AlternativeTo, There’s An AI For That, G2 (later).
-- **Community answers:** Reddit r/webdev, r/CursorAI, r/ClaudeAI — solve a motion problem, link free Actually! / Helix / Nexus.
+- **Community answers:** Reddit r/webdev, r/CursorAI, r/ClaudeAI — solve a motion problem, link free Nexus / Aether / Vertex. Helix and Studio Sequence are Pro.
 
 ### 2. Become the default citation for a narrow niche
 
@@ -75,7 +75,7 @@ Document tools in `/mcp` and keep `llms-full.txt` tool table accurate.
 
 ### 5. Free funnel as marketing R&D
 
-Free SKUs (Actually!, Helix, Nexus, Aether, Vertex) are **citation bait**. Push them in:
+Free SKUs (Nexus, Aether, Vertex) are **citation bait**. Helix and Studio Sequence are Pro. Push free SKUs in:
 
 - Social clips of interactive demos
 - “Steal this free hero” threads

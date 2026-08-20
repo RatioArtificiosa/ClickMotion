@@ -1,0 +1,80 @@
+---
+id: "MS-SEC-CONT04"
+title: "REED - Chromatic Slip Contact"
+slug: "reed-chromatic-slip-contact"
+description: "Vermilion letterpress desk. Send slips 2px, once. Restage the note until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "contact"
+category: "lifestyle"
+subcategory: "studio"
+styleTags: ["editorial"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ink-riot"
+tokenTheme: "vermilion-colophon"
+motionPrimitive: "chromatic-slip"
+enterRecipe: "letterpress-crush"
+compatibleWith: ["MS-HERO-REVL01", "MS-SEC-HELI01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-reed"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["press-inquiry", "invitation-contact", "letterpress-form"]
+---
+
+## Promise (buyer-facing)
+
+REED is a mid-page **contact** that reads as a letterpress desk, not a SaaS form. You don't have to have it finished. The type slips two pixels, once.
+
+**Why use it:**
+- The slip is the design. The board never says chromatic
+- Stage is night paper. One vermilion seal
+- Sits after Revel, Helix, or Verve without copying Mark, Quill, or Holt
+
+## Design System
+
+Stage `#1A1A1A`. Ink `#F5F0E8`. Accent `#E23B2A`. Newsreader display. Inter UI. IBM Plex Mono labels.
+
+**Primitive:** `chromatic-slip` (2px, 200ms). **Enter:** `letterpress-crush`.
+
+**Anti-slop:** floating labels, red website, matrix glitch, smoke-script clone.
+
+## Layout Structure
+
+`100dvh`. Masthead, headline, form.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| headline | You don't have to have it finished. | 64 |
+| period | Most of what I set starts as a note on a phone... | 240 |
+| place | East Market Street, Rhinebeck | 40 |
+| ctaLabel | Here's my note | 28 |
+| doneLabel | Got it | 28 |
+
+## Motion Specification
+
+Plate kisses the page. Send slips once. Reduced: rest, no split. One click sends.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not clone Mark's cascade. Do not clone Quill's smoke.

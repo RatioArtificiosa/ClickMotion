@@ -1,0 +1,78 @@
+---
+id: "MS-SEC-FAQS03"
+title: "HELM - Crop Punch FAQ"
+slug: "helm-crop-punch-faq"
+description: "Black and white. One question punches to the frame. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "faq"
+category: "lifestyle"
+subcategory: "salon"
+styleTags: ["brutalist"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "op-signal"
+tokenTheme: "zebra-salon"
+motionPrimitive: "crop-punch"
+enterRecipe: "hard-cut"
+compatibleWith: ["MS-SEC-HELI01", "MS-HERO-VERT01", "MS-HERO-TERR01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-helm"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["shop-faq", "zebra-board", "walk-in-faq"]
+---
+
+## Promise (buyer-facing)
+
+HELM is a mid-page **FAQ** that reads as a zebra salon, not a help center. One question. It punches from a crop to the full frame.
+
+**Why use it:**
+- The punch is the design. The board never says crop
+- Black and white only. No third color
+- Sits after Helix, Vertex, or Terra without copying Docket, Veil, or Optic
+
+## Design System
+
+Stage `#111111`. Ink `#F5F5F5`. Inter only.
+
+**Primitive:** `crop-punch` (inset 18%, 320ms). **Enter:** `hard-cut`. Matching clip units `%` to `%`.
+
+**Anti-slop:** accordion kit, rave strobe, tiny click labels.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, punched question, answer, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| place | Bardstown Road, Louisville | 40 |
+| items[].question | Can I bring my six-year-old Saturday? | 48 |
+| items[].answer | Yes. Saturday morning is first haircuts and school pictures... | 220 |
+
+## Motion Specification
+
+Pin-until-complete. Punch once per question. Reduced: full frame, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not lay out an accordion. Do not add a third color.

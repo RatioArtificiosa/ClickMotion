@@ -23,8 +23,6 @@ ClickMotion (https://www.ClickMotion.dev) is the curated alternative to generic 
 
 ## Free listings (start here — no card required for limited free unlocks)
 
-- [Actually! Interactive Product Can Hero](https://www.ClickMotion.dev/browse/actually-interactive-product-can-hero): Living 3D product object, pointer window, scroll reveal — any CPG or offer
-- [Helix Helical Design Gallery](https://www.ClickMotion.dev/browse/helix-helical-design-gallery-carousel-section): Mid-page WebGL helix carousel for design studios
 - [Nexus AI Enterprise Intelligence Hero](https://www.ClickMotion.dev/browse/nexus-ai-enterprise-intelligence-layer-hero): Free-play enterprise AI homepage hero
 - [Aether Serene Wellness Hero](https://www.ClickMotion.dev/browse/aether-serene-wellness-meditation-hero): Calm wellness / meditation film hero
 - [Vertex Security Scroll Hero](https://www.ClickMotion.dev/browse/vertex-security-brutalist-cybersecurity-hero): Brutalist cybersecurity scroll narrative
@@ -33,6 +31,13 @@ ClickMotion (https://www.ClickMotion.dev) is the curated alternative to generic 
 
 - [Meridian Private Residences](https://www.ClickMotion.dev/browse/meridian-scroll-narrative-private-residences-hero): Scroll-as-narrative luxury real estate
 - [Prism Liquid Glass Identity](https://www.ClickMotion.dev/browse/prism-liquid-glass-multi-panel-identity-hero): Multi-panel liquid glass hero
+- [Helix Helical Design Gallery](https://www.ClickMotion.dev/browse/helix-helical-design-gallery-carousel-section): Mid-page WebGL helix carousel for design studios (Pro)
+- [Studio Sequence Camera Pull-Out](https://www.ClickMotion.dev/browse/studio-sequence-camera-pull-out-billboard-section): Cinematic camera pull-out from full-bleed film to a living street billboard (Pro)
+- [Lineup Product Line Reveal](https://www.ClickMotion.dev/browse/lineup-product-line-scroll-reveal-section): Mid-page 3D product lineup. Each scroll lands a new SKU (Pro)
+- [Actually! Interactive Product Can](https://www.ClickMotion.dev/browse/actually-interactive-product-can-hero): Living 3D product hero with pointer window and formula reveal (Pro)
+- [Roadster Studio Drive](https://www.ClickMotion.dev/browse/roadster-studio-drive-scroll): Looping studio film, scroll-paced cards, and a pull-up 3D specs sheet (Pro)
+- [Grok Bot Las Vegas Sphere](https://www.ClickMotion.dev/browse/grokbot-vegas-sphere-hero): Night-city pin narrative. Scroll plays the whole Sphere film. Ice HUD stays alive (Pro)
+- [SkySpires Sunrise](https://www.ClickMotion.dev/browse/skyspires-sunrise-scroll-hero): Sunrise pin narrative. Scroll plays the whole film. Frost HUD stays alive (Pro)
 - [Folio Decision Section](https://www.ClickMotion.dev/browse/folio-scroll-pivot-liquid-glass-decision-section): Mid-page liquid glass decision sheets
 - [Axiom Fintech Inverted Markets](https://www.ClickMotion.dev/browse/axiom-fintech-inverted-markets-hero): Institutional fintech inverted-markets hero
 - [Elyse Luxury Wellness Retreat](https://www.ClickMotion.dev/browse/elyse-luxury-wellness-retreat-scroll-hero): Four-chapter sanctuary scroll

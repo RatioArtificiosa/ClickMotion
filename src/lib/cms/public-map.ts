@@ -5,7 +5,9 @@ import type { CmsGenre, CmsProduct } from "./types";
 import {
   DEMO_SLUG_BY_ID,
   shortTitle,
-  typeLabel,
+  typeLabelsJoined,
+  genreLineForProduct,
+  resolvePreviewVideo,
   resolvePreviewVideoFullscreen,
   isScrollExperienceProduct,
 } from "@/lib/gallery-utils";
@@ -41,19 +43,26 @@ export function cmsProductToPublic(
     shortTitle: shortTitle(p.title),
     description: p.description,
     type: p.type,
-    typeLabel: typeLabel(p.type),
+    typeLabel: typeLabelsJoined(p),
     category: p.genreId,
     categoryLabel,
     // Prefer CMS genre label over static taxonomy (admin may rename genres).
-    genreLine: `${typeLabel(p.type)} · ${categoryLabel}`,
+    genreLine: genreLineForProduct(p, p.genreId),
     styleTags: p.styleTags,
     motionIntensity: p.motionIntensity,
     priceTier: p.priceTier,
     difficulty: p.difficulty,
     thumbnail: p.thumbnail || p.poster,
-    previewVideo: p.previewVideo || undefined,
+    previewVideo:
+      resolvePreviewVideo(p.id, { previewVideo: p.previewVideo || undefined }) ||
+      p.previewVideo ||
+      undefined,
     previewVideoFullscreen: resolvePreviewVideoFullscreen(p.id, {
-      previewVideo: p.previewVideo || undefined,
+      previewVideoFullscreen: p.previewVideoFullscreen || undefined,
+      previewVideo:
+        resolvePreviewVideo(p.id, { previewVideo: p.previewVideo || undefined }) ||
+        p.previewVideo ||
+        undefined,
     }),
     poster: p.poster || p.thumbnail,
     liveDemoHref: demoSlug ? `/demo/${demoSlug}` : undefined,
@@ -98,12 +107,16 @@ export function cmsProductToGallery(p: CmsProduct): GalleryPrompt {
     slug: p.slug,
     title: p.title,
     type: p.type,
+    types: p.types,
     category: p.genreId,
     styleTags: p.styleTags,
     motionIntensity: p.motionIntensity,
     priceTier: p.priceTier,
     thumbnail: p.thumbnail || p.poster,
-    previewVideo: p.previewVideo || undefined,
+    previewVideo:
+      resolvePreviewVideo(p.id, { previewVideo: p.previewVideo || undefined }) ||
+      p.previewVideo ||
+      undefined,
   };
 }
 

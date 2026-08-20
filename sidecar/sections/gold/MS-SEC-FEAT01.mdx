@@ -1,0 +1,163 @@
+---
+id: "MS-SEC-FEAT01"
+title: "ATLAS - Systems Features Section"
+slug: "atlas-systems-features-section"
+description: "A swiss specification board. One system holds the page. Names rise from the rule. Restage the lot, the yard, the feed, and the paper until they read as your site."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "tech"
+subcategory: "climate"
+styleTags: ["minimal", "corporate"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "swiss-minimal"
+tokenTheme: "swiss-light"
+motionPrimitive: "text-split-reveal"
+enterRecipe: "paper-slide"
+compatibleWith: ["MS-HERO-TERR01", "MS-HERO-APEX01", "MS-HERO-NEXU01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-atlas"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 7500
+useCases: ["climate-features", "hardware-spec-board", "utility-systems"]
+---
+
+## Promise (buyer-facing)
+
+ATLAS is a mid-page **features section** that reads as a site drawing, not a bento. One system holds the plate. The name rises from a mask. Visitors do not scan six icon tiles. They sit with a figure and three lines of paper.
+
+**Why use it:**
+- Your capabilities feel specified, not marketed
+- Type does the motion. No cards, no icons, no glow
+- Every name, figure, and row is a slot for your yard
+- Sits after Terra Nova, Apex, or Nexus without copying their film
+- Built for climate, hardware, and desks that ship from a drawing
+
+## Design System
+
+**Aesthetic Direction:** **ATLAS** - mid-page **systems / features** (not a hero, not a bento). Gallery white `#FAFAFA`. Ink `#111111`. Radius 0. Grotesk display. Mono labels. Hairline rules.
+
+**Famous-UI craft direction (not a clone):** Apple marketing spec restraint × modernist grid × a one-line electrical drawing. Dry paper. No glass.
+
+**Design language:** `swiss-minimal`  
+**Token theme:** `swiss-light`  
+**Motion primitive:** `text-split-reveal` (word mask, 700ms, stagger 28ms, ease `[0.22, 1, 0.36, 1]`)
+
+**Enter (support, once on view):** `paper-slide`. Duration 640ms, stagger 60ms. Interaction after land (~900ms). Reduced motion skips enter.
+
+**Typography:**
+- Display name: Inter 400, `clamp(2.35rem, 6.4vw, 4.75rem)`, tracking `-0.045em`, line-height `1.02`
+- Figure: Inter 400, `clamp(2.35rem, 6.8vw, 5.35rem)`, tabular-nums, tracking `-0.05em`
+- Period: Inter 13px, muted
+- Labels / masthead / CTA: IBM Plex Mono, 10–11px, uppercase tracking `0.14–0.22em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#FAFAFA` | Your board |
+| Ink | `#111111` | Your type |
+| Muted | `#6B6B6B` | Captions |
+| Line | `#E8E8E8` | Rules |
+
+**Anti-slop hard ban:** icon + title + blurb bento, three equal rounded cards, sage glass leftover from Terra, cyan quantum leftover from Apex, purple mesh, shiny H1, pill docks, Magic UI / v0 feature grid.
+
+**Differentiation:**
+| vs | Atlas must not become |
+|----|------------------------|
+| Kit features | Six icons in a bento |
+| Witness | Quotes and names. Atlas is a spec plate |
+| Ledger | Pin and seats. Atlas clicks a system. No pin |
+| Docket | Questions. Atlas is capabilities |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~1180px.
+
+1. Masthead rule: ATLAS left, folio right
+2. Left legend: kicker SYSTEMS, then index (01 Site survey … 04 County paper)
+3. Plate: split name, figure, period
+4. Horizontal ink rule
+5. Three spec rows (label mono / value sans)
+6. Title block: four system names with figures + solid ink CTA
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Atlas | 24 | Masthead |
+| kicker | Systems | 24 | Lives in the left legend |
+| systems[0–3].name | Site survey / Battery yard / Grid feed / County paper | 28 | Two words so the split reads |
+| systems[0–3].figure | 22.4 ac / 16 MWh / 69 kV / Type II | 16 | |
+| systems[0–3].period | | 120 | Common real places, original to the site. Not invented houses. |
+| systems[].rows | label + value | 3 rows | |
+| ctaLabel | Send me the drawing | 28 | Not Get Started |
+
+## Motion Specification
+
+**Signature (one):** text-split-reveal. Each word sits in overflow hidden and rises `y: 110% → 0`. Duration 700ms. Stagger 28ms. Retriggers when the system changes.
+
+**Enter (support, once on view):** `paper-slide`. Interaction (index, rail, CTA press) starts after land.
+
+**Engine:** Motion (Framer lineage).
+
+**Reduced motion:** names appear whole. No mask rise. Instant plate swap.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section.
+
+## Video / Media Integration
+
+None. Paper board. No background film.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥960px | Left index visible |
+| ≥768px | Full figure scale |
+| <768px | Index hidden. Rail + CTA wrap. Name and figure still own the plate. |
+
+## Accessibility
+
+- `prefers-reduced-motion`: whole names, no rise
+- Contrast on white ≥ 4.5:1
+- Keyboard: index and rail are buttons
+- Semantic `<section>`, `<h2>`, `<dl>`, rail `role="tablist"`
+- `aria-live="polite"` on the display plate
+
+## Performance Notes
+
+- No video, no WebGL, no extra kits
+- One enter spring of slides, one split per change
+- Four plates, only the active one mounted
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`AtlasFeaturesSection.tsx`) plus CSS. Motion for enter and the masked name. Reimplement the mechanic. Do not install Magic UI, shadcnblocks, or a feature-card kit. Do not add icons unless the buyer asks.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's site. Keep two-word names so the split still reads. Keep one system on the plate.
+
+## Expected Output
+
+A single React section that:
+1. Is a **section**, not a site shell
+2. Reveals the system name from a mask when the index changes
+3. Uses swiss-light tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

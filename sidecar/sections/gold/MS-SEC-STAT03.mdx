@@ -1,0 +1,79 @@
+---
+id: "MS-SEC-STAT03"
+title: "PEARL - Sequin Burst Stats"
+slug: "pearl-sequin-burst-stats"
+description: "Platinum case figures. Twelve sequins, once. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "stats"
+category: "lifestyle"
+subcategory: "jewelry"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "jewel-chrome"
+tokenTheme: "vitrine-platinum"
+motionPrimitive: "sequin-burst"
+enterRecipe: "pin-drop"
+compatibleWith: ["MS-HERO-PRSM01", "MS-HERO-MIRA01", "MS-HERO-ELYS01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-pearl"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["jewelry-proof", "atelier-stats", "vitrine-numbers"]
+---
+
+## Promise (buyer-facing)
+
+PEARL is a mid-page **stats** board that reads as a jewelry case, not a ticker. One figure. Twelve sequins leave once.
+
+**Why use it:**
+- The burst is the design. The board never says sequin
+- Stage is the case. Gilt is the stone
+- Sits after Prism, Mirage, or Elyse without copying Facet or Press
+
+## Design System
+
+Stage `#0E0F12`. Metal `#D8D5D0`. Gilt `#C9A24A`. Cinzel display. Outfit UI.
+
+**Primitive:** `sequin-burst` (12 dots, 48px, 420ms). **Enter:** `pin-drop`.
+
+**Anti-slop:** emoji confetti, number ticker kit, four stat cards.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, figure, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| metrics[].figure | 14 | 8 |
+| metrics[].name | Strands that left this week | 40 |
+| metrics[].period | Fourteen went out the door on Thames... | 180 |
+| place | Thames Street, Newport | 40 |
+
+## Motion Specification
+
+Pin-until-complete. Burst once per figure. Reduced: no burst, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Twelve dots. Never a particle rain.

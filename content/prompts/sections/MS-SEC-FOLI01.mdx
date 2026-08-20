@@ -2,17 +2,17 @@
 id: "MS-SEC-FOLI01"
 title: "FOLIO - Scroll Pivot Liquid Glass Decision Section"
 slug: "folio-scroll-pivot-liquid-glass-decision-section"
-description: "For B2B and SaaS growth teams. Five dense liquid-glass decision panels pivot on scroll over motion film - mandate through outcomes, board-ready."
-version: "1.0.0"
+description: "For B2B and SaaS growth teams. Five dense liquid-glass decision panels pivot on a pin-until-complete journey over motion film - mandate through outcomes, board-ready."
+version: "1.2.0"
 created: "2026-08-09"
-updated: "2026-08-09"
+updated: "2026-08-15"
 author: "MS Team"
 status: "published"
 type: "section"
 category: "saas"
 subcategory: "analytics"
 styleTags: ["liquid-glass", "editorial", "corporate", "dark-cinematic"]
-technicalTags: ["scroll-trigger", "video-background", "parallax", "intersection-observer"]
+technicalTags: ["pin-until-complete", "video-background"]
 motionIntensity: "medium"
 difficulty: "advanced"
 priceTier: "pro"
@@ -37,10 +37,20 @@ videoBackgrounds:
 dependencies:
   - { name: "framer-motion", version: "^11.0.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: true }
-estimatedTokens: 8600
+estimatedTokens: 11200
 useCases: ["saas-growth-page", "b2b-services-midpage", "enterprise-process-section", "board-story-section"]
-compatibleWith: []
+compatibleWith: ["MS-SEC-HELI01", "MS-HERO-MERI01"]
 positionInPage: "middle"
+---
+
+## Promise (buyer-facing)
+
+**FOLIO** is a mid-page **pin-until-complete** liquid glass **decision section**: one full-viewport stage, five dense board-ready panels (Mandate → Outcomes), free-play motion film under glass. Wheel and trackpad advance **virtual progress**. Not a tall multi-page scroll. Not a hero.
+
+**Pin freeing (mandatory).** After the last panel, scrolling down releases the pin. Then the **page owns** the wheel until the stage docks at the top (`stage.top >= 0`). Scrolling up in the next section must move the page, not rewind the cards. Pointer on the next sibling never drives the panels.
+
+**How you build it:** download the product pack. Tell your AI: *Build FOLIO using the files in this folder. Read PROMPT.md. Keep pin-until-complete. After release at the end, the page owns scroll until the stage docks (top >= 0). Do not restore a tall multi-vh sticky track.*
+
 ---
 
 ## Design System
@@ -87,12 +97,13 @@ positionInPage: "middle"
 ## Layout Structure
 
 - **Section only** - no forced page intro/outro in the component
-- **Scroll track:** ~`5 × 1.55 × 100vh` (sticky stage inside)
-- **Sticky stage:** `100vh`, video cover + soft veil
+- **Pin-until-complete (mandatory):** one `100dvh` stage — **no** tall multi-vh document scrollbar track
+- **Stage:** `100dvh` pinned viewport, video cover + soft veil
 - **Header:** kicker + heading above deck
 - **Deck:** ~980×560 large glass sheet (absolute stack, hidden deck)
 - **Footer chrome:** step label, dots, progress bar, quiet scroll hint
 - **Safe insets:** stage column `min(1080px, 94vw)`; sheet pad `clamp(1.4rem, 2.8vw, 2.35rem)`
+- **Client embed:** pin while journey runs; release at progress 0 (scroll up) or 1 (scroll down) so the host page continues
 
 ## Content slots
 
@@ -107,11 +118,30 @@ positionInPage: "middle"
 | sheet_04 eyebrow | Execution | 16 |
 | sheet_05 eyebrow | Outcomes | 16 |
 
-Each sheet: `lead` paragraph + dense blocks (`metrics` | `rows` | `list` | `chips` | `quote` | `split`). Configurable via `sheets` prop.
+Each sheet: `lead` paragraph + dense blocks (`metrics` | `rows` | `list` | `chips` | `quote` | `split`). Configurable via `sheets` prop. **Prefer the full default sheet bodies in pack `source/FolioPivotSection.tsx`** (do not invent thin marketing fluff).
+
+| # | Eyebrow | Title (default) |
+|---|---------|-----------------|
+| 01 | Mandate | Align the enterprise on a single growth thesis. |
+| 02 | Insight | See the buyers who convert - and the ones who never will. |
+| 03 | System | Build the operating system, not a campaign of the week. |
+| 04 | Execution | Run a 90-day plan with owners, gates, and kill criteria. |
+| 05 | Outcomes | Report the numbers the board already asked for. |
+
+## Interaction law (non-negotiable)
+
+1. **Pin-until-complete** (PRODUCT_LAW). One `100dvh` stage. **Never** a tall multi-vh document track.  
+2. Wheel / trackpad / touch / keys advance `journeyProgress` **0→1** (virtual distance ≈ sheets × 1.55 × viewport height).  
+3. At progress **0 + scroll up** or **1 + scroll down**, **do not preventDefault** - host page continues.  
+4. After release at **g = 1 + down**, the **page owns** wheel / touch / keys until the stage docks (`top >= -2`). Pointer on the next sibling never drives the cards.  
+5. Map global progress → per-sheet local 0→1 with ~**18% overlap** + **smoothstep**.  
+6. Film free-plays muted. **Never** set `video.currentTime` from progress.  
+7. Capture: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, pageOwns, productId: "MS-SEC-FOLI01" }`. Root: `data-folio-drive="pin"`. After release: `data-folio-owns="page"`.  
+8. Reduced motion: static stacked cards, no pivot, gradient fallback.
 
 ## Motion Specification
 
-**Mode:** Scroll-linked paper pivot (Framer Motion `useScroll` / `useTransform`). **Not** video scrub. Video is muted loop wallpaper under glass.
+**Mode:** **Pin-until-complete** paper pivot (Framer Motion `useMotionValue` journey progress + `useTransform`). Wheel / trackpad / touch / keys advance virtual progress **0→1**. **Not** tall multi-vh page scroll. **Not** video scrub. Video is muted loop wallpaper under glass.
 
 | Local t | rotateX | opacity | note |
 |---------|---------|---------|------|
@@ -119,11 +149,14 @@ Each sheet: `lead` paragraph + dense blocks (`metrics` | `rows` | `list` | `chip
 | 0.22-0.78 | ~0° | 1 | face-on plateau |
 | 1 | −72° | 0 | edge above |
 
+- Virtual journey effort ≈ `sheets × 1.55` viewports of wheel/trackpad (not document height)
 - Local progress: ~18% overlap between sheets; **smoothstep** easing on segment map
 - Dense rotate / opacity / y / scale keyframes (no hard jump)
 - Y travel ~36px; scale 0.96→1→0.96
 - Last sheet holds face longer then soft exit
-- Progress bar `scaleX(scrollYProgress)`
+- Progress bar `scaleX(journeyProgress)`
+- Capture helper: `window.__msScrollNarrative` (includes `pageOwns`)
+- **Pin freeing:** after g=1 + down, page owns until dock
 - **Reduced motion:** static stacked glass cards, gradient fallback (no video), auto height
 
 ## Video / Media Integration
@@ -166,17 +199,46 @@ Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover`.
 
 ## AI Tool Instructions
 
-**Cursor / Claude / Grok Build:** Build `FolioPivotSection.tsx` from this brief only. Wire exact video paths. Framer Motion scroll pivot + liquid glass stack are mandatory. Dense enterprise content blocks, not empty marketing cards.
+**Cursor / Claude / Grok Build:** Build `FolioPivotSection.tsx` from this brief only. Wire exact video paths. **Pin-until-complete** virtual progress + Framer paper pivot + liquid glass stack are mandatory. Dense enterprise content blocks, not empty marketing cards. Do **not** build a tall multi-vh sticky scroll track.
 
-**Lovable / Bolt:** Single self-contained section component; same tokens, five sheets, video loop under glass.
+**Lovable / Bolt:** Single self-contained section component; same tokens, five sheets, video loop under glass, pin-until-complete drive.
 
 ## Expected Output
 
 1. Single React component `FolioPivotSection.tsx` (`"use client"`, default export)
-2. Tall scroll track + sticky stage + looping client HD video under veil
+2. One-viewport pin stage + virtual progress + looping client HD video under veil
 3. Five one-way pivot glass sheets with dense board-ready content
 4. Liquid glass fill + iridescence + specular + edge
 5. Progress + dots + step label
 6. Reduced-motion and reduced-transparency paths
-7. Configurable `sheets`, `kicker`, `heading`, `vhPerSheet`, `backgroundSrc`
+7. Configurable `sheets`, `kicker`, `heading`, `vhPerSheet` (virtual journey effort), `backgroundSrc`
 8. No host marketing shell, no intro/outro forced by the component
+9. Client embed releases pin at journey ends. After release at the end, the page owns until dock
+10. Prefer pack `source/FolioPivotSection.tsx` + `assets/folio-blurry-v1.mp4` when using the files zip
+
+## What to tell your AI
+
+```
+Build FOLIO using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+Keep pin-until-complete virtual progress. After the last card, the page owns scroll until the section docks at the top.
+Do not build a tall multi-vh scroll track. Do not add PSAVE. Do not scrub the film.
+```
+
+### Pin freeing (if scroll feels stuck after the last card)
+```
+After the last card, scrolling down must release the pin.
+Then the PAGE owns the wheel until the section docks at the top of the viewport again (stage.top >= 0).
+Scrolling up in the next section must move the page, not rewind the cards.
+Pointer on the next sibling must never drive the cards.
+```
+
+## Package notes (operators)
+
+- Opaque: `f0l1o9x4k7m2` · PaidSalt: `fl8n3q`  
+- Files zip root = START-HERE.md (no nested `files/` wrapper)  
+- Client media only under package `assets/`  
+- Mode: pin-until-complete + free-play film under glass + paper pivot + pin freeing (page owns until dock)  
+- Pin migration: 2026-08-13 · pin freeing: 2026-08-15  
+
+ClickMotion · www.ClickMotion.dev

@@ -1,0 +1,204 @@
+/* DOCKET — typographic FAQ. Not chevrons. Not cards. */
+
+.docket-root {
+  --docket-stage: #0b0f14;
+  --docket-ink: #f4f7fa;
+  --docket-muted: #9aa8b5;
+  --docket-line: #1c2530;
+  --docket-accent: #c9d4e0;
+  color: var(--docket-ink);
+  background: var(--docket-stage);
+  font-family: var(--font-docket-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.docket-stage {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .docket-stage {
+    padding: 2.5rem 3.5rem 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .docket-stage {
+    padding: 3rem 4.5rem 5rem;
+  }
+}
+
+.docket-masthead {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+}
+
+.docket-masthead-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--docket-ink);
+  transform-origin: 0 50%;
+  display: block;
+}
+
+.docket-brand,
+.docket-meta,
+.docket-kicker,
+.docket-index {
+  font-family: var(--font-docket-mono), ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.docket-brand {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.docket-meta {
+  font-size: 0.625rem;
+  color: var(--docket-muted);
+}
+
+.docket-kicker {
+  font-family: var(--font-docket-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--docket-muted);
+  margin: 2.25rem 0 0.65rem;
+}
+
+.docket-heading {
+  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin: 0 0 2.5rem;
+  max-width: 14ch;
+}
+
+.docket-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--docket-line);
+}
+
+.docket-item {
+  border-bottom: 1px solid var(--docket-line);
+}
+
+.docket-q {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin: 0;
+  padding: 1.15rem 0 1.05rem;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 180ms ease;
+}
+
+.docket-q:hover .docket-title,
+.docket-q:focus-visible .docket-title {
+  color: var(--docket-ink);
+}
+
+.docket-q:hover .docket-num,
+.docket-q:focus-visible .docket-num {
+  color: var(--docket-accent);
+}
+
+.docket-q:focus-visible {
+  outline: 1px solid var(--docket-accent);
+  outline-offset: 4px;
+}
+
+.docket-num {
+  font-family: var(--font-docket-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--docket-muted);
+  padding-top: 0.55rem;
+  transition: color 180ms ease;
+}
+
+.docket-item[data-open="true"] .docket-num {
+  color: var(--docket-accent);
+}
+
+.docket-title {
+  font-size: clamp(1.35rem, 3.4vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: var(--docket-muted);
+  transition: color 180ms ease;
+}
+
+.docket-item[data-open="true"] .docket-title {
+  color: var(--docket-ink);
+}
+
+.docket-a {
+  overflow: hidden;
+}
+
+.docket-a-inner {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 1rem;
+  padding: 0 0 1.65rem;
+}
+
+.docket-rule {
+  width: 1px;
+  background: var(--docket-accent);
+  justify-self: center;
+  min-height: 100%;
+}
+
+.docket-body {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--docket-ink);
+  opacity: 0.88;
+}
+
+.docket-body p + p {
+  margin-top: 0.85rem;
+}
+
+@media (max-width: 639px) {
+  .docket-q,
+  .docket-a-inner {
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0.75rem;
+  }
+
+  .docket-title {
+    font-size: clamp(1.2rem, 6.4vw, 1.7rem);
+  }
+}

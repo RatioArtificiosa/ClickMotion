@@ -2,17 +2,17 @@
 id: "MS-HERO-PRSM01"
 title: "PRISM - Liquid Glass Multi-Panel Identity Hero"
 slug: "prism-liquid-glass-multi-panel-identity-hero"
-description: "For creative studios. Multi-face film with liquid glass panels that pop on both sides as scroll advances the sculpture - never left-column only."
-version: "1.0.0"
+description: "For creative identity studios. Scroll aims a 48-second multi-face film. Liquid glass panels speak from both sides. Dual process: PSAVE plus No Scroller. The picture never jumps a frame."
+version: "2.0.0"
 created: "2026-08-09"
-updated: "2026-08-09"
+updated: "2026-08-15"
 author: "MS Team"
 status: "published"
 type: "hero"
 category: "agency"
 subcategory: "creative"
 styleTags: ["liquid-glass", "editorial", "artsy", "multi-panel"]
-technicalTags: ["scroll-scrub", "video-background", "liquid-glass", "gsap"]
+technicalTags: ["pin-until-complete", "video-background", "liquid-glass"]
 motionIntensity: "aggressive"
 difficulty: "advanced"
 priceTier: "pro"
@@ -32,29 +32,45 @@ videoBackgrounds:
     format: "mp4"
     duration: "48s"
     loop: false
-    sizeMb: 18
+    sizeMb: 126
     poster: "/assets/posters/prism-faces-v1.webp"
 dependencies:
-  - { name: "gsap", version: "^3.12.0", required: true }
-  - { name: "tailwindcss", version: "^3.4.0", required: true }
-estimatedTokens: 9200
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 14000
 useCases: ["creative-portfolio", "ai-identity-landing", "gallery-hero", "studio-homepage"]
-compatibleWith: []
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-REVL01", "MS-HERO-VERT01", "MS-HERO-STIL01"]
 positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**PRISM** is a full-viewport **creative identity pin-until-complete** scroll hero: one studio-mist stage, a 48-second multi-face sculpture film the playhead walks through three acts (Atelier, Proof, Invite) while liquid-glass panels of many sizes float on **both left and right**. **Dual process = PSAVE + No Scroller.** **PSAVE** (Perfect Scroll Video Engine): scroll aims, down plays forward, up plays reverse, the picture never jumps a frame. **No Scroller:** the page does not physically scroll during the journey. Not a tall 520vh sticky track. Not GSAP ScrollTrigger seek-scrub. Not Meridian estate scrub. Not Revel pearl fashion. Not a left-column-only essay.
+
+**Why use it:**
+- Creative studios, identity houses, and fashion-adjacent brands that sell **many faces as one system**
+- Dual-process signature: scroll aims a long even faces film; the picture plays; glass panels follow what is on screen; the page stays still
+- Syne + DM Sans restages cleanly for any prestige identity studio
+- Client HD is pure sculpture film (no burnt UI). Storefront dual previews are separate
+
+Default copy (Now booking through Book a studio intro) is a starting board. Restage panel titles, metrics, quotes, and the atelier band until it is unmistakably yours. **Never collapse to a single left H1 column.**
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build PRISM using the files in this folder. Read PROMPT.md and follow it. Prefer source/PrismLiquidGlass.tsx. Dual process: PSAVE plus No Scroller. Pin-until-complete. Scroll aims on 12 viewports (47.63s even faces: two flicks must not dump the film). Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward at the same 1.2x, one 3-frame step per seek. Never jump a frame. When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Glass panels, moment pill, and the violet bar follow the picture. Release only when the picture arrives. After release the atelier band may scroll in. Replacement films must be re-encoded GOP 3, no B-frames. Do not seek the playhead across the film. Do not restore GSAP ScrollTrigger, a 520vh sticky track, or left-column-only layout. Do not install gsap.*
+
 ---
 
 ## Design System
 
-**Aesthetic Direction:** **PRISM** - liquid-glass multi-panel identity hero. Soft studio mist behind a centered multi-face sculpture. **Panels of many sizes float on LEFT and RIGHT** (chips, metrics, stats, profiles, quotes, features, CTAs). Scroll owns the film timeline. Material system: SVG distortion + shell + specular + stabilized content plate. Syne display + DM Sans. Prism violet / cyan accents.
+**Aesthetic Direction:** Soft studio mist over a centered multi-face sculpture. Canvas `#E8EAEF`, ink `#0E1016`, prism violet `#A78BFA`, soft violet `#C4B5FD`, cyan `#67E8F9`, fuchsia `#F0ABFC`. Syne display, DM Sans UI. White type on liquid glass with a soft text-shadow. **Not** a single left H1 column. **Not** cheap one-blur glassmorphism. **Not** Meridian dark-gold estate. **Not** Revel pearl fashion. **Not** Vertex mono security.
 
-**Famous-UI craft direction (not a clone):** Apple Liquid Glass material discipline (layers, light model, readability) × gallery installation pacing. Never a single left H1 column.
+**Famous-UI craft direction (not a clone):** Apple Liquid Glass material discipline (layers, light model, readability) times gallery installation pacing. One signature system: **PSAVE** on a **pinned 100dvh** studio stage. Scroll aims. The film plays forward or reverse to that moment. Information lives in **both-side** floating panels.
 
 **Typography:**
-- Display: Syne 600-700, tracking tight
-- UI: DM Sans 400-600, 11-14px
-- Chips: 10-11px uppercase tracking
+- Display / panel titles: Syne 600-700, tracking tight
+- UI / body: DM Sans 400-600, 11-14px
+- Chips / eyebrows: 10-11px uppercase tracking
 
 **Color tokens:**
+
 | Token | Value |
 |-------|--------|
 | Studio mist | `#E8EAEF` |
@@ -65,42 +81,284 @@ positionInPage: "top"
 | Fuchsia | `#F0ABFC` |
 | Glass fill | `rgba(255,255,255,0.10-0.18)` |
 
-**Liquid glass stack (mandatory):**
-1. SVG `#prism-glass-distortion` once (turbulence + blur + displacement)
-2. Shell with backdrop-filter blur + saturate
-3. Specular top edge + hairline rim
-4. Stabilized plate under type
-5. Tiers thin / standard / thick
-6. `prefers-reduced-transparency` solid fallback
+**Spacing:** 8px grid. Content max ~1480px. Full-bleed video. Side insets keep the sculpture clear. Safe horizontal inset min ~1.5%.
 
-**Layout law:** Center faces stay clear. Information lives in **both-side** floating panels. Top-center chapter pill. No left-only body dump.
+**Liquid glass stack (mandatory - three live tiers):**
+1. SVG filters once: `#glass-distortion` (Ice Ripple, seed 92, scale 65) and `#glass-distortion-mercury` (deeper, scale 120)
+2. Host isolation + outer glow shadow
+3. FX layer: frost blur + saturate + distortion filter
+4. Dual reflection washes (top-left and top)
+5. Stabilized content plate: white type + text-shadow
+6. Tiers: **silk** (chips/metrics, 18px radius, softer blur) · **ice** (standard) · **mercury** (features/quotes/CTA, deeper refraction)
+7. `prefers-reduced-transparency`: solid elevated dark plates, same layout
 
-**Chapters:**
-1. 01 · Spectrum — open feature left, stats right
-2. 02 · Margins — quote right, profile left, chips both sides
-3. 03 · Clarity — feature left, CTA right
-
-**Anti-slop hard ban:** left-column-only heroes, full-viewport frosted slab, purple mesh sludge, emoji, Meridian/Vertex/Neon/Revel clones, Apple trademarks.
+**Anti-slop hard ban:** left-column-only heroes, full-viewport frosted slab, purple mesh sludge, emoji, Meridian/Vertex/Neon/Revel clones, Apple trademarks, GSAP ScrollTrigger scrub, 520vh sticky track, seeking `currentTime` across a jump.
 
 **Differentiation:**
+
 | vs | Prism must not become |
 |----|------------------------|
-| Revel | Pearl fashion left chapters |
-| Meridian | Dark coastal estate |
-| Vertex | Mono security scrub |
-| Apex | Quantum cyan void |
-| Neon | Rain megacity loop |
+| Old Prism (v1 seek-scrub) | 520vh sticky + GSAP ScrollTrigger scrub 0.55 |
+| Revel | Pearl fashion left chapters, rose bar |
+| Meridian | Dark coastal estate seek-scrub |
+| Vertex | Mono security, 3.6 vh, no footer |
+| Elyse | Gold earth sanctuary, 3.6 vh |
+| Still | Night mindfulness, five chapters, mint bar |
+| Generic agency | Left H1 + one blur card |
 
 ---
 
-## Implementation notes for AI builders
+## Layout Structure
 
-**Cursor / Claude / Grok Build:** Build `PrismLiquidGlass.tsx` from this brief only. Wire exact video paths. GSAP ScrollTrigger scrub is mandatory. Multi-panel both-side field is the signature. Liquid glass is a stack, not one blur.
+- **One pinned `100dvh` stage** in normal document flow. **No** tall spacer. **No** `position: sticky`. **Do not** `overflow: hidden` the host page.
+- Film absolute cover. Center faces stay sacred. Dual side atmosphere (violet/cyan edge wash + top/bottom vignette) so glass has something to refract. Never grey-wash the whole sculpture.
+- Top: PRISM wordmark + Identity studio + nav (Work · Approach · Atelier · Journal) + Book intro glass pill
+- Violet → fuchsia → cyan progress hairline under nav (`scaleX` from **playhead**, origin left, DOM ref every tick)
+- Top-center moment pill follows playhead: **Atelier** (0-0.34) · **Proof** (0.34-0.66) · **Invite** (0.66-1)
+- **Both-side multi-panel field** (desktop `sm+`): chips, metrics, stats, profile, quotes, features, CTA. Different sizes. Staggered tops ~15% to ~80%.
+- Mobile `<sm`: hide the multi-panel field. One mercury strip at the bottom with the active act title
+- Scroll cue at start only ("Scroll to explore") until playhead > 0.06
+- After the picture arrives at 1, the pin **releases** so `#atelier` (next sibling) can scroll in
+- `#atelier` dark band (`#0E1016`): Prism Atelier, "Identity for brands / with many faces.", dual CTAs
 
-### Deliverables
+---
+
+## Content Slots
+
+| Slot | Default | Notes |
+|------|---------|--------|
+| brand | PRISM | Wordmark tracking 0.28em |
+| kicker | Identity studio | Next to wordmark |
+| nav | Work · Approach · Atelier · Journal | Desktop; href `#atelier` (demo may preventDefault) |
+| nav_cta | Book intro | Glass pill |
+| moment | Atelier / Proof / Invite | Playhead bands 0-0.34 / 0.34-0.66 / 0.66-1 |
+| atelier_kicker | Prism Atelier | Closing band |
+| atelier_h2 | Identity for brands / with many faces. | Two lines |
+| atelier_cta | Book a studio intro · View selected work | After release |
+
+### Default panels (exact - both sides)
+
+**Act 1 · Atelier (playhead 0-0.34)**
+
+| id | kind | side | range | tier | Copy |
+|----|------|------|-------|------|------|
+| chip-live | chip | left | 0.02-0.3 | silk | Now booking |
+| metric-brands | metric | right | 0.04-0.32 | silk | 48 / Brands shaped |
+| feature-open | feature | left | 0.00-0.34 | mercury | Identity studio / Your brand has more than one face. / We design systems that hold every expression of you - campaign, product, and culture - without losing the core. |
+| stat-cities | stat | right | 0.08-0.36 | ice | 12 / Cities / Global campaign launches |
+
+**Act 2 · Proof (playhead 0.34-0.66)**
+
+| id | kind | side | range | tier | Copy |
+|----|------|------|-------|------|------|
+| quote-client | quote | right | 0.28-0.58 | mercury | They saw every side of us. / Prism built a visual language our audience finally recognized as whole - fierce, soft, and unmistakably ours. |
+| profile-iris | profile | left | 0.30-0.58 | ice | Iris Vale / Creative Director / Prism Atelier |
+| chip-drop | chip | left | 0.34-0.62 | silk | Spring drop live |
+| chip-awards | chip | right | 0.36-0.64 | silk | Awwwards jury |
+| stat-retention | stat | left | 0.40-0.64 | ice | 94% / Client return / Year-over-year retainers |
+| feature-mid | feature | right | 0.42-0.68 | mercury | What we ship / Systems, not one-offs. / Brand films, digital experiences, and identity kits built to scale from first look to global rollout. |
+
+**Act 3 · Invite (playhead 0.66-1)**
+
+| id | kind | side | range | tier | Copy |
+|----|------|------|-------|------|------|
+| metric-years | metric | left | 0.64-0.94 | silk | 9 / Years open |
+| feature-close | feature | left | 0.66-1.01 | mercury | Next season / Bring your story into the light. / Limited studio slots for brands ready to show every face of who they are - with clarity and courage. |
+| quote-close | quote | right | 0.64-0.96 | ice | Quiet confidence. / The work does not shout. It holds the room - and invites people closer. |
+| cta-book | cta | right | 0.70-1.01 | mercury | Start a project / Book a studio intro / Thirty minutes. Your brief. Our eyes on the work. / Request a slot |
+| chip-nyc | chip | left | 0.76-1.01 | silk | NYC · remote |
+| stat-weeks | stat | right | 0.78-1.01 | silk | 6 wk / Avg. kickoff / From brief to first film |
+
+Panel fade ~0.045. Enter from the side (36px) + 10px rise. Opacity and transform follow the **playhead**, not the wheel target.
+
+Do not invent a sixth act. Do not move all copy to the left.
+
+---
+
+## Motion Specification
+
+**Mode:** Scroll-as-narrative · **pin-until-complete** (**No Scroller**) · **PSAVE** (Perfect Scroll Video Engine). **Dual process.** Scroll sets a destination on `12` viewports. Down plays the film forward at **1.2x**. Up plays it backward at the same **1.2x**, **exactly one 3-frame step per seek**. Never jump a frame. **When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little**, then rate eases to a stop. Glass panels, moment pill, and the violet bar follow the **picture**, not the wheel target. Release only when the **picture** arrives at `0` (up) or `1` (down). Then `#atelier` may scroll in. **Do not** autoplay-loop as primary. **Do not** seek `currentTime` across a jump.
+
+**Hard ban:** tall multi-vh document scrollbar track (legacy `520vh` sticky pattern).
+**Hard ban:** GSAP `ScrollTrigger` scrub `0.55` mapping progress onto `currentTime`.
+**Hard ban:** seeking the playhead to a far destination (`video.currentTime = dest * duration` on a large delta).
+**Hard ban:** a 3.6 aim track on this 47.63s film (two flicks dump dest; feels like watching a video). Locked earn is **12**.
+**Hard ban:** `WHEEL_GAIN`, swipe cap, GSAP lag.
+**Hard ban:** a low-res frame buffer or canvas overlay for reverse. Reverse walks the live video.
+**Hard ban:** releasing the pin because the destination hit 1 while the picture is still walking.
+**Hard ban:** a window wheel listener that keeps driving the film after the pin has released.
+**Hard ban:** a replacement film with one I-frame (or long GOP + B-frames). Reverse will stall mid-film.
+**Hard ban:** pausing on the last wheel tick. The stop is friction, then a graceful slowdown.
+**Hard ban:** installing `gsap` or importing `ScrollTrigger`.
+**Hard ban:** left-column-only layout.
+
+```
+const VIRTUAL_VIEWPORTS = 12;  // GOLD: 47.63s even faces. Not Elyse/Vertex 3.6. Not old 520vh.
+const PSAVE_RATE = 1.2;        // film-seconds per wall-second, both directions
+const PSAVE_FRAME = 1 / 24;    // never skip more than one frame in a forward tick
+const PSAVE_REV_STRIDE = 3;    // reverse: exactly 3 frames per seek (0.125s)
+const PSAVE_LIVE_MS = 280;     // still scrolling if last up/down is inside this window
+const PSAVE_COAST_SEC = 0.55;  // leftover dest floor after last real intent
+const PSAVE_EASE_SEC = 0.55;   // forward rate tapers over last leftover film-seconds
+const PSAVE_FLIP_DEADZONE_PX = 32; // ignore tiny opposite trackpad ticks
+```
+
+**Earn vs perceived time:** this film is **even** faces time (the sculpture morphs the whole 47.63s, not a late kick). Even films that are **short** (Elyse 10s, Vertex 12s) lock at **3.6**. This film is **long**. Two 1800px flicks on 3.6 dump dest past Invite. On **12**, those same flicks aim about one third of the film. The visitor earns every face. Same number as Still and Revel, **different reason** (length, not a kick). Do not copy Elyse 3.6. Do not restore 520vh. Do not flatten the edit.
+
+**The lift:** leftover dest is the Elyse stop. On this 48s film dest still dies (1.2x eats it; a tiny opposite tick snaps dest). After last real intent, dest must sit at least `0.55s` of film ahead. Ignore opposite ticks under `32px`. Forward `playbackRate` stays 1.2 until leftover dest is under `0.55s`, then tapers toward ~0.42. Friction, then a graceful stop. This `0.55` is **not** old GSAP `scrub 0.55`. Live window is **280ms** (Revel/Still-class, not Vertex 220).
+
+**Rebuild algorithm (mandatory):** one `100dvh` stage in **normal document flow**. Next sibling is `#atelier`. Do not `overflow: hidden` the page. Do not import ScrollTrigger or GSAP. Do not use `position: sticky`. Do not build a `520vh` spacer. Gestures map **1:1** onto `12` viewports and only move the **destination**. First **real** opposite gesture snaps destination to the picture. Ignore tiny opposite ticks. Each frame, walk the picture toward that destination at **1.2x**, never more than **1/24s** of film on a forward fallback tick. **Down:** muted `play()` at `playbackRate 1.2`, ease over the last `0.55s` of leftover dest. After they lift, apply the `0.55s` dest floor once if dest is closer than that. **Up:** first real up-scroll cancels a pending forward destination. Walk `currentTime` backward exactly one 3-frame step per seek, **during the gesture and after**. Wait `seeked`. Never seek to the stop point. No loop. No low-res buffer. Glass panels, moment pill, and the violet bar follow the **playhead**. Release only when the **picture** is at `0+up` / `1+down`. Test live `currentTime` as well as the playhead ref (settle can stop ~1 frame short). After release the **page** owns scroll until the stage docks at the top. **Opening frame:** kick-seek `0.04 → 0`, wait `seeked`. Reduced motion keeps a **mid composition at 0.42** (readable Proof-adjacent panels). No chase.
+
+| Element | Motion |
+|---------|--------|
+| Film | PSAVE: play toward destination forward or reverse, never jump a frame |
+| Stage | Pinned 100dvh; no tall page track |
+| Wheel | 1:1 onto the 12 aim track (destination only) |
+| Lift | 0.55s dest floor + rate ease. Friction, then a graceful stop. |
+| Panels | Opacity + 36px side enter from **playhead** (fade 0.045) |
+| Moment pill | Atelier / Proof / Invite from playhead |
+| Progress bar | `scaleX(playhead)` violet → fuchsia → cyan |
+| Reduced motion | 100dvh static stage, playhead 0.42, no PSAVE |
+
+Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, productId: "MS-HERO-PRSM01" }`. `getProgress` is the picture. `getTarget` is leftover dest. Root marker: `data-prism-drive="psave"`.
+
+---
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/prism-faces-v1.mp4` (PSAVE B-roll, GOP 3, no B-frames, 47.63s / 24fps / 1143 frames / **381 I-frames** / 762 P / 0 B / ~126 MB)
+- Poster: `/assets/posters/prism-faces-v1.webp`
+- Storefront page + browse/gallery (presentation only): `/assets/videos/prism-scroll-preview-v1.mp4`
+- Storefront FS (presentation only): `/assets/videos/prism-scroll-preview-fs-v1.mp4`
+- Attributes (client build): muted playsInline preload auto. **No** primary wallpaper loop. **No** autoPlay as the product mode.
+- Object-fit: cover. No intentional CSS zoom or blur on the film.
+
+**Buyer film generation:** pack file `VIDEO_GEN_PROMPT.md` (pure world, no UI).
+
+**Required film subject:** centered multi-face identity sculpture morphing and fragmenting (stone, porcelain, iridescent paint) on soft cool-gray studio. Generous empty left and right thirds for glass. No logos / UI / watermarks.
+
+**Forbidden film subjects:** left-locked portrait only, crowded group shots, readable brand marks, neon cyberpunk, office stock.
+
+**Film encode (if you change the video):** the shipped client HD is H.264, **GOP 3**, **no B-frames**, 24fps, 47.63s, 1143 frames, **381 I-frames**. PSAVE reverse seeks every `0.125s`. The previous encode (~27.9 MB, long GOP) would stall mid-reverse. Re-encode any replacement:
+
+```
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset slow -crf 16 -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart your-film-psave.mp4
+```
+
+Wire that remastered file. Keep 24fps, or set `PSAVE_FRAME = 1/fps` and keep a 3-frame reverse stride. Do not extract PNG frames. Do not use a storefront preview as the hero. Keep leftover dest + 0.55s dest floor on lift. If the new film is much shorter, you may lower the aim track only after two-flick smoke (two flicks must not dump an act). If it is slow-then-kick, keep 12 or raise until the kick is earned.
+
+```txt
+Use ONLY the local paths above. Never hotlink foreign CDNs.
+Scroll aims. The film plays to that moment. Do not skip frames.
+```
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, both-side multi-panel field, large glass |
+| ≥1024px | Full nav; panels at authored widths |
+| ≥640px (`sm`) | Multi-panel field visible; mobile strip hidden |
+| <640px | Hide multi-panel field; one mercury strip at the bottom with the active act; **stage still one viewport** |
+| ≤390px | Tighter type; Book intro stays; film cover |
+| Reduced motion | 100vh static; playhead 0.42; no chase |
+| Reduced transparency | Solid elevated plates; no SVG distortion |
+
+---
+
+## Accessibility
+
+- Semantic header / nav / section / h2 / h3
+- Focus rings violet (`#a78bfa`)
+- White type on darkened glass plates meets contrast intent
+- `prefers-reduced-motion`: mid composition at 0.42. No PSAVE
+- `prefers-reduced-transparency`: solid plates
+- Video decorative (`aria-hidden`)
+- Pin consumes wheel / touch / keys while the journey runs; **releases** at ends so `#atelier` can continue. Do not trap Space on focused links.
+- Do not trap keyboard focus
+
+---
+
+## Performance Notes
+
+- Playhead chase only (no GSAP, no Framer, no ScrollTrigger)
+- Single video element; decode readiness on metadata
+- Kick-seek `0.04 → 0`
+- Progress bar transform via DOM ref; panel React state from playhead
+- Fonts: `display: swap` (Syne + DM Sans)
+- One viewport stage (no tall spacer DOM)
+- Client film **GOP 3 / no B-frames** (not "dense keyframes every 1-2s")
+- Prefer WebP poster
+- SVG filters once; do not clone per panel
+- No Three.js; single hero component budget
+
+---
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder. You should see `START-HERE.md` at the top level.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place film + poster at the public paths above (see START-HERE).
+4. Use `source/PrismLiquidGlass.tsx`. Do not rewrite the engine unless the file is missing.
+5. **Do not install gsap.** Load Syne + DM Sans (`--font-prism-display` / `--font-prism-sans`).
+6. Mount the hero on a page that is **not** `overflow: hidden`.
+7. Verify: page does not physically scroll during the journey; tiny click creeps; fling plays; lift coasts; reverse walks 3-frame steps; panels on both sides; atelier after last frame; reduced motion.
+8. Restage with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**, then GOP-3 remaster before wiring.
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite. `"use client"`. Implement **PSAVE** (12 viewport aim track, **1.2x** forward and reverse, reverse every 3rd frame, leftover dest plus 0.55s dest floor on lift, never jump a frame), glass panels from the **picture**, **no 520vh track**, page-owns `#atelier` after release. If the video is replaced, re-encode GOP 3 / no B-frames first.
+
+**Lovable / Bolt:** Single self-contained component; same tokens and panels. Walk `currentTime` toward the destination on `requestAnimationFrame` at 1.2x, max one 24fps frame per forward tick, reverse every 3rd frame. Still no wallpaper loop. Still **no tall multi-vh track**. Still **no seek across a jump**. Still **no GSAP**. Still **both-side glass**.
+
+Do not rebuild as a tall sticky scroll track. Do not restore GSAP scrub. Do not seek the playhead across a jump. Do not wire a replacement MP4 that still has a long GOP. Do not collapse to left-column-only.
+
+---
+
+## Expected Output
 
 1. Single React component `PrismLiquidGlass.tsx` (`"use client"`)
-2. SVG filter once; tiered glass panels left + right
-3. Scroll track ~520vh, sticky stage, scrub ~0.55
-4. Reduced motion mid-frame; reduced transparency solid plates
-5. No host marketing chrome inside the cleanroom component
+2. **Pinned 100dvh stage** with dual process PSAVE + No Scroller (no tall multi-vh track)
+3. Local faces video the playhead walks (aim **12 vh**, rate **1.2x**, reverse every 3rd frame, 0.55s dest floor on lift, never jump a frame)
+4. Both-side liquid-glass panels (silk / ice / mercury) + moment pill + violet bar + `#atelier` band
+5. Studio mist / violet-cyan system only
+6. No GSAP. No 520vh sticky. No left-only dump.
+7. Reduced-motion path (playhead 0.42)
+8. Host page can scroll to `#atelier` after the picture arrives
+9. Local film + poster paths resolve; no storefront chrome in the client build
+
+---
+
+## What to tell your AI
+
+```
+Build PRISM using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Prefer source/PrismLiquidGlass.tsx.
+Dual process: PSAVE (Perfect Scroll Video Engine) plus No Scroller (pin-until-complete).
+One 100dvh stage. Scroll aims on 12 viewports. The page does not physically scroll during the journey.
+Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward every 3rd frame at the same 1.2x. Never jump a frame.
+When they stop, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Ignore tiny opposite ticks.
+The film is a 47.63s even multi-face sculpture. Two flicks must not dump dest. Do not copy Elyse 3.6. Do not restore 520vh or GSAP scrub.
+Glass panels, moment pill, and the violet bar follow the picture. Release only when the picture arrives. After release the atelier band may scroll in.
+If you change the video, re-encode GOP 3, no B-frames, crf 16, then wire that file.
+Do not import ScrollTrigger or gsap. Do not seek currentTime across a jump. Do not build a tall multi-vh track. Do not collapse to a left-column-only layout.
+```
+
+To restage later, open CUSTOMIZATION.md. To generate a new film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `p8r3sm7k2n4q` · PaidSalt: `pr5m2x`
+- Pack mode: **files zip + PDF** (Studio-class folder). Zip root = START-HERE.md
+- Client media only under package `assets/` (no storefront previews)
+- Client HD: `/assets/videos/prism-faces-v1.mp4` · poster `/assets/posters/prism-faces-v1.webp`
+- Storefront page+browse: `prism-scroll-preview-v1.mp4`. FS: `prism-scroll-preview-fs-v1.mp4`
+- Pin gold: PSAVE · 12 vh aim · 1.2x · 3-frame reverse · 280ms live · 0.55s dest floor + rate ease · 32px bounce ignore · GOP 3 client HD (381 I / 762 P / 0 B)
+- Method spec (operators): `docs/PSAVE.md` §5E / §5B / §9.1
+- Demo: `/demo/cleanroom-prism` (do not overflow-hidden the page)
+- Dual process lock: 2026-08-15 · operator feel lock: "It is perfect."
+- First production post (seek-scrub 520vh): 2026-08-09. 520vh / GSAP scrub are **banned history**.
+
+ClickMotion · www.ClickMotion.dev

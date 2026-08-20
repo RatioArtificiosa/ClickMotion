@@ -1,10 +1,33 @@
 # MS Handoff — For the Next AI (Grok Build)
 
+## Shipping for sale (read first — do not forget)
+
+**Entry gate:** [`docs/SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md)  
+**Full checklist:** [`docs/PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md)  
+**Package law (PDF + product folder + zip):** [`docs/PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) §10  
+**Platinum Second Revision (mandatory after every new product post):** [`docs/PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md) · checklist **Phase 13**
+
+Every rebuild product has a **product folder** (`public/packages/{id}/files/`) with all files needed to make the end product with AI, **and** a **zip of that folder**. Gold: Meridian PDF · Studio Sequence folder/zip · Helix description bar. Re-open the checklist every ship — do not work from vibes.
+
+**After first production post — critical:** Tell the operator the first pass is finished, then **ask permission**: *“May I run the Platinum Second Revision to make sure that all is perfectly ultra premium?”* Only after yes, run the full second-revision gap audit + fixes. Never skip.
+
+---
+
 **Current product law:** [`docs/PRODUCT_LAW.md`](./PRODUCT_LAW.md)  
+**Scroll narrative pin law (mandatory 100% for S + hybrid-with-scroll):** pin-until-complete — fixed stage, virtual progress, no traditional long-page scrollbar UX; client embed pins until the journey ends then releases. Canonical: [`docs/PRODUCT_LAW.md`](./PRODUCT_LAW.md) → **Scroll narrative pin law**.  
+**PSAVE (Perfect Scroll Video Engine):** named film-drive method on Elyse, live Revel, live Vertex, live Still, live Prism, and live **Grok Bot**. Scroll aims, film plays forward/reverse, leftover dest on lift, picture never jumps. Still, Prism, and Grok Bot dual process = PSAVE + No Scroller. Canonical: [`docs/PSAVE.md`](./PSAVE.md). Do not call old Vertex / old Revel / Meridian seek-scrub / old Still hybrid / old Prism 520vh PSAVE. Do not roll PSAVE onto other SKUs unless the operator names it.  
+**Helix (MS-SEC-HELI01):** **No Scroller only** (2026-08-15 feel lock). Platinum Second Revision 2026-08-15: **backend only** (public visuals waived). Virtual progress 5 vh desktop / 3 mobile. Pin freeing: page owns until dock. PaidSalt `t2v8c6` is on the live PDF and zip filenames. Not PSAVE. No gsap / lenis / SmoothScroll / tall spacer. Storefront preview leave as-is.  
+**Mirage (MS-HERO-MIRA01):** **No Scroller only** (2026-08-15 feel lock). Virtual earn 5 × 1.55 vh (7.75 at five sheets). Free-play desert film (not PSAVE, no GOP 3, no reverse). Pin freeing: page owns until dock. Storefront preview leave as-is. Platinum Second Revision 2026-08-15: **backend only** (public visuals waived).  
+**Studio Sequence (MS-SEC-STUDIO01):** **No Scroller only** (2026-08-15 first production). Platinum Second Revision 2026-08-15: **backend only** (public visuals waived). Virtual earn **4 vh desktop / 3 mobile**. Free-play billboard film (not PSAVE, no GOP 3, no reverse, never seek). Camera pull-out 1:1. Pin freeing: page owns until dock. Storefront preview **WebM** leave as-is (ASSET_PIPELINE §1A). PaidSalt `p8k2m1`. No gsap / lenis / SmoothScroll / tall spacer. Listed as **Pro** in `llms.txt` / `llms-full.txt`.  
+**Lineup (MS-SEC-LINE01):** **No Scroller only** (2026-08-16 first production). Platinum Second Revision 2026-08-16: **backend only** (public visuals waived). Virtual earn **N viewports**. Snap on lift. 3D vessel + copy. Pin freeing: page owns until dock. Storefront preview **WebM** leave as-is. PaidSalt `q3n7w2`. No leftover SmoothScroll / lenis-bridge / gsap-register. gsap tweens only.  
+**Actually! (MS-HERO-ACTU01):** **No Scroller only** (2026-08-16 first production + Platinum backend **v2.1.0**). Virtual earn **1.2 vh**. Pointer window + grab + formula reveal. Pin freeing: page owns until dock. Storefront preview leave as-is. PaidSalt `r5m4x9`. No lenis / ScrollTrigger pin.  
+**Roadster (MS-HERO-ROAD01):** **No Scroller only** (2026-08-16 first production + Platinum backend **v2.1.0**). Virtual earn **13.3 vh**. Loop film + enter-hold-exit cards + pull-up sheet + Y-spin GLB. Pin freeing: page owns until dock. Storefront preview leave as-is. PaidSalt `rd7n4x`. No gsap / ScrollTrigger pin. Film never seeks. Not PSAVE.  
+**Grok Bot (MS-HERO-GROK01):** **PSAVE + No Scroller** (2026-08-16 first production + Platinum backend **v2.1.0**). Virtual earn **12 vh**. Whole 62.5s Sphere film. HUD loops stay. Pin freeing: page owns until dock. Storefront page+gallery = operator `GrokBot-VEGAS.webm` (full 63.76s, keep WebM). FS = `GrokBot-VEGAS_FS.mp4`. Never play `grokbot-sphere-v1.mp4` as storefront preview. PaidSalt `gk4n8x`.  
+**SkySpires (MS-HERO-SKYS01):** **PSAVE + No Scroller** (2026-08-16 first production + Platinum backend **v2.1.0**). Virtual earn **12 vh**. Whole 25.04s sunrise film (24fps). HUD loops stay. Glass lock. Pin freeing: page owns until dock. Clone frozen. Storefront is agent capture until operator Premiere. PaidSalt `sk5n2q`.  
 **Media vault (paths, naming, grandfather table):** [`docs/ASSET_PIPELINE.md`](./ASSET_PIPELINE.md)  
 **Prompt authoring (Deepseek):** [`docs/DEEPSEEK_PROMPT_PIPELINE.md`](./DEEPSEEK_PROMPT_PIPELINE.md)  
 
-Product = sold prompt + **locked client HD**. Site gallery/product preview = **separate** muted UI capture. Never move/rename/overwrite client HD after prep. New videos: role folders + `Product-Purpose-OpaqueId[-PaidSalt]`; do not rename existing files.
+Product = sold prompt + **locked client HD** + **buyer package** (folder + zip + PDF). Site gallery/product preview = **separate** muted UI capture. Never move/rename/overwrite client HD after prep. New videos: role folders + `Product-Purpose-OpaqueId[-PaidSalt]`; do not rename existing files.
 
 **Product page shell (locked):** main display **~960×540**, meta height-matched, **3-card** related rail (`justify-between`, titles flush left), genre gallery below independent — see PRODUCT_LAW “Product page layout (template law — locked)” and `PromptProductView` / `PRODUCT_PAGE_LAYOUT`.
 
@@ -14,7 +37,7 @@ Product = sold prompt + **locked client HD**. Site gallery/product preview = **s
 
 **LLM / agent discovery:** `/llms.txt` (+ `/llm.txt` alias, `/llms-full.txt`) · `robots.txt` · `sitemap.ts` · growth playbook [`AEO_LLM_GROWTH.md`](./AEO_LLM_GROWTH.md). MCP documented as live at `/api/mcp` for agents.
 
-**Product Package PDF:** [`docs/PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) · Admin → Product packages · Opaque filenames in `src/lib/product-packages.ts` (Meridian = golden-rule layout; Aether + Vertex sale-ready). Brand: ClickMotion. Full gate: [`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md).
+**Product package (PDF + files zip):** [`docs/PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) — **§10 is the full files zip protocol** (do not forget). Registry: `src/lib/product-packages.ts`. Get Full Prompt prefers `{Product}-files-{OpaqueId}[-PaidSalt].zip` over PDF. Staging: `public/packages/{id}/files/`. Gold PDF: Meridian · Gold zip tree: Studio Sequence. Admin → Product packages. Brand: ClickMotion. Full gate: [`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md) Phase 8 + **8H**.
 
 ## What Was Built
 

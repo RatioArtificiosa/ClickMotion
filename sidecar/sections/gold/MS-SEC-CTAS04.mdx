@@ -1,0 +1,155 @@
+---
+id: "MS-SEC-CTAS04"
+title: "MARK - Fall Show CTA"
+slug: "mark-fall-show-cta"
+description: "A dark sheet. The title drops in letter by letter. Restage the street until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "fashion"
+subcategory: "waitlist"
+styleTags: ["editorial", "brutalist"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ink-riot"
+tokenTheme: "vermilion-colophon"
+motionPrimitive: "glyph-cascade"
+enterRecipe: "offset-print"
+compatibleWith: ["MS-HERO-REVL01", "MS-SEC-HELI01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-mark"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["show-invite", "gallery-close", "title-cta"]
+---
+
+## Promise (buyer-facing)
+
+MARK is a mid-page **close** that reads as a show poster, not a scramble kit. The title falls into place. One vermilion seal. One street.
+
+**Why use it:**
+- The cascade is the design. The board never says letters
+- Stage is night paper. Red is the seal
+- Every line is a slot
+- Sits after Revel, Helix, or Verve without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **MARK** - mid-page **waitlist / CTA**. Stage `#1A1A1A`. Ink `#F5F0E8`. Seal `#E23B2A`. Newsreader italic. Inter UI.
+
+**Famous-UI craft direction (not a clone):** fashion-week title. Square seal. No graffiti clutter.
+
+**Design language:** `ink-riot` (wow register)  
+**Token theme:** `vermilion-colophon`  
+**Motion primitive:** `glyph-cascade` (40px, stagger 22ms, 420ms)
+
+**Enter (support, once on view):** `offset-print`. Land ~700ms. Cascade after land.
+
+**Typography:**
+- Wordmark: Newsreader italic 700
+- Headline: Newsreader italic `clamp(3rem, 11vw, 7.2rem)`
+- Period: Inter ~17px
+- Button: Inter uppercase
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#1A1A1A` | Your night |
+| Ink | `#F5F0E8` | Your paper |
+| Muted | `#9A9488` | Period |
+| Accent | `#E23B2A` | The seal |
+
+**Anti-slop hard ban:** matrix scramble, tags everywhere, Kern collision clone, three pills.
+
+**Differentiation:**
+| vs | Mark must not become |
+|----|------------------------|
+| Kern | Two words collide. Mark is one falling title |
+| Rouge | Lacquer paint. Mark is ink |
+| Helix | Gallery orbit. Mark is a poster close |
+
+## Layout Structure
+
+`100dvh` stage.
+
+1. Masthead: Mark left, This week right
+2. Title glyphs, period, place
+3. Foot: vermilion button
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Mark | 24 | |
+| kicker | This week | 24 | |
+| headline | This Thursday. | 24 | Short display only |
+| period | We printed eighty posters for the Flushing Avenue show... | 160 | |
+| place | Bushwick, Brooklyn | 40 | Real place, restage |
+| ctaLabel | Get a ticket | 28 | |
+| doneLabel | You're on the list | 28 | |
+
+## Motion Specification
+
+**Signature (one):** glyph-cascade. After land, each letter drops 40px with 22ms stagger.
+
+**Enter (support, once on view):** `offset-print`.
+
+**Engine:** CSS enter. Per-glyph transform.
+
+**Reduced motion:** full string at rest. One click confirms.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Button full width |
+
+## Accessibility
+
+- `prefers-reduced-motion`: full title, no drop
+- Contrast cream on near-black
+- Keyboard: button after land
+- Headline `aria-label` is the full string
+
+## Performance Notes
+
+- No video, no WebGL
+- Short display string only
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not scramble body copy. Do not copy Kern.
+
+**Lovable / Bolt:** Same section. Replace the show and the street. Keep the falling title. Keep one seal.
+
+## Expected Output
+
+A single React CTA that:
+1. Is a **close**, not a hero
+2. Offsets in, then the title drops
+3. Uses vermilion-colophon tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

@@ -1,0 +1,158 @@
+---
+id: "MS-SEC-CTAS02"
+title: "ROUGE - Cherry Lacquer CTA"
+slug: "rouge-cherry-lacquer-cta"
+description: "A red room. The word paints on. One chair. Restage the street until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "fashion"
+subcategory: "waitlist"
+styleTags: ["playful", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "candy-couture"
+tokenTheme: "cherry-lacquer"
+motionPrimitive: "lipstick-swipe"
+enterRecipe: "pop-in"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-VERV01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-rouge"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["fashion-waitlist", "salon-close", "lacquer-cta"]
+---
+
+## Promise (buyer-facing)
+
+ROUGE is a mid-page **close** that reads as a lacquered room, not a launch bar. One headline. One street. One chair. The cream paints across the type. Visitors do not pick between three pills. They save a seat.
+
+**Why use it:**
+- The swipe is the design. The board never says swipe
+- Stage is the lacquer. Cream is the second ink
+- Every line is a slot for your house
+- Sits after Revel, Verve, or Dopamine without copying their film
+- Built for rooms that open at night
+
+## Design System
+
+**Aesthetic Direction:** **ROUGE** - mid-page **waitlist / CTA** (not a hero, not Dew, not a Mailchimp bar). Stage `#C41E3A`. Ink `#FFF5F0`. Gloss `#FFD6C8`. Syne display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** couture lacquer × a salon door after eight. Hard-ish button (12px). No blob. No emoji.
+
+**Design language:** `candy-couture` (wow register)  
+**Token theme:** `cherry-lacquer`  
+**Motion primitive:** `lipstick-swipe` (`inset(0% 100% 0% 0%)` → `inset(0% 0% 0% 0%)`, 480ms, ease `[0.2, 0.12, 0.18, 1]`)
+
+**Enter (support, once on view):** `pop-in`. Scale 0.92 / 28px. Land ~880ms. Lipstick after land. Reduced motion skips enter and shows the painted word.
+
+**Typography:**
+- Wordmark: Syne 700, `clamp(1.7rem, 3.2vw, 2.15rem)`
+- Headline: Syne 800, `clamp(2.6rem, 8.4vw, 5.6rem)`, tracking `-0.045em`
+- Period: Outfit ~17px, muted
+- Place / meta / button: Outfit, 10–12px, uppercase tracking `0.16–0.2em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#C41E3A` | Your lacquer |
+| Ink | `#FFF5F0` | Your cream |
+| Muted | `#F2C4C8` | Period |
+| Line | `#A01830` | Rules |
+| Deep | `#8E1028` | Unpainted type |
+
+**Anti-slop hard ban:** three equal pills, Mailchimp email + Subscribe, App Store row, blob button, Dew hold clone, Get Started on a gradient, emoji, kit radius 999.
+
+**Differentiation:**
+| vs | Rouge must not become |
+|----|------------------------|
+| Dew | Warm paper hold. Rouge is a lacquer swipe |
+| Verve | Creator night hero. Rouge is a mid-page close |
+| Kern | Poster collision. Rouge is one painted line |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset. Max width ~1040px.
+
+1. Masthead: Rouge left, Tonight right
+2. Body: headline (rest + swipe layer), period, place
+3. Foot: one button
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Rouge | 24 | |
+| kicker | After eight | 24 | |
+| headline | If you want your lips done, come after eight. | 72 | Site copy. Not a caption of the swipe |
+| period | Dinner on Palm Canyon, and you do not want to do this in a car visor... | 160 | |
+| place | Palm Springs, California | 40 | Real place, restage |
+| ctaLabel | I'll be there | 28 | |
+| doneLabel | See you tonight | 28 | |
+
+## Motion Specification
+
+**Signature (one):** lipstick-swipe. After land, cream paints the headline left to right in 480ms. Hover the button to paint it. Click to keep it and change the label. Same clip units `%` → `%`.
+
+**Enter (support, once on view):** `pop-in`. CSS standing in for the spring. Interaction after land.
+
+**Engine:** CSS enter. CSS clip.
+
+**Reduced motion:** painted rest. One click confirms. No travel.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None. Lacquer field. No vault film.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Button full width |
+
+## Accessibility
+
+- `prefers-reduced-motion`: painted rest, instant confirm
+- Contrast cream on cherry
+- Keyboard: button after land
+- `aria-label` follows the live label
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL, no Lottie
+- One clip at a time
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`RougeCtaSection.tsx`) plus CSS. Do not install a CTA kit. Do not copy Dew hold. Do not lay out three pills.
+
+**Lovable / Bolt:** Same section as a mid-page close. Replace street and hours. Keep the swipe. Keep one button.
+
+## Expected Output
+
+A single React CTA that:
+1. Is a **close**, not a hero
+2. Pops in, then paints the line
+3. Uses cherry-lacquer tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

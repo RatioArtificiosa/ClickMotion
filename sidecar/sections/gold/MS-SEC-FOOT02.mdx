@@ -1,0 +1,78 @@
+---
+id: "MS-SEC-FOOT02"
+title: "BRINE - Ice Neon Footer"
+slug: "brine-ice-neon-footer"
+description: "Glacier close. One tube catches. Restage the rooms until they read as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "footer"
+category: "lifestyle"
+subcategory: "nightlife"
+styleTags: ["playful", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "arcade-atelier"
+tokenTheme: "ice-silver"
+motionPrimitive: "neon-ignite"
+enterRecipe: "pop-in"
+compatibleWith: ["MS-HERO-VERV01", "MS-HERO-ACTU01", "MS-SEC-DOPA01"]
+positionInPage: "end"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-brine"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["night-footer", "room-close", "arcade-atelier-end"]
+---
+
+## Promise (buyer-facing)
+
+BRINE is a **footer** that reads as a recovered arcade room, not a link dump. One glacier tube. Three rooms.
+
+**Why use it:**
+- The tube is the design. The board never says neon
+- Stage is ice silver. One tube, not a city
+- Sits after Verve, Actually!, or Dopamine without copying Clear or Tilt
+
+## Design System
+
+Stage `#E4EEF4`. Ink `#1A2330`. Accent `#7ED0E8`. Unbounded display. Syne UI.
+
+**Primitive:** `neon-ignite` (3 flickers, 70ms, then hold). **Enter:** `pop-in`.
+
+**Anti-slop:** HitCounter, Comic Sans, four gray columns, neon grid.
+
+## Layout Structure
+
+`100dvh` pin. Wordmark with one tube, room name, links, close.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| rooms[].name | Penn Avenue | 24 |
+| legal | Open until two. Kitchen until midnight. | 64 |
+| ctaLabel | This week's oysters | 24 |
+
+## Motion Specification
+
+Pin-until-complete through rooms. Tube ignites on each plate. Reduced: steady on, first room.
+
+## AI Tool Instructions
+
+Single React footer plus CSS. Do not clone Clear's desks. Do not light a city.

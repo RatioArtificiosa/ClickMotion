@@ -1,0 +1,150 @@
+/* PORT — club bordeaux proof. Champagne pool parks. Not Witness. */
+
+.port-root {
+  --port-stage: #1a0a12;
+  --port-ink: #f6e8ee;
+  --port-muted: #c4a0b0;
+  --port-line: #3b1524;
+  --port-accent: #e8d5a3;
+  --port-velvet: #3b0d22;
+  --ms-pin-fill: var(--port-accent);
+  position: relative;
+  color: var(--port-ink);
+  background: var(--port-stage);
+  font-family: var(--font-port-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.port-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+}
+
+.port-spot {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 80ms linear;
+}
+
+.port-root[data-parked="true"] .port-spot {
+  transition: background 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.port-stage {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .port-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .port-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.port-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.port-root[data-entered="true"] .port-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.port-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--port-line);
+  flex-shrink: 0;
+  transition-delay: 0ms;
+}
+
+.port-brand {
+  font-family: var(--font-port-display), Fraunces, serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.port-meta,
+.port-place,
+.port-city {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--port-muted);
+}
+
+.port-quote {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 2rem 0;
+  max-width: 22ch;
+  font-family: var(--font-port-display), Fraunces, serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2.2rem, 6.4vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  transition-delay: 90ms;
+}
+
+.port-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 180ms;
+}
+
+.port-place {
+  margin: 0 0 1rem;
+  color: var(--port-accent);
+}
+
+.port-who {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-port-display), Fraunces, serif;
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.port-who .port-city {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .port-enter,
+  .port-spot,
+  .port-root[data-parked="true"] .port-spot {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

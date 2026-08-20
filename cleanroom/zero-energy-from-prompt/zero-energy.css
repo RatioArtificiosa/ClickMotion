@@ -1,0 +1,163 @@
+@font-face {
+  font-family: "Geist";
+  src: url("/assets/zero-energy/fonts/Geist-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("/assets/zero-energy/fonts/Geist-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/zero-energy/fonts/GeistMono-Regular.woff2") format("woff2");
+  font-weight: 300 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Franklin Gothic ATF";
+  src: url("/assets/zero-energy/fonts/Franklin_Gothic_ATF_Black_Italic.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Franklin Gothic Atf";
+  src: url("/assets/zero-energy/fonts/Franklin_Gothic_ATF_Black_Italic.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+html {
+  margin: 0;
+  min-height: 100%;
+  background: #000;
+  color: #fff;
+}
+
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: transparent;
+  color: #fff;
+}
+
+body {
+  font-family: Geist, system-ui, sans-serif;
+}
+
+/* Canvas must receive drag. Never put a full-screen overlay on top with pointer-events:auto. */
+main canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.section,
+.hud,
+.hud_container,
+.gradient_overlay,
+.gamme_container,
+.profile_container,
+.benefits_container,
+.carousel_title-bis-wrapper,
+.carousel_title-collection,
+.carousel_nav {
+  background: transparent !important;
+  pointer-events: none !important;
+}
+
+.navbar,
+.carousel_arrow,
+.carousel_pagination,
+.navbar_sound,
+.navbar_menu-button,
+.navbar_logo-link,
+.button,
+.benefits_icon-wrapper,
+.faq_container,
+.faq_list,
+.faq_question,
+.faq_accordion,
+.newsletter_container {
+  pointer-events: auto !important;
+}
+
+button.faq_question,
+button.button {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  width: 100%;
+  cursor: pointer;
+}
+
+button.faq_question {
+  display: flex;
+}
+
+button.button {
+  width: auto;
+  cursor: pointer;
+}
+
+/* User: no floating left HUD letters / profile copy */
+.hud_left-top > div:not(.icon-embed-xtiny),
+.hud_left-bottom-top,
+.hud_right-top-bottom,
+.hud_right-bottom > div:not(.icon-scroll_wrapper):not(.icon-embed-xtiny),
+.carousel_desc .heading-style-h2,
+.carousel_desc .profile_desc,
+.carousel_title-b {
+  display: none !important;
+}
+
+/*
+  First paint: only hero chrome. Benefits / argument / extra titles are
+  position:fixed and would stack until ScrollTrigger sets autoAlpha.
+*/
+body:not(.is-hud-ready) .profile_container,
+body:not(.is-hud-ready) .benefits_container,
+body:not(.is-hud-ready) .argument_container,
+body:not(.is-hud-ready) .carousel_title-bis-wrapper,
+body:not(.is-hud-ready) .benefits_nav,
+body:not(.is-hud-ready) .carousel_slide,
+body:not(.is-hud-ready) .carousel_desc,
+body:not(.is-hud-ready) .carousel_title-b {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.ze-lab-badge {
+  position: fixed;
+  top: 6px;
+  left: 10px;
+  z-index: 40;
+  pointer-events: auto;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.28;
+}
+
+.ze-lab-badge a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ze-lab-badge:hover {
+  opacity: 0.7;
+}

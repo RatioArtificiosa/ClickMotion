@@ -8,10 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { splitWords } from "./splitFallback";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
   children: ReactNode;
@@ -23,7 +20,7 @@ type Props = {
   end?: string;
 };
 
-/** Word opacity scrub — dim .24, start top 82%, end top 34%. */
+/** Word opacity play-once, dim .24, start top 82%, end top 34%. */
 export function ScrollIlluminate({
   children,
   as: Tag = "div",
@@ -62,17 +59,31 @@ export function ScrollIlluminate({
 
     gsap.set(words, { opacity: dim });
     gsap.set(el, { opacity: 1 });
-    const tw = gsap.to(words, {
-      opacity: 1,
-      ease: "none",
-      duration: 1,
-      stagger: 0.35,
-      scrollTrigger: { trigger: el, start, end, scrub: true },
-    });
+    let played = false;
+    const play = () => {
+      if (played) return;
+      played = true;
+      gsap.to(words, {
+        opacity: 1,
+        ease: "none",
+        duration: 1,
+        stagger: 0.35,
+        overwrite: "auto",
+      });
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        play();
+        io.disconnect();
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
 
     return () => {
-      tw.scrollTrigger?.kill();
-      tw.kill();
+      io.disconnect();
+      gsap.killTweensOf(words);
       el.innerHTML = original;
     };
   }, [dim, start, end]);

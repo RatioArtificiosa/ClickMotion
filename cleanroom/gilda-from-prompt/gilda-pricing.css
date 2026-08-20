@@ -1,0 +1,221 @@
+/* GILDA — cherry lacquer sittings. One plate shuffles. Ghosts are empty, not three cards. */
+
+.gilda-root {
+  --gilda-stage: #c41e3a;
+  --gilda-ink: #fff5f0;
+  --gilda-muted: #f2c4c8;
+  --gilda-line: #a01830;
+  --gilda-accent: #ffd6c8;
+  --ms-pin-fill: var(--gilda-accent);
+  position: relative;
+  color: var(--gilda-ink);
+  background: var(--gilda-stage);
+  font-family: var(--font-gilda-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.gilda-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.gilda-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .gilda-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gilda-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.gilda-enter {
+  opacity: 0;
+  transform: translateY(-36px);
+}
+
+.gilda-root[data-entered="true"] .gilda-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 860ms cubic-bezier(0.34, 1.3, 0.64, 1),
+    transform 860ms cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.gilda-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--gilda-line);
+  flex-shrink: 0;
+}
+
+.gilda-brand {
+  font-family: var(--font-gilda-display), Syne, sans-serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.gilda-meta,
+.gilda-place,
+.gilda-hours {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gilda-muted);
+}
+
+.gilda-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  transition-delay: 80ms;
+}
+
+.gilda-stack {
+  position: absolute;
+  left: 0;
+  top: 6%;
+  width: min(88%, 22rem);
+  height: 5.2rem;
+  pointer-events: none;
+  transform: none;
+}
+
+.gilda-ghost {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: var(--gilda-accent);
+  opacity: 0.2;
+}
+
+.gilda-ghost--1 {
+  transform: rotate(6deg) translate(18px, 10px);
+}
+
+.gilda-ghost--2 {
+  transform: rotate(-8deg) translate(-16px, 18px);
+  opacity: 0.12;
+}
+
+.gilda-plate {
+  position: relative;
+  z-index: 1;
+  max-width: 34rem;
+  transform-origin: 50% 80%;
+}
+
+.gilda-root[data-shuffle="true"] .gilda-plate {
+  animation: gilda-shuffle 480ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+}
+
+@keyframes gilda-shuffle {
+  0% {
+    transform: rotate(0deg) translateY(8px);
+  }
+  40% {
+    transform: rotate(3deg) translateY(-6px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+
+.gilda-name {
+  margin: 0;
+  font-family: var(--font-gilda-display), Syne, sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 9vw, 6.4rem);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+}
+
+.gilda-price {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-gilda-display), Syne, sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--gilda-accent);
+}
+
+.gilda-period {
+  margin: 1.1rem 0 0;
+  max-width: 28rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  color: var(--gilda-muted);
+}
+
+.gilda-rows {
+  margin: 1.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  max-width: 28rem;
+}
+
+.gilda-rows li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--gilda-line);
+  font-size: 0.92rem;
+}
+
+.gilda-rows li span:first-child {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  color: var(--gilda-muted);
+}
+
+.gilda-foot {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  transition-delay: 160ms;
+}
+
+.gilda-place,
+.gilda-hours {
+  margin: 0 0 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gilda-enter,
+  .gilda-plate,
+  .gilda-root[data-entered="true"] .gilda-enter,
+  .gilda-root[data-shuffle="true"] .gilda-plate {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}

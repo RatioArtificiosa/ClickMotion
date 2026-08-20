@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Birthstone } from "next/font/google";
 import HelixGallerySection from "../../../../../cleanroom/helix-from-prompt/HelixGallerySection";
-import { SmoothScroll } from "../../../../../cleanroom/helix-from-prompt/SmoothScroll";
 
 const display = Inter({
   subsets: ["latin"],
@@ -20,32 +19,31 @@ const wordmark = Birthstone({
 export const metadata: Metadata = {
   title: "HELIX · Helical Design Gallery Carousel Section",
   description:
-    "MS-SEC-HELI01 free listing. Spatial mid-page gallery: scroll-pinned WebGL helix cards, crossing titles, brand lockup - fully customizable.",
+    "Pin-until-complete (No Scroller) mid-page gallery: scroll aims the helix, the page stays still until the journey ends.",
 };
 
-/** Production cleanroom demo for MS-SEC-HELI01 (carousel / gallery section). */
+/**
+ * Production cleanroom demo for MS-SEC-HELI01 (HELIX).
+ * No Scroller: do not overflow-hidden the page. After progress 1,
+ * the next sibling may scroll in. Not PSAVE (no reverse film).
+ */
 export default function CleanroomHelixPage() {
   return (
     <div
-      className={`${display.variable} ${wordmark.variable} min-h-screen bg-[#C3C3C3] text-[#0a0a0a]`}
+      className={`${display.variable} ${wordmark.variable} bg-[#C3C3C3] text-[#0a0a0a]`}
       style={{
         fontFamily: "var(--font-helix-display), system-ui, sans-serif",
       }}
     >
-      <style>{`
-        html.lenis, html.lenis body { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto !important; }
-        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-        .lenis.lenis-stopped { overflow: hidden; }
-        #helix-gallery > .pin-spacer,
-        .pin-spacer-helix-gallery-pin {
-          background: #c3c3c3 !important;
-        }
-        .pin-spacer { background: transparent !important; }
-      `}</style>
-      <SmoothScroll>
-        <HelixGallerySection />
-      </SmoothScroll>
+      <HelixGallerySection />
+      <section
+        id="helix-after"
+        className="flex min-h-[40dvh] items-center justify-center bg-[#b8b8b8] px-6 py-16 text-[#0a0a0a]/70"
+      >
+        <p className="max-w-md text-center text-[13px] uppercase tracking-[0.12em]">
+          After the helix
+        </p>
+      </section>
     </div>
   );
 }

@@ -45,7 +45,7 @@ export default async function AdminProductPackagesPage() {
   return (
     <AdminShell
       title="Product packages"
-      subtitle="Client delivery PDFs — golden-rule manuals for free and paid SKUs. Storefront CTAs unchanged."
+      subtitle="Client delivery PDFs and files zips. Golden-rule manuals plus rebuild packs. Storefront CTAs unchanged."
     >
       {/* Intro */}
       <div className="mb-8 overflow-hidden rounded-[18px] border border-white/[0.07] bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent">
@@ -158,6 +158,12 @@ export default async function AdminProductPackagesPage() {
           </li>
           <li>
             · Product page CTAs stay Get Full Prompt — PDF is the pack manual.
+          </li>
+          <li>
+            · After every new product post: tell the operator first pass is done,
+            then ask to run{" "}
+            <code className="text-white/55">PLATINUM_SECOND_REVISION.md</code>{" "}
+            (checklist Phase 13) before claiming ultra-premium complete.
           </li>
         </ul>
         <div className="mt-4 flex flex-wrap gap-2">

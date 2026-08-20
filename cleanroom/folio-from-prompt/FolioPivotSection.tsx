@@ -5,12 +5,18 @@
  * One-way paper journey: edge-below → face-on → edge-above (hidden deck).
  * True translucent glass over motion video — Super Frontend LG stack.
  * Dense enterprise content. Not a hero. Not Prism.
+ *
+ * Pin-until-complete (PRODUCT_LAW): fixed stage, virtual progress 0→1 from
+ * wheel/trackpad/touch/keys. No tall multi-vh document scrollbar UX.
+ * Client embed: pin while journey runs; release at ends. After release at
+ * the end, the PAGE owns the wheel until the stage docks (top >= -2).
+ * Pointer on the next sibling never drives the cards.
  */
 
 import { useRef, useMemo, useState, useEffect, type ReactNode } from "react";
 import {
   motion,
-  useScroll,
+  useMotionValue,
   useTransform,
   useReducedMotion,
   useMotionValueEvent,
@@ -246,18 +252,26 @@ type FolioPivotSectionProps = {
   sheets?: FolioSheet[];
   kicker?: string;
   heading?: string;
+  /**
+   * Virtual journey length multiplier (same effort as old tall-track: total × vhPerSheet viewports).
+   * Higher = more wheel/trackpad distance to finish the five sheets.
+   */
   vhPerSheet?: number;
   backgroundSrc?: string;
 };
 
 const MAX_SHEETS = 5;
 
+function clamp01(n: number) {
+  return Math.min(1, Math.max(0, n));
+}
+
 /**
- * Map global scroll → local 0–1 for each sheet.
+ * Map global journey progress (0–1) → local 0–1 for each sheet.
  * Wider overlap = next sheet eases in while previous is still leaving (no hard cut).
  */
 function useLocalProgress(
-  scrollYProgress: MotionValue<number>,
+  journeyProgress: MotionValue<number>,
   index: number,
   total: number
 ) {
@@ -267,7 +281,7 @@ function useLocalProgress(
   const start = Math.max(0, index * span - pad);
   const end = Math.min(1, (index + 1) * span + pad);
   // Ease local progress so motion spends more time near face-on
-  return useTransform(scrollYProgress, [start, end], [0, 1], {
+  return useTransform(journeyProgress, [start, end], [0, 1], {
     clamp: true,
     // smoothstep-ish: slow at ends of the segment, soft middle
     ease: (t: number) => t * t * (3 - 2 * t),
@@ -593,47 +607,211 @@ export default function FolioPivotSection({
   sheets = DEFAULT_SHEETS,
   kicker = "Enterprise growth system",
   heading = "Five decisions that turn strategy into revenue.",
-  // More scroll distance per sheet = denser samples = smoother perceived motion
+  // Virtual journey length: total × vhPerSheet viewports of wheel/trackpad effort
   vhPerSheet = 1.55,
   backgroundSrc = BG_SRC,
 }: FolioPivotSectionProps) {
-  const trackRef = useRef<HTMLElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const touchYRef = useRef<number | null>(null);
+  const pageOwnsRef = useRef(false);
   const reduced = useReducedMotion() ?? false;
   const total = Math.min(sheets.length, MAX_SHEETS);
   const list = sheets.slice(0, total);
 
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start start", "end end"],
-  });
+  /** 0→1 journey progress (pin-until-complete virtual scroll). */
+  const journeyProgress = useMotionValue(0);
 
-  const local0 = useLocalProgress(scrollYProgress, 0, total);
-  const local1 = useLocalProgress(scrollYProgress, 1, total);
-  const local2 = useLocalProgress(scrollYProgress, 2, total);
-  const local3 = useLocalProgress(scrollYProgress, 3, total);
-  const local4 = useLocalProgress(scrollYProgress, 4, total);
+  const local0 = useLocalProgress(journeyProgress, 0, total);
+  const local1 = useLocalProgress(journeyProgress, 1, total);
+  const local2 = useLocalProgress(journeyProgress, 2, total);
+  const local3 = useLocalProgress(journeyProgress, 3, total);
+  const local4 = useLocalProgress(journeyProgress, 4, total);
   const locals = useMemo(
     () => [local0, local1, local2, local3, local4].slice(0, total),
     [local0, local1, local2, local3, local4, total]
   );
 
-  const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const progressScale = useTransform(journeyProgress, [0, 1], [0, 1]);
   const [activeIdx, setActiveIdx] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
+  useMotionValueEvent(journeyProgress, "change", (p) => {
     setActiveIdx(
       Math.min(total - 1, Math.max(0, Math.floor(p * total + 0.001)))
     );
   });
   useEffect(() => {
-    const p = scrollYProgress.get();
+    const p = journeyProgress.get();
     setActiveIdx(
       Math.min(total - 1, Math.max(0, Math.floor(p * total + 0.001)))
     );
-  }, [scrollYProgress, total]);
+  }, [journeyProgress, total]);
 
-  // Keep video playing when stage is in view
+  // Capture API for storefront burns + operator tooling
+  useEffect(() => {
+    if (reduced) return;
+    const api = {
+      setProgress: (p: number) => journeyProgress.set(clamp01(p)),
+      getProgress: () => journeyProgress.get(),
+      getTarget: () => journeyProgress.get(),
+      pageOwns: () => pageOwnsRef.current,
+      productId: "MS-SEC-FOLI01",
+    };
+    const w = window as Window & {
+      __msScrollNarrative?: typeof api;
+    };
+    w.__msScrollNarrative = api;
+    return () => {
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+    };
+  }, [journeyProgress, reduced]);
+
+  /**
+   * Pin-until-complete: wheel / touch / keys write virtual progress.
+   * Release at 0 + up or 1 + down. After release at the end, the PAGE
+   * owns the wheel until the stage docks at the top again. Pointer on
+   * the next sibling never drives the cards.
+   */
+  useEffect(() => {
+    if (reduced) return;
+    const root = rootRef.current;
+    if (!root) return;
+
+    const virtualDistance = () => {
+      const vh = window.innerHeight || 800;
+      return Math.max(vh * 2.4, total * vhPerSheet * vh);
+    };
+
+    const sectionInView = () => {
+      const r = root.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+
+    const pinDocked = () => root.getBoundingClientRect().top >= -2;
+
+    const journeyAtEnd = () => journeyProgress.get() >= 0.9995;
+
+    const eventOnStage = (e: Event) => {
+      if (e.target instanceof Node && root.contains(e.target)) return true;
+      if (e instanceof WheelEvent) {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && root.contains(el)) return true;
+      }
+      return false;
+    };
+
+    const touchOnStage = (e: TouchEvent) => {
+      const t = e.touches[0] || e.changedTouches[0];
+      if (!t) return false;
+      if (e.target instanceof Node && root.contains(e.target)) return true;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      return Boolean(el && root.contains(el));
+    };
+
+    const setPageOwns = (owns: boolean) => {
+      pageOwnsRef.current = owns;
+      root.dataset.folioOwns = owns ? "page" : "pin";
+    };
+    setPageOwns(false);
+
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const p = journeyProgress.get();
+      if (p <= 0.0005 && deltaPx < 0) return false;
+      if (p >= 0.9995 && deltaPx > 0) return false;
+      const next = clamp01(p + deltaPx / virtualDistance());
+      journeyProgress.set(next);
+      return true;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current) return;
+      if (!sectionInView()) return;
+      if (!eventOnStage(e)) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const consumed = applyDelta(e.deltaY);
+      if (!consumed && journeyAtEnd() && e.deltaY > 0) setPageOwns(true);
+      if (consumed) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      const deltaY = prev - y;
+      const consumed = applyDelta(deltaY);
+      if (!consumed && journeyAtEnd() && deltaY > 0) setPageOwns(true);
+      if (consumed) e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView()) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        el.closest(
+          "a, button, input, textarea, select, [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (!consumed && journeyAtEnd() && delta > 0) setPageOwns(true);
+      if (consumed) e.preventDefault();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [journeyProgress, reduced, total, vhPerSheet]);
+
+  // Keep video playing
   useEffect(() => {
     const v = videoRef.current;
     if (!v || reduced) return;
@@ -645,17 +823,16 @@ export default function FolioPivotSection({
     return () => v.removeEventListener("canplay", tryPlay);
   }, [reduced]);
 
-  const trackHeight = reduced
-    ? "auto"
-    : `${Math.max(3.2, total * vhPerSheet) * 100}vh`;
-
   const activeSheet = list[activeIdx] ?? list[0];
 
   return (
     <section
-      ref={trackRef}
-      className="folio-root"
-      style={{ height: trackHeight }}
+      ref={rootRef}
+      id="folio-pivot"
+      className={`folio-root${reduced ? "" : " folio-root--pin"}`}
+      data-folio-pin="true"
+      data-folio-drive="pin"
+      data-folio-progress={activeIdx}
       aria-label={heading}
     >
       <div className={`folio-stage${reduced ? " folio-stage--static" : ""}`}>
@@ -731,20 +908,39 @@ export default function FolioPivotSection({
           width: 100%;
           background: #0a0c12;
         }
+        /* Pin-until-complete: one viewport stage, no tall multi-vh track */
+        .folio-root--pin {
+          height: 100dvh;
+          min-height: 100vh;
+          max-height: 100dvh;
+          overflow: hidden;
+          /* Sticky keeps stage locked while host page would otherwise move;
+             virtual progress (not document height) drives the sheets. */
+        }
         .folio-stage {
-          position: sticky;
+          position: relative;
           top: 0;
-          height: 100vh;
+          height: 100dvh;
           min-height: 680px;
+          max-height: 100dvh;
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
         }
+        .folio-root--pin .folio-stage {
+          position: sticky;
+          top: 0;
+          width: 100%;
+          height: 100dvh;
+          max-height: 100dvh;
+          min-height: min(680px, 100dvh);
+        }
         .folio-stage--static {
-          position: relative;
+          position: relative !important;
           height: auto;
           min-height: 0;
+          max-height: none;
           padding: 4rem 0 3.5rem;
         }
 

@@ -1,0 +1,224 @@
+/* EMBER — oxblood glaze contact. Lacquer pours the send. Not Datum swiss. */
+
+.ember-root {
+  --ember-stage: #5c1218;
+  --ember-ink: #f6e6d8;
+  --ember-muted: #d4a090;
+  --ember-line: #7a2830;
+  --ember-accent: #e8c4a8;
+  color: var(--ember-ink);
+  background: var(--ember-stage);
+  font-family: var(--font-ember-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.ember-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .ember-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ember-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.ember-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.ember-root[data-entered="true"] .ember-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ember-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--ember-line);
+  flex-shrink: 0;
+}
+
+.ember-brand {
+  font-family: var(--font-ember-display), Fraunces, serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.ember-meta,
+.ember-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ember-muted);
+}
+
+.ember-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 2rem;
+  align-content: center;
+  padding: 2rem 0;
+  transition-delay: 90ms;
+}
+
+@media (min-width: 860px) {
+  .ember-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+}
+
+.ember-headline {
+  margin: 0;
+  max-width: 10ch;
+  font-family: var(--font-ember-display), Fraunces, serif;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+
+.ember-period {
+  margin: 1.1rem 0 0;
+  max-width: 22rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  color: var(--ember-muted);
+}
+
+.ember-place {
+  margin: 1.15rem 0 0;
+}
+
+.ember-form {
+  display: grid;
+  gap: 1.05rem;
+}
+
+.ember-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.ember-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ember-muted);
+}
+
+.ember-field :is(input, textarea) {
+  appearance: none;
+  width: 100%;
+  margin: 0;
+  padding: 0.55rem 0 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--ember-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ember-ink);
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.ember-field textarea {
+  resize: none;
+  min-height: 4.2rem;
+}
+
+.ember-field :is(input, textarea):focus {
+  border-bottom-color: var(--ember-accent);
+}
+
+.ember-cta {
+  appearance: none;
+  position: relative;
+  margin: 0.4rem 0 0;
+  padding: 0.85rem 1.4rem;
+  width: fit-content;
+  overflow: hidden;
+  border: 0;
+  border-radius: 44px;
+  background: transparent;
+  color: var(--ember-ink);
+  cursor: pointer;
+  font-family: var(--font-ember-display), Fraunces, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  box-shadow: inset 0 0 0 1px var(--ember-accent);
+}
+
+.ember-cta-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ember-accent);
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+
+.ember-root[data-pour="true"] .ember-cta-fill {
+  clip-path: inset(0 0 0% 0);
+  transition: clip-path 780ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ember-cta-label {
+  position: relative;
+  z-index: 1;
+}
+
+.ember-root[data-pour="true"] .ember-cta {
+  color: #5c1218;
+}
+
+.ember-cta:focus-visible {
+  outline: 1px solid var(--ember-accent);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+.ember-foot {
+  flex-shrink: 0;
+  transition-delay: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember-enter,
+  .ember-cta-fill,
+  .ember-root[data-entered="true"] .ember-enter {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    clip-path: none;
+  }
+
+  .ember-root[data-pour="true"] .ember-cta-fill {
+    clip-path: none;
+    background: var(--ember-accent);
+  }
+}

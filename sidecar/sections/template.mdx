@@ -1,0 +1,153 @@
+---
+id: "MS-SEC-0000"
+title: "Template Section Title"
+slug: "template-section-title"
+description: "Buyer-facing Helix-quality description. Experience + benefit + brand ownership. No tech laundry list."
+version: "0.1.0"
+created: "2026-08-13"
+updated: "2026-08-13"
+author: "MS Team"
+status: "sidecar-draft"
+
+type: "section"
+sectionKind: "pricing"
+category: "fintech"
+subcategory: "payments"
+styleTags: ["corporate", "minimal"]
+technicalTags: ["scroll-trigger", "magnetic-cursor"]
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+
+designLanguage: "calm-fintech"
+tokenTheme: "stripe-trust-light"
+motionPrimitive: "magnetic-recommended"
+enterRecipe: "stamp-settle"
+compatibleWith: ["MS-HERO-AXIO01", "MS-HERO-ORBI01"]
+positionInPage: "middle"
+
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+
+previewVideo: "/assets/videos/placeholder-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/placeholder-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-0000.webp"
+# Operator proof only when set (e.g. /demo/cleanroom-…). Never the public catalog. Public = previewVideo.
+liveDemo: ""
+
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+
+estimatedTokens: 8000
+useCases: ["saas-pricing", "fintech-plans"]
+---
+
+## Promise (buyer-facing)
+
+[What the visitor experiences. What the buyer gains. Why this is not a stock grid. Helix-quality. No em dashes.]
+
+## Design System
+
+**Aesthetic Direction:** [one paragraph. Name the section kind. Materials. What owns focus.]
+
+**Famous-UI craft direction (not a clone):** [e.g. Stripe checkout calm × Linear density]
+
+**Design language:** `calm-fintech`  
+**Token theme:** `stripe-trust-light` (pull hex, fonts, radii, spacing from `sidecar/sections/libraries/token-themes.json`. Do not invent a palette.)  
+**Motion primitive:** `magnetic-recommended` (pull numbers from `motion-primitives.json`)  
+**Enter recipe:** `stamp-settle` (pull from `enter-recipes.json` / `ENTER.md`. One landing. Interaction after landMs.)
+
+**Typography:** [from the token theme. Sizes as clamps. Tracking. Weights.]
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | | Your board color |
+| Ink | | Your primary type |
+| Accent | | One accent only |
+
+**Anti-slop hard ban:** purple mesh, shiny gradient H1, pill docks, aurora + marquee + number ticker as the section, Magic UI / v0 default bento, unquantified motion.
+
+**Differentiation:**
+| vs | This section must not become |
+|----|------------------------------|
+| Kit pricing | Three equal cards, indigo buttons, toggle leftover |
+| Kit FAQ | Native accordion with gray chevron only |
+
+## Layout Structure
+
+[Exact layout with measurements. Safe inset: minimum px-8 / 2rem, prefer md:px-14+. Never flush type to the viewport edge.]
+
+## Content Slots
+
+| Slot | Default Text | Max Length | Notes |
+|------|--------------|------------|-------|
+| eyebrow | | 40 | |
+| headline | | 60 | |
+| body | | 200 | |
+| cta_primary | | 24 | |
+
+## Motion Specification
+
+**Signature (one):** [name the primitive]
+
+**Engine:** Motion | GSAP | CSS
+
+**Numbers:**
+- duration:
+- ease / spring:
+- scrub / lag (if scroll):
+- hover lerp (if pointer):
+
+**Reduced motion:** static layout, no magnetic, no pin theater.
+
+**Pin-until-complete:** required if scroll-narrative or hybrid-with-scroll. Virtual progress. No tall multi-vh sticky track as the product UX.
+
+## Video / Media Integration
+
+[Owned MS CDN paths only. Or none.]
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥1280px | Full signature motion |
+| ≥768px | Reduce travel / simplify |
+| <768px | Touch-safe. Signature must still read. |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static
+- Contrast ≥ 4.5:1
+- Keyboard for all controls
+- Semantic `<section>`, headings, buttons
+- Form labels if contact
+
+## Performance Notes
+
+- One background system max
+- Bundle budget honest
+- No stacked particles + globe + video
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section component. Tailwind for layout. Motion or GSAP only as specified. Reimplement the mechanic. Do not install Magic UI / Lightswind / Aceternity.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's brand.
+
+## Expected Output
+
+A single React component that:
+1. Is a **section**, not a full marketing site shell
+2. Implements the signature motion with the numbers above
+3. Uses the token theme
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

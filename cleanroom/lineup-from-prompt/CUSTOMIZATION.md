@@ -1,4 +1,4 @@
-# Lineup — Ultra Customization Guide (MS-SEC-LINE01)
+# Lineup - Ultra Customization Guide (MS-SEC-LINE01)
 
 **Audience:** buyer’s AI coding tool (Cursor, Claude, Grok Build, Codex, Lovable, Bolt).  
 **Goal:** restage this section for *any* product line — beverages, skincare, wine, hardware, apparel drops, multi-SKU CPG — and expand or shrink the count without rewriting scroll math.
@@ -14,7 +14,7 @@
 | `Can3D.tsx` | GLB materials, `LABEL_MAP`, lighting. Mesh / label advanced. |
 | `InlineCan.tsx` | Stage canvas + stacked products. Passes `labelUrl` / `meshUrl`. |
 | `Bloom.tsx`, `ScrollReveal.tsx`, `TextReveal.tsx` | Motion helpers — leave unless theming deeply. |
-| `SmoothScroll.tsx`, `lenis-bridge.ts`, `gsap-register.ts` | Scroll stack — leave. |
+| `ScrollReveal.tsx`, `TextReveal.tsx` | Entrance helpers (IntersectionObserver). |
 | `hooks.ts`, `useInView.ts`, `splitFallback.ts` | Utilities — leave. |
 
 **Rule:** product count, names, colors, and copy never live as magic numbers in JSX. They live in `lineup-data.ts`.
@@ -62,7 +62,7 @@ Update SECTION_META:
 - eyebrowLabel → suggested via countWord or brand wording
 - title → e.g. "Five formulations." / "Six expressions."
 
-Pin length = N * 100vh automatically. Tabs show 01…N.
+Virtual earn = N viewports automatically. Tabs show 01…N.
 Ghost numbers, blooms, and stage meshes map over PRODUCTS.
 Add labelPath (or LABEL_MAP keys in Can3D) for every new SKU.
 Keep reduced-motion fallback on first product.

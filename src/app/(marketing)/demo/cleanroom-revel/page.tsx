@@ -19,12 +19,17 @@ const sans = Inter({
 export const metadata: Metadata = {
   title: "REVEL Cleanroom · Scroll Narrative",
   description:
-    "Ultra-premium scroll-as-narrative fashion hero: video advances with scroll. Pearl studio, rose gold, breakout chapters.",
+    "Pin-until-complete PSAVE fashion scroll narrative: scroll aims, film plays forward and reverse. Pearl studio, rose gold.",
 };
 
+/**
+ * Cleanroom demo - MS-HERO-REVL01 REVEL.
+ * Pin-until-complete on the film stage; atelier band after the pin releases.
+ * Do not lock the page to overflow-hidden (the closing band must be reachable).
+ */
 export default function CleanroomRevelPage() {
   return (
-    <div className={`${display.variable} ${sans.variable}`}>
+    <div className={`${display.variable} ${sans.variable} bg-[#F7F4F1]`}>
       <RevelScrollNarrative />
     </div>
   );

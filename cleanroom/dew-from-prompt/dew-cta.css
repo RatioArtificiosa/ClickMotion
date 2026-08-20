@@ -1,0 +1,208 @@
+/* DEW — organic waitlist close. Not three pills. Not a Mailchimp bar. */
+
+.dew-root {
+  --dew-stage: #f4efe6;
+  --dew-ink: #2c241c;
+  --dew-muted: #6e6458;
+  --dew-line: #e4d8c8;
+  --dew-accent: #8c6a4a;
+  color: var(--dew-ink);
+  background: var(--dew-stage);
+  font-family: var(--font-dew-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.dew-crop {
+  min-height: 100dvh;
+  overflow: hidden;
+  clip-path: inset(0% 0% 100% 0%);
+  transition: clip-path 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dew-root[data-entered="true"] .dew-crop {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.dew-stage {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .dew-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dew-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.dew-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--dew-ink);
+  flex-shrink: 0;
+}
+
+.dew-brand {
+  font-family: var(--font-dew-serif), Georgia, serif;
+  font-size: clamp(1.85rem, 3.4vw, 2.35rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.dew-meta {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dew-muted);
+}
+
+.dew-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.25rem 0 2rem;
+  max-width: 34rem;
+}
+
+.dew-headline {
+  margin: 0;
+  font-family: var(--font-dew-serif), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 8vw, 5.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+}
+
+.dew-period {
+  margin: 1.35rem 0 0;
+  max-width: 22rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--dew-muted);
+}
+
+.dew-place {
+  margin: 0.85rem 0 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dew-ink);
+}
+
+.dew-foot {
+  flex-shrink: 0;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--dew-ink);
+}
+
+.dew-cta {
+  --dew-hold: 0;
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 13.5rem;
+  min-height: 3.15rem;
+  padding: 0.95rem 1.6rem;
+  border: 1px solid var(--dew-ink);
+  border-radius: 2px;
+  background: var(--dew-stage);
+  color: var(--dew-ink);
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+  font-family: var(--font-dew-sans), Inter, system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.dew-cta:focus-visible {
+  outline: 1px solid var(--dew-ink);
+  outline-offset: 4px;
+}
+
+.dew-root[data-landed="false"] .dew-cta {
+  cursor: default;
+}
+
+.dew-cta-ghost {
+  visibility: hidden;
+  display: block;
+}
+
+.dew-cta-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--dew-ink);
+  transform: scaleX(var(--dew-hold));
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.dew-cta-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.dew-cta-label--rest {
+  color: var(--dew-ink);
+}
+
+.dew-cta-label--over {
+  z-index: 1;
+  color: var(--dew-stage);
+  clip-path: inset(0% calc((1 - var(--dew-hold)) * 100%) 0% 0%);
+}
+
+.dew-root[data-confirmed="true"] .dew-cta-fill {
+  transform: scaleX(1);
+}
+
+.dew-root[data-confirmed="true"] .dew-cta-label--over {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+@media (max-width: 639px) {
+  .dew-cta {
+    width: 100%;
+  }
+
+  .dew-body {
+    padding: 1.75rem 0 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dew-crop {
+    clip-path: inset(0% 0% 0% 0%);
+    transition: none;
+  }
+
+  .dew-cta-fill,
+  .dew-cta-label--over {
+    transition: none;
+  }
+}

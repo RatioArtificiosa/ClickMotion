@@ -3,16 +3,16 @@ id: "MS-HERO-MIRA01"
 title: "MIRAGE - Agency Desert Scroll Glass Hero"
 slug: "mirage-agency-desert-scroll-glass-hero"
 description: "For ad agencies and brand studios. Morphic liquid-glass story cards pivot on scroll over free-playing desert film - subject on the right, heat-proof craft."
-version: "1.0.0"
+version: "2.0.0"
 created: "2026-08-09"
-updated: "2026-08-09"
+updated: "2026-08-15"
 author: "MS Team"
 status: "published"
 type: "hero"
 category: "agency"
 subcategory: "creative"
 styleTags: ["liquid-glass", "dark-cinematic", "editorial", "luxury"]
-technicalTags: ["scroll-trigger", "video-background", "parallax", "intersection-observer"]
+technicalTags: ["pin-until-complete", "video-background"]
 motionIntensity: "medium"
 difficulty: "advanced"
 priceTier: "pro"
@@ -36,11 +36,30 @@ videoBackgrounds:
     poster: "/assets/posters/mirage-desert-v1.webp"
 dependencies:
   - { name: "framer-motion", version: "^11.0.0", required: true }
-  - { name: "tailwindcss", version: "^3.4.0", required: true }
-estimatedTokens: 9000
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 13000
 useCases: ["ad-agency-homepage", "brand-studio-hero", "creative-services-landing", "campaign-house-intro"]
 compatibleWith: []
 positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+MIRAGE is a full-viewport **agency hero**. Desert film plays freely on the right. Five morphic liquid-glass story cards pivot on the left. Visitors do not scrub a film. They move through a crafted deck of work while the heat-haze subject holds the frame.
+
+**No Scroller (pin-until-complete).** Scroll aims the cards. The page does not physically scroll during the viewing. When the journey ends, the pin **releases**. Then the **page owns the wheel** until the stage docks at the top of the viewport again. Pointer on the next sibling never drives the cards. Not a tall sticky track. Not GSAP ScrollTrigger. Not PSAVE. The film does not rewind.
+
+**Why use it:**
+- Your agency or studio feels like a private screening, not a stock carousel
+- Scroll owns the cards so each sheet gets a full beat
+- Film stays cinematic because it free-plays; cards stay intentional
+- Every string, metric, chip, and the film itself is meant to be replaced with your brand
+- Built for ad agencies, brand studios, and campaign houses that sell craft with heat and restraint
+
+Default demo content (MIRAGE wordmark, sample agency sheets, "Creative that / survives the heat.") is only a starting board. Tell your AI to restage everything until it reads as you alone.
+
+**How you build it:** download the product pack (prompt + source + desert film). Tell your AI: *Build MIRAGE using the files in this folder. Read PROMPT.md and follow it. Prefer source/MirageAgencyHero.tsx. No Scroller: pin-until-complete. One 100dvh stage. Scroll aims virtual progress on 5 x 1.55 viewports. Cards follow that progress 1:1. Film free-plays muted. At 0 plus up, or 1 plus down, release. After release at the end, the page owns scroll until the stage docks (top >= 0). Do not restore a tall multi-vh sticky track. Do not add PSAVE. Do not scrub video.currentTime.*
+
 ---
 
 ## Design System
@@ -81,19 +100,28 @@ positionInPage: "top"
 | vs | Mirage must not become |
 |----|------------------------|
 | Folio | Mid-page section, enterprise decision board |
-| Prism | Multi-face + both-side floating panels |
+| Prism | Multi-face + both-side floating panels + PSAVE film |
+| Helix | Mid-page WebGL card helix, no film |
 | Meridian | Dark coastal multi-chapter scrub estate |
 | Neon Forge | Cyan/pink liquid-glass pill SaaS game studio |
 
+---
+
 ## Layout Structure
 
-- **Hero:** full-viewport sticky stage inside tall scroll track (~`5 x 1.35 x 100vh`)
+- **Hero only** - one `100dvh` stage `#mirage-hero` in normal document flow
+- **No** tall multi-vh spacer. **No** `position: sticky` track as the method. **No** Framer `useScroll` on a 7.75vh document
+- **Earn (virtual, not page height):** `5 × 1.55` viewports (same as the old pin end). `virtualDistance = max(2.4, sheets × vhPerSheet) × innerHeight`
 - **Grid:** left rail (~1fr, max ~540px visual, optional `zoom: 1.2` composition) + right subject space
 - **Nav:** absolute top, text-only brand + links, no bar
 - **Rail intro:** kicker + two-line H1 (`white-space: nowrap` per line)
 - **Deck:** ~430px / 50vh height absolute stack of five glass sheets
 - **Footer under cards:** centered progress bar, dots, active label, scroll hint
 - **Safe insets:** stage padding `clamp` horizontal; type never flush to edge
+- On a buyer site the next sibling after `#mirage-hero` may scroll in after release
+- **Do not** set `overflow: hidden` on the host page (release must be able to reveal the next sibling)
+
+---
 
 ## Content slots
 
@@ -112,22 +140,60 @@ positionInPage: "top"
 
 Each sheet: `lead` + dense blocks (`metrics` | `rows` | `list` | `chips` | `quote`). Configurable via `sheets` prop.
 
+---
+
 ## Motion Specification
 
-**Mode:** Scroll-linked glass card pivot (Framer Motion `useScroll` / `useTransform`). **Not** video scrub. Video is free-playing muted loop wallpaper under glass.
+**Mode:** **No Scroller** = **pin-until-complete**. Cards are driven by **virtual progress** `g` 0→1. Film is **not** on that clock.
 
-| Local t | rotateX | opacity | note |
-|---------|---------|---------|------|
-| 0 | +64° | 0 | edge below |
-| ~0.38-0.55 | ~0° | 1 | face-on plateau |
-| 1 | −64° | 0 | edge above |
+```
+Earn: VIRTUAL = max(2.4, sheets × 1.55) viewports
+virtualDistance = VIRTUAL * window.innerHeight
+delta progress = wheelDeltaY / virtualDistance
+```
 
-- Local progress with soft pad overlap between sheets; smoothstep on segment map
-- Sheet 0 starts near face-on (`from ~0.38`) so open state never empty
-- Dense rotate / opacity / y / scale / contentOpacity keyframes
-- Y travel ~26px; scale 0.975→1→0.975
-- Progress bar `scaleX(scrollYProgress)`
-- **Reduced motion:** static stacked glass cards, gradient fallback (no video)
+Gestures map **1:1** onto that distance. No wheel gain. Old `useScroll` feel: cards follow `g` immediately through the same rotateX maps.
+
+| Event | Timing | Ease / notes |
+|-------|--------|--------------|
+| Pin engage | section in view, page does not own the wheel | consume wheel / touch / keys |
+| Sheet local `t` | each sheet maps a slice of `g` with ~16% pad overlap | smoothstep on the segment |
+| Sheet 0 open | starts near face-on (`from ~0.38`) | hero never opens empty |
+| rotateX | +64° → 0° face plateau → −64° | last sheet holds face longer |
+| opacity / scale / y / z | same keyframes as pack source | transform + opacity only |
+| Progress bar | `scaleX(g)` | footer under cards |
+| Release | g ≤ 0 + up, or g ≥ 1 + down | do not preventDefault |
+| **Pin freeing** | after release at **g = 1 + down** | **page owns** wheel / touch / keys |
+| **Dock** | stage `getBoundingClientRect().top >= 0` (use `>= -2`) | page-owns clears; pin may take the wheel again |
+| Pointer on next sibling | never | runway / after-band never drives cards |
+
+**Pin freeing (mandatory, do not skip):**
+
+Once the last card has closed and the visitor scrolls **down**, the pin **releases**. From that moment the **page** owns scroll. Scrolling **up** in the next section must move the **page**, not rewind the cards. The pin may take the wheel again only after the stage **docks** at the top of the viewport. If the pointer is on the next sibling, never consume the gesture.
+
+```
+pageOwns = false
+on each gesture:
+  if stage.top >= -2: pageOwns = false
+  if pageOwns: do not preventDefault; return
+  if g >= 1 and delta > 0: pageOwns = true; do not preventDefault; return
+  if g <= 0 and delta < 0: do not preventDefault; return
+  else: apply delta to g; preventDefault
+```
+
+**Hard ban:** Framer `useScroll` on a tall document spacer.
+**Hard ban:** a 5 × 1.55 vh **document spacer** as the method (those numbers are **virtual earn** only).
+**Hard ban:** keeping the pin armed after release so up-scroll in the runway rewinds the sequence.
+**Hard ban:** PSAVE / GOP 3 / reverse film. Mirage film free-plays. It does not rewind.
+**Hard ban:** mapping scroll to `video.currentTime`.
+**Hard ban:** `overflow: hidden` on the host page.
+**Hard ban:** installing `gsap` or `lenis` for this hero.
+
+Root marker: `data-mirage-drive="pin"`. After release: `data-mirage-owns="page"`. While the pin owns: `data-mirage-owns="pin"`. Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, pageOwns, productId: "MS-HERO-MIRA01" }`.
+
+**Reduced motion:** static stacked glass cards, gradient fallback, no video chase.
+
+---
 
 ## Video / Media Integration
 
@@ -135,24 +201,28 @@ Each sheet: `lead` + dense blocks (`metrics` | `rows` | `list` | `chips` | `quot
 |------|------|
 | Client HD (buyer) | `/assets/videos/mirage-desert-v1.mp4` |
 | Backgrounds library (small) | `/assets/videos/backgrounds/mirage-desert-bg-v1.mp4` |
-| Storefront preview | `/assets/videos/mirage-scroll-preview-v1.mp4` |
+| Storefront preview | `/assets/videos/mirage-scroll-preview-v1.mp4` (leave as-is; no recapture; no GOP 3) |
 | Storefront FS | `/assets/videos/mirage-scroll-preview-fs-v1.mp4` |
 | Pure film poster | `/assets/posters/mirage-desert-v1.webp` |
 | Storefront poster / thumb | `/assets/posters/mirage-scroll-preview-v1.webp` · `/thumbnails/MS-HERO-MIRA01.webp` |
 
 Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover object-position: 72% center`. Soft left + vertical veil for type contrast. Forbidden: using backgrounds small encode as client HD; using storefront UI capture as client HD.
 
-**Storefront capture law:** FG plates (cards/chrome) captured transparent; BG film composited as a **separate continuous ffmpeg track** (no browser seek). Card scroll curve continuous open/face/close (no mid-stall).
+Do not use storefront previews as rebuild media.
+
+---
 
 ## Responsive Behavior
 
 | Breakpoint | Behavior |
 |------------|----------|
-| ≥1100px | Full rail + subject space, large H1 two lines |
+| ≥1100px | Full rail + subject space, large H1 two lines; virtual earn 7.75 vh at five sheets |
 | ≥960px | Comfortable type, subject visible |
 | <960px | Single column, hide pure subject spacer, film recentered |
 | <640px | Metrics 2-col, rows stack, nav stacks |
 | Reduced motion | Static stack, no pivot |
+
+---
 
 ## Accessibility
 
@@ -162,6 +232,8 @@ Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover o
 - Focusable text links in nav
 - Contrast: near-white type on dark glass + scrim
 
+---
+
 ## Performance Notes
 
 - One heavy glass surface face-on at a time (hidden deck)
@@ -169,20 +241,99 @@ Video attrs: `autoPlay muted loop playsInline preload="auto" object-fit: cover o
 - Video single element, cover scale ~1.02
 - Optional `zoom: 1.2` on rail only (composition scale, not redesign)
 - will-change limited to sheet transform/opacity
+- Do not load gsap or lenis
+
+---
 
 ## AI Tool Instructions
 
-**Cursor / Claude / Grok Build:** Build `MirageAgencyHero.tsx` from this brief only. Wire exact client HD path. Framer Motion scroll pivot + morphic M.A.C. glass stack are mandatory. Free-playing film. Five dense agency cards.
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite. `"use client"`. Implement **No Scroller** (5 × 1.55 viewport aim track, virtual progress 1:1, release at ends, **page owns until dock**). Wire fonts Syne + DM Sans. Place the desert film at the locked path. Do not install gsap. Do not install lenis. Do not add PSAVE. Do not scrub the film.
 
-**Lovable / Bolt:** Single self-contained hero component; same tokens, five sheets, free-playing desert film under glass.
+**Lovable / Bolt:** Single self-contained hero; same tokens, five sheets, free-playing desert film under glass. Wheel advances `g`. No tall page track. After the last card, the page must be able to scroll.
+
+---
 
 ## Expected Output
 
 1. Single React component `MirageAgencyHero.tsx` (`"use client"`, default export)
-2. Tall scroll track + sticky stage + free-playing client HD video under soft veil
-3. Five one-way pivot morphic glass sheets with dense agency content
-4. Morphic fill rgba(28,30,42,0.38) + blur(36px) saturate(190%) + specular + body above
-5. Two-line H1, minimal text nav, centered progress footer
-6. Reduced-motion path (static)
-7. Configurable `sheets`, `brand`, `tagline`, `vhPerSheet`, `backgroundSrc`
-8. No host marketing shell required
+2. No Scroller: one 100dvh stage; the page stays still while scroll aims the cards; then the pin releases
+3. After release at the end, the page owns scroll until the stage docks at the top
+4. Five one-way pivot morphic glass sheets with dense agency content
+5. Free-playing client HD video under soft veil; subject on the right
+6. Morphic fill rgba(28,30,42,0.38) + blur(36px) saturate(190%) + specular + body above
+7. Two-line H1, minimal text nav, centered progress footer
+8. Reduced-motion path (static)
+9. Configurable `sheets`, `brand`, `tagline`, `vhPerSheet`, `backgroundSrc`
+10. No host marketing shell required
+
+---
+
+## What to tell your AI
+
+Use these as-is. Replace brackets. Prefer one request at a time so the AI does not drop motion.
+
+### Brand
+```
+Change the brand name MIRAGE to [YOUR BRAND] everywhere, including the top left and any aria-label.
+```
+
+### Headline
+```
+Change the two-line headline "Creative that" / "survives the heat." to "[LINE 1]" / "[LINE 2]".
+Keep exactly two lines. Keep nowrap on each line.
+```
+
+### Five cards
+```
+Rewrite all five glass cards for [YOUR AGENCY / BRAND].
+Keep dense metrics, rows, chips, and the scroll pivot.
+Keep No Scroller and pin freeing. Do not add PSAVE.
+```
+
+### Accents
+```
+Keep dark morphic glass, but shift gold and cyan accents to [HEX A] and [HEX B].
+Keep type readable.
+```
+
+### Background film
+```
+Replace the background video with [YOUR VIDEO LINK OR FILE].
+Keep it muted, looping, free-playing. Do not scroll-scrub the video.
+Keep the subject on the right if possible.
+```
+
+### Pin freeing (if scroll feels stuck after the last card)
+```
+After the last card, scrolling down must release the pin.
+Then the PAGE owns the wheel until the hero docks at the top of the viewport again (stage.top >= 0).
+Scrolling up in the next section must move the page, not rewind the cards.
+Pointer on the next sibling must never drive the cards.
+Do not restore a tall sticky track. Do not add PSAVE.
+```
+
+### Something looks wrong
+```
+Something is broken: [DESCRIBE WHAT YOU SEE].
+Fix it and keep Mirage as a morphic dark liquid-glass agency hero over free-playing desert film.
+Keep No Scroller (pin-until-complete) and pin freeing (page owns until dock).
+Do not restore a tall multi-vh sticky track. Do not add PSAVE. Do not scrub the film.
+Do not ask me to write code.
+```
+
+---
+
+## Package notes (operators)
+
+| Role | Path |
+|------|------|
+| Client HD | `/assets/videos/mirage-desert-v1.mp4` |
+| Storefront preview | `/assets/videos/mirage-scroll-preview-v1.mp4` (leave as-is; no recapture; no GOP 3) |
+| Storefront FS | `/assets/videos/mirage-scroll-preview-fs-v1.mp4` |
+| Poster / thumb | `/assets/posters/mirage-scroll-preview-v1.webp` · `/thumbnails/MS-HERO-MIRA01.webp` |
+| Live demo | `/demo/cleanroom-mirage` |
+| Product folder | `public/packages/MS-HERO-MIRA01/files/` |
+| Files zip | `/packages/MS-HERO-MIRA01/Mirage-files-m1r4ge8k2n9x-mg7k3p.zip` |
+| Package PDF | `/packages/MS-HERO-MIRA01/Mirage-package-m1r4ge8k2n9x-mg7k3p.pdf` |
+| Backgrounds page | `/assets/videos/backgrounds/mirage-desert-bg-v1.mp4` (small encode only) |
+| Mode | No Scroller · not PSAVE · pin freeing (page owns until dock) · operator feel lock 2026-08-15 |

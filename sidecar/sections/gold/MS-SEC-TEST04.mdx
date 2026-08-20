@@ -1,0 +1,79 @@
+---
+id: "MS-SEC-TEST04"
+title: "REEL - Polaroid Develop Testimonials"
+slug: "reel-polaroid-develop-testimonials"
+description: "Oxblood darkroom. The quote develops. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "testimonials"
+category: "lifestyle"
+subcategory: "studio"
+styleTags: ["editorial"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ceramic-gloss"
+tokenTheme: "oxblood-glaze"
+motionPrimitive: "polaroid-develop"
+enterRecipe: "blackout-lift"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-STIL01", "MS-HERO-AETH01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-reel"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["lab-proof", "studio-quotes", "film-testimonials"]
+---
+
+## Promise (buyer-facing)
+
+REEL is a mid-page **testimonials** board that reads as a darkroom, not a quote carousel. The quote comes up like a print.
+
+**Why use it:**
+- The develop is the design. The board never says polaroid
+- Stage is oxblood. Cream is the catch
+- Sits after Elyse, STILL, or Aether without copying Ember, Kiln, or Port
+
+## Design System
+
+Stage `#5C1218`. Ink `#F6E6D8`. Fraunces italic display. Outfit UI.
+
+**Primitive:** `polaroid-develop` (1400ms, contrast 0.35, brightness 1.4). **Enter:** `blackout-lift`.
+
+**Anti-slop:** avatar cards, 5-star rows, logo marquee.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, quote, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| voices[].quote | The wedding roll sat in my glove box for a month... | 180 |
+| voices[].name | Tom Keller | 28 |
+| voices[].city | Tombstone | 24 |
+| place | Main Street, Bisbee | 40 |
+
+## Motion Specification
+
+Pin-until-complete. Develop once per quote. Reduced: final exposure, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not clone Ember's pour. Do not add a photo frame kit.

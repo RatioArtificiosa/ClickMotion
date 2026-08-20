@@ -1,0 +1,79 @@
+---
+id: "MS-SEC-PRIC04"
+title: "DUNE - Vitrine Sweep Pricing"
+slug: "dune-vitrine-sweep-pricing"
+description: "Desert inn nights. One light across the gilt. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "pricing"
+category: "lifestyle"
+subcategory: "travel"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "solar-gilt"
+tokenTheme: "desert-leaf"
+motionPrimitive: "vitrine-sweep"
+enterRecipe: "match-cut"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-NOMA01", "MS-HERO-MERI01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-dune"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5400
+useCases: ["inn-pricing", "desert-nights", "gilt-plans"]
+---
+
+## Promise (buyer-facing)
+
+DUNE is a mid-page **pricing** board that reads as three nights, not three kit cards. One sheen across the gilt price.
+
+**Why use it:**
+- The sweep is the design. The board never says vitrine
+- Stage is gilt sand. Leaf gold is the price
+- Sits after Elyse, Nomad, or Meridian without copying Heat, Sol, or Gilda
+
+## Design System
+
+Stage `#E8C97A`. Ink `#2A1808`. Accent `#C9A227`. Cinzel display. Outfit UI.
+
+**Primitive:** `vitrine-sweep` (900ms, 24deg). **Enter:** `match-cut`.
+
+**Anti-slop:** three equal pricing cards, crypto foil, shiny-text identity, dinner clone.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, night, gilt price, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| nights[].name | Courtyard | 20 |
+| nights[].price | 180 | 12 |
+| nights[].period | 62 is loud until eleven... | 180 |
+| place | Highway 62, Twentynine Palms | 48 |
+
+## Motion Specification
+
+Camera eases in. Pin. Sheen once per night. Reduced: first night, no sweep.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not lay out a three-card grid. Do not clone Heat's dinner or Sol's lunch.

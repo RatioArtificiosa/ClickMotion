@@ -17,15 +17,16 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MERIDIAN — Scroll Narrative (Live Lab)",
+  title: "MERIDIAN - Scroll Narrative (Live Lab)",
   description:
-    "Ultra-premium scroll-as-narrative hero: video advances with scroll. Clean-room lab for prompt perfection.",
+    "Ultra-premium pin-until-complete scroll narrative: virtual progress scrubs the estate film. Gold cleanroom for Meridian.",
 };
 
 export default function ScrollNarrativeDemoPage() {
   return (
     <div className={`${display.variable} ${sans.variable}`}>
-      <MeridianScrollNarrative />
+      {/* Lab only: skip first 0.2s of film to hide roof glitch. Gold product default remains 0. */}
+      <MeridianScrollNarrative startTimeSec={0.2} />
     </div>
   );
 }

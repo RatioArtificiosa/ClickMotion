@@ -1,9 +1,12 @@
 # MS Production Process — Beat Motionsites at Scale
 
-**Status:** Operating law for catalog velocity · 2026-08-08  
+**Status:** Operating law for catalog velocity · 2026-08-11  
 **Goal:** Close the five Motionsites gaps and ship a library that is **denser, more varied, and more honest** than their free set, faster than copy-paste volume.
 
-**Related:** [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) · [`DEEPSEEK_PROMPT_PIPELINE.md`](./DEEPSEEK_PROMPT_PIPELINE.md) · [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md) · [`PROMPT_VISUAL_QA_LOOP.md`](./PROMPT_VISUAL_QA_LOOP.md) · [`CONTENT_PLAN_100.md`](./CONTENT_PLAN_100.md) · [`QUALITY_CHECKLIST.md`](./QUALITY_CHECKLIST.md) · **[`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md)** (complete sale-ready gate) · [`MOTIONSITES_COMPETITIVE_DISSECT.md`](./MOTIONSITES_COMPETITIVE_DISSECT.md)
+**Before any “sale ready” claim:** open **[`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md)** then work **[`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md)**.  
+**After every new product post:** tell the operator first pass is finished, ask permission, run **[`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md)** (Phase 13).
+
+**Related:** [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) · [`DEEPSEEK_PROMPT_PIPELINE.md`](./DEEPSEEK_PROMPT_PIPELINE.md) · [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md) · [`PROMPT_VISUAL_QA_LOOP.md`](./PROMPT_VISUAL_QA_LOOP.md) · [`CONTENT_PLAN_100.md`](./CONTENT_PLAN_100.md) · [`QUALITY_CHECKLIST.md`](./QUALITY_CHECKLIST.md) · **[`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md)** (complete sale-ready gate) · [`PRODUCT_PACKAGE.md`](./PRODUCT_PACKAGE.md) (product folder + zip + PDF) · **[`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md)** · [`MOTIONSITES_COMPETITIVE_DISSECT.md`](./MOTIONSITES_COMPETITIVE_DISSECT.md)
 
 ---
 
@@ -45,15 +48,20 @@ Beat Motionsites by **shipped quality density × honest modes × owned packs**, 
 1. PHASE A       Deepseek: concept + dense buyer prompt + video gen (if needed)
 2. PHASE B       Deepseek: MS Architect MDX (taxonomy, 10 H2s, paths)
 3. MACHINE GATE  validate:prompts (+ assets paths / CMS schema)
-4. MEDIA         Generate / source B-roll → encode → MS object store → CDN
+4. MEDIA         Generate / source B-roll → encode → lock client; storefront separate
 5. CLEAN-ROOM    Build FROM PROMPT ONLY (agent or human, no secret design)
 6. VISUAL QA     Screenshot → score → edit PROMPT (not only code) → rebuild if fail
-7. PROOF         Muted screen record of signature interaction
-8. PACK          CMS: body, tags, previewVideo, thumbnail, poster, download paths
-9. PUBLISH       status published → gallery + product page
+7. PROOF         Muted screen record of signature interaction (page + FS)
+8. PRODUCT PACK  Product folder (files/) + zip of folder + package PDF + registries
+9. CMS           body, tags, priceTier, previewVideo, thumbnail, poster
+10. PUBLISH      First production pass (SHIP_FOR_SALE + checklist Phase 12)
+11. PLATINUM     Tell operator first pass done → ask permission →
+                 Platinum Second Revision (Phase 13) → fix → PASS
 ```
 
-**Never skip 5–6 for “looks fine in my head.”** That is how Motionsites ships thin prompts.
+**Never skip 5–6 for “looks fine in my head.”** That is how Motionsites ships thin prompts.  
+**Never skip 8 for rebuild flagships:** buyers need the **product folder** (all rebuild files) **and** the **zip**.  
+**Never skip 11:** after every new product post, **ask** for Platinum Second Revision ([`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md)).
 
 ### Time budget (video hero, steady state)
 
@@ -196,12 +204,16 @@ Deepseek brief always includes:
 | Mode code | Tags | Prompt must specify | Capture must show |
 |-----------|------|---------------------|-------------------|
 | `V` Video | `video-background` | Loop attrs, overlays, path | UI + B-roll playing |
-| `S` Scroll | `scroll-trigger`, `parallax`, `text-split` | scrub numbers, ranges | Scroll through beats |
+| `S` Scroll | `scroll-trigger`, `parallax`, `text-split` | scrub/ranges **+ pin-until-complete** (virtual progress; no tall multi-vh scrollbar UX) — PRODUCT_LAW | Full pin journey (virtual progress OK) |
 | `M` Mouse | `magnetic-cursor` | follow radius, lerp, targets | Cursor wiggle / head follow |
 | `3` 3D | `3d-threejs`, `3d-spline`, `webgl` | scene, camera, perf budget | Orbit / idle spin |
 | `Q` Marquee | `infinite-marquee` | duration, duplicate array | Continuous scroll band |
 | `L` Loader | (section/special) | timing sequence | Full loader → hero |
-| `H` Hybrid | combine | which modes stack | One take proving main mode |
+| `H` Hybrid | combine | which modes stack; **if any leg is scroll narrative → pin-until-complete 100%** | One take proving main mode |
+
+**Scroll narrative pin law (factory — non-negotiable):** Every `S` primary and every hybrid with a scroll-narrative leg ships **pin-until-complete** only. Animation art can stay product-specific; the **method** is always pinned stage + virtual progress + release when done. See [`PRODUCT_LAW.md`](./PRODUCT_LAW.md).
+
+**PSAVE (named film-drive, Elyse gold, live Revel, live Vertex, live Still, live Prism):** when the operator says **PSAVE**, do **not** seek-scrub. Scroll aims on a product earn track; the film plays forward at 1.2x and reverse every 3rd frame; leftover dest keeps going a little on lift; release follows the picture; replacement films need GOP 3 / no B-frames. Canonical: [`PSAVE.md`](./PSAVE.md). Do not roll PSAVE onto Meridian / Folio unless named. Elyse, Revel, Vertex, Still, and Prism are named. Still and Prism dual process = PSAVE + No Scroller.
 
 **Mix quotas (rolling first 40 heroes):**
 
@@ -290,7 +302,10 @@ Copy of product law, tightened:
 7. [ ] **Storefront** muted proof (`*-preview-v1` / fs) shows signature interaction; capture did **not** overwrite client HD.  
 8. [ ] CMS: title, body, genre, tools, **previewVideo** (storefront), thumb, poster, status **published**.  
 9. [ ] Buyer download path = **client HD** on MS CDN when commerce unlocks (not preview captures).  
-10. [ ] Owner vault entry in `src/lib/owner-designs.ts` for flagships (roles labeled).
+10. [ ] Owner vault entry in `src/lib/owner-designs.ts` for flagships (roles labeled).  
+11. [ ] **First production pass finished** and operator **told** it is finished.  
+12. [ ] **Permission asked** for Platinum Second Revision (*“May I run the Platinum Second Revision to make sure that all is perfectly ultra premium?”*).  
+13. [ ] **Platinum Second Revision PASS** ([`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md) / checklist Phase 13) — gaps fixed, re-smoked.
 
 ---
 
@@ -326,7 +341,7 @@ Paste Architect system from pipeline §6 + task template with the slot card fiel
 
 ```text
 V: 12s loop, no cursor, full hero in frame
-S: scroll top→bottom in 8–12s, pause on key beats
+S: advance pin journey 0→100% in 8–12s (virtual progress; stage stays pinned), pause on key beats
 M: 10s mouse figure-eight over magnetic target
 3: 10s slow orbit or idle spin
 H: 12–15s — establish UI then prove main mode

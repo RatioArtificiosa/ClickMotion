@@ -1,9 +1,20 @@
 "use client";
 
 /**
- * PRISM — Creative identity studio hero
+ * PRISM - Creative identity studio hero (MS-HERO-PRSM01)
+ *
+ * Dual process: PSAVE + No Scroller (pin-until-complete).
  * Faces film center stage; Aether liquid-glass panels float on both sides.
- * Scroll owns film timeline. White type on liquid glass (Ice Ripple / Mercury Drop).
+ * Art, panels, tiers, and the atelier band stay. The 520vh sticky
+ * GSAP ScrollTrigger seek-scrub is gone.
+ *
+ * PSAVE - Perfect Scroll Video Engine:
+ *   Scroll aims a destination on a 12-viewport track (47.63s even faces film).
+ *   Down-scroll plays the film forward (native play at 1.2x, leftover dest
+ *   + rate ease on lift). Up-scroll walks the live video backward one
+ *   3-frame step at a time. Never seek to the stop point.
+ *   Glass panels, moment pill, and the violet bar follow the picture.
+ *   Release only when the picture has arrived at 0 (up) or 1 (down).
  */
 
 import {
@@ -14,13 +25,25 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+export const VIDEO_SRC = "/assets/videos/prism-faces-v1.mp4";
+export const POSTER_SRC = "/assets/posters/prism-faces-v1.webp";
 
-const VIDEO_SRC = "/assets/videos/prism-faces-v1.mp4";
-const POSTER_SRC = "/assets/posters/prism-faces-v1.webp";
+/**
+ * 47.63s even multi-face film, three acts (Atelier / Proof / Invite).
+ * Two flicks on 3.6 dump dest into watching a video. Starting earn is
+ * Revel/Still-class 12. Operator locks feel. Family leftovers stay.
+ */
+const VIRTUAL_VIEWPORTS = 12;
+
+const PSAVE_RATE = 1.2;
+const PSAVE_FRAME = 1 / 24;
+const PSAVE_REV_STRIDE = 3;
+const PSAVE_REV_STEP = PSAVE_FRAME * PSAVE_REV_STRIDE;
+const PSAVE_LIVE_MS = 280;
+const PSAVE_COAST_SEC = 0.55;
+const PSAVE_EASE_SEC = 0.55;
+const PSAVE_FLIP_DEADZONE_PX = 32;
 
 type PanelKind = "feature" | "stat" | "quote" | "chip" | "profile" | "cta" | "metric";
 
@@ -286,6 +309,33 @@ function panelTranslate(
   return `translate3d(${(1 - o) * 36 * dir}px, ${(1 - o) * 10}px, 0)`;
 }
 
+function clamp01(n: number) {
+  return Math.min(1, Math.max(0, n));
+}
+
+function wheelDeltaPx(e: WheelEvent) {
+  let y = e.deltaY;
+  if (!Number.isFinite(y) || y === 0) return 0;
+  if (e.deltaMode === 1) y *= 16;
+  else if (e.deltaMode === 2) {
+    y *= typeof window !== "undefined" ? window.innerHeight || 800 : 800;
+  }
+  return y;
+}
+
+type ScrollNarrativeApi = {
+  setProgress: (p: number) => void;
+  getProgress: () => number;
+  getTarget: () => number;
+  productId: string;
+};
+
+function momentFromProgress(progress: number) {
+  if (progress < 0.34) return "Atelier";
+  if (progress < 0.66) return "Proof";
+  return "Invite";
+}
+
 /**
  * Aether liquid-glass shell (AGENT.md / generateLiquidGlass).
  * Host isolation + ::before tint/inner rim + ::after frost blur + SVG distortion.
@@ -461,31 +511,54 @@ export default function PrismLiquidGlass() {
   const pinRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const touchYRef = useRef<number | null>(null);
+  const targetProgressRef = useRef(0);
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
   const [reduced, setReduced] = useState(false);
   const progressRef = useRef(0);
 
-  const applyProgress = useCallback((p: number) => {
-    const clamped = Math.min(1, Math.max(0, p));
+  const paintPlayheadUi = useCallback((p: number) => {
+    const clamped = clamp01(p);
     progressRef.current = clamped;
-    setProgress(clamped);
+    if (progressBarRef.current) {
+      progressBarRef.current.style.transform = `scaleX(${clamped})`;
+    }
+    const root = pinRef.current?.parentElement;
+    if (root instanceof HTMLElement) {
+      root.dataset.prismPlayhead = clamped.toFixed(3);
+      root.dataset.prismTarget = targetProgressRef.current.toFixed(3);
+    }
+    setProgress((prev) => (Math.abs(prev - clamped) > 0.0008 ? clamped : prev));
+  }, []);
 
+  const snapPlayhead = useCallback((p: number) => {
+    const clamped = clamp01(p);
+    targetProgressRef.current = clamped;
     const video = videoRef.current;
     if (video && video.duration && Number.isFinite(video.duration)) {
-      const t = clamped * video.duration;
-      if (Math.abs(video.currentTime - t) > 0.016) {
-        try {
-          video.currentTime = t;
-        } catch {
-          /* seek race */
-        }
+      video.pause();
+      try {
+        video.currentTime = clamped * video.duration;
+      } catch {
+        /* seek race before metadata */
       }
     }
+    progressRef.current = clamped;
+    setProgress(clamped);
     if (progressBarRef.current) {
       progressBarRef.current.style.transform = `scaleX(${clamped})`;
     }
   }, []);
+
+  const setTargetProgress = useCallback(
+    (next: number, immediate = false) => {
+      const clamped = clamp01(next);
+      targetProgressRef.current = clamped;
+      if (immediate) snapPlayhead(clamped);
+    },
+    [snapPlayhead]
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -498,58 +571,549 @@ export default function PrismLiquidGlass() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const onMeta = () => {
+
+    let cancelled = false;
+    let settled = false;
+    let safetyTimer: ReturnType<typeof setTimeout> | null = null;
+    let onSeeked: (() => void) | null = null;
+
+    const cleanupSeek = () => {
+      if (onSeeked) {
+        video.removeEventListener("seeked", onSeeked);
+        onSeeked = null;
+      }
+      if (safetyTimer != null) {
+        clearTimeout(safetyTimer);
+        safetyTimer = null;
+      }
+    };
+
+    const markReady = () => {
+      if (cancelled || settled) return;
+      settled = true;
+      cleanupSeek();
       video.pause();
-      video.currentTime = 0;
       setReady(true);
     };
+
+    const paintStartFrame = () => {
+      if (cancelled || settled) return;
+      video.pause();
+      cleanupSeek();
+      const target = 0;
+      let kicked = false;
+      onSeeked = () => {
+        if (cancelled || settled) return;
+        if (!kicked) {
+          kicked = true;
+          try {
+            video.currentTime = target;
+          } catch {
+            markReady();
+          }
+          return;
+        }
+        markReady();
+      };
+      video.addEventListener("seeked", onSeeked);
+      try {
+        video.currentTime = target + 0.04;
+      } catch {
+        markReady();
+        return;
+      }
+      safetyTimer = setTimeout(() => {
+        if (cancelled) return;
+        try {
+          if (Math.abs(video.currentTime - target) > 0.02) {
+            video.currentTime = target;
+          }
+        } catch {
+          /* ignore */
+        }
+        if (video.readyState >= 2) markReady();
+      }, 800);
+    };
+
+    const onMeta = () => paintStartFrame();
+    const onLoadedData = () => paintStartFrame();
+
     if (video.readyState >= 1) onMeta();
     else video.addEventListener("loadedmetadata", onMeta);
-    return () => video.removeEventListener("loadedmetadata", onMeta);
+    video.addEventListener("loadeddata", onLoadedData);
+
+    return () => {
+      cancelled = true;
+      cleanupSeek();
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", onLoadedData);
+    };
   }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !ready) return;
-    const onSeeked = () => {
-      if (!video.duration || !Number.isFinite(video.duration)) return;
-      applyProgress(video.currentTime / video.duration);
+    if (reduced) return;
+    const api: ScrollNarrativeApi = {
+      setProgress: (p: number) => setTargetProgress(p, true),
+      getProgress: () => progressRef.current,
+      getTarget: () => targetProgressRef.current,
+      productId: "MS-HERO-PRSM01",
     };
-    video.addEventListener("seeked", onSeeked);
-    return () => video.removeEventListener("seeked", onSeeked);
-  }, [ready, applyProgress]);
+    const w = window as Window & {
+      __msScrollNarrative?: ScrollNarrativeApi;
+    };
+    w.__msScrollNarrative = api;
+    return () => {
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+    };
+  }, [reduced, setTargetProgress]);
 
+  /**
+   * Dual process: No Scroller pin + PSAVE chase.
+   * Gestures aim on 12 vh. Film plays. Page does not physically scroll.
+   */
   useEffect(() => {
     if (!ready || reduced) return;
     const pin = pinRef.current;
     const video = videoRef.current;
     if (!pin || !video) return;
+
     video.pause();
-    const st = ScrollTrigger.create({
-      trigger: pin,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.55,
-      onUpdate: (self) => applyProgress(self.progress),
-    });
-    applyProgress(0);
-    return () => {
-      st.kill();
+    video.loop = false;
+    snapPlayhead(0);
+
+    const rootEl = pin.parentElement;
+    const setDir = (dir: "fwd" | "rev" | "idle") => {
+      if (rootEl) rootEl.dataset.prismDir = dir;
     };
-  }, [ready, reduced, applyProgress]);
+    setDir("idle");
+
+    const virtualDistance = () => {
+      const vh = window.innerHeight || 800;
+      return VIRTUAL_VIEWPORTS * vh;
+    };
+
+    const sectionInView = () => {
+      const r = pin.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+
+    const pinDocked = () => pin.getBoundingClientRect().top >= -2;
+
+    let pageOwns = false;
+
+    const eventOnPin = (e: Event) => {
+      if (e.target instanceof Node && pin.contains(e.target)) return true;
+      if (e instanceof WheelEvent) {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && pin.contains(el)) return true;
+      }
+      return false;
+    };
+
+    const touchOnPin = (e: TouchEvent) => {
+      const t = e.touches[0] || e.changedTouches[0];
+      if (!t) return false;
+      if (e.target instanceof Node && pin.contains(e.target)) return true;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      return Boolean(el && pin.contains(el));
+    };
+
+    let lastUpAt = 0;
+    let lastDownAt = 0;
+    let lastIntentSign = 0;
+    let coastApplied = false;
+    let revHead = 0;
+    let revArmed = false;
+    let revAcc = 0;
+    let revBusy = false;
+    let revClear: (() => void) | null = null;
+    let revSafety: ReturnType<typeof setTimeout> | null = null;
+
+    const clearRevWait = () => {
+      if (revClear) {
+        video.removeEventListener("seeked", revClear);
+        revClear = null;
+      }
+      if (revSafety != null) {
+        clearTimeout(revSafety);
+        revSafety = null;
+      }
+      revBusy = false;
+    };
+
+    const markIntent = (deltaPx: number) => {
+      const now = performance.now();
+      if (deltaPx < 0) lastUpAt = now;
+      if (deltaPx > 0) lastDownAt = now;
+      lastIntentSign = deltaPx > 0 ? 1 : -1;
+      coastApplied = false;
+    };
+
+    const pictureAtStart = () => {
+      if (progressRef.current <= 0.0005) return true;
+      const d = video.duration;
+      return Boolean(d && Number.isFinite(d) && video.currentTime <= 0.04);
+    };
+    const pictureAtEnd = () => {
+      if (progressRef.current >= 0.9995) return true;
+      const d = video.duration;
+      return Boolean(d && Number.isFinite(d) && video.currentTime >= d - 0.08);
+    };
+
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const playhead = progressRef.current;
+      let target = targetProgressRef.current;
+      if (pictureAtStart() && deltaPx < 0) return false;
+      if (pictureAtEnd() && deltaPx > 0) return false;
+      if (target <= 0.0005 && deltaPx < 0) return true;
+      if (target >= 0.9995 && deltaPx > 0) return true;
+
+      const thisSign = deltaPx > 0 ? 1 : -1;
+      const now = performance.now();
+      const lastAt = Math.max(lastUpAt, lastDownAt);
+      const flipIsBounce =
+        lastIntentSign !== 0 &&
+        thisSign !== lastIntentSign &&
+        Math.abs(deltaPx) < PSAVE_FLIP_DEADZONE_PX &&
+        now - lastAt < PSAVE_LIVE_MS + 120;
+      if (flipIsBounce) return true;
+
+      markIntent(deltaPx);
+      if (deltaPx < 0 && target > playhead) target = playhead;
+      if (deltaPx > 0 && target < playhead) target = playhead;
+      targetProgressRef.current = clamp01(target + deltaPx / virtualDistance());
+      if (rootEl) {
+        rootEl.dataset.prismTarget = targetProgressRef.current.toFixed(3);
+        rootEl.dataset.prismDir = deltaPx > 0 ? "fwd" : "rev";
+      }
+      return true;
+    };
+
+    let wheelPending = 0;
+    let wheelRaf = 0;
+    let chaseRaf = 0;
+    let lastTs = 0;
+
+    const flushWheel = () => {
+      wheelRaf = 0;
+      const pending = wheelPending;
+      wheelPending = 0;
+      if (pending) applyDelta(pending);
+    };
+
+    const onEnded = () => {
+      video.pause();
+      video.loop = false;
+      if (video.duration && Number.isFinite(video.duration)) {
+        try {
+          video.currentTime = Math.max(0, video.duration - 0.001);
+        } catch {
+          /* ignore */
+        }
+      }
+      paintPlayheadUi(1);
+    };
+
+    const issueReverseStep = (targetT: number) => {
+      if (revBusy) return false;
+      const next = Math.max(targetT, revHead - PSAVE_REV_STEP);
+      if (next >= revHead - 0.0005) return false;
+      revHead = next;
+      revBusy = true;
+      if (!video.paused) video.pause();
+      video.playbackRate = 1;
+      revClear = () => {
+        clearRevWait();
+      };
+      video.addEventListener("seeked", revClear);
+      revSafety = setTimeout(() => {
+        clearRevWait();
+      }, 200);
+      try {
+        video.currentTime = revHead;
+      } catch {
+        clearRevWait();
+        return false;
+      }
+      return true;
+    };
+
+    const chase = (ts: number) => {
+      chaseRaf = requestAnimationFrame(chase);
+      const duration = video.duration;
+      if (!duration || !Number.isFinite(duration)) return;
+
+      const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 1 / 60;
+      lastTs = ts;
+
+      const liveUp = ts - lastUpAt < PSAVE_LIVE_MS && lastUpAt >= lastDownAt;
+      const liveDown = ts - lastDownAt < PSAVE_LIVE_MS && lastDownAt > lastUpAt;
+      const settle = PSAVE_FRAME * 0.6;
+
+      if (!liveUp && !liveDown && !coastApplied && lastIntentSign !== 0) {
+        coastApplied = true;
+        const playT = video.currentTime;
+        const destT = targetProgressRef.current * duration;
+        const atEnd = playT >= duration - 0.08 || progressRef.current >= 0.9995;
+        const atStart = playT <= 0.04 || progressRef.current <= 0.0005;
+        if (lastIntentSign > 0 && !atEnd && destT < playT + PSAVE_COAST_SEC) {
+          targetProgressRef.current = clamp01(
+            (playT + PSAVE_COAST_SEC) / duration
+          );
+        } else if (
+          lastIntentSign < 0 &&
+          !atStart &&
+          destT > playT - PSAVE_COAST_SEC
+        ) {
+          targetProgressRef.current = clamp01(
+            (playT - PSAVE_COAST_SEC) / duration
+          );
+        }
+        if (rootEl) {
+          rootEl.dataset.prismTarget = targetProgressRef.current.toFixed(3);
+        }
+      }
+
+      const targetT = targetProgressRef.current * duration;
+
+      if (liveUp) {
+        if (!revArmed) {
+          revHead = video.currentTime;
+          revArmed = true;
+          revAcc = PSAVE_REV_STEP;
+        }
+        if (!video.paused) video.pause();
+        video.playbackRate = 1;
+        setDir("rev");
+        if (revHead > targetT + settle && !revBusy) {
+          issueReverseStep(targetT);
+        }
+        paintPlayheadUi(clamp01(revHead / duration));
+        return;
+      }
+
+      if (revArmed && revHead > targetT + settle) {
+        setDir("rev");
+        if (!video.paused) video.pause();
+        video.playbackRate = 1;
+        if (!revBusy) {
+          revAcc += PSAVE_RATE * dt;
+          if (revAcc >= PSAVE_REV_STEP) {
+            revAcc -= PSAVE_REV_STEP;
+            issueReverseStep(targetT);
+          }
+        }
+        paintPlayheadUi(clamp01(revHead / duration));
+        return;
+      }
+
+      if (revArmed && revHead <= targetT + settle) {
+        revArmed = false;
+        revAcc = 0;
+        clearRevWait();
+      }
+
+      const cur = revArmed ? revHead : video.currentTime;
+      const err = targetT - cur;
+
+      if (Math.abs(err) <= settle) {
+        if (!video.paused) video.pause();
+        clearRevWait();
+        revArmed = false;
+        revAcc = 0;
+        setDir("idle");
+        const atFilmEnd = targetT >= duration - 0.08 || cur >= duration - 0.08;
+        const atFilmStart = targetT <= 0.04 && cur <= 0.04;
+        if (atFilmEnd) {
+          try {
+            video.currentTime = Math.max(0, duration - 0.001);
+          } catch {
+            /* ignore */
+          }
+          paintPlayheadUi(1);
+        } else if (atFilmStart) {
+          try {
+            video.currentTime = 0;
+          } catch {
+            /* ignore */
+          }
+          paintPlayheadUi(0);
+        } else {
+          paintPlayheadUi(clamp01(cur / duration));
+        }
+        return;
+      }
+
+      if (err > 0 && !liveUp) {
+        clearRevWait();
+        revArmed = false;
+        revAcc = 0;
+        setDir("fwd");
+        if (cur >= duration - 0.08) {
+          if (!video.paused) video.pause();
+          try {
+            video.currentTime = duration - 0.001;
+          } catch {
+            /* ignore */
+          }
+          paintPlayheadUi(1);
+          return;
+        }
+        if (liveDown || !liveUp) {
+          const remain = Math.max(0, err);
+          video.playbackRate =
+            remain < PSAVE_EASE_SEC
+              ? Math.max(0.42, PSAVE_RATE * (remain / PSAVE_EASE_SEC))
+              : PSAVE_RATE;
+          if (video.paused) {
+            const attempt = video.play();
+            if (attempt && typeof attempt.catch === "function") {
+              attempt.catch(() => {
+                try {
+                  video.currentTime = Math.min(
+                    duration - 0.001,
+                    cur + Math.min(err, PSAVE_RATE * dt, PSAVE_FRAME)
+                  );
+                } catch {
+                  /* ignore */
+                }
+              });
+            }
+          }
+        }
+        paintPlayheadUi(clamp01(video.currentTime / duration));
+        return;
+      }
+
+      if (!video.paused) video.pause();
+      video.playbackRate = 1;
+      if (!revArmed) {
+        revHead = video.currentTime;
+        revArmed = true;
+        revAcc = PSAVE_REV_STEP;
+      }
+      setDir("rev");
+      if (!revBusy) issueReverseStep(targetT);
+      paintPlayheadUi(clamp01(revHead / duration));
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns) return;
+      if (!sectionInView()) return;
+      if (!eventOnPin(e)) return;
+      if (e.ctrlKey || e.metaKey) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const raw = wheelDeltaPx(e);
+      if (!raw) return;
+
+      const releasing =
+        (pictureAtStart() && raw < 0) || (pictureAtEnd() && raw > 0);
+      if (releasing) {
+        if (pictureAtEnd() && raw > 0) pageOwns = true;
+        return;
+      }
+
+      const thisSign = raw > 0 ? 1 : -1;
+      const now = performance.now();
+      const lastAt = Math.max(lastUpAt, lastDownAt);
+      const flipIsBounce =
+        lastIntentSign !== 0 &&
+        thisSign !== lastIntentSign &&
+        Math.abs(raw) < PSAVE_FLIP_DEADZONE_PX &&
+        now - lastAt < PSAVE_LIVE_MS + 120;
+      if (!flipIsBounce) {
+        wheelPending += raw;
+        if (!wheelRaf) wheelRaf = requestAnimationFrame(flushWheel);
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns || !sectionInView() || e.touches.length !== 1) return;
+      if (!touchOnPin(e)) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns || !sectionInView() || e.touches.length !== 1) return;
+      if (!touchOnPin(e)) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      const deltaY = prev - y;
+      const consumed = applyDelta(deltaY);
+      if (!consumed && pictureAtEnd() && deltaY > 0) pageOwns = true;
+      if (consumed) e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns || !sectionInView()) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        el.closest(
+          "a, button, input, textarea, select, [contenteditable='true']"
+        )
+      ) {
+        return;
+      }
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (!consumed && pictureAtEnd() && delta > 0) pageOwns = true;
+      if (consumed) e.preventDefault();
+    };
+
+    video.addEventListener("ended", onEnded);
+    chaseRaf = requestAnimationFrame(chase);
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+      if (wheelRaf) cancelAnimationFrame(wheelRaf);
+      if (chaseRaf) cancelAnimationFrame(chaseRaf);
+      clearRevWait();
+      video.removeEventListener("ended", onEnded);
+      video.pause();
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [ready, reduced, paintPlayheadUi, snapPlayhead]);
 
   useEffect(() => {
     if (!ready || !reduced) return;
-    applyProgress(0.42);
-  }, [ready, reduced, applyProgress]);
+    snapPlayhead(0.42);
+  }, [ready, reduced, snapPlayhead]);
 
   const showScrollCue = !reduced && progress < 0.06;
-  const momentLabel =
-    progress < 0.34
-      ? "Atelier"
-      : progress < 0.66
-        ? "Proof"
-        : "Invite";
+  const momentLabel = momentFromProgress(progress);
 
   return (
     <div
@@ -558,8 +1122,10 @@ export default function PrismLiquidGlass() {
         fontFamily: "var(--font-prism-sans), system-ui, sans-serif",
         background: "#E8EAEF",
       }}
+      data-prism-drive="psave"
+      data-prism-pin={reduced ? "false" : "true"}
     >
-      {/* Aether SVG filter once — Ice Ripple baseFrequency/scale; seed 92 */}
+      {/* Aether SVG filter once. Ice Ripple baseFrequency/scale; seed 92 */}
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
         <defs>
           <filter
@@ -614,10 +1180,8 @@ export default function PrismLiquidGlass() {
 
       <div
         ref={pinRef}
-        className="relative"
-        style={{ height: reduced ? "100vh" : "520vh" }}
+        className="relative h-[100dvh] min-h-screen w-full overflow-hidden bg-[#E8EAEF]"
       >
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#E8EAEF]">
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full object-cover"
@@ -793,7 +1357,6 @@ export default function PrismLiquidGlass() {
               <span className="h-8 w-px bg-gradient-to-b from-white/50 to-transparent" />
             </div>
           )}
-        </div>
       </div>
 
       <section

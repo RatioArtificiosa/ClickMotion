@@ -3,16 +3,16 @@ id: "MS-HERO-VERT01"
 title: "VERTEX SECURITY - Brutalist Cybersecurity Scroll Hero"
 slug: "vertex-security-brutalist-cybersecurity-hero"
 description: "For security teams and enterprise vendors. A monochrome narrative that hardens as the visitor scrolls - seriousness you can feel before the first demo."
-version: "3.0.0"
+version: "4.0.0"
 created: "2026-08-07"
-updated: "2026-08-08"
+updated: "2026-08-14"
 author: "MS Team"
 status: "published"
 type: "hero"
 category: "tech"
 subcategory: "cybersecurity"
 styleTags: ["brutalist", "minimal", "dark-cinematic"]
-technicalTags: ["video-background", "scroll-scrub"]
+technicalTags: ["video-background", "scroll-trigger"]
 motionIntensity: "aggressive"
 difficulty: "intermediate"
 priceTier: "free"
@@ -24,6 +24,7 @@ aiToolsRating:
   grok-build: 5
 frameworksSupported: ["react"]
 previewVideo: "/assets/videos/vertex-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/vertex-preview-fs-v1.mp4"
 thumbnail: "/thumbnails/MS-HERO-VERT01.webp"
 liveDemo: "/demo/cleanroom-vertex"
 videoBackgrounds:
@@ -31,20 +32,27 @@ videoBackgrounds:
     format: "mp4"
     duration: "12s"
     loop: false
-    sizeMb: 6
+    sizeMb: 25
     poster: "/assets/posters/vertex-globe-v1.webp"
 dependencies:
-  - { name: "gsap", version: "^3.12.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: true }
-estimatedTokens: 6200
+estimatedTokens: 11000
 useCases: ["cybersecurity-homepage", "b2b-security-hero", "scroll-narrative"]
 compatibleWith: []
 positionInPage: "top"
 ---
 
+## Promise (buyer-facing)
+
+**VERTEX SECURITY** is an enterprise cybersecurity **pin-until-complete** scroll hero: one full-viewport black stage, a 12-second monochrome asteroid / wireframe globe film the playhead walks through three chapters that harden from zero-trust to prevention. **PSAVE** (Perfect Scroll Video Engine): scroll aims, down plays forward, up plays reverse, the picture never jumps a frame. Not a tall multi-page scrollbar track. Not Meridian dark coastal. Not Revel pearl fashion.
+
+**How you build it:** this listing is **PDF-only** (no files zip). Give your AI this sold prompt plus the Vertex package PDF. Tell it: *Build VERTEX with PSAVE (Perfect Scroll Video Engine). Pin-until-complete. Scroll aims on 3.6 viewports (even asteroid approach, like Elyse, not Revel 12). Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward at the same 1.2x, one 3-frame step per seek. Never jump a frame. When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Copy and the white bar follow the picture. Release only when the picture arrives. There is no footer band. After release the host page may continue. Replacement films must be re-encoded GOP 3, no B-frames. Do not seek the playhead across the film. Do not copy old Vertex wheel-gain 0.22 or GSAP lag 0.45. Do not build a 420vh sticky track.*
+
+---
+
 ## Design System
 
-**Aesthetic Direction:** **VERTEX SECURITY** - enterprise cybersecurity, monochrome brutalist. Black canvas, pure white type, Space Grotesk display, Inter UI. Wireframe globe video scrubbed by scroll. Feels like a serious SOC vendor, not a SaaS startup kit.
+**Aesthetic Direction:** **VERTEX SECURITY** - enterprise cybersecurity, monochrome brutalist. Black canvas, pure white type, Space Grotesk display, Inter UI. Wireframe globe / asteroid film driven by **PSAVE** on a **pinned 100dvh** stage. Feels like a serious SOC vendor, not a SaaS startup kit.
 
 **Famous-UI craft direction (not a clone):** Linear / Stripe enterprise density meets brutalist editorial (no soft glass pills as house chrome). One video system + sharp geometry + scroll-as-narrative chapters.
 
@@ -75,17 +83,17 @@ positionInPage: "top"
 ## Layout Structure
 
 ```
-[Scroll track ~420vh - NO footer after]
-  [Sticky 100vh stage]
-    video cover (globe) - currentTime = scroll progress * duration
-    dual scrim (diagonal + vertical)
-    fixed-feel nav + progress hairline
-    chapter stack: eyebrow, title, body, (final: dual CTAs + 3 stats)
-    chapter index 01/02/03 right rail
-    scroll cue at start
+[Pinned 100dvh stage - pin-until-complete; NO tall multi-vh track]
+  video cover (globe / asteroid) - PSAVE playhead owns time
+  dual scrim (diagonal + vertical)
+  fixed-feel nav + progress hairline
+  chapter stack: eyebrow, title, body, (final: dual CTAs + 3 stats)
+  chapter index 01/02/03 right rail
+  scroll cue at start
+[NO footer / closing band]
 ```
 
-**Do not add a closing membership / footer band.** The narrative ends when the pin track ends.
+**Do not add a closing membership / footer band.** The narrative ends when the picture arrives at progress 1. On a client site, release the pin at the ends so the host page can continue. Do not `overflow: hidden` the page.
 
 **Scrim:**
 ```
@@ -95,13 +103,15 @@ linear-gradient(105deg, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.58) 42%, rgba(0,0,0,0.
 
 ---
 
-## Chapters (scroll progress)
+## Chapters (playhead 0-1)
 
 | Progress | Eyebrow | Titles | Body focus |
 |----------|---------|--------|------------|
 | 0-0.34 | Zero Trust Architecture | SECURITY. / WITHOUT COMPROMISE. | zero-day prevention |
 | 0.34-0.66 | Global Threat Fabric | Every packet / is a signal. | telemetry + intent |
-| 0.66-1.0 | Built for SOC teams | Prevention / is the product. | CTAs + MTTR / Coverage / SOC stats |
+| 0.66-1.01 | Built for SOC teams | Prevention / is the product. | CTAs + MTTR / Coverage / SOC stats |
+
+Chapters follow the **picture**, not the wheel target.
 
 ---
 
@@ -119,15 +129,47 @@ linear-gradient(105deg, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.58) 42%, rgba(0,0,0,0.
 
 ## Motion Specification
 
-```ts
-// GSAP ScrollTrigger on pin track
-// start: top top, end: bottom bottom, scrub: 0.45
-// onUpdate: video.currentTime = progress * duration
-// Chapter crossfade via key remount + CSS keyframes (vertexFade / vertexRise)
-// reduced-motion: 100vh static, no scrub, chapter 1 only
+**Mode:** Scroll-as-narrative · **pin-until-complete** · **PSAVE** (Perfect Scroll Video Engine). Scroll sets a destination on `3.6` viewports. Down plays the film forward at **1.2x**. Up plays it backward at the same **1.2x**, **exactly one 3-frame step per seek**. Never jump a frame. **When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little**, then rate eases to a stop. **Do not** autoplay-loop as primary. **Do not** seek `currentTime` across a jump.
+
+**Hard ban:** tall multi-vh document scrollbar track (legacy `420vh` sticky pattern).  
+**Hard ban:** seeking the playhead to a far destination (GSAP scrub, old Vertex wheel-gain `0.22`, old scrub lag `0.45`).  
+**Hard ban:** mapping raw wheel `deltaY` through a gain, or restoring `VIRTUAL_VIEWPORTS = 3.2`. Locked earn is **3.6**.  
+**Hard ban:** a Revel `12` aim track on this even asteroid film (there is no halfway kick to earn).  
+**Hard ban:** a low-res frame buffer or canvas overlay for reverse. Reverse walks the live video.  
+**Hard ban:** releasing the pin because the destination hit 1 while the picture is still walking.  
+**Hard ban:** a replacement film with one I-frame (or long GOP + B-frames). Reverse will stall mid-film.  
+**Hard ban:** pausing on the last wheel tick. The stop is friction, then a graceful slowdown.  
+**Hard ban:** a closing footer / membership / atelier band.
+
+```
+const VIRTUAL_VIEWPORTS = 3.6; // GOLD: even asteroid approach. Not old 3.2 seek-scrub. Not Revel 12.
+const PSAVE_RATE = 1.2;        // film-seconds per wall-second, both directions
+const PSAVE_FRAME = 1 / 24;    // never skip more than one frame in a forward tick
+const PSAVE_REV_STRIDE = 3;    // reverse: exactly 3 frames per seek (0.125s)
+const PSAVE_LIVE_MS = 220;     // still scrolling if last up/down is inside this window
+const PSAVE_COAST_SEC = 0.55;  // leftover dest floor after last real intent
+const PSAVE_EASE_SEC = 0.55;   // forward rate tapers over last leftover film-seconds
+const PSAVE_FLIP_DEADZONE_PX = 32; // ignore tiny opposite trackpad ticks
 ```
 
-No magnetic cursor. No 3D library - video only. No autoplay loop - scroll owns time.
+**Perceived time:** this film is even. Rocks shed toward the viewpoint the whole 12 seconds. It is not Revel slow-then-kick. The **3.6** track is locked because the story is a steady approach, like Elyse sanctuary time. Do not raise it to 12. Do not restore 3.2 + wheel gain.
+
+**The lift:** leftover dest is the Elyse stop. On this 12s film dest still dies (1.2x eats it; a tiny opposite tick snaps dest). After last real intent, dest must sit at least `0.55s` of film ahead. Ignore opposite ticks under `32px`. Forward `playbackRate` stays 1.2 until leftover dest is under `0.55s`, then tapers toward ~0.42. Friction, then a graceful stop. This `0.55` is **not** old GSAP `SCRUB_LAG 0.45`.
+
+**Rebuild algorithm (mandatory):** one `100dvh` stage in **normal document flow**. There is **no** next-sibling band inside this product. Do not `overflow: hidden` the page (a host embed must be able to scroll after release). Do not import ScrollTrigger or GSAP. Do not use `position: sticky`. Do not build a `420vh` spacer. Gestures map **1:1** onto `3.6` viewports and only move the **destination**. First **real** opposite gesture snaps destination to the picture. Ignore tiny opposite ticks. Each frame, walk the picture toward that destination at **1.2x**, never more than **1/24s** of film on a forward fallback tick. **Down:** muted `play()` at `playbackRate 1.2`, ease over the last `0.55s` of leftover dest. After they lift, apply the `0.55s` dest floor once if dest is closer than that. **Up:** first real up-scroll cancels a pending forward destination. Walk `currentTime` backward exactly one 3-frame step per seek, **during the gesture and after**. Wait `seeked`. Never seek to the stop point. No loop. No low-res buffer. Copy, chapters, and the white bar follow the **playhead**. Release only when the **picture** is at `0+up` / `1+down`. Test live `currentTime` as well as the playhead ref (settle can stop ~1 frame short). After release the **page** owns scroll until the stage docks at the top. **Opening frame:** the poster is the opening asteroid (≈ frame 0). Kick-seek `0.04 → 0`, wait `seeked`, fade the film in (`.is-ready`). Reduced motion may keep that poster and show chapter 01 only.
+
+| Element | Motion |
+|---------|--------|
+| Film | PSAVE: play toward destination forward or reverse, never jump a frame |
+| Stage | Pinned 100dvh; no tall page track |
+| Wheel | 1:1 onto the 3.6 aim track (destination only) |
+| Lift | 0.55s dest floor + rate ease. Friction, then a graceful stop. |
+| Chapters | Crossfade eyebrow/title/body from **playhead** (vertexFade / vertexRise) |
+| Progress bar | `scaleX(playhead)` white hairline, origin left |
+| Scroll cue | visible only when playhead &lt; 0.04 |
+| Reduced motion | 100dvh static stage, poster + chapter 01, no PSAVE |
+
+Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, productId: "MS-HERO-VERT01" }`. `getProgress` is the picture. `getTarget` is leftover dest.
 
 ---
 
@@ -136,11 +178,25 @@ No magnetic cursor. No 3D library - video only. No autoplay loop - scroll owns t
 | Field | Value |
 |-------|--------|
 | File | `/assets/videos/vertex-globe-web-v1.mp4` |
-| Poster | `/assets/posters/vertex-globe-v1.webp` |
-| Control | Scroll scrub (paused element) |
-| Subject | Dark abstract / wireframe globe - technical, cold, monochrome-friendly |
+| Poster | `/assets/posters/vertex-globe-v1.webp` (this still ≈ frame 0) |
+| Attributes | `muted playsInline preload="auto"` - **NO autoplay, NO loop** |
+| Object-fit | `cover`, full pin stage |
+| Control | PSAVE. Scroll aims. The film plays forward or reverse. Never seek across a jump. |
+| Subject | Dark abstract / wireframe globe or asteroid approach - technical, cold, monochrome-friendly |
 
-> **AI Video Generation Prompt:** Cinematic seamless loop 10-14s, no audio, dark abstract wireframe globe or orbital network rotating slowly on pure black, thin white/cyan-gray lines only, no logos, no text, no people. Technical cybersecurity atmosphere, 24fps feel, seamless loop.
+```txt
+Use ONLY the paths above. Never hotlink foreign CDNs. Scroll aims. The film plays to that moment.
+```
+
+> **AI Video Generation Prompt:** Cinematic seamless narrative 10-14s, no audio, dark abstract wireframe globe or orbital network / asteroid approach on pure black, thin white/cyan-gray lines only, no logos, no text, no people. Technical cybersecurity atmosphere, 24fps feel, even steady motion (not a slow-then-kick cut).
+
+**Film encode (if you change the video):** the shipped client HD is H.264, **GOP 3**, **no B-frames**, 24fps, 12.04s, 289 frames, **97 I-frames** / 192 P / 0 B. PSAVE reverse seeks every `0.125s`. The previous encode (13 I / 190 B) stalled mid-reverse. Re-encode any replacement:
+
+```
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset slow -crf 16 -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart your-film-psave.mp4
+```
+
+Wire that remastered file. Keep 24fps, or set `PSAVE_FRAME = 1/fps` and keep a 3-frame reverse stride. Do not extract PNG frames. Do not use a storefront preview as the hero. Keep leftover dest + 0.55s dest floor on lift. If the new film is slow-then-kick, raise the aim track until two flicks do not dump a chapter (`docs/PSAVE.md` §5B / §5C / §9.1).
 
 ---
 
@@ -148,9 +204,10 @@ No magnetic cursor. No 3D library - video only. No autoplay loop - scroll owns t
 
 | Breakpoint | Behavior |
 |------------|----------|
-| >=1024px | Full nav, large type, chapter index, corner mark |
+| >=1024px | Full nav, large type, chapter index, corner mark; pin 100dvh |
 | >=768px | Nav links visible |
-| <768px | Hide center nav; stack CTAs; H1 clamp down; hide corner mark optional |
+| <768px | Hide center nav; stack CTAs; H1 clamp down; hide corner mark optional; pin stage still one viewport |
+| Reduced motion | 100vh static; no scrub; chapter 01 + poster |
 
 ---
 
@@ -159,35 +216,67 @@ No magnetic cursor. No 3D library - video only. No autoplay loop - scroll owns t
 - Single h1 per chapter (key remount)
 - Video aria-hidden
 - Focus outlines white
-- prefers-reduced-motion: static chapter 1, no scrub
+- prefers-reduced-motion: static chapter 1, no PSAVE
 - Contrast: white on black scrim
+- Pin consumes wheel/touch while journey runs; **releases** at ends so the host page can continue. Do not trap focus. Do not trap Space on a focused link or button.
 
 ---
 
 ## Performance Notes
 
-- One video element; poster first paint
-- Pause + seek only (no free-running decode waste)
-- Prefer 1080p web encode under ~12MB
+- Playhead chase only (no GSAP, no Framer, no ScrollTrigger)
+- One video element; kick-seek then fade `.is-ready`
+- Animate transform/opacity only on chapter text
+- One viewport stage (no tall spacer DOM)
 
 ---
 
 ## AI Tool Instructions
 
-**Cursor / Claude / Grok Build:** `VertexHeroSection.tsx` default export, use client, GSAP ScrollTrigger scrub, Space Grotesk + Inter via next/font. Exact strings. Border-radius 0 on CTAs. **No footer section.**
+**Cursor / Claude / Grok Build:** `VertexHeroSection.tsx` default export, `"use client"`. Implement **PSAVE** (3.6 viewport aim track, **1.2x** forward and reverse, reverse every 3rd frame, leftover dest plus 0.55s dest floor on lift, never jump a frame), three chapters from the **picture**, **no footer section**, page-owns after release so a host page can continue. If the video is replaced, re-encode GOP 3 / no B-frames first. Space Grotesk + Inter via next/font. Exact strings. Border-radius 0 on CTAs. Prefer cleanroom `VertexHeroSection.tsx` when present.
 
-**Lovable / Bolt:** Same structure; keep monochrome brutalist - do not "pretty up" with soft cards or gradients.
+**Lovable / Bolt:** Single self-contained component; same tokens and chapters. Walk `currentTime` toward the destination on `requestAnimationFrame` at 1.2x, max one 24fps frame per forward tick, reverse every 3rd frame. Still no wallpaper loop. Still **no tall multi-vh track**. Still **no seek across a jump**. Still **no GSAP**. Still **no footer band**.
 
-Do not apply Liquid Glass host styles. Do not use cyan neon as primary brand.
+Do not apply Liquid Glass host styles. Do not use cyan neon as primary brand. Do not rebuild as a tall sticky scroll track. Do not restore wheel-gain 0.22.
 
 ---
 
 ## Expected Output
 
-1. Scroll-as-narrative black brutalist security hero (tall track + sticky stage)
-2. Local globe video scrubbed by scroll
+1. Scroll-as-narrative black brutalist security hero (**pinned 100dvh stage**, pin-until-complete)
+2. Local globe film the playhead walks (aim **3.6 vh**, rate **1.2x**, reverse every 3rd frame, 0.55s dest floor on lift, never jump a frame)
 3. Three chapters ending with dual CTAs + stats
 4. Deep safe insets - no clipped type
 5. Reduced-motion static path
 6. **No footer / closing band**
-7. Reads as enterprise security - not AI SaaS template
+7. **No tall multi-vh page track**
+8. Reads as enterprise security - not AI SaaS template
+
+## What to tell your AI
+
+```
+Build VERTEX from this prompt (and the Vertex package PDF if you have it).
+There is no files zip and no START-HERE folder.
+Use /assets/videos/vertex-globe-web-v1.mp4 (or the video URL in the PDF).
+Implement PSAVE (Perfect Scroll Video Engine) as pin-until-complete: one 100dvh stage. Scroll aims on 3.6 viewports.
+Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward every 3rd frame at the same 1.2x. Never jump a frame.
+When they stop, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Ignore tiny opposite ticks.
+The film is an even asteroid approach. Do not copy Revel 12. Do not restore old Vertex 3.2 / wheel gain 0.22 / GSAP 0.45.
+Copy and the white bar follow the picture. Release only when the picture arrives. There is no footer band.
+If you change the video, re-encode GOP 3, no B-frames, crf 16, then wire that file. Size the aim track to the story beat.
+Do not import ScrollTrigger or GSAP. Do not seek currentTime across a jump. Do not build a tall multi-vh track.
+```
+
+## Package notes (operators)
+
+- Opaque: `b352guxju0ic` · PaidSalt: none (free listing)
+- Pack mode: **PDF-only** (peer: Elyse / Revel). No `files/` folder, no files zip
+- Client HD: `/assets/videos/vertex-globe-web-v1.mp4` · poster `/assets/posters/vertex-globe-v1.webp` (≈ frame 0; still kick-seek)
+- Storefront: `vertex-preview-v1.mp4` + FS `vertex-preview-fs-v1.mp4` (do not recapture unless asked)
+- Pin gold: PSAVE · 3.6 vh aim · 1.2x · 3-frame reverse · 220ms live · 0.55s dest floor + rate ease · 32px bounce ignore · GOP 3 client HD (97 I / 192 P / 0 B)
+- Method spec (operators): `docs/PSAVE.md` §5C / §5B / §9.1
+- Demo: `/demo/cleanroom-vertex` (do not overflow-hidden the page)
+- Closing band: **none**
+- PSAVE lock: 2026-08-14 · operator feel lock: 2026-08-14
+
+ClickMotion · www.ClickMotion.dev

@@ -190,6 +190,7 @@ export type MotionIntensityId = (typeof motionIntensityLevels)[number]["id"];
 export const technicalTags = [
   "video-background",
   "scroll-trigger",
+  "pin-until-complete",
   "3d-threejs",
   "3d-spline",
   "parallax",

@@ -1,0 +1,277 @@
+---
+id: "MS-HERO-ZERO01"
+title: "ZERO ENERGY - 3D Can Gallery"
+slug: "zero-energy-3d-can-gallery"
+description: "A private tasting of your range: six vessels on one 3D stage you turn by hand, then a scroll that earns the proof. Restage every can until it could only be yours."
+version: "1.0.1"
+created: "2026-08-13"
+updated: "2026-08-13"
+author: "MS Team"
+status: "published"
+type: "hero"
+types: ["hero", "landing-page"]
+category: "ecommerce"
+subcategory: "food-beverage"
+styleTags: ["3d-immersive", "dark-cinematic", "editorial", "luxury"]
+technicalTags: ["3d-threejs", "webgl", "text-split", "scroll-trigger"]
+motionIntensity: "extreme"
+difficulty: "expert"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/zero-energy-preview-v1.webm"
+previewVideoFullscreen: "/assets/videos/zero-energy-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-ZERO01.webp"
+liveDemo: "/demo/cleanroom-zero"
+videoBackgrounds: []
+dependencies:
+  - { name: "three", version: "0.161.0", required: true }
+  - { name: "lenis", version: "^1.3.0", required: true }
+  - { name: "gsap", version: "^3.13.0", required: true }
+estimatedTokens: 18500
+useCases: ["beverage-launch", "cpg-product-gallery", "3d-can-carousel", "landing-page"]
+compatibleWith: ["MS-HERO-ACTU01", "MS-SEC-LINE01", "MS-SEC-STUDIO01"]
+positionInPage: "full"
+---
+
+## Promise (buyer-facing)
+
+**ZERO ENERGY** is a full-page **3D range gallery**. The difference is the lineup. Six vessels share one dark stage. Visitors grab the can they want and turn the whole range by hand. Scroll then opens flavor, four proof beats, a hard closer, the pack, and FAQ. One piece does hero and landing page.
+
+This is not a single hero can and not a photo slider. It is a private tasting of your range, then the brand story in the same breath.
+
+**Why use it:**
+- Energy drinks, sodas, coffee, water, wine, skincare, supplements, or any physical SKU that sells as a family
+- Visitors choose with their hands, then read why it is theirs
+- Six products, or fewer. The carousel is the range. The scroll is the argument.
+- Every label, line, and color is meant to be replaced until a stranger knows it is yours
+
+Default Zero Energy copy and six flavor labels are a starting board.
+
+**How you build it:** download the product pack. Tell your AI:
+
+> Build ZERO ENERGY using the files in this folder. Read START-HERE.md. This is my brand, not Zero Energy. Swap the six labels, the logo, and every line of copy. Keep the 3D range and the scroll journey.
+
+Drop in your can art and your product names. Your AI rebuilds the gallery around your lineup.
+
+## Design System
+
+**Aesthetic Direction:** black tasting room. One raw WebGL stage. Six labeled cans on a shared carousel. Geist for UI. Franklin Gothic ATF Black Italic for display (local woff2 only). Flavor color pairs drive lights, pager, and HUD. Not SaaS glass. Not a photo carousel. Not a single-can hero.
+
+**Famous-UI craft direction (not a clone):** private CPG tasting room x editorial beverage launch x tactile product photography, digital. Quiet until the hand turns the range. Then the scroll earns the proof.
+
+**Canvas:** `#000`. **Safe insets:** min `2rem` / `px-8` horizontal. Lockups sit in the center ~84% of the frame. Type never flush to the edge.
+
+**Typography:**
+- Display / flavor titles: Franklin Gothic ATF Black Italic, local woff2, tracking tight, two-line titles
+- UI / body: Geist Regular / Light, 14-16px, leading 1.5
+- Mono crumbs: Geist Mono Regular
+- Wordmark: supplied logo lockup. The italic **Z** cut is designed. Do not "correct" it.
+
+**Flavor tokens (source order = can labels, required six):**
+
+| Flavor | Primary | Secondary |
+|--------|---------|-----------|
+| Double Litchi | `#3D2B68` | `#9089D3` |
+| Coco Citron Vert | `#27326B` | `#00A6E2` |
+| Kiwi Concombre | `#024A44` | `#71BD96` |
+| Peche Blanche | `#BA5200` | `#EFB36B` |
+| Pomme Rhubarbe | `#9B0984` | `#E6A0E8` |
+| Abricot Framboise | `#800035` | `#FF659D` |
+
+**Anti-slop hard ban:** purple mesh wallpaper, Motionsites pill docks, emoji, rainbow H1, React Three Fiber, bumping Three away from **0.161.0**, `ScrollTrigger.scrub` as the 3D clock, tall multi-vh sticky track, outbound `mailto` / CDN / Google Fonts / `fetch`, storefront `*-preview*` files as rebuild media, "fixing" the logo Z.
+
+**Differentiation:**
+
+| vs | ZERO ENERGY must not become |
+|----|------------------------------|
+| Actually! | One hero can, pointer window, bone paper |
+| Lineup | Mid-page pin snap through SKUs |
+| Helix | Card helix gallery of stills |
+| Studio Sequence | Camera pull-out to a street billboard |
+
+## Layout Structure
+
+- **Full-page machine.** One fixed viewport stage. No traditional long-page scrollbar as the product UX.
+- **Pin-until-complete (mandatory):** the WebGL canvas and HUD stay pinned. Wheel, trackpad, and touch drive **virtual progress** (Lenis seeks the GSAP timeline). When this is the whole site, Lenis owns the document. When embedded in a longer page, **pin the stage until the closer chapter finishes, then release**. Never convert this to a tall sticky `N x 100vh` track.
+- **Nav:** logo left. Links Gamme / Benefices / FAQ. Contact is an in-page jump to `#FAQ`. No outbound URLs.
+- **Journey regions (in order):**
+  1. 3D can carousel (grab + arrows + liquid pager)
+  2. Flavor profile (title + body for the active can)
+  3. Four benefit beats
+  4. ZERO BULLSHIT mark
+  5. Packshot
+  6. Nine FAQ
+  7. Closer
+- **Desktop:** full HUD around the stage. Carousel spacing `3.5`. Camera FOV `20`.
+- **Mobile:** HUD compresses. Touch drag on the canvas. Same chapter order. Targets ≥44px.
+
+## Content Slots
+
+Every string is replaceable. Default copy is French Zero Energy.
+
+| Slot | Default (demo only) | Guidance | Max |
+|------|---------------------|----------|-----|
+| Brand | Zero Energy | Wordmark + spoken name | 2 words |
+| Nav | Gamme / Benefices / FAQ | In-page anchors only | 3 labels |
+| Flavor titles | Double Litchi, Coco Citron Vert, Kiwi Concombre, Peche Blanche, Pomme Rhubarbe, Abricot Framboise | Two-line titles, keep six | 2 words / line |
+| Flavor body | See `source/data/flavors.ts` | One tasting sentence each | ~30 words |
+| Benefit strike | 11G de sucres / Arômes artificiels / Caféine artificielle / Aspartame sucralose acésulfame K | What you reject | 6 words |
+| Benefit titles | Moins de sucre / arômes naturels / caféine issue de grains de café / stevia | What you chose | 6 words |
+| Benefit body | See `source/data/copy.ts` | One proof paragraph | ~40 words |
+| Argument mark | ZERO BULLSHIT | Hard closer wordmark | 2 words |
+| FAQ | Nine Q/A in `source/data/copy.ts` | Honest product answers | 9 pairs |
+| Closer kicker | ZERO BULLSHIT | Repeat the mark | 2 words |
+| Closer line | Six saveurs. Moins de sucre. Arômes naturels. Caféine végétale. | One proof sentence | 16 words |
+| Copyright | © 2026 ZERO ENERGY | Legal line | 1 line |
+
+Keep six flavor objects and keep their order matched to `canLabels` in `webgl-scene.js`.
+
+## Motion Specification
+
+**Mode:** pin-until-complete 3D range + Lenis virtual progress. Not free-play film. Not `ScrollTrigger.scrub`.
+
+| Event | Timing | Ease / notes |
+|-------|--------|--------------|
+| Clock | Lenis `infinite: true`, `autoRaf: false` | Lenis scroll **seeks** the GSAP timeline. Do not switch to ST.scrub. |
+| Virtual progress | 0 → 1 across the journey | Wheel / trackpad / touch. Stage stays fixed. |
+| Embed release | progress 1 + scroll down | Unpin so the host page can continue. Progress 0 + scroll up also releases. |
+| Can grab | pointer capture | Horizontal drag turns the range. Arrows and liquid pager stay in sync. |
+| Carousel snap | debounce 250ms / 50ms | Snaps to nearest can. Spacing `3.5`. |
+| Flavor HUD | on index change | SplitText lines mask, stagger `0.08s`, duration `0.7s`, ease `power3.out` |
+| Benefits | chapter enter | SplitText line reveal, same stagger band `0.05-0.2s` |
+| FAQ accordion | click / tap | Height + opacity, ~0.35s `power2.out` |
+| Reduced motion | `prefers-reduced-motion: reduce` | Settle on chapter 1. No grab thrash. No long timeline seek. Cans remain readable. |
+
+**Do not:**
+- Build a tall multi-vh sticky ScrollTrigger track
+- Seek `video.currentTime` (there is no hero film)
+- Auto-rotate the carousel as the signature (the hand turns the range)
+- Animate layout width/height in a way that causes CLS
+
+## Video / Media Integration
+
+This product is a **3D pack**, not a looping film hero. There is **no** `videoBackgrounds` client film and **no** `/backgrounds` tile.
+
+**Client rebuild media** (place at `/assets/zero-energy/`):
+
+```
+webgl/can.glb
+webgl/base.glb
+webgl/hdri2.hdr
+textures/zero-energy_texture_double-litchi.webp
+textures/zero-energy_texture_coco-citron-vert.webp
+textures/zero-energy_texture_Kiwi-Concombre.webp
+textures/zero-energy_texture_peche-blanche.webp
+textures/zero-energy_texture_pomme-rhubarbe.webp
+textures/zero-energy_texture_abricot_framboise.webp
+img/zero-energy_logo.webp
+img/zero-bullshit-mask.svg
+img/can-metallic-2.avif
+img/spot-mask.avif
+fonts/Geist-Regular.woff2
+fonts/Geist-Light.woff2
+fonts/GeistMono-Regular.woff2
+fonts/Franklin_Gothic_ATF_Black_Italic.woff2
+audio/*.mp3
+css/*.css
+```
+
+Storefront presentation on ClickMotion (not rebuild media):
+- Page / gallery: `/assets/videos/zero-energy-preview-v1.webm` (operator screenshot WebM, keep WebM)
+- Fullscreen: `/assets/videos/zero-energy-preview-fs-v1.mp4`
+- Poster: `/assets/posters/zero-energy-preview-v1.webp`
+- Thumbnail: `/thumbnails/MS-HERO-ZERO01.webp`
+
+**Forbidden subjects in any restage film you generate later:** burnt website chrome, Scroll badges, competitor logos, watermarks.
+
+## Responsive Behavior
+
+| BP | Behavior |
+|----|----------|
+| ≥1440 | Full HUD, large display type, carousel spacing 3.5, FOV 20 |
+| ≥1024 | Full nav labels, grab + arrows + pager |
+| ≥768 | Desktop HUD; fine pointer grab |
+| <768 | Compress HUD; hide secondary chrome; touch drag; 44px targets |
+| ≤390 | Tighter type; no horizontal overflow; logo scales, never clips |
+| reduced-motion | Chapter 1 settled; no timeline thrash |
+
+No horizontal scroll at 320px. Type remains readable. Nav collapses to the three in-page anchors.
+
+## Accessibility
+
+- Semantic landmarks: `header` / `nav` / `main` / `section` per chapter, `h1` for the active flavor or brand
+- Logo `alt` / `aria-label` speaks the brand name
+- FAQ uses buttons that toggle `aria-expanded`
+- Canvas may stay decorative; flavor, benefit, and FAQ copy remain in the DOM
+- Focus rings visible on black (`#fff` or the active flavor secondary)
+- `prefers-reduced-motion: reduce`: skip Lenis timeline seek and SplitText thrash
+- Contrast: cream / white type on `#000`; flavor secondary used only as accent
+
+## Performance Notes
+
+- **Three 0.161.0 exact.** Raw module. No R3F. Do not bump to match other products.
+- Isolate this Three from any host `three@0.185` / R3F (issuer alias or dedicated install).
+- DPR: respect low-power / mobile caps already in `webgl-scene.js`. Do not raise them.
+- Dispose WebGL renderer, composer, textures, and animation frame on unmount.
+- Fonts: `font-display: swap` on local woff2.
+- CSS sheets load as route-local links so they unmount with the page.
+- JS budget: three + lenis + gsap + SplitText + one scene module. No extra 3D libraries.
+- Poster / first paint: black stage, then cans. No layout shift from late HUD.
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder.
+2. Read **START-HERE.md**, then **PROMPT.md**. Follow them exactly.
+3. Copy `assets/` to `public/assets/zero-energy/` (keep the folder names: webgl, textures, img, fonts, audio, css).
+4. Copy `source/` into your components folder. Keep the relative tree (`data/`, `lib/`, `sections/can-gallery/`).
+5. Install **exactly**: `three@0.161.0`, `lenis@^1.3.0`, `gsap@^3.13.0` (ScrollTrigger + **real** SplitText).
+6. Mount `<ZeroEnergyGallery />` on a full-viewport page. Load the CSS sheets listed in START-HERE.
+7. Confirm: grab turns six cans, scroll opens the chapters on a **fixed** stage, no tall sticky track.
+8. Restage with **CUSTOMIZATION.md** until every Zero Energy string and label is gone.
+
+**Cursor / Claude / Grok Build:** Prefer pack source over a rewrite. Do not introduce React Three Fiber.
+
+**Lovable / Bolt:** A single-file rewrite is allowed only if Three stays 0.161.0, Lenis still seeks the timeline, and the six-can range remains.
+
+**Your Smart AI Agent:** If your tool is not named above, still build from this folder. Same clock. Same stack.
+
+## Expected Output
+
+1. Full-page black 3D range gallery. Six labeled cans on one stage.
+2. Visitors grab the canvas (or use arrows / pager) and turn the whole range by hand.
+3. Wheel / trackpad / touch drive Lenis. Lenis seeks the GSAP timeline. The stage stays pinned.
+4. Journey order: carousel → flavor profile → four benefits → ZERO BULLSHIT → packshot → nine FAQ → closer.
+5. Pin-until-complete. No traditional long-page scrollbar. No `N x 100vh` sticky track. Embeds release after the closer.
+6. Three is **0.161.0**. No R3F. SplitText is the real plugin.
+7. Local fonts, local GLB / HDR / labels. No outbound URLs, no emails, no CDN, no `fetch`.
+8. All demo strings, six labels, logo, and flavor tokens are replaceable via CUSTOMIZATION.md.
+9. Reduced-motion settles on a readable first chapter.
+10. Works as a drop-in homepage (hero + landing page) for any beverage or physical product family.
+
+## What to tell your AI
+
+```
+Build ZERO ENERGY using only the files in this pack folder.
+Read START-HERE.md and PROMPT.md. Use source/ and assets/ as provided.
+This is my brand, not Zero Energy. Swap the six labels, the logo, and every line of copy.
+Keep the 3D range, Three 0.161.0, and the Lenis timeline clock.
+Do not build a tall sticky scroll track. Do not add React Three Fiber.
+```
+
+To rebrand later, open CUSTOMIZATION.md.
+
+## Package notes
+
+- Paid listing · Opaque `q8w3n6k2xm5r` · PaidSalt `n4k8p2`
+- Client media is the 3D pack (GLB, six labels, HDRI, fonts). No looping hero film. Not on /backgrounds.
+- Storefront page/gallery stays the operator WebM. Fullscreen may be mp4. Never put those files in the buyer zip.
+- Files zip root is START-HERE.md (no nested files/ wrapper).
+- Three 0.161.0 exact. Lenis seeks the timeline. Pin-until-complete.
+
+ClickMotion · www.ClickMotion.dev

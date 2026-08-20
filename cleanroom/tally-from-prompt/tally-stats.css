@@ -1,0 +1,312 @@
+/* TALLY — desk proof board. Not four stat cards. Not a ticker kit. */
+
+.tally-root {
+  --tally-stage: #ffffff;
+  --tally-ink: #0a2540;
+  --tally-muted: #425466;
+  --tally-line: #e3e8ee;
+  --tally-accent: #635bff;
+  --ms-pin-fill: var(--tally-accent);
+  position: relative;
+  color: var(--tally-ink);
+  background: var(--tally-stage);
+  font-family: var(--font-tally-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.tally-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.tally-stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.5rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .tally-stage {
+    padding: 2.25rem 3.5rem 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tally-stage {
+    padding: 2.5rem 4.5rem 2rem;
+  }
+}
+
+.tally-enter {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.tally-root[data-entered="true"] .tally-enter {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 420ms cubic-bezier(0.22, 0.8, 0.2, 1),
+    transform 420ms cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+.tally-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--tally-ink);
+  flex-shrink: 0;
+}
+
+.tally-brand,
+.tally-meta,
+.tally-kicker {
+  font-family: var(--font-tally-mono), ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.tally-brand {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.tally-meta,
+.tally-kicker {
+  font-size: 0.625rem;
+  color: var(--tally-muted);
+}
+
+.tally-kicker {
+  margin: 1.35rem 0 0.15rem;
+}
+
+.tally-plate {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.75rem 0 1rem;
+}
+
+.tally-figure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.08em 0.18em;
+  margin: 0;
+  line-height: 0.9;
+}
+
+.tally-num {
+  font-weight: 500;
+  font-size: clamp(3.25rem, 11vw, 7.5rem);
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tally-unit {
+  font-family: var(--font-tally-mono), ui-monospace, monospace;
+  font-size: clamp(0.75rem, 1.6vw, 1rem);
+  letter-spacing: 0.08em;
+  color: var(--tally-muted);
+  text-transform: none;
+}
+
+.tally-count-rule {
+  display: block;
+  width: min(14rem, 42%);
+  height: 2px;
+  margin: 1.1rem 0 0;
+  background: var(--tally-accent);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+.tally-name {
+  margin: 1.15rem 0 0;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  letter-spacing: -0.03em;
+}
+
+.tally-period {
+  margin: 0.45rem 0 0;
+  max-width: 32rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--tally-muted);
+}
+
+.tally-rows {
+  margin: 1.35rem 0 0;
+  max-width: 36rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.tally-row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 26%) 1fr;
+  gap: 1rem;
+  padding: 0.62rem 0;
+  border-top: 1px solid var(--tally-line);
+  font-size: 0.8125rem;
+}
+
+.tally-row:last-child {
+  border-bottom: 1px solid var(--tally-line);
+}
+
+.tally-row dt {
+  font-family: var(--font-tally-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tally-muted);
+  padding-top: 0.12rem;
+}
+
+.tally-row dd {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.tally-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 1.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--tally-ink);
+  flex-shrink: 0;
+}
+
+.tally-tape {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (min-width: 800px) {
+  .tally-tape {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tally-tape button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: var(--tally-muted);
+  cursor: pointer;
+  font: inherit;
+  transition: color 180ms ease;
+}
+
+.tally-tape button[data-active="true"],
+.tally-tape button:hover,
+.tally-tape button:focus-visible {
+  color: var(--tally-ink);
+}
+
+.tally-tape button:focus-visible {
+  outline: 1px solid var(--tally-ink);
+  outline-offset: 4px;
+}
+
+.tally-tape-index,
+.tally-tape-name {
+  font-family: var(--font-tally-mono), ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tally-tape-index {
+  display: block;
+  font-size: 0.5625rem;
+  margin-bottom: 0.28rem;
+}
+
+.tally-tape-name {
+  display: block;
+  font-size: 0.625rem;
+}
+
+.tally-tape-fig {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.tally-cta {
+  appearance: none;
+  border: 1px solid var(--tally-ink);
+  background: var(--tally-ink);
+  color: var(--tally-stage);
+  padding: 0.85rem 1.35rem;
+  font-family: var(--font-tally-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.tally-cta:hover,
+.tally-cta:focus-visible {
+  background: transparent;
+  color: var(--tally-ink);
+}
+
+.tally-cta:focus-visible {
+  outline: 1px solid var(--tally-ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+  .tally-row {
+    grid-template-columns: 5.25rem 1fr;
+    gap: 0.7rem;
+  }
+
+  .tally-foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tally-cta {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tally-enter {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .tally-count-rule {
+    transform: scaleX(1);
+  }
+}

@@ -1,0 +1,325 @@
+---
+id: "MS-HERO-STIL01"
+title: "STILL - Mindfulness Scroll Narrative Hero"
+slug: "still-mindfulness-hybrid-hero"
+description: "For mindfulness and wellness brands. A night-sky pin narrative where scroll aims a 30-second cosmic film. Five soft chapters. Dual process: PSAVE plus No Scroller. The picture never jumps a frame."
+version: "2.0.0"
+created: "2026-08-12"
+updated: "2026-08-15"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "health"
+subcategory: "wellness"
+styleTags: ["dark-cinematic", "organic", "minimal"]
+technicalTags: ["video-background", "scroll-trigger"]
+motionIntensity: "high"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/still-preview-v1.webm"
+previewVideoFullscreen: "/assets/videos/still-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-STIL01.webp"
+liveDemo: "/demo/cleanroom-still"
+videoBackgrounds:
+  - file: "/assets/videos/still-cosmos-v1.mp4"
+    format: "mp4"
+    duration: "30s"
+    loop: false
+    sizeMb: 82
+    poster: "/assets/posters/still-cosmos-v1.webp"
+dependencies:
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 14000
+useCases: ["mindfulness-app-homepage", "wellness-brand-launch", "meditation-product", "mental-wellness-landing"]
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-REVL01", "MS-HERO-VERT01"]
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**STILL** is a full-viewport **mindfulness pin-until-complete** scroll hero: one night-sky stage, a 30-second cosmic transformation film the playhead walks through five soft chapters from arid quiet to living cosmos. **Dual process = PSAVE + No Scroller.** **PSAVE** (Perfect Scroll Video Engine): scroll aims, down plays forward, up plays reverse, the picture never jumps a frame. **No Scroller:** the page does not physically scroll during the journey. Not a tall 960vh sticky track. Not hybrid Option A idle free-play. Not Meridian estate scrub. Not Elyse sanctuary gold.
+
+**Why use it:**
+- Mindfulness, meditation, sleep, and wellness brands that sell **calm as craft**
+- Dual-process signature: scroll aims a long even cosmos film; the picture plays; the page stays still
+- Cormorant + Inter restages cleanly for any soft-premium wellness brand
+- Client HD is pure film (no burnt UI). Storefront dual previews are separate
+
+Default copy (**Soften. / Begin again.** through **Come home / to yourself.**) is a starting board. Restage chapters, whispers, CTAs, and stats until it is unmistakably yours.
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build STILL using the files in this folder. Read PROMPT.md and follow it. Prefer source/StillMindfulnessHero.tsx. Dual process: PSAVE plus No Scroller. Pin-until-complete. Scroll aims on 12 viewports (30s even cosmos: two flicks must not dump the film). Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward at the same 1.2x, one 3-frame step per seek. Never jump a frame. When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Copy and the mint bar follow the picture. Release only when the picture arrives. After release the host page may continue. Replacement films must be re-encoded GOP 3, no B-frames. Do not seek the playhead across the film. Do not restore hybrid Option A, a 5s idle free-play, GSAP ScrollTrigger, or a 960vh sticky track. Do not install gsap.*
+
+---
+
+## Design System
+
+**Aesthetic Direction:** Quiet mindfulness prestige. Canvas `#070b12`, moon cream `#eef6f4`, mint `#8fd0c8`, sparing soft violet `#c5b8e0`. Cormorant Garamond (or Playfair) display, Inter body. Hairline mint-to-violet progress. Calm / Headspace craft language, cosmic prestige film. **Not** clinical white spa, neon SaaS, purple mesh, or Meridian dark-gold estate.
+
+**Famous-UI craft direction (not a clone):** Soft app wellness calm plus high-end nature documentary cosmos. One signature system: **PSAVE** on a **pinned 100dvh** night stage. Scroll aims. The film plays forward or reverse to that moment.
+
+**Typography:**
+- Display / H1: Cormorant Garamond 500, tracking `-0.02em`, line-height `0.94`, size `clamp(2.6rem, 7.2vw, 5.75rem)`
+- Body: Inter 300-500, 15-16px, cream at ~72%
+- Eyebrow / whisper / chips: Inter 10-11px uppercase tracking
+
+**Color tokens:**
+
+| Token | Value |
+|-------|--------|
+| Canvas | `#070b12` |
+| Moon cream | `#eef6f4` |
+| Mint | `#8fd0c8` |
+| Soft violet | `#c5b8e0` (progress end / sparing) |
+
+**Spacing:** 8px grid. Content max ~1400px. Full-bleed video. Safe horizontal inset min ~2rem.
+
+**Anti-slop hard ban:** neon cyan/pink, purple mesh, pill SaaS dock as only identity, grey full-frame wash, center breath circle covering the film, medical claims language, GSAP ScrollTrigger scrub, 960vh sticky track, 5s idle free-play, mode chip "Breathing with you".
+
+**Differentiation:**
+
+| vs | STILL must not become |
+|----|------------------------|
+| Old Still (v1 hybrid) | 960vh sticky + GSAP scrub + 5s idle Option A |
+| Meridian | Seek-scrub only (3.2 vh, gain 0.22, lag 0.45) |
+| Nomad | Free-play wallpaper + entrance only |
+| Elyse | 10s sanctuary, 3.6 vh leftover dest, gold earth |
+| Revel | Pearl fashion, slow-then-kick 20s, rose bar |
+| Vertex | Mono security, 3.6 vh, no footer, white bar |
+| Generic wellness | White spa stock + soft blur only |
+
+---
+
+## Layout Structure
+
+- **One pinned `100dvh` stage** in normal document flow. **No** tall spacer. **No** `position: sticky`. **Do not** `overflow: hidden` the host page.
+- Film absolute cover under dual **edge** scrims only (left type field + bottom vignette). Center film stays clean. Never grey-wash the whole frame.
+- Top: STILL wordmark + nav (Practice · Sleep · Stress · Retreats) + Sign in (glass) / Begin free (mint solid)
+- Mint-to-violet progress hairline under nav (`scaleX` from **playhead**, origin left, DOM ref every tick)
+- **No mode chip.** There is no "Scroll to guide" / "Breathing with you" badge.
+- Bottom: chapter eyebrow, two-line display H1, body. Right-side chapter markers 01-05 on desktop
+- Final chapter: dual CTAs + three quiet stats
+- Floating whisper words per chapter (Breathe in · Unclench · Ease · Expand · Return). No center ring covering the cosmos
+- After the picture arrives at 1, the pin **releases** so a host page can continue
+
+---
+
+## Content Slots
+
+| Slot | Default | Notes |
+|------|---------|--------|
+| brand | STILL | Wordmark |
+| nav | Practice · Sleep · Stress · Retreats | Desktop |
+| nav_ghost | Sign in | Glass |
+| nav_solid | Begin free | Mint solid |
+| ch1 | Soften. / Begin again. | Arrive · 0-0.14 |
+| ch2 | When your mind / never lands. | Arid · 0.14-0.34 |
+| ch3 | Softness / is a skill. | Soften · 0.34-0.56 |
+| ch4 | Grow into / your quiet. | Bloom · 0.56-0.78 |
+| ch5 | Come home / to yourself. | Sky · 0.78-1.01 · feeling + benefits body |
+| whispers | Breathe in · Unclench · Ease · Expand · Return | One per chapter |
+| cta_primary | Start free session | End only |
+| cta_secondary | Explore programs | End only |
+| stats | 10 min daily sessions · Science led programs · Live retreats and circles | End only |
+
+### Default chapter bodies (exact)
+
+1. **Soften. / Begin again.** Eyebrow: Mindfulness · Sleep · Live programs. Body: A private practice for a louder world. Guided calm, deeper sleep, and in-person retreats when you are ready.
+2. **When your mind / never lands.** Eyebrow: For the days that feel dry. Body: Stress less with short sessions that meet you where you are. No perfect breath required. No judgment.
+3. **Softness / is a skill.** Eyebrow: Small practices · Real change. Body: Evidence-backed mindfulness and wind-downs you can finish in minutes. Build the habit that holds you.
+4. **Grow into / your quiet.** Eyebrow: Daily calm · Night rest. Body: Ten minutes can reset a morning. A night program can return your sleep. You choose the pace.
+5. **Come home / to yourself.** Eyebrow: A quieter way to live. Body: Less noise in your chest. Clearer mornings. Sleep that actually restores you. The calm you feel here is meant to follow you into the rest of your day.
+
+Do not invent medical claims. Do not add a sixth chapter.
+
+---
+
+## Motion Specification
+
+**Mode:** Scroll-as-narrative · **pin-until-complete** (**No Scroller**) · **PSAVE** (Perfect Scroll Video Engine). **Dual process.** Scroll sets a destination on `12` viewports. Down plays the film forward at **1.2x**. Up plays it backward at the same **1.2x**, **exactly one 3-frame step per seek**. Never jump a frame. **When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little**, then rate eases to a stop. Copy, whispers, chapter markers, and the mint bar follow the **picture**, not the wheel target. Release only when the **picture** arrives at `0` (up) or `1` (down). **Do not** autoplay-loop as primary. **Do not** seek `currentTime` across a jump. **Do not** restore 5s idle free-play.
+
+**Hard ban:** tall multi-vh document scrollbar track (legacy `960vh` sticky pattern).
+**Hard ban:** hybrid Option A (idle >= 5000ms free-play with frozen scroll and one reclaim `scrollTo`).
+**Hard ban:** seeking the playhead to a far destination (GSAP `ScrollTrigger` scrub `0.45`, Meridian gain `0.22`, `video.currentTime = dest * duration` on a large delta).
+**Hard ban:** a 3.6 aim track on this 30s film (two flicks dump dest; feels like watching a video). Locked earn is **12**.
+**Hard ban:** `WHEEL_GAIN`, swipe cap, GSAP lag, `STILL_IDLE_MS`, `TRACK_VH`, mode chip.
+**Hard ban:** a low-res frame buffer or canvas overlay for reverse. Reverse walks the live video.
+**Hard ban:** releasing the pin because the destination hit 1 while the picture is still walking.
+**Hard ban:** a window wheel listener that keeps driving the film after the pin has released.
+**Hard ban:** a replacement film with one I-frame (or long GOP + B-frames). Reverse will stall mid-film.
+**Hard ban:** pausing on the last wheel tick. The stop is friction, then a graceful slowdown.
+**Hard ban:** installing `gsap` or importing `ScrollTrigger`.
+
+```
+const VIRTUAL_VIEWPORTS = 12;  // GOLD: 30s even cosmos. Not Elyse/Vertex 3.6. Not old 960vh.
+const PSAVE_RATE = 1.2;        // film-seconds per wall-second, both directions
+const PSAVE_FRAME = 1 / 24;    // never skip more than one frame in a forward tick
+const PSAVE_REV_STRIDE = 3;    // reverse: exactly 3 frames per seek (0.125s)
+const PSAVE_LIVE_MS = 280;     // still scrolling if last up/down is inside this window
+const PSAVE_COAST_SEC = 0.55;  // leftover dest floor after last real intent
+const PSAVE_EASE_SEC = 0.55;   // forward rate tapers over last leftover film-seconds
+const PSAVE_FLIP_DEADZONE_PX = 32; // ignore tiny opposite trackpad ticks
+```
+
+**Earn vs perceived time:** this film is **even** cosmos time (desert greening the whole 30s, not a late kick). Even films that are **short** (Elyse 10s, Vertex 12s) lock at **3.6**. This film is **long**. Two 1800px flicks on 3.6 dump dest past the last chapter. On **12**, those same flicks aim about one third of the film (~10s of picture). The visitor earns the lush valley. Do not copy Elyse 3.6. Do not restore 960vh. Do not flatten the edit.
+
+**The lift:** leftover dest is the Elyse stop. On this 30s film dest still dies (1.2x eats it; a tiny opposite tick snaps dest). After last real intent, dest must sit at least `0.55s` of film ahead. Ignore opposite ticks under `32px`. Forward `playbackRate` stays 1.2 until leftover dest is under `0.55s`, then tapers toward ~0.42. Friction, then a graceful stop. This `0.55` is **not** old GSAP `SCRUB 0.45`. Live window is **280ms** (Revel-class, not Vertex 220).
+
+**Rebuild algorithm (mandatory):** one `100dvh` stage in **normal document flow**. There is **no** required next-sibling band inside this product. Do not `overflow: hidden` the page (a host embed must be able to scroll after release). Do not import ScrollTrigger or GSAP. Do not use `position: sticky`. Do not build a `960vh` spacer. Gestures map **1:1** onto `12` viewports and only move the **destination**. First **real** opposite gesture snaps destination to the picture. Ignore tiny opposite ticks. Each frame, walk the picture toward that destination at **1.2x**, never more than **1/24s** of film on a forward fallback tick. **Down:** muted `play()` at `playbackRate 1.2`, ease over the last `0.55s` of leftover dest. After they lift, apply the `0.55s` dest floor once if dest is closer than that. **Up:** first real up-scroll cancels a pending forward destination. Walk `currentTime` backward exactly one 3-frame step per seek, **during the gesture and after**. Wait `seeked`. Never seek to the stop point. No loop. No low-res buffer. Copy, chapters, whispers, and the mint bar follow the **playhead**. Release only when the **picture** is at `0+up` / `1+down`. Test live `currentTime` as well as the playhead ref (settle can stop ~1 frame short). After release the **page** owns scroll until the stage docks at the top. **Opening frame:** kick-seek `0.04 → 0`, wait `seeked`, fade the film in (`.is-ready`). Reduced motion keeps the poster and chapter 1 only.
+
+| Element | Motion |
+|---------|--------|
+| Film | PSAVE: play toward destination forward or reverse, never jump a frame |
+| Stage | Pinned 100dvh; no tall page track |
+| Wheel | 1:1 onto the 12 aim track (destination only) |
+| Lift | 0.55s dest floor + rate ease. Friction, then a graceful stop. |
+| Chapters | Crossfade ~0.75s cubic-bezier(0.22, 0.61, 0.36, 1) from **playhead** |
+| Progress bar | `scaleX(playhead)` mint → soft violet |
+| Whispers | Soft mint when that chapter is active |
+| Reduced motion | 100dvh static stage, poster + chapter 1, no PSAVE |
+
+Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, productId: "MS-HERO-STIL01" }`. `getProgress` is the picture. `getTarget` is leftover dest. Root marker: `data-still-drive="psave"`.
+
+---
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/still-cosmos-v1.mp4` (PSAVE B-roll, GOP 3, no B-frames, 30.00s / 24fps / 720 frames / **240 I-frames** / 480 P / 0 B / ~81.5 MB)
+- Poster: `/assets/posters/still-cosmos-v1.webp`
+- Storefront page + browse/gallery (presentation only): `/assets/videos/still-preview-v1.webm` (operator screenshot WebM. Do not re-encode this role to mp4. Do not use as the hero.)
+- Storefront FS (presentation only): `/assets/videos/still-preview-fs-v1.mp4`
+- Attributes (client build): muted playsInline preload auto. **No** primary wallpaper loop. **No** autoPlay as the product mode.
+- Object-fit: cover. No intentional CSS zoom or blur on the film.
+
+**Buyer film generation:** pack file `VIDEO_GEN_PROMPT.md` (pure world, no UI).
+
+**Required film subject:** arid desert → greening life → lush cosmic landscape. Optional distant figure. No logos / UI / watermarks.
+
+**Forbidden film subjects:** generic office meditation stock, neon cyberpunk, clinical spa white-only, readable brand marks.
+
+**Film encode (if you change the video):** the shipped client HD is H.264, **GOP 3**, **no B-frames**, 24fps, 30.00s, 720 frames, **240 I-frames**. PSAVE reverse seeks every `0.125s`. The previous encode (~16.7 MB, GOP ~30, 24 I) stalled mid-reverse. Re-encode any replacement:
+
+```
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset slow -crf 16 -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart your-film-psave.mp4
+```
+
+Wire that remastered file. Keep 24fps, or set `PSAVE_FRAME = 1/fps` and keep a 3-frame reverse stride. Do not extract PNG frames. Do not use a storefront preview as the hero. Keep leftover dest + 0.55s dest floor on lift. If the new film is much shorter, you may lower the aim track only after two-flick smoke (two flicks must not dump a chapter). If it is slow-then-kick, keep 12 or raise until the kick is earned.
+
+```txt
+Use ONLY the local paths above. Never hotlink foreign CDNs.
+Scroll aims. The film plays to that moment. Do not skip frames.
+```
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, large display type, chapter markers, dual CTA row |
+| ≥1024px | Full nav; side-by-side CTAs when end chapter shows |
+| ≥768px | Nav links visible; markers may hide |
+| <768px | Hide center nav links; stack CTAs; keep safe insets; **stage still one viewport** |
+| ≤390px | Tighter type clamp; progress remains; film cover |
+| Reduced motion | 100vh static; poster + chapter 1; no chase |
+
+---
+
+## Accessibility
+
+- Semantic section / header / nav / h1
+- Focus rings mint on cream-night field
+- Cream on night overlays meet body contrast intent
+- `prefers-reduced-motion`: still + chapter 1. No PSAVE
+- Video decorative (`aria-hidden`)
+- Pin consumes wheel / touch / keys while the journey runs; **releases** at ends so a host page can continue. Do not trap Space on focused links.
+- Do not trap keyboard focus
+
+---
+
+## Performance Notes
+
+- Playhead chase only (no GSAP, no Framer, no ScrollTrigger)
+- Single video element; decode readiness on metadata
+- Kick-seek `0.04 → 0`, then fade `.is-ready`
+- `will-change` only on progress bar transform
+- Fonts: `display: swap` (Cormorant Garamond + Inter)
+- One viewport stage (no tall spacer DOM)
+- Client film **GOP 3 / no B-frames** (not "dense keyframes every 1-2s")
+- Prefer WebP poster
+- No Three.js; single hero component budget
+
+---
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder. You should see `START-HERE.md` at the top level.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place film + poster at the public paths above (see START-HERE).
+4. Use `source/StillMindfulnessHero.tsx`. Do not rewrite the engine unless the file is missing.
+5. **Do not install gsap.** Load Cormorant Garamond + Inter (`--font-still-display` / `--font-still-body`).
+6. Mount the hero on a page that is **not** `overflow: hidden`.
+7. Verify: page does not physically scroll during the journey; tiny click creeps; fling plays; lift coasts; reverse walks 3-frame steps; five chapters; end CTAs; reduced motion.
+8. Restage with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**, then GOP-3 remaster before wiring.
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite. `"use client"`. Implement **PSAVE** (12 viewport aim track, **1.2x** forward and reverse, reverse every 3rd frame, leftover dest plus 0.55s dest floor on lift, never jump a frame), five chapters from the **picture**, **no hybrid idle**, **no 960vh track**, page-owns after release so a host page can continue. If the video is replaced, re-encode GOP 3 / no B-frames first.
+
+**Lovable / Bolt:** Single self-contained component; same tokens and chapters. Walk `currentTime` toward the destination on `requestAnimationFrame` at 1.2x, max one 24fps frame per forward tick, reverse every 3rd frame. Still no wallpaper loop. Still **no tall multi-vh track**. Still **no seek across a jump**. Still **no GSAP**. Still **no 5s idle free-play**.
+
+Do not rebuild as a tall sticky scroll track. Do not restore hybrid Option A. Do not seek the playhead across a jump. Do not wire a replacement MP4 that still has a long GOP.
+
+---
+
+## Expected Output
+
+1. Single React component `StillMindfulnessHero.tsx` (`"use client"`)
+2. **Pinned 100dvh stage** with dual process PSAVE + No Scroller (no tall multi-vh track)
+3. Local cosmos video the playhead walks (aim **12 vh**, rate **1.2x**, reverse every 3rd frame, 0.55s dest floor on lift, never jump a frame)
+4. Five chapters + whispers + mint progress + end CTAs + three stats
+5. Night / mint / moon-cream system only
+6. No mode chip. No hybrid idle. No GSAP.
+7. Reduced-motion path (poster + chapter 1)
+8. Host page can scroll after the picture arrives
+9. Local film + poster paths resolve; no storefront chrome in the client build
+
+---
+
+## What to tell your AI
+
+```
+Build STILL using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Prefer source/StillMindfulnessHero.tsx.
+Dual process: PSAVE (Perfect Scroll Video Engine) plus No Scroller (pin-until-complete).
+One 100dvh stage. Scroll aims on 12 viewports. The page does not physically scroll during the journey.
+Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward every 3rd frame at the same 1.2x. Never jump a frame.
+When they stop, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Ignore tiny opposite ticks.
+The film is a 30s even cosmos. Two flicks must not dump dest. Do not copy Elyse 3.6. Do not restore 960vh or 5s idle hybrid.
+Copy and the mint bar follow the picture. Release only when the picture arrives. After release the page may continue.
+If you change the video, re-encode GOP 3, no B-frames, crf 16, then wire that file.
+Do not import ScrollTrigger or gsap. Do not seek currentTime across a jump. Do not build a tall multi-vh track.
+```
+
+To restage later, open CUSTOMIZATION.md. To generate a new film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `s7i1l9m4ndf0` · PaidSalt: `sk3p8w`
+- Pack mode: **files zip + PDF** (Studio-class folder). Zip root = START-HERE.md
+- Client media only under package `assets/` (no storefront previews)
+- Client HD: `/assets/videos/still-cosmos-v1.mp4` · poster `/assets/posters/still-cosmos-v1.webp`
+- Storefront page+browse: `still-preview-v1.webm` (keep WebM). FS: `still-preview-fs-v1.mp4`
+- Pin gold: PSAVE · 12 vh aim · 1.2x · 3-frame reverse · 280ms live · 0.55s dest floor + rate ease · 32px bounce ignore · GOP 3 client HD (240 I / 480 P / 0 B)
+- Method spec (operators): `docs/PSAVE.md` §5D / §5B / §9.1
+- Demo: `/demo/cleanroom-still` (do not overflow-hidden the page)
+- Dual process lock: 2026-08-15 · operator feel lock: "It is perfect."
+- First production post (hybrid): 2026-08-12. Hybrid / 960vh / Option A are **banned history**.
+
+ClickMotion · www.ClickMotion.dev

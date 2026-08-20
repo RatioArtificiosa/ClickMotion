@@ -8,6 +8,10 @@ import type { ProductPrompt, RelatedProductCard } from "@/lib/product-prompt";
 import { shortTitle } from "@/lib/gallery-utils";
 import { stillPosterForVideo } from "@/lib/media-url";
 import { MediaFill } from "@/components/media/MediaFill";
+import {
+  CardHoverChrome,
+  useContainLetterbox,
+} from "@/components/gallery/CardHoverChrome";
 import { GetFullPromptButton } from "@/components/product/GetFullPromptButton";
 import { cn } from "@/lib/utils";
 import { syne } from "@/lib/fonts";
@@ -20,11 +24,10 @@ const PRODUCT_VALUE_LINE = "· Auto Customization Guide · HD Video Background �
 
 /**
  * Max public product description length for the meta panel.
- * ~3 short lines at 13px in the fixed-height sidebar. Prefer ≤160; hard cap 180.
- * PRODUCT_LAW: storefront description max.
+ * Meta panel has room for richer copy. Soft ≤200; hard ≤230 (PRODUCT_LAW).
  */
-export const PRODUCT_DESCRIPTION_MAX_CHARS = 180;
-export const PRODUCT_DESCRIPTION_SOFT_CHARS = 160;
+export const PRODUCT_DESCRIPTION_MAX_CHARS = 230;
+export const PRODUCT_DESCRIPTION_SOFT_CHARS = 200;
 
 /**
  * Product page layout tokens — must match docs/PRODUCT_LAW.md
@@ -75,6 +78,9 @@ export function PromptProductView({
   const [mediaRatio, setMediaRatio] = useState(16 / 9);
   const [metaHeight, setMetaHeight] = useState<number | null>(null);
   const [overlayOpen, setOverlayOpen] = useState(false);
+  /** Still only after video error — never as HTML poster (avoids load flash). */
+  const [pageVideoFailed, setPageVideoFailed] = useState(false);
+  const [fsVideoFailed, setFsVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const overlayVideoRef = useRef<HTMLVideoElement>(null);
@@ -84,6 +90,7 @@ export function PromptProductView({
     product.previewVideoFullscreen || product.previewVideo || undefined;
   const showScrollBadge = product.isScrollExperience;
   const isPaid = !product.isFree;
+  const failureStill = stillPosterForVideo(product.poster, product.thumbnail);
 
   const description = (product.description || "").trim().slice(
     0,
@@ -95,6 +102,8 @@ export function PromptProductView({
     setMetaHeight(null);
     setOverlayOpen(false);
     setLikeBusy(false);
+    setPageVideoFailed(false);
+    setFsVideoFailed(false);
 
     // Hydrate: server likes are source of truth; localStorage only tracks this browser's heart.
     let storedLiked = false;
@@ -208,8 +217,11 @@ export function PromptProductView({
     ? `· ${product.aiTools.join(" · ")} ·`
     : null;
 
-  // PRODUCT_LAW: two 16:9 rail cards — absolute top + bottom of third column
+  // PRODUCT_LAW: two 16:9 rail cards — absolute top + bottom of third column.
+  // Rail and bottom gallery never share products (related is pre-scored; current
+  // product already excluded by loadRelatedProducts).
   const railItems = related.slice(0, PRODUCT_PAGE_LAYOUT.railCount);
+  const belowItems = related.slice(PRODUCT_PAGE_LAYOUT.railCount);
   // Slightly larger 16:9 width that still fits two cards + titles with space-between
   // (title block ~32px each; small min air between when packed to top/bottom)
   const railCardMaxPx =
@@ -245,12 +257,11 @@ export function PromptProductView({
             )}
             style={{ aspectRatio: String(mediaRatio) }}
           >
-            {pageVideo ? (
+            {pageVideo && !pageVideoFailed ? (
               <video
                 ref={videoRef}
                 key={product.id}
                 src={pageVideo}
-                poster={stillPosterForVideo(product.poster, product.thumbnail)}
                 muted
                 loop
                 playsInline
@@ -260,12 +271,17 @@ export function PromptProductView({
                 disablePictureInPicture
                 onContextMenu={(e) => e.preventDefault()}
                 onLoadedMetadata={onVideoMeta}
+                onError={() => setPageVideoFailed(true)}
                 className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center"
               />
-            ) : product.poster || product.thumbnail ? (
+            ) : failureStill || product.poster || product.thumbnail ? (
               <div className="pointer-events-none absolute inset-0">
                 <MediaFill
-                  src={product.poster || product.thumbnail}
+                  src={
+                    failureStill ||
+                    product.poster ||
+                    product.thumbnail
+                  }
                   alt={product.title}
                   className="absolute inset-0"
                   fit="contain"
@@ -410,8 +426,8 @@ export function PromptProductView({
           )}
         </div>
 
-        {/* Genre gallery under product — gallery card styling; independent of rail law */}
-        {related.length > 0 && (
+        {/* Related gallery under product — same scoring as rail, no rail duplicates */}
+        {belowItems.length > 0 && (
           <section className="mt-8 sm:mt-10" aria-label={product.genreLine}>
             <div className="mb-4 flex items-end justify-between gap-3">
               <h2
@@ -423,7 +439,7 @@ export function PromptProductView({
                 {product.genreLine}
               </h2>
               <Link
-                href={`/?category=${encodeURIComponent(product.category)}`}
+                href={`/browse?category=${encodeURIComponent(product.category)}`}
                 className="text-[12.5px] font-medium text-[var(--text-tertiary)] transition hover:text-[var(--text-primary)]"
               >
                 See all
@@ -431,7 +447,7 @@ export function PromptProductView({
             </div>
 
             <div className="grid grid-cols-1 gap-x-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {related.map((r) => (
+              {belowItems.map((r) => (
                 <RelatedCard key={r.id} item={r} />
               ))}
             </div>
@@ -495,15 +511,11 @@ export function PromptProductView({
               }}
             >
               <div className="relative h-[90%] w-[90%]">
-                {fsVideo ? (
+                {fsVideo && !fsVideoFailed ? (
                   <video
                     ref={overlayVideoRef}
                     key={`fs-${product.id}`}
                     src={fsVideo}
-                    poster={stillPosterForVideo(
-                      product.poster,
-                      product.thumbnail
-                    )}
                     muted
                     loop
                     playsInline
@@ -512,11 +524,16 @@ export function PromptProductView({
                     controlsList="nodownload noplaybackrate"
                     disablePictureInPicture
                     onContextMenu={(e) => e.preventDefault()}
+                    onError={() => setFsVideoFailed(true)}
                     className="h-full w-full object-contain object-center"
                   />
                 ) : (
                   <MediaFill
-                    src={product.poster || product.thumbnail}
+                    src={
+                      failureStill ||
+                      product.poster ||
+                      product.thumbnail
+                    }
                     alt={product.title}
                     className="h-full w-full"
                     fit="contain"
@@ -605,17 +622,26 @@ function RelatedCard({
     item.genreLine ||
     [item.typeLabel, item.categoryLabel].filter(Boolean).join(" · ");
   const isRail = variant === "rail";
+  const [hovered, setHovered] = useState(false);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const letterbox = useContainLetterbox(frameRef);
+  const href = `/browse/${item.slug}`;
 
   return (
-    <Link
-      href={`/browse/${item.slug}`}
+    <div
       style={style}
-      className={cn(
-        "group flex w-full min-w-0 flex-col outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--canvas)]",
-        className
-      )}
+      className={cn("group flex w-full min-w-0 flex-col", className)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setHovered(true)}
+      onBlurCapture={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setHovered(false);
+        }
+      }}
     >
       <div
+        ref={frameRef}
         className={cn(
           "relative aspect-video w-full overflow-hidden bg-black",
           isRail ? "rounded-[10px]" : "rounded-[14px]",
@@ -626,39 +652,44 @@ function RelatedCard({
         )}
       >
         {item.previewVideo || item.thumbnail ? (
-          <div className="absolute inset-0">
-            <MediaFill
-              src={item.previewVideo || item.thumbnail}
-              alt={title}
-              className="absolute inset-0"
-              fit="contain"
-            />
-          </div>
+          <MediaFill
+            src={item.previewVideo || item.thumbnail}
+            alt={title}
+            className="pointer-events-none absolute inset-0"
+            fit="contain"
+            fallbackStill={
+              item.previewVideo
+                ? stillPosterForVideo(item.thumbnail, undefined)
+                : undefined
+            }
+          />
         ) : (
           <div className="absolute inset-0 bg-[var(--well)]" />
         )}
-        {isPro && (
-          <span
-            className={cn(
-              "absolute flex items-center justify-center rounded-full border border-white/10 bg-black/45 text-amber-200/90 backdrop-blur-sm",
-              isRail
-                ? "right-1.5 top-1.5 h-6 w-6"
-                : "right-2.5 top-2.5 h-7 w-7"
-            )}
-          >
-            <Crown className={isRail ? "h-3 w-3" : "h-3.5 w-3.5"} aria-hidden />
-          </span>
-        )}
+        <Link
+          href={href}
+          className={cn(
+            "absolute inset-0 z-[1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--canvas)]",
+            isRail ? "rounded-[10px]" : "rounded-[14px]"
+          )}
+          aria-label={title}
+        />
+        <CardHoverChrome
+          hovered={hovered}
+          isPro={isPro}
+          letterbox={letterbox}
+          compact={isRail}
+        />
       </div>
       {/*
         Gallery: slight inset is fine.
         Rail only: title + subtitle hard-flush to the video’s left edge (no inset).
       */}
-      <div
+      <Link
+        href={href}
         className={cn(
-          isRail
-            ? "mt-1.5 w-full p-0 text-left"
-            : "mt-2.5 px-0.5"
+          "block min-w-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          isRail ? "mt-1.5 w-full p-0 text-left" : "mt-2.5 px-0.5"
         )}
       >
         <div
@@ -677,7 +708,7 @@ function RelatedCard({
         >
           {meta}
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }

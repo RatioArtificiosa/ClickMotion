@@ -1,0 +1,206 @@
+/* VESPER — ultraviolet silk close. Velvet crushes once. Not a neon city. */
+
+.vesper-root {
+  --vesper-stage: #12081c;
+  --vesper-ink: #ede6f7;
+  --vesper-muted: #a090c0;
+  --vesper-line: #2a1650;
+  --vesper-accent: #e8d5a3;
+  --vesper-velvet: #1c1038;
+  --ms-pin-fill: var(--vesper-accent);
+  position: relative;
+  color: var(--vesper-ink);
+  background: var(--vesper-stage);
+  font-family: var(--font-vesper-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+  clip-path: inset(0 50% 0 50%);
+}
+
+.vesper-root[data-entered="true"] {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 880ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vesper-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.vesper-stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.5rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .vesper-stage {
+    padding: 2.25rem 3.5rem 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vesper-stage {
+    padding: 2.5rem 4.5rem 2rem;
+  }
+}
+
+.vesper-enter {
+  opacity: 0;
+}
+
+.vesper-root[data-entered="true"] .vesper-enter {
+  opacity: 1;
+  transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+}
+
+.vesper-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--vesper-line);
+  flex-shrink: 0;
+}
+
+.vesper-brand {
+  font-family: var(--font-vesper-display), Fraunces, serif;
+  font-size: clamp(1.7rem, 3vw, 2.15rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.vesper-meta,
+.vesper-legal,
+.vesper-nav a {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--vesper-muted);
+}
+
+.vesper-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.vesper-name {
+  margin: 0;
+  width: fit-content;
+  font-family: var(--font-vesper-display), Fraunces, serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2.8rem, 9vw, 6.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  transform-origin: 50% 80%;
+}
+
+.vesper-root[data-crush="true"] .vesper-name {
+  animation: vesper-crush 280ms cubic-bezier(0.22, 1, 0.36, 1) 1;
+}
+
+@keyframes vesper-crush {
+  0% {
+    transform: scaleY(1);
+    filter: none;
+  }
+  42% {
+    transform: scaleY(0.97);
+    filter: drop-shadow(0 22px 28px rgba(8, 2, 18, 0.7));
+  }
+  100% {
+    transform: scaleY(1);
+    filter: none;
+  }
+}
+
+.vesper-period {
+  margin: 1.15rem 0 0;
+  max-width: 28rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  color: var(--vesper-muted);
+}
+
+.vesper-foot {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding-top: 0.4rem;
+}
+
+.vesper-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.4rem;
+}
+
+.vesper-nav a {
+  color: var(--vesper-ink);
+  text-decoration: none;
+}
+
+.vesper-cta {
+  appearance: none;
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--vesper-accent);
+  color: var(--vesper-stage);
+  cursor: pointer;
+  font-family: var(--font-vesper-display), Fraunces, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.vesper-legal {
+  margin: 1rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+  flex-shrink: 0;
+}
+
+.vesper-legal p {
+  margin: 0;
+}
+
+.vesper-cta:focus-visible,
+.vesper-nav a:focus-visible {
+  outline: 1px solid var(--vesper-accent);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vesper-root,
+  .vesper-root[data-entered="true"],
+  .vesper-enter,
+  .vesper-name,
+  .vesper-root[data-crush="true"] .vesper-name {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    filter: none;
+    transition: none;
+    animation: none;
+  }
+}

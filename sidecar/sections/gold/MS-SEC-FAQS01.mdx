@@ -1,0 +1,71 @@
+---
+id: "MS-SEC-FAQS01"
+title: "DOCKET - Typographic Questions Section"
+slug: "docket-typographic-questions-section"
+description: "A written docket of questions, one line open at a time. Answers stage in by height, not a chevron kit. Restage the lines until they read as your house counsel."
+version: "0.1.0"
+created: "2026-08-13"
+updated: "2026-08-13"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "faq"
+category: "fintech"
+subcategory: "banking"
+styleTags: ["corporate", "minimal"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "calm-fintech"
+tokenTheme: "orbit-trust-dark"
+motionPrimitive: "accordion-stage"
+enterRecipe: "click-in"
+compatibleWith: ["MS-HERO-ORBI01", "MS-HERO-AXIO01", "MS-HERO-NEXU01", "MS-SEC-PRIC01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-docket"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 7000
+useCases: ["fintech-faq", "enterprise-trust", "neobank-questions"]
+---
+
+## Promise (buyer-facing)
+
+DOCKET is a mid-page **questions section** that reads like counsel, not a help center. One line is open. The answer stages in by height. Visitors do not hunt a chevron. They read a docket.
+
+**Why use it:**
+- Your FAQ feels written, not generated
+- One open line keeps the page calm
+- Every question and paragraph is a slot for your house
+- Sits after a fintech hero or after Ledger pricing
+- Built for desks that answer in writing
+
+## Design System
+
+**Famous-UI craft direction (not a clone):** Linear density × Stripe calm × a clerk's docket. Dark paper. No glass.
+
+**Design language:** `calm-fintech`  
+**Token theme:** `orbit-trust-dark`  
+**Motion primitive:** `accordion-stage` (height 420ms, ease `[0.25, 0.46, 0.45, 0.94]`, ink 200ms)
+
+**Anti-slop hard ban:** gray chevrons, plus/minus icons, card stacks, purple accordions, Intercom help-center chrome, three-column FAQ grids.
+
+## Motion Specification
+
+**Signature (one):** accordion-stage. Only one item open. Click the open line to close. Reduced motion: instant height.
+
+**Enter (support, once on view):** `click-in` (aggressive clerk). Duration 280ms, stagger 48ms, ease `[0.2, 0.12, 0.18, 1]`. Lines land closed, then the first answer stages open. Hover inks a closed line. Click after land.
+
+## Expected Output
+
+A single React section. Dark stage. Typographic list. Height-staged answers. No chevron kit.

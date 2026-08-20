@@ -122,6 +122,8 @@ Copy these into every Deepseek system / architect message.
 - Tailwind only (no CSS modules as primary).
 - **Do not** require Vite, hls.js (MP4 loops), or shadcn as a hard dependency in the sold prompt.
 - Motion must be **quantified**: durations, easings, stagger, scrub numbers — not “animate nicely.”
+- **Scroll narrative / scroll-scrub / scroll-pivot / hybrid with scroll narrative:** always specify **pin-until-complete** (pinned stage, wheel/trackpad drive virtual progress 0→1, no traditional tall multi-vh page scrollbar UX; on a client site pin until the journey ends then release). See [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) **Scroll narrative pin law**. Do **not** invent tall sticky multi-vh tracks as the default method for new prompts.
+- **PSAVE (only when the operator names it, gold = Elyse, second ship = live Revel, third ship = live Vertex, fourth ship = live Still, fifth ship = live Prism):** do **not** write seek-scrub / wheel-gain / GSAP lag / hybrid idle. Specify Perfect Scroll Video Engine: destination vs playhead, product earn track, 1.2x play forward, reverse every 3rd frame on the live video, leftover dest on lift, picture-gated release, page-owns the next sibling, GOP 3 / no B-frames for the client film. Canonical: [`PSAVE.md`](./PSAVE.md).
 - 3D (`threejs` / Spline): only when intensity is extreme / special and tagged correctly — or remove Three and use canvas/particles.
 
 ### 3.5 Assets (critical)

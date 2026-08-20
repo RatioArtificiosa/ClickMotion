@@ -1,6 +1,6 @@
 /**
  * Burn Vertex scroll-narrative UI into a gallery/product preview.
- * Programmatic scroll scrub (no mouse) → frame sequence → H.264.
+ * Drives pin-until-complete via window.__msScrollNarrative.setProgress (no tall-page scroll).
  * Viewport is 16:9 so product object-cover does not crop left/right type.
  *
  * Usage:
@@ -83,12 +83,19 @@ async function main() {
     deviceScaleFactor: 1,
   });
 
-  await page.goto(URL, { waitUntil: "networkidle", timeout: 90_000 });
+  await page.goto(URL, { waitUntil: "load", timeout: 90_000 });
 
   await page.waitForFunction(
     () => {
       const v = document.querySelector("video");
-      return v && v.readyState >= 1 && v.duration > 0;
+      const api = window.__msScrollNarrative;
+      return (
+        v &&
+        v.readyState >= 1 &&
+        v.duration > 0 &&
+        api &&
+        typeof api.setProgress === "function"
+      );
     },
     { timeout: 60_000 }
   );
@@ -99,14 +106,8 @@ async function main() {
     content: `[data-ms-scroll-cue] { display: none !important; }`,
   });
 
-  const maxScroll = await page.evaluate(() => {
-    const track = document.querySelector(".vertex-root > div");
-    if (!track) return document.body.scrollHeight - window.innerHeight;
-    return Math.max(0, track.offsetHeight - window.innerHeight);
-  });
-
   console.log(
-    `Capturing ${TOTAL_FRAMES} frames @ ${FPS}fps over ${DURATION_S}s (scroll 0…${maxScroll}px)`
+    `Capturing ${TOTAL_FRAMES} frames @ ${FPS}fps over ${DURATION_S}s (virtual progress 0…1)`
   );
 
   for (let i = 0; i < TOTAL_FRAMES; i++) {
@@ -119,11 +120,10 @@ async function main() {
           ? 0.9 + (t - 0.9) * 1.2
           : 0.055 + ((t - 0.1) * (0.9 - 0.055)) / 0.8;
     const progress = Math.min(1, Math.max(0, eased));
-    const y = progress * maxScroll;
 
-    await page.evaluate((scrollY) => {
-      window.scrollTo(0, scrollY);
-    }, y);
+    await page.evaluate((p) => {
+      window.__msScrollNarrative?.setProgress(p);
+    }, progress);
 
     await page.evaluate(
       () =>

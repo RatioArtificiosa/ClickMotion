@@ -1,0 +1,141 @@
+/* QUILL — sumi slash. Smoke that locks. Black only. */
+
+.quill-root {
+  --quill-stage: #f4f0e6;
+  --quill-ink: #111111;
+  --quill-muted: #5a564c;
+  --ms-pin-fill: var(--quill-ink);
+  position: relative;
+  color: var(--quill-ink);
+  background: var(--quill-stage);
+  font-family: var(--font-quill-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.quill-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.quill-sheet {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.quill-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem 0.85rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .quill-masthead {
+    padding: 2rem 3.5rem 0.9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quill-masthead {
+    padding: 2.25rem 4.5rem 1rem;
+  }
+}
+
+.quill-brand,
+.quill-meta,
+.quill-place {
+  font-family: var(--font-quill-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.quill-lockup {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4vw;
+  opacity: 0;
+  transform: translate(-7px, 7px);
+}
+
+.quill-root[data-entered="true"] .quill-lockup {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quill-name {
+  margin: 0;
+  font-family: var(--font-quill-display), Newsreader, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(3.4rem, 14vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: 0.18em;
+  filter: blur(6px);
+}
+
+.quill-root[data-smoke="true"] .quill-name {
+  letter-spacing: -0.03em;
+  filter: blur(0);
+  transition:
+    letter-spacing 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.quill-period {
+  margin: 1.1rem 0 0;
+  max-width: 24rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  color: var(--quill-muted);
+}
+
+.quill-foot {
+  flex-shrink: 0;
+  padding: 1.2rem 2rem 1.6rem;
+}
+
+@media (min-width: 768px) {
+  .quill-foot {
+    padding: 1.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quill-foot {
+    padding: 1.5rem 4.5rem 2.25rem;
+  }
+}
+
+.quill-place {
+  margin: 0;
+}
+
+.quill-root :is(button):focus-visible {
+  outline: 1px solid var(--quill-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quill-lockup,
+  .quill-name,
+  .quill-root[data-entered="true"] .quill-lockup,
+  .quill-root[data-smoke="true"] .quill-name {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    letter-spacing: -0.03em;
+    transition: none;
+  }
+}

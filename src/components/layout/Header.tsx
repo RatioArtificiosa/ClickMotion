@@ -33,6 +33,7 @@ export function Header() {
     }
 
     // Main home always runs the intro — keep chrome hidden until settle.
+    // Soft-nav back to `/` remounts HomeExperience; re-hide until ms:intro-complete.
     // (Do not early-show from sessionStorage; intro is published to `/`.)
     setRevealed(false);
     const onDone = () => setRevealed(true);
@@ -44,6 +45,8 @@ export function Header() {
   const isImmersiveDemo =
     pathname === "/demo/scroll-narrative" ||
     pathname?.startsWith("/demo/scroll-narrative/") ||
+    pathname === "/demo/tesla-roadster" ||
+    pathname?.startsWith("/demo/tesla-roadster/") ||
     pathname === "/demo/cleanroom-aether" ||
     pathname === "/demo/cleanroom-vertex" ||
     pathname === "/demo/cleanroom-neon" ||

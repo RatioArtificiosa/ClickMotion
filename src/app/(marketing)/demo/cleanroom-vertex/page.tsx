@@ -18,12 +18,17 @@ const sans = Inter({
 
 export const metadata: Metadata = {
   title: "VERTEX SECURITY - Cleanroom Build",
-  description: "Brutalist cybersecurity hero - free listing reference build.",
+  description:
+    "Pin-until-complete PSAVE cybersecurity hero: scroll aims, film plays forward and reverse.",
 };
 
+/**
+ * Cleanroom demo - MS-HERO-VERT01 VERTEX.
+ * Pin-until-complete + PSAVE. Do not lock the page to overflow-hidden.
+ */
 export default function CleanroomVertexPage() {
   return (
-    <div className={`${display.variable} ${sans.variable}`}>
+    <div className={`${display.variable} ${sans.variable} bg-black text-white`}>
       <VertexHeroSection />
     </div>
   );

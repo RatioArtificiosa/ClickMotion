@@ -121,6 +121,36 @@ const JOBS = [
     src: "public/assets/videos/studio-surreal-v1.mp4",
     out: "studio-surreal-bg-v1.mp4",
   },
+  {
+    id: "nomad-montage",
+    src: "public/assets/videos/nomad-montage-v1.mp4",
+    out: "nomad-montage-bg-v1.mp4",
+  },
+  {
+    id: "still-cosmos",
+    src: "public/assets/videos/still-cosmos-v1.mp4",
+    out: "still-cosmos-bg-v1.mp4",
+  },
+  {
+    id: "luna-yoga",
+    src: "public/assets/videos/luna-yoga-v1.mp4",
+    out: "luna-yoga-bg-v1.mp4",
+  },
+  {
+    id: "acne-secret",
+    src: "public/assets/videos/acne-secret-v1.webm",
+    out: "acne-secret-bg-v1.mp4",
+  },
+  {
+    id: "grokbot-sphere",
+    src: "public/assets/videos/grokbot-sphere-v1.mp4",
+    out: "grokbot-sphere-bg-v1.mp4",
+  },
+  {
+    id: "skyspires-sunrise",
+    src: "public/assets/videos/skyspires-sunrise-v1.mp4",
+    out: "skyspires-sunrise-bg-v1.mp4",
+  },
 ];
 
 const only = process.argv.includes("--only")

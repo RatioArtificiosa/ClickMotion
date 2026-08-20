@@ -232,6 +232,8 @@ async function main() {
   await browser.close();
 
   console.log("Encoding…");
+  // Dense keyframes (~every 2s @ 24fps) so gallery progressive decode never freezes
+  // on long GOP gaps. sc_threshold 0 forces fixed GOP (no scene-cut sparsity).
   runFfmpeg([
     "-y",
     "-framerate",
@@ -246,6 +248,14 @@ async function main() {
     "20",
     "-pix_fmt",
     "yuv420p",
+    "-g",
+    "48",
+    "-keyint_min",
+    "24",
+    "-sc_threshold",
+    "0",
+    "-bf",
+    "2",
     "-movflags",
     "+faststart",
     "-an",

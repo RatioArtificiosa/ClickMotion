@@ -31,7 +31,8 @@ Code patches during QA are allowed only to **preview** a theory. The durable fix
 | CMS / gallery proof after pass | New **storefront** `*-preview*.mp4` only |
 | Bad encode experiment | Copy to `tmp/` — **never** `-y` overwrite locked client HD or masters |
 
-Full law: [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) · [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md).
+Full law: [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) · [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md).  
+**Scroll narrative:** if the product is scroll-as-narrative or hybrid-with-scroll, SEE pass must confirm **pin-until-complete** (fixed stage, no traditional long-page scrollbar through the journey) — PRODUCT_LAW **Scroll narrative pin law**.
 
 ## How we SEE the output
 

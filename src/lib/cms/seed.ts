@@ -193,21 +193,68 @@ function buildSeedPayload(): {
 }
 
 /**
+ * Append MDX products that are missing from an already-seeded CMS store.
+ * Does not overwrite admin edits or resurrect deleted products by title —
+ * only adds when the product **id** is absent. Safe for every gallery load.
+ */
+function mergeMissingMdxProducts(draft: CmsStore): number {
+  const have = new Set(draft.products.map((p) => p.id));
+  const files = walkMdx(CONTENT_ROOT);
+  let maxSort = draft.products.reduce(
+    (m, p) => Math.max(m, p.sortOrder ?? 0),
+    -1
+  );
+  let added = 0;
+  for (const file of files) {
+    const p = productFromMdx(file, maxSort + 1);
+    if (!p || have.has(p.id)) continue;
+    maxSort += 1;
+    p.sortOrder = maxSort;
+    draft.products.push(p);
+    have.add(p.id);
+    added += 1;
+  }
+  return added;
+}
+
+/**
  * Seed CMS from MDX + taxonomy if empty (or force=true).
  * Safe to call on every public request when empty - only writes once.
  *
  * seededAt alone is enough to skip re-seed: an empty product list after admin
  * deletes is intentional and must not resurrect MDX content.
+ *
+ * After seed, new MDX product ids (e.g. MS-SEC-STUDIO01) are **merged in**
+ * without wiping admin order or drafts.
  */
 export async function ensureCmsSeeded(force = false): Promise<CmsStore> {
   const current = readStore();
   if (!force && (current.products.length > 0 || current.seededAt)) {
-    return current;
+    // Merge any new MDX SKUs that were added after the initial seed.
+    // Only write when something was actually added (avoid thrashing store.json).
+    return withStoreLockSync(() => {
+      const draft: CmsStore = {
+        version: 1,
+        seededAt: current.seededAt,
+        genres: current.genres.map((g) => ({ ...g })),
+        products: current.products.map((p) => ({ ...p })),
+        collections: current.collections.map((c) => ({
+          ...c,
+          productIds: [...c.productIds],
+        })),
+      };
+      const added = mergeMissingMdxProducts(draft);
+      if (added > 0) writeStoreSnapshot(draft);
+      return added > 0 ? draft : current;
+    });
   }
 
   return updateStore((draft) => {
     // Re-check under lock (TOCTOU): another request may have seeded already.
-    if (!force && (draft.products.length > 0 || draft.seededAt)) return;
+    if (!force && (draft.products.length > 0 || draft.seededAt)) {
+      mergeMissingMdxProducts(draft);
+      return;
+    }
     const payload = buildSeedPayload();
     // force=true replaces store contents from MDX/taxonomy snapshot
     draft.genres = payload.genres;
@@ -225,7 +272,15 @@ export function ensureCmsSeededSync(force = false): CmsStore {
   return withStoreLockSync(() => {
     const current = readStore();
     if (!force && (current.products.length > 0 || current.seededAt)) {
-      return current;
+      const draft: CmsStore = {
+        ...current,
+        products: [...current.products],
+        genres: [...current.genres],
+        collections: [...current.collections],
+      };
+      const added = mergeMissingMdxProducts(draft);
+      if (added > 0) writeStoreSnapshot(draft);
+      return added > 0 ? draft : current;
     }
     const payload = buildSeedPayload();
     const next: CmsStore = {

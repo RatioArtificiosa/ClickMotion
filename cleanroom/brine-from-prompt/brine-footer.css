@@ -1,0 +1,214 @@
+/* BRINE — ice silver close. One tube catches. Not a neon city. */
+
+.brine-root {
+  --brine-stage: #e4eef4;
+  --brine-ink: #1a2330;
+  --brine-muted: #5a7080;
+  --brine-line: #c8d8e4;
+  --brine-accent: #7ed0e8;
+  --brine-metal: #f7fbff;
+  --ms-pin-fill: var(--brine-ink);
+  position: relative;
+  color: var(--brine-ink);
+  background: var(--brine-stage);
+  font-family: var(--font-brine-sans), Syne, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.brine-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.brine-stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.5rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .brine-stage {
+    padding: 2.25rem 3.5rem 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .brine-stage {
+    padding: 2.5rem 4.5rem 2rem;
+  }
+}
+
+.brine-enter {
+  opacity: 0;
+  transform: translateY(28px) scale(0.92);
+}
+
+.brine-root[data-entered="true"] .brine-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 520ms cubic-bezier(0.34, 1.45, 0.64, 1),
+    transform 520ms cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+.brine-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--brine-line);
+  flex-shrink: 0;
+}
+
+.brine-brand {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-brine-display), Unbounded, sans-serif;
+  font-size: clamp(1.55rem, 2.8vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.brine-tube {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--brine-accent);
+  box-shadow: 0 0 12px rgba(126, 208, 232, 0.7);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.brine-root[data-ignite="true"] .brine-tube {
+  animation: brine-ignite 210ms steps(1, end) 1,
+    brine-hold 800ms linear 210ms 1 forwards;
+}
+
+@keyframes brine-ignite {
+  0%,
+  32%,
+  66% {
+    opacity: 0.15;
+  }
+  16%,
+  48%,
+  84%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes brine-hold {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.brine-meta,
+.brine-legal,
+.brine-nav a {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brine-muted);
+}
+
+.brine-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  transition-delay: 80ms;
+}
+
+.brine-name {
+  margin: 0;
+  font-family: var(--font-brine-display), Unbounded, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 5.6rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.brine-period {
+  margin: 1.1rem 0 0;
+  max-width: 26rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  color: var(--brine-muted);
+}
+
+.brine-foot {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding-top: 0.4rem;
+  transition-delay: 160ms;
+}
+
+.brine-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.4rem;
+}
+
+.brine-nav a {
+  color: var(--brine-ink);
+  text-decoration: none;
+}
+
+.brine-cta {
+  appearance: none;
+  margin: 0;
+  padding: 0.7rem 1.2rem;
+  border: 0;
+  border-radius: 20px;
+  background: var(--brine-ink);
+  color: var(--brine-metal);
+  cursor: pointer;
+  font-family: var(--font-brine-display), Unbounded, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brine-legal {
+  margin: 1rem 0 0;
+  flex-shrink: 0;
+}
+
+.brine-cta:focus-visible,
+.brine-nav a:focus-visible {
+  outline: 1px solid var(--brine-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brine-enter,
+  .brine-root[data-entered="true"] .brine-enter,
+  .brine-tube,
+  .brine-root[data-ignite="true"] .brine-tube {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}

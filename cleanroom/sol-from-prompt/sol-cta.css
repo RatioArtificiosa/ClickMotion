@@ -1,0 +1,179 @@
+/* SOL — noon bleach close. One photography flash. Not crypto foil. */
+
+.sol-root {
+  --sol-stage: #f7f1dc;
+  --sol-ink: #c45a12;
+  --sol-muted: #a07848;
+  --sol-line: #e8d8a8;
+  --sol-accent: #e8a317;
+  position: relative;
+  color: var(--sol-ink);
+  background: var(--sol-stage);
+  font-family: var(--font-sol-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.sol-flash {
+  position: absolute;
+  inset: 0;
+  background: #fffdf6;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.sol-root[data-flash="true"] .sol-flash {
+  animation: sol-flash 80ms linear 1;
+}
+
+@keyframes sol-flash {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.88;
+  }
+}
+
+.sol-stage {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .sol-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sol-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.sol-enter {
+  opacity: 0;
+}
+
+.sol-root[data-entered="true"] .sol-enter {
+  opacity: 1;
+  transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sol-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--sol-line);
+  flex-shrink: 0;
+}
+
+.sol-brand {
+  font-family: var(--font-sol-display), Cinzel, serif;
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.sol-meta,
+.sol-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sol-muted);
+}
+
+.sol-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.sol-headline {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--font-sol-display), Cinzel, serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 8vw, 5.4rem);
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+}
+
+.sol-period {
+  margin: 1.15rem 0 0;
+  max-width: 24rem;
+  font-size: 1.12rem;
+  line-height: 1.45;
+  color: var(--sol-muted);
+}
+
+.sol-foot {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.sol-place {
+  margin: 0 0 0.35rem;
+}
+
+.sol-cta {
+  appearance: none;
+  margin: 0 0 1rem;
+  padding: 0.85rem 1.45rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--sol-ink);
+  color: var(--sol-stage);
+  cursor: pointer;
+  font-family: var(--font-sol-display), Cinzel, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sol-cta:disabled {
+  cursor: default;
+}
+
+.sol-cta:focus-visible {
+  outline: 1px solid var(--sol-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sol-enter,
+  .sol-flash,
+  .sol-root[data-entered="true"] .sol-enter,
+  .sol-root[data-flash="true"] .sol-flash {
+    opacity: 1;
+    transition: none;
+    animation: none;
+  }
+
+  .sol-flash {
+    opacity: 0;
+  }
+}

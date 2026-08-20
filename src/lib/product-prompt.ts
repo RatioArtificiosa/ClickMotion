@@ -336,6 +336,12 @@ function toRelatedCard(p: ProductPrompt): RelatedProductCard {
   return toRelated(p);
 }
 
+/**
+ * Scored related products for the product page.
+ * - Excludes the current product.
+ * - Ranked by type / category / style tags / intensity (not random).
+ * - Caller splits: rail = first 2, bottom gallery = remainder (no repeats).
+ */
 export function loadRelatedProducts(current: ProductPrompt, limit = 10): RelatedProductCard[] {
   const all = loadAllProducts().filter((p) => p.id !== current.id);
 
@@ -352,5 +358,14 @@ export function loadRelatedProducts(current: ProductPrompt, limit = 10): Related
   scored.sort((a, b) => b.score - a.score || a.p.shortTitle.localeCompare(b.p.shortTitle));
   const withSignal = scored.filter((x) => x.score > 0);
   const pool = withSignal.length >= Math.min(4, limit) ? withSignal : scored;
-  return pool.slice(0, limit).map((x) => toRelatedCard(x.p));
+  // De-dupe by id (defensive; loadAllProducts should already be unique)
+  const seen = new Set<string>();
+  const unique: RelatedProductCard[] = [];
+  for (const { p } of pool) {
+    if (seen.has(p.id) || p.id === current.id) continue;
+    seen.add(p.id);
+    unique.push(toRelatedCard(p));
+    if (unique.length >= limit) break;
+  }
+  return unique;
 }

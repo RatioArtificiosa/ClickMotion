@@ -1,0 +1,155 @@
+---
+id: "MS-SEC-CTAS06"
+title: "TILT - Floor Open CTA"
+slug: "tilt-floor-open-cta"
+description: "A pink room. One chrome bead takes a lap. Restage the street until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "fashion"
+subcategory: "waitlist"
+styleTags: ["playful", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "arcade-atelier"
+tokenTheme: "chrome-bubblegum"
+motionPrimitive: "orbit-trinket"
+enterRecipe: "pop-in"
+compatibleWith: ["MS-HERO-VERV01", "MS-HERO-ACTU01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-tilt"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["club-close", "y2k-waitlist", "floor-cta"]
+---
+
+## Promise (buyer-facing)
+
+TILT is a mid-page **close** that reads as a fashion-house recovery of Y2K, not a HitCounter. One headline. One street. One chrome bead that takes a single lap around the button, then parks.
+
+**Why use it:**
+- The bead is the design. The board never says orbit
+- Stage is bubblegum. Chrome is the metal
+- Every line is a slot
+- Sits after Verve, Actually!, or Dopamine without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **TILT** - mid-page **waitlist / CTA**. Stage `#F7C6D8`. Ink `#1A1A1A`. Metal `#E8E8EC`. Unbounded display. Syne UI.
+
+**Famous-UI craft direction (not a clone):** arcade as atelier. Radius 12px. Not clipart 2000s.
+
+**Design language:** `arcade-atelier` (wow register)  
+**Token theme:** `chrome-bubblegum`  
+**Motion primitive:** `orbit-trinket` (12px path, 2400ms, one lap)
+
+**Enter (support, once on view):** `pop-in`. Land ~880ms. Orbit after land.
+
+**Typography:**
+- Wordmark: Unbounded 800
+- Headline: Unbounded 800, `clamp(2.4rem, 7.6vw, 5.2rem)`
+- Period: Syne ~17px
+- Button: Syne 700 uppercase
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#F7C6D8` | Your candy |
+| Ink | `#1A1A1A` | Your dark |
+| Muted | `#6A4050` | Period |
+| Accent | `#E85A9B` | Candy |
+| Metal | `#E8E8EC` | The bead |
+
+**Anti-slop hard ban:** Helix orbit, HitCounter, Comic Sans, aurora, emoji rain.
+
+**Differentiation:**
+| vs | Tilt must not become |
+|----|------------------------|
+| Helix | Many works orbit. Tilt is one 12px bead |
+| Facet | Gilt pendant. Tilt is chrome candy |
+| Rouge | Lacquer swipe. Tilt is a lap |
+
+## Layout Structure
+
+`100dvh` stage.
+
+1. Masthead: Tilt left, Tonight right
+2. Headline, period, place
+3. Foot: button with one bead
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Tilt | 24 | |
+| kicker | After ten | 24 | |
+| headline | The machines are on after ten. | 56 | Site copy. Not a caption of the bead |
+| period | If you have been walking Bedford looking for something that is not another bar... | 160 | |
+| place | Williamsburg, Brooklyn | 40 | Real place, restage |
+| ctaLabel | I'll come by | 28 | |
+| doneLabel | You're on tonight | 28 | |
+
+## Motion Specification
+
+**Signature (one):** orbit-trinket. After land, one 10px chrome bead travels a 12px radius once in 2400ms, then parks. Confirm restages one lap.
+
+**Enter (support, once on view):** `pop-in`.
+
+**Engine:** CSS enter. CSS keyframes, one cycle.
+
+**Reduced motion:** parked bead. One click confirms.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Button full width. Bead still orbits the control |
+
+## Accessibility
+
+- `prefers-reduced-motion`: parked jewel
+- Contrast black on pink
+- Keyboard: button after land
+
+## Performance Notes
+
+- No video, no WebGL
+- One bead
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not copy Helix. Do not add a second orbiting object.
+
+**Lovable / Bolt:** Same section. Replace the floor and the street. Keep one bead. Keep one button.
+
+## Expected Output
+
+A single React CTA that:
+1. Is a **close**, not a hero
+2. Pops in, then one bead takes a lap
+3. Uses chrome-bubblegum tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

@@ -1,18 +1,33 @@
 "use client";
 
 /**
- * MERIDIAN - Scroll-as-narrative hero
- * Video currentTime scrubbed by scroll progress. Clean-room implementation of BUYER_PROMPT.md.
+ * MERIDIAN — Scroll-as-narrative hero (gold standard scroll native)
+ * Video currentTime scrubbed by virtual progress. Clean-room of BUYER_PROMPT.md.
+ *
+ * Pin-until-complete (PRODUCT_LAW): fixed 100dvh stage, virtual progress 0→1 from
+ * wheel/trackpad/touch/keys. No tall multi-vh document scrollbar UX.
+ * Gold motion preserved:
+ *   - Virtual effort ≡ old 420vh sticky track (ST end bottom-bottom → 3.2 viewports)
+ *   - Scrub lag 0.45s (GSAP tween, same feel as ScrollTrigger scrub: 0.45)
+ *   - Chapter ranges, seek threshold, copy, layout unchanged
+ * Client embed: pin while journey runs; release at ends so page can continue.
  */
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const VIDEO_SRC = "/assets/videos/sequence-01.mp4";
 const POSTER_SRC = "/assets/posters/sequence-01.webp";
+
+/**
+ * Gold virtual distance: old track height 420vh with sticky 100vh + ST
+ * start "top top" / end "bottom bottom" → scroll distance = 320vh = 3.2 viewports.
+ * Do not change without operator approval — this is the Meridian gold pace.
+ */
+const VIRTUAL_VIEWPORTS = 3.2;
+
+/** Matches legacy ScrollTrigger scrub: 0.45 — lag only, not journey length. */
+const SCRUB_LAG = 0.45;
 
 /** Chapter copy tied to scroll/video progress (0-1). */
 const CHAPTERS = [
@@ -47,25 +62,51 @@ function chapterIndex(progress: number) {
   return CHAPTERS.length - 1;
 }
 
-export default function MeridianScrollNarrative() {
+function clamp01(n: number) {
+  return Math.min(1, Math.max(0, n));
+}
+
+export type MeridianScrollNarrativeProps = {
+  /**
+   * Demo / A-B only: skip this many seconds of the film at progress 0.
+   * Default 0 = gold product (full timeline). Maps progress 0→1 to
+   * [startTimeSec … duration]. Not a permanent product change unless shipped.
+   */
+  startTimeSec?: number;
+};
+
+export default function MeridianScrollNarrative({
+  startTimeSec = 0,
+}: MeridianScrollNarrativeProps = {}) {
   const pinRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const touchYRef = useRef<number | null>(null);
+  const targetProgressRef = useRef(0);
+  const proxyRef = useRef({ p: 0 });
+  const scrubTweenRef = useRef<gsap.core.Tween | null>(null);
+  const startTimeRef = useRef(Math.max(0, startTimeSec));
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
   const [reduced, setReduced] = useState(false);
   const [activeChapter, setActiveChapter] = useState(0);
   const progressRef = useRef(0);
 
+  useEffect(() => {
+    startTimeRef.current = Math.max(0, startTimeSec);
+  }, [startTimeSec]);
+
   const applyProgress = useCallback((p: number) => {
-    const clamped = Math.min(1, Math.max(0, p));
+    const clamped = clamp01(p);
     progressRef.current = clamped;
     setProgress(clamped);
     setActiveChapter(chapterIndex(clamped));
 
     const video = videoRef.current;
     if (video && video.duration && Number.isFinite(video.duration)) {
-      const t = clamped * video.duration;
+      const start = Math.min(startTimeRef.current, Math.max(0, video.duration - 0.05));
+      const span = Math.max(0.05, video.duration - start);
+      const t = start + clamped * span;
       // Avoid thrashing near the exact same frame
       if (Math.abs(video.currentTime - t) > 0.016) {
         try {
@@ -81,6 +122,30 @@ export default function MeridianScrollNarrative() {
     }
   }, []);
 
+  /** Smooth display progress toward target (gold scrub lag 0.45). */
+  const setTargetProgress = useCallback(
+    (next: number, immediate = false) => {
+      const clamped = clamp01(next);
+      targetProgressRef.current = clamped;
+      if (immediate) {
+        scrubTweenRef.current?.kill();
+        scrubTweenRef.current = null;
+        proxyRef.current.p = clamped;
+        applyProgress(clamped);
+        return;
+      }
+      scrubTweenRef.current?.kill();
+      scrubTweenRef.current = gsap.to(proxyRef.current, {
+        p: clamped,
+        duration: SCRUB_LAG,
+        ease: "none",
+        overwrite: true,
+        onUpdate: () => applyProgress(proxyRef.current.p),
+      });
+    },
+    [applyProgress]
+  );
+
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReduced(mq.matches);
@@ -93,64 +158,229 @@ export default function MeridianScrollNarrative() {
     const video = videoRef.current;
     if (!video) return;
 
-    const onMeta = () => {
+    // Mark ready once the start frame is painted (t = startTimeSec, gold default 0).
+    // Never hang if seeked never fires when already on that time.
+    let cancelled = false;
+    let settled = false;
+    let safetyTimer: ReturnType<typeof setTimeout> | null = null;
+    let onSeeked: (() => void) | null = null;
+
+    const targetStart = () => {
+      const d = video.duration;
+      if (!d || !Number.isFinite(d)) return startTimeRef.current;
+      return Math.min(startTimeRef.current, Math.max(0, d - 0.05));
+    };
+
+    const cleanupSeek = () => {
+      if (onSeeked) {
+        video.removeEventListener("seeked", onSeeked);
+        onSeeked = null;
+      }
+      if (safetyTimer != null) {
+        clearTimeout(safetyTimer);
+        safetyTimer = null;
+      }
+    };
+
+    const markReady = () => {
+      if (cancelled || settled) return;
+      settled = true;
+      cleanupSeek();
       video.pause();
-      video.currentTime = 0;
       setReady(true);
     };
 
+    const paintStartFrame = () => {
+      if (cancelled || settled) return;
+      video.pause();
+      const hasFrame = video.readyState >= 2;
+      const start = targetStart();
+
+      if (hasFrame && Math.abs(video.currentTime - start) <= 0.02 && !video.seeking) {
+        requestAnimationFrame(markReady);
+        return;
+      }
+
+      cleanupSeek();
+      onSeeked = () => markReady();
+      video.addEventListener("seeked", onSeeked);
+      try {
+        // Nudge so seeked fires when already near target
+        if (Math.abs(video.currentTime - start) <= 0.02 && hasFrame) {
+          video.currentTime = start + 0.001;
+        }
+        video.currentTime = start;
+      } catch {
+        markReady();
+        return;
+      }
+      safetyTimer = setTimeout(() => {
+        if (!cancelled && video.readyState >= 2) markReady();
+      }, 500);
+    };
+
+    const onMeta = () => paintStartFrame();
+    const onLoadedData = () => paintStartFrame();
+
     if (video.readyState >= 1) onMeta();
     else video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("loadeddata", onLoadedData);
 
-    return () => video.removeEventListener("loadedmetadata", onMeta);
-  }, []);
+    return () => {
+      cancelled = true;
+      cleanupSeek();
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", onLoadedData);
+    };
+  }, [startTimeSec]);
 
+  // Capture API for storefront burns + operator tooling
+  useEffect(() => {
+    if (reduced) return;
+    const api = {
+      setProgress: (p: number) => setTargetProgress(p, true),
+      getProgress: () => progressRef.current,
+      productId: "MS-HERO-MERI01",
+    };
+    const w = window as Window & {
+      __msScrollNarrative?: typeof api;
+    };
+    w.__msScrollNarrative = api;
+    return () => {
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+    };
+  }, [reduced, setTargetProgress]);
+
+  /**
+   * Pin-until-complete input: wheel / touch / keys advance virtual progress.
+   * Virtual distance = 3.2 × vh (gold: old 420vh track effort).
+   * At progress 0 + scroll up, or progress 1 + scroll down → release (page continues).
+   */
   useEffect(() => {
     if (!ready || reduced) return;
     const pin = pinRef.current;
     const video = videoRef.current;
     if (!pin || !video) return;
 
-    // Force decode readiness for scrub
     video.pause();
-
-    const st = ScrollTrigger.create({
-      trigger: pin,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.45,
-      onUpdate: (self) => applyProgress(self.progress),
-    });
-
-    // Initial
     applyProgress(0);
 
-    return () => {
-      st.kill();
+    const virtualDistance = () => {
+      const vh = window.innerHeight || 800;
+      return VIRTUAL_VIEWPORTS * vh;
     };
-  }, [ready, reduced, applyProgress]);
+
+    const sectionInView = () => {
+      const r = pin.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const p = targetProgressRef.current;
+      // Release at ends so host page (membership band) can continue
+      if (p <= 0.0005 && deltaPx < 0) return false;
+      if (p >= 0.9995 && deltaPx > 0) return false;
+      const next = clamp01(p + deltaPx / virtualDistance());
+      setTargetProgress(next, false);
+      return true;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (!sectionInView()) return;
+      // Ignore pure horizontal trackpad
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const consumed = applyDelta(e.deltaY);
+      if (consumed) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (!sectionInView() || e.touches.length !== 1) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!sectionInView() || e.touches.length !== 1) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      // Finger up → content down (negative) → advance journey (positive delta like wheel)
+      const deltaY = prev - y;
+      const consumed = applyDelta(deltaY);
+      if (consumed) e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!sectionInView()) return;
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (consumed) e.preventDefault();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      scrubTweenRef.current?.kill();
+      scrubTweenRef.current = null;
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [ready, reduced, applyProgress, setTargetProgress]);
 
   const chapter = CHAPTERS[activeChapter];
   const showScrollCue = !reduced && progress < 0.04;
 
   return (
     <div
-      className="meridian-root bg-[#0c0a08] text-[#f7f1e8]"
+      className={`meridian-root bg-[#0c0a08] text-[#f7f1e8]${reduced ? "" : " meridian-root--pin"}`}
+      data-meridian-pin={reduced ? "false" : "true"}
+      data-meridian-progress={activeChapter}
       style={{ fontFamily: "var(--font-meridian-sans), system-ui, sans-serif" }}
     >
-      {/* Tall scroll track; sticky stage inside */}
-      <div ref={pinRef} className="relative" style={{ height: reduced ? "100vh" : "420vh" }}>
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
-          {/* VIDEO */}
+      {/* Pin-until-complete: one viewport stage; virtual progress drives film (not tall track) */}
+      <div
+        ref={pinRef}
+        className={`relative w-full overflow-hidden${
+          reduced ? " h-screen" : " meridian-pin-stage"
+        }`}
+      >
+        <div className="relative h-screen w-full overflow-hidden">
+          {/* VIDEO — poster = frame 0 only when startTimeSec is 0 (gold). Demo offsets skip poster to avoid flash of the cut frames. */}
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full object-cover"
             src={VIDEO_SRC}
-            poster={POSTER_SRC}
+            poster={startTimeSec > 0 ? undefined : POSTER_SRC}
             muted
             playsInline
             preload="auto"
-            // no autoplay - scroll owns time
+            // no autoplay - virtual progress owns time
           />
 
           {/* Cinematic scrims - keep type legible without killing gold hour */}
@@ -386,6 +616,12 @@ export default function MeridianScrollNarrative() {
       </section>
 
       <style jsx global>{`
+        /* Pin-until-complete: one viewport stage, no tall multi-vh track */
+        .meridian-root--pin .meridian-pin-stage {
+          height: 100dvh;
+          min-height: 100vh;
+          max-height: 100dvh;
+        }
         @keyframes meridianFade {
           from {
             opacity: 0;

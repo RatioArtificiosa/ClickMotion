@@ -2,9 +2,11 @@
 
 Every prompt must pass all applicable points before `status: published`. CI enforces the automatable ones; human review covers the rest.
 
-> **Full production gate (prompt + media + package PDF + CMS + vault):**  
+> **Ship entry (open first):** [`SHIP_FOR_SALE.md`](./SHIP_FOR_SALE.md)  
+> **Full production gate (prompt + media + product folder + zip + PDF + CMS + vault):**  
 > **[`PRODUCTION_READY_CHECKLIST.md`](./PRODUCTION_READY_CHECKLIST.md)** — ultra-thorough master protocol.  
-> Meridian package PDF is the **prompt gold standard** for buyer delivery.
+> Meridian package PDF = **prompt gold standard** for buyer manuals.  
+> Studio Sequence **product folder + files zip** = rebuild pack gold standard ([`PRODUCT_PACKAGE.md` §10](./PRODUCT_PACKAGE.md)).
 
 ## 1. Motion Quality (10 pts)
 
@@ -12,7 +14,9 @@ Every prompt must pass all applicable points before `status: published`. CI enfo
 |---|---|---|
 | 1 | Easing is not `easeOut` everywhere — uses spring or custom bezier where appropriate | Read motion spec |
 | 2 | Stagger values are 0.05–0.2s (not 0.5s+ which feels sluggish) | Read motion spec |
-| 3 | ScrollTrigger `scrub` is `true` or `0.5–2` (not `5` which feels laggy) | Read motion spec |
+| 3 | ScrollTrigger `scrub` is `true` or `0.5–2` (not `5` which feels laggy) when a scrub value is used | Read motion spec |
+| 3a | **Scroll narrative / hybrid-with-scroll:** **pin-until-complete** (fixed stage, virtual progress, no traditional tall multi-vh page scrollbar UX; client embed pins until journey ends) — [`PRODUCT_LAW.md`](./PRODUCT_LAW.md) | Code + demo |
+| 3a-PSAVE | **If PSAVE (Elyse / live Revel / live Vertex / live Still / live Prism / named):** two clocks, product earn track, 1.2x forward, reverse every 3rd frame on the live video, leftover dest on lift, picture-gated release, page owns next sibling, GOP 3 / no B-frames — [`PSAVE.md`](./PSAVE.md) | Demo: tiny click creeps; fling plays; lift coasts then friction-stops; reverse mid-film does not jump; next sibling (if any) scrolls without driving the film |
 | 4 | Parallax speed is `0.2–0.8` vertical, never >1.0 | Read motion spec |
 | 5 | `prefers-reduced-motion` disables/reduces all animations | Code + manual test |
 | 6 | No layout shift (CLS) from animations — uses `transform`/`opacity` only | Lighthouse |
@@ -72,9 +76,9 @@ Every prompt must pass all applicable points before `status: published`. CI enfo
 | 37d | Capture / ffmpeg never overwrote master or client HD in place (copy-out only); client not moved/renamed after prep | Process / git history |
 | 37e | Product page shell follows PRODUCT_LAW layout: main **~960×540**, meta height-matched, rail **3** cards space-between, rail titles flush left; genre gallery below unchanged | Product page visual / `PromptProductView` |
 | 37f | Paths recorded in MDX + CMS + `owner-designs` (flagships); new assets use naming protocol; legacy names not force-renamed | ASSET_PIPELINE §3–§4–§8 |
-| 37g | Publish media complete: **preview video + thumbnail + poster** (storefront) + **client HD** + **Product Package PDF** registered | Admin Preview media + `/admin/packages` + PRODUCT_PACKAGE.md |
+| 37g | Publish media complete: **preview video + thumbnail + poster** (storefront) + **client HD** + **Product Package PDF** registered + **files zip** when rebuild flagship | Admin Preview media + `/admin/packages` + PRODUCT_PACKAGE.md §10 |
 | 38 | `priceTier` matches value (free = simple, agency = premium/3D) | Manual |
-| 39 | Storefront description compelling; soft ≤160 / hard ≤180 chars (PRODUCT_LAW) | Zod + manual |
+| 39 | Storefront description compelling; soft ≤200 / hard ≤230 chars (PRODUCT_LAW) | Zod + manual |
 | 40 | License header / commercial-use note present | Read prompt footer |
 
 ## Publishing Gate
@@ -84,6 +88,12 @@ validate:prompts  ✓
 validate:assets   ✓  (warn allowed for drafts)
 typecheck         ✓
 manual review     ✓  (required for motionIntensity: extreme)
+SHIP_FOR_SALE + PRODUCTION_READY_CHECKLIST Phases 0–12  ✓
+Operator told: first production pass finished  ✓
+Permission asked for Platinum Second Revision  ✓
+PLATINUM_SECOND_REVISION / Phase 13 PASS (after permission)  ✓
 ```
 
-Only then set `status: published`.
+Only then treat the SKU as **ultra-premium sale complete**.  
+`status: published` may land at end of Phase 12 **if** the agent immediately asks for Platinum Second Revision and does not claim “fully done” until Phase 13 PASS.  
+Full law: [`PLATINUM_SECOND_REVISION.md`](./PLATINUM_SECOND_REVISION.md).

@@ -66,9 +66,7 @@ function cardFrame(
 }
 
 function camConfig(w: number) {
-  // Exact source DribbleSection camera (0.924d2y-5_87.js):
-  // position (0, 0, l()), lookAt(0, 0, 0), fov d() — never tilt down.
-  // Tilting lookY negative lifts the helix into mid-frame (our old bug).
+  // Camera looks at origin. Never tilt lookY. Width sets z and fov only.
   const tablet = w >= 768 && w < 1200;
   if (w < 768) return { z: 28, fov: 58 };
   if (tablet) return { z: 24, fov: 54 };
@@ -207,7 +205,7 @@ function OrbitCards({ progressRef, urls }: OrbitSceneProps) {
 
   useFrame(() => {
     const g = THREE.MathUtils.clamp(progressRef.current, 0, 1);
-    // Source P = min(1, g / (400/600)) — helix completes at 2/3 of phase g
+    // Source P = min(1, g / (400/600)) - helix completes at 2/3 of phase g
     const P = Math.min(1, g / HELIX_G_END);
 
     // Source path offset: P*(y+ep) - ep + 25
@@ -224,7 +222,7 @@ function OrbitCards({ progressRef, urls }: OrbitSceneProps) {
       if (!mesh) continue;
       const s = base + CARD_SPACING * i;
       // Source: visible while 0 < s < pathLen. Require a hair of lead-in so
-      // partial “card ends” never sit clipped in the viewport corner — cards
+      // partial "card ends" never sit clipped in the viewport corner - cards
       // fully form on the path before they’re shown, and hide before the path tail.
       const lead = CARD_H * 0.2;
       const visible =
@@ -259,7 +257,7 @@ function OrbitCards({ progressRef, urls }: OrbitSceneProps) {
     }
   });
 
-  // Slight lift so the smile threads the lower half of MOTION (Trionn).
+  // Slight lift so the helix sits in the lower half of the titles.
   return (
     <group position={[0, 0.9, 0]}>
       {urls.map((_, i) => (
@@ -302,7 +300,7 @@ function CameraSync() {
     };
     apply();
     window.addEventListener("resize", apply);
-    // Re-measure after pinType:fixed settles
+    // Re-measure after first paint so the canvas fills the stage.
     const t1 = window.setTimeout(apply, 50);
     const t2 = window.setTimeout(apply, 250);
     return () => {
@@ -320,8 +318,8 @@ type OrbitHelixProps = {
 };
 
 /**
- * WebGL helix orbit matching trionn.com DribbleSection:
- * radius 12, pitch 28/4π, card spacing 6.2, ribbon deformation, guide rails.
+ * WebGL helical card ribbon.
+ * radius 12, pitch 28 over 2 turns, card spacing 6.2, ribbon deformation, guide rails.
  */
 export function OrbitHelix({ progressRef, className }: OrbitHelixProps) {
   return (
@@ -341,7 +339,7 @@ export function OrbitHelix({ progressRef, className }: OrbitHelixProps) {
           alpha: true,
           powerPreference: "high-performance",
         }}
-        // PinType fixed can leave R3F at default 300×150 — always fill viewport
+        // Always fill the viewport. Never leave R3F at the default 300x150.
         style={{
           position: "absolute",
           inset: 0,

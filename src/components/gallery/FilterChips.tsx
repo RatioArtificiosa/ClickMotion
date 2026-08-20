@@ -108,8 +108,8 @@ export function FilterChips({ className }: { className?: string }) {
               "appearance-none cursor-pointer pr-7 bg-[var(--elevated)] border-[var(--hairline)]"
             )}
           >
-            <option value="recent">Recent</option>
-            <option value="oldest">Oldest</option>
+            <option value="recent">Discover</option>
+            <option value="oldest">Catalog order</option>
           </select>
           <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--text-quaternary)]" />
         </label>

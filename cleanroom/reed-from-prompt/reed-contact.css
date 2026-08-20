@@ -1,0 +1,208 @@
+/* REED — vermilion colophon contact. 2px slip, once. Not a red website. */
+
+.reed-root {
+  --reed-stage: #1a1a1a;
+  --reed-ink: #f5f0e8;
+  --reed-muted: #9a9488;
+  --reed-line: #f5f0e8;
+  --reed-accent: #e23b2a;
+  color: var(--reed-ink);
+  background: var(--reed-stage);
+  font-family: var(--font-reed-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.reed-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(1.06);
+}
+
+.reed-root[data-entered="true"] .reed-stage {
+  transform: none;
+  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  .reed-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reed-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.reed-enter {
+  opacity: 1;
+}
+
+.reed-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--reed-ink);
+  flex-shrink: 0;
+}
+
+.reed-brand {
+  font-family: var(--font-reed-display), Newsreader, serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+}
+
+.reed-meta,
+.reed-place,
+.reed-label {
+  font-family: var(--font-reed-mono), "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--reed-muted);
+}
+
+.reed-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 2rem;
+  align-content: center;
+  padding: 2rem 0;
+}
+
+@media (min-width: 860px) {
+  .reed-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+}
+
+.reed-headline {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-reed-display), Newsreader, serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6.4vw, 4.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+
+.reed-period {
+  margin: 1.1rem 0 0;
+  max-width: 24rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--reed-muted);
+}
+
+.reed-place {
+  margin: 1.15rem 0 0;
+}
+
+.reed-form {
+  display: grid;
+  gap: 1.05rem;
+}
+
+.reed-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.reed-field :is(input, textarea) {
+  appearance: none;
+  width: 100%;
+  margin: 0;
+  padding: 0.55rem 0 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--reed-muted);
+  border-radius: 0;
+  background: transparent;
+  color: var(--reed-ink);
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.reed-field textarea {
+  resize: none;
+  min-height: 4.2rem;
+}
+
+.reed-field :is(input, textarea):focus {
+  border-bottom-color: var(--reed-accent);
+}
+
+.reed-cta {
+  appearance: none;
+  margin: 0.5rem 0 0;
+  padding: 0.9rem 1.35rem;
+  width: fit-content;
+  border: 0;
+  border-radius: 0;
+  background: var(--reed-ink);
+  color: var(--reed-stage);
+  cursor: pointer;
+  font-family: var(--font-reed-display), Newsreader, serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  box-shadow: none !important;
+}
+
+.reed-root[data-sent="true"] .reed-cta {
+  background: var(--reed-accent);
+  color: var(--reed-ink);
+}
+
+.reed-root[data-slip="true"] .reed-headline,
+.reed-root[data-slip="true"] .reed-cta-label {
+  animation: reed-slip 200ms steps(2, end) 1;
+}
+
+@keyframes reed-slip {
+  0% {
+    text-shadow: none;
+    transform: none;
+  }
+  50% {
+    text-shadow: 2px 0 var(--reed-accent), -2px 0 #6ec8c8;
+    transform: translateX(2px);
+  }
+  100% {
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+.reed-cta:focus-visible {
+  outline: 1px solid var(--reed-accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reed-stage,
+  .reed-root[data-entered="true"] .reed-stage,
+  .reed-headline,
+  .reed-cta-label,
+  .reed-root[data-slip="true"] .reed-headline,
+  .reed-root[data-slip="true"] .reed-cta-label {
+    transform: none;
+    transition: none;
+    animation: none;
+    text-shadow: none;
+  }
+}

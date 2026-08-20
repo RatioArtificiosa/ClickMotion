@@ -1,0 +1,296 @@
+---
+id: "MS-HERO-BLOM01"
+title: "BLOOM - Kids & Teen Girls Yoga Course Hero"
+slug: "bloom-kids-teen-yoga-course-hero"
+description: "For kids and teen girls wellness brands. A sunlit class film free-plays while Kids and Teens paths restage the course and app hero. Fully yours to restage."
+version: "1.0.1"
+created: "2026-08-12"
+updated: "2026-08-12"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "health"
+subcategory: "wellness"
+styleTags: ["soft-premium", "organic", "editorial"]
+technicalTags: ["video-background", "framer-motion", "path-toggle"]
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/bloom-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/bloom-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-BLOM01.webp"
+liveDemo: "/demo/cleanroom-bloom"
+videoBackgrounds:
+  - file: "/assets/videos/luna-yoga-v1.mp4"
+    format: "mp4"
+    duration: "45s"
+    loop: true
+    poster: "/assets/posters/luna-yoga-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "lucide-react", version: "^0.400.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 10000
+useCases: ["kids-yoga-homepage", "teen-wellness-app", "girls-course-landing", "family-fitness-hero"]
+compatibleWith: ["MS-HERO-STIL01", "MS-HERO-ELYS01"]
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**BLOOM** is a full-viewport **kids and teen girls yoga course + app hero**: sunlit multi-girl class film, warm paper and lilac craft, peach CTAs, and a signature **Kids / Teens** path that restages badge, titles, modules, phone card, and CTAs over a living free-play film. Soft staggered entrance. Optional desktop film-wrap parallax only. Never scrub.
+
+**Why use it:**
+- Kids / teen wellness, yoga course, and girl-app brands that sell **belonging as craft**
+- Dual-age path no single-static hero can match
+- Plus Jakarta soft geometric restages cleanly for any soft-premium education brand
+- Client HD is pure class film (no burnt UI); storefront dual previews are separate
+
+Default copy (**Soft strength. / Big smiles.** through **Your calm. / Your circle.**) is a starting board. Restage paths, modules, CTAs, and stats until it is unmistakably yours.
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build BLOOM using the files in this folder. Read PROMPT.md.*
+
+---
+
+## Design System
+
+**Aesthetic Direction:** Soft kids education prestige meets beauty-commerce warmth. Canvas paper `#fff8f5`, ink `#2a2438`, lilac `#c4a8e8`, peach CTA `#ffb5a7`, butter kids accent `#ffe8a3`, soft mint teens `#b8e0d2`. Plus Jakarta Sans (or equal soft geometric) for display and body. Cream glass pills, soft shadows. **Not** adult night spa, neon mesh, emoji kids junk, or body-shame fitness.
+
+**Famous-UI craft direction (not a clone):** Premium kids education homepage bar + soft beauty commerce + class-card fitness clarity. One signature system: free-play class film + dual-age path restage.
+
+**Typography:**
+- Display / H1: Plus Jakarta Sans 600-700, tracking tight, line-height ~0.95, size `clamp(2.4rem, 6.5vw, 5rem)`
+- Body: Plus Jakarta / Inter 400-500, 15-16px, ink at ~72%
+- Eyebrow / chips: 10-12px uppercase tracking
+
+**Color tokens:**
+
+| Token | Value |
+|-------|--------|
+| Paper | `#fff8f5` |
+| Ink | `#2a2438` |
+| Lilac | `#c4a8e8` |
+| Peach CTA | `#ffb5a7` |
+| Butter (kids) | `#ffe8a3` |
+| Soft mint (teens) | `#b8e0d2` |
+
+**Spacing:** 8px grid · content max ~1400px · full-bleed video · safe horizontal inset min ~2rem · touch targets ≥44px
+
+**Anti-slop hard ban:** emoji spam, neon cyan/pink, purple mesh, dark adult spa only, body-shame fitness copy, medical claims, grey full-frame wash, scroll-scrub of `video.currentTime`, competitor brand names in UI.
+
+**Differentiation:**
+
+| vs | BLOOM must not become |
+|----|------------------------|
+| STILL | Night hybrid scrub / idle free-play cosmos |
+| Nomad | Espresso travel free-play only |
+| Generic kids | Rainbow emoji junk + stock still |
+| Adult wellness | Spa white / dark night only |
+
+---
+
+## Layout Structure
+
+- Full-viewport hero (100dvh) with sticky stage feel, overflow hidden
+- Film absolute cover under dual paper scrims (left type field + bottom vignette) + soft lilac rim glow
+- Top: flower mark + BLOOM wordmark · nav Classes · App · Ages · Stories · Sign in / Get the app
+- Age path toggle: Kids | Teens (glass pill tablist)
+- Left stack: badge, two-line H1, body, dual CTAs, module chips, quiet stats, parent trust line
+- Right (desktop): soft phone card showing active module / app class
+- Optional desktop film wrap scale parallax 1 → 1.05 (never time scrub)
+
+---
+
+## Content slots
+
+### Kids (default)
+
+| Slot | Default |
+|------|---------|
+| badge | For girls 7-12 |
+| H1 | Soft strength. / Big smiles. |
+| body | Short classes you can finish. Breathe, stretch, and feel proud in your own body. |
+| whisper | Join the circle |
+| CTAs | Start free class · Get the app |
+| modules | Breathe 5 · Stretch 8 · Animal flows 10 · Wind-down 7 |
+
+### Teens
+
+| Slot | Default |
+|------|---------|
+| badge | Course + app for teens |
+| H1 | Your calm. / Your circle. |
+| body | Flows for busy school days, soft nights, and real confidence. No judgment. Just show up. |
+| whisper | Come as you are |
+| CTAs | Join free · Download app |
+| modules | Focus 8 · Flow 15 · Soft strength 12 · Sleep wind-down 10 |
+
+### Shared
+
+Nav: Classes · App · Ages · Stories · Sign in · Get the app  
+Stats: 120+ interactive classes · 7-17 ages welcome · 10 min starter flows  
+Parent: Made for girls. Easy for parents to start.
+
+---
+
+## Interaction law (non-negotiable)
+
+1. Film free-plays muted loop (class energy). **Never** set `video.currentTime` from scroll.
+2. Soft staggered entrance for type + chips + CTAs (~0.7s ease).
+3. Kids / Teens toggle restages badge, H1, body, modules, whisper, CTAs, phone card (film continuous).
+4. Module chips update phone card active class.
+5. Dual CTAs always visible: free class + get/download app.
+6. Desktop only optional: GSAP scale film wrap 1 → 1.05 scrub ~1.2 on section.
+7. `prefers-reduced-motion`: poster still, no stagger, no parallax, video paused.
+8. IntersectionObserver: pause when off-screen, play when visible.
+
+---
+
+## Asset contract
+
+| Role | Path |
+|------|------|
+| Client HD film | `/assets/videos/luna-yoga-v1.mp4` (~45s silent 1080p loopable) |
+| Poster | `/assets/posters/luna-yoga-v1.webp` |
+| Storefront page preview | `/assets/videos/bloom-preview-v1.mp4` (UI burn, not in pack) |
+| Storefront FS preview | `/assets/videos/bloom-preview-fs-v1.mp4` |
+| Thumbnail | `/thumbnails/MS-HERO-BLOM01.webp` |
+
+Client film subject: stylized diverse girls, bright yoga class, belonging circle, rainbow mats. No UI burnt into client media.
+
+---
+
+## Motion Specification
+
+**Mode:** Free-play muted class film + Kids/Teens path restage. **Not** scroll-scrub. **Not** STILL hybrid Option A.
+
+| Layer | Spec |
+|-------|------|
+| Film | autoPlay muted loop playsInline preload auto; object-fit cover |
+| Entrance | Stagger fade/up ~0.7s ease `[0.25, 0.46, 0.45, 0.94]` |
+| Age path | Crossfade copy stack ~0.35s; film continuous (never seeks) |
+| Modules | Chip select updates phone card only |
+| Desktop parallax | Optional GSAP scale wrap `1 → 1.05`, scrub ~1.2; **never** `video.currentTime` |
+| Mobile | No wrap parallax under 768px; hide center nav; stack CTAs |
+| Off-screen | IntersectionObserver pause / play (threshold ~0.12) |
+| Reduced motion | Poster still; no stagger; no parallax; video paused |
+
+---
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/luna-yoga-v1.mp4` (~45s silent 1080p; free-play loop)
+- Poster (pure film): `/assets/posters/luna-yoga-v1.webp`
+- Storefront page (presentation only): `/assets/videos/bloom-preview-v1.mp4`
+- Storefront FS (presentation only): `/assets/videos/bloom-preview-fs-v1.mp4`
+- Attributes (client build): muted loop autoPlay playsInline preload auto
+- Object-fit: cover; paper scrims for type only (never grey-wash full frame)
+
+**Buyer film generation:** pack file `VIDEO_GEN_PROMPT.md` (pure class world, no UI).
+
+**Required film subject:** multi-girl sunlit class, belonging circle, rainbow mats. No logos/UI/watermarks.
+
+**Forbidden film subjects:** empty mat only, adult dark spa only, neon cyber yoga, body-shame fitness stock.
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, large display type, phone card beside stack |
+| ≥1024px | Full nav; side-by-side content + phone |
+| ≥768px | Nav links visible; dual CTA row |
+| <768px | Hide center nav; stack CTAs; phone under content; no film parallax |
+| ≤390px | Tighter type clamp; keep ≥44px targets; film cover |
+
+---
+
+## Accessibility
+
+- Semantic section / header / nav / h1
+- Age path tablist with aria-selected
+- Focus rings lilac on paper field
+- Ink-on-paper body contrast intent
+- `prefers-reduced-motion` static + paused film
+- Video decorative (`aria-hidden`)
+- Touch targets ≥44px
+- Do not trap keyboard focus
+
+---
+
+## Performance Notes
+
+- Preload auto on client film for smooth free-play
+- will-change only on film wrap when parallax active
+- Fonts: `display: swap` (Plus Jakarta Sans)
+- No Three.js; single hero component budget
+- Prefer WebP poster
+- Pause film when off-screen; kill GSAP / disconnect IO on unmount
+
+---
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place film + poster at the public paths above (see START-HERE).
+4. Use `source/BloomYogaHero.tsx`.
+5. Install `framer-motion`, `gsap`, `lucide-react`.
+6. Load Plus Jakarta Sans (`--font-bloom-display` / `--font-bloom-body` preferred).
+7. Mount the hero; verify free-play, Kids/Teens restage, modules, dual CTAs, reduced motion.
+8. Restage with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**.
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite.  
+**Lovable / Bolt:** Single file OK if free-play + Kids/Teens path + reduced-motion stay intact.
+
+---
+
+## Stack
+
+React + TypeScript + Tailwind. Framer Motion for entrance / path crossfade. GSAP ScrollTrigger only for optional wrap scale. Lucide icons OK. Prefer integrating `BloomYogaHero.tsx` over rewriting.
+
+---
+
+## Expected Output
+
+1. Full-viewport soft wellness hero with living class film  
+2. Film free-plays muted; never scrubbed by scroll  
+3. Kids/Teens restages badge, H1, body, modules, whisper, CTAs, phone card  
+4. Module chips update phone card  
+5. Dual CTAs present and tappable  
+6. Desktop optional wrap scale only  
+7. Mobile stack; reduced-motion safe  
+8. Local film + poster paths resolve; no storefront chrome in client build  
+
+---
+
+## What to tell your AI
+
+```
+Build BLOOM using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+```
+
+To restage later, open CUSTOMIZATION.md. To generate a new class film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `b1o0m7y0g4k2` · PaidSalt: `bm4k8p`
+- Files zip root = START-HERE.md
+- Client media only under package `assets/` (no storefront previews)
+- Mode: free-play class film + Kids/Teens path - **not** hybrid scrub, **not** wallpaper-only without path UI
+- First production post: 2026-08-12
+- Platinum Second Revision: 2026-08-12 (pack density, docs gold, hash re-sync, re-smoke; **visuals locked**)
+
+ClickMotion · www.ClickMotion.dev

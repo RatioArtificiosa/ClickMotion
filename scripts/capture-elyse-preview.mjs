@@ -1,8 +1,8 @@
 /**
  * Burn ELYSE scroll-narrative hero into storefront preview videos (page + fullscreen).
  *
- * Meridian-style full UI burn: programmatic scroll scrub of the pin track
- * so chapters + film advance together (scroll owns time).
+ * Drives pin-until-complete via window.__msScrollNarrative.setProgress (no tall-page scroll).
+ * Live wheel gold (do not recapture unless asked): 3.6 vh, gain 0.145, swipe 0.125, lag 0.42.
  *
  * Usage:
  *   node scripts/capture-elyse-preview.mjs
@@ -97,12 +97,19 @@ async function captureAt(viewport, framesDir) {
     deviceScaleFactor: 1,
   });
 
-  await page.goto(URL, { waitUntil: "networkidle", timeout: 120_000 });
+  await page.goto(URL, { waitUntil: "load", timeout: 90_000 });
   await page.waitForSelector(".elyse-root", { timeout: 60_000 });
   await page.waitForFunction(
     () => {
       const v = document.querySelector(".elyse-video, .elyse-stage video, video");
-      return v && v.readyState >= 1 && v.duration > 0;
+      const api = window.__msScrollNarrative;
+      return (
+        v &&
+        v.readyState >= 1 &&
+        v.duration > 0 &&
+        api &&
+        typeof api.setProgress === "function"
+      );
     },
     { timeout: 60_000 }
   );
@@ -113,21 +120,16 @@ async function captureAt(viewport, framesDir) {
     content: `[data-ms-scroll-cue], .elyse-scroll-cue { display: none !important; }`,
   });
 
-  const maxScroll = await page.evaluate(() => {
-    const pin = document.querySelector(".elyse-pin");
-    if (!pin) return document.body.scrollHeight - window.innerHeight;
-    return Math.max(0, pin.offsetHeight - window.innerHeight);
-  });
-
   console.log(
-    `Capturing ${TOTAL_FRAMES} frames @ ${FPS}fps over 0…${maxScroll}px (full film)`
+    `Capturing ${TOTAL_FRAMES} frames @ ${FPS}fps over virtual progress 0…1 (full film)`
   );
 
   for (let i = 0; i < TOTAL_FRAMES; i++) {
     const progress = Math.min(1, Math.max(0, progressForFrame(i, TOTAL_FRAMES)));
-    const y = Math.round(progress * maxScroll);
 
-    await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
+    await page.evaluate((p) => {
+      window.__msScrollNarrative?.setProgress(p);
+    }, progress);
 
     await page.evaluate(
       () =>

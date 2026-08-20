@@ -11,7 +11,8 @@ export const videoAssetSchema = z.object({
   format: z.enum(["mp4", "webm", "hls"]),
   duration: z.string().regex(/^\d+s$/, "Duration must be like '12s'"),
   loop: z.boolean(),
-  sizeMb: z.number().positive().max(50),
+  // GOP 3 PSAVE client films are 80-130MB (Still ~82, Prism ~126, GrokBot ~127).
+  sizeMb: z.number().positive().max(200),
   poster: z.string().optional(),
 });
 
@@ -53,8 +54,8 @@ export const promptFrontmatterSchema = z.object({
   id: z.string().regex(idPattern, "ID must match MS-(HERO|SEC|LP|SPC)-XXX"),
   title: z.string().min(5).max(80),
   slug: z.string().regex(slugPattern, "Slug must be kebab-case"),
-  // PRODUCT_LAW: storefront description soft ≤160, hard ≤180
-  description: z.string().min(20).max(180),
+  // PRODUCT_LAW: storefront description soft ≤200, hard ≤230
+  description: z.string().min(20).max(230),
   version: z.string().regex(/^\d+\.\d+\.\d+$/),
   created: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   updated: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -62,6 +63,10 @@ export const promptFrontmatterSchema = z.object({
   status: z.enum(["draft", "review", "published", "archived"]),
 
   type: z.enum(["hero", "section", "landing-page", "special"]),
+  /** Optional extra type memberships for multi-type browse filters. */
+  types: z
+    .array(z.enum(["hero", "section", "landing-page", "special"]))
+    .optional(),
   category: z.string().refine((v) => categoryIds.includes(v), { message: "Invalid category id" }),
   subcategory: z.string().min(1),
   styleTags: z.array(z.string().refine((v) => (styleTagIds as string[]).includes(v), { message: "Invalid styleTag" })).min(1).max(4),

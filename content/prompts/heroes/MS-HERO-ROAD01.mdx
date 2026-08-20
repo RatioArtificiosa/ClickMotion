@@ -1,0 +1,268 @@
+---
+id: "MS-HERO-ROAD01"
+title: "Roadster - Studio Drive Scroll Hero"
+slug: "roadster-studio-drive-scroll"
+description: "Looping studio film, scroll-paced product cards, and a black specs sheet that pulls up with a spinning 3D model. Hybrid motion that stays bright, catalog-grade, and restageable."
+version: "2.1.0"
+created: "2026-08-11"
+updated: "2026-08-16"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "ecommerce"
+subcategory: "luxury"
+styleTags: ["minimal", "luxury", "dark-cinematic", "editorial"]
+technicalTags: ["pin-until-complete", "webgl", "video-background", "3d-threejs"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/roadster-studio-drive-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/roadster-studio-drive-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-ROAD01.webp"
+poster: "/assets/posters/roadster-studio-drive-v1.webp"
+liveDemo: "/demo/cleanroom-roadster"
+videoBackgrounds: []
+dependencies:
+  - { name: "three", version: "^0.170.0", required: true }
+  - { name: "@react-three/fiber", version: "^9.0.0", required: true }
+  - { name: "@react-three/drei", version: "^10.0.0", required: true }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 17000
+useCases: ["ev-product-launch", "supercar-unveil", "luxury-auto-landing", "studio-product-hero", "3d-configurator-lead"]
+compatibleWith: ["MS-SEC-STUDIO01", "MS-HERO-MERI01", "MS-HERO-ACTU01"]
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**Roadster** is a **studio-drive hero** for luxury vehicle and product launches. A high-key film loops forever. Scroll aims sparse product cards with enter, hold, and exit. At the end, a black rounded sheet pulls up over the film with official-style specs, a spinning GLB turntable, and reserve CTAs.
+
+**No Scroller (pin-until-complete).** Scroll aims virtual progress on **13.3 viewports** (12 for the cards, 1.3 for the sheet). The page does not physically scroll during the viewing. When the journey ends, the pin **releases**. Then the **page owns the wheel** until the stage docks at the top of the viewport again. Pointer on the next sibling never drives the hero. Not a tall sticky track. Not GSAP ScrollTrigger pin. Not Lenis. Not PSAVE. The film free-plays. Scroll never seeks `currentTime`.
+
+**How you build it:** download the product pack. Tell your AI: *Build Roadster using the files in this folder. Read PROMPT.md. Prefer source/TeslaRoadsterPromo.tsx. No Scroller: pin-until-complete. One 100dvh stage. Scroll aims virtual progress on 13.3 viewports. At 0 plus up, or 1 plus down, release. After release at the end, the page owns until dock (top >= 0; implement >= -2). Do not install gsap or lenis. Do not build a tall multi-vh sticky track. Do not add PSAVE. Never map scroll to video.currentTime.*
+
+**Why use it:**
+- Hybrid motion avoids expensive video scrub and keeps GPU calm
+- Catalog-bright film stays pure; type is dark ink with local lift only
+- Specs sheet + 3D close the story without a flat footer band
+- Every brand mark, card, spec, film, and model is meant to be restaged
+
+Default demo content (TESLA / ROADSTER, EV supercar claims) is only a starting board. Tell your AI to restage everything until it reads as you alone.
+
+## Design System
+
+**Aesthetic Direction:** high-key automotive studio, dark ink type on bright film, pure black specs sheet, massive product name, giant performance numbers, restrained red accent on progress tip only.
+
+**Craft direction:** vehicle unveil x catalog stills x product-page density. Calm until scroll arrives, then deliberate card pacing and a satisfying sheet pull-up.
+
+**Do not:**
+- Scroll-scrub the film (`currentTime` mapping)
+- Grey-wash or vignette the entire frame
+- Use frosted glass story cards
+- Ship storefront preview videos as rebuild media
+- Install gsap, ScrollTrigger, or lenis
+- Mount WebGL while the sheet is fully off-screen (context thrash)
+
+**Differentiation:**
+
+| vs | Roadster must not become |
+|----|--------------------------|
+| Meridian | Pure text scroll narrative without hybrid film loop |
+| Studio Sequence | Camera pull-out to street billboard |
+| Actually | Product-can 3D grab hero without studio film story |
+| Generic auto hero | Static image + glass cards + scrubbed reel |
+
+## Layout Structure
+
+- **Hero only** - one `100dvh` stage. Virtual earn **13.3 viewports**. Pin freeing after the last moment.
+- **Top chrome:** brand, Learn More, Reserve Now, progress hairline (ink to red tip)
+- **Story cards:** center hero/specs + left/right features with optional stats
+- **Bottom rail:** model line + micro specs (fades as sheet rises)
+- **Specs sheet:** absolute on stage, rounded top corners, Drive grid, secondary grid, tall 3D stage, reserve block
+- **Mobile:** full-bleed film, stacked cards, tall 3D min-height so the model is not clipped
+- Immersive page: no site header/footer over the hero
+
+## Content slots
+
+All buyer media and copy live in the pack source + assets.
+
+| Slot | Guidance |
+|------|----------|
+| Studio film | `studio-drive.mp4` under `/assets/roadster/` (muted loop only) |
+| 3D model | `roadster.glb` (GLB preferred, +Y up, origin under car) |
+| Brand chrome | Wordmarks, CTAs, progress accent |
+| PANELS | Kickers, titles, bodies, stats, enter/hold/exit timing |
+| Specs grids | `DRIVE_SPECS` + `MORE_SPECS` on the black sheet |
+| Turntable | `MODEL_SCALE`, `MODEL_Y`, `SPIN_SPEED` |
+
+## Motion Specification
+
+**Mode:** **No Scroller** = **pin-until-complete** + loop film + enter-hold-exit cards + sheet pull-up + Y-spin GLB. Not video scrub. Not PSAVE.
+
+```
+Earn: VIRTUAL_VIEWPORTS = 13.3
+virtualDistance = 13.3 * window.innerHeight
+delta progress = wheelDeltaY / virtualDistance
+```
+
+| Event | Timing | Ease / notes |
+|-------|--------|--------------|
+| Intro | g near 0 | Film only; Scroll cue until first card |
+| Cards | first ~90% of g | Enter ramp, hold full opacity, exit ramp |
+| **Pin freeing** | after g = 1 + down | **page owns** until dock (`top >= -2`) |
+| Sheet | last ~10% of g | `translateY(100%)` to `0` over live film |
+| 3D | while sheet > ~20% | Continuous Y spin; Canvas unmounts off-screen |
+| Reduced motion | on load | Settled readable cards/sheet; spin paused |
+
+**3D hardening (required):** preload GLB; no placeholder flash; no HDR Environment fetch; light dpr; `Clone` for safe remount; context-loss recovery; dispose Canvas when sheet off-screen.
+
+## Assets (buyer pack)
+
+| Asset | Path | Role |
+|-------|------|------|
+| Studio film | `/assets/roadster/studio-drive.mp4` | Looping high-key plate |
+| Vehicle mesh | `/assets/roadster/roadster.glb` | Turntable |
+
+Storefront previews on ClickMotion (presentation only):
+- Page: `/assets/videos/roadster-studio-drive-preview-v1.mp4`
+- Fullscreen: `/assets/videos/roadster-studio-drive-preview-fs-v1.mp4`
+
+This product is **not** listed on the backgrounds library as a looping tile to browse. Client film lives in the pack.
+
+## Technical implementation notes for AI tools
+
+Build a single default-export React component `TeslaRoadsterPromo` (or page section).
+
+Stack: React + TypeScript. No gsap. No ScrollTrigger. No Lenis. three + @react-three/fiber + @react-three/drei for the turntable.
+
+Root marker: `data-roadster-drive="pin"` · `data-product="MS-HERO-ROAD01"`. After release: `data-roadster-owns="page"`. Capture helper: `window.__msScrollNarrative`.
+
+Film: muted autoPlay loop playsInline. Never seek.
+
+`prefers-reduced-motion`: settled cards, docked sheet, spin paused.
+
+## Customization law
+
+After the default builds, the buyer will tell their AI to restage brand chrome, cards, film, GLB, and specs until the hero feels made for their product alone.
+
+## Quality bar
+
+It should feel like a production vehicle unveil: restrained, bright, intentional type, a still page while scroll aims the story, then a satisfying sheet pull-up with a living 3D product. Nothing shouts.
+
+## Responsive Behavior
+
+| BP | Behavior |
+|----|----------|
+| <768 | full-bleed film, stacked cards, tall 3D min-height |
+| ≥768 | side feature cards, wide specs grid, larger type |
+| reduced-motion | settled cards + docked sheet, spin off |
+| ultrawide | stage remains full bleed; type stays intentional |
+
+## Accessibility
+
+- Semantic `<section id="hero">` + heading hierarchy
+- Focusable Reserve / Learn CTAs
+- Arrow / Page / Space drive `g` while the pin owns. Never trap Tab
+- After release the page can continue. Do not trap focus
+- `aria-hidden` on fully off panels
+- Specs sheet `aria-label`
+- `prefers-reduced-motion`: skip long card runway; dock sheet
+
+## Performance Notes
+
+- Film is native decode + loop only (never seek by scroll)
+- One 100dvh stage. No 13.3 vh document spacer
+- WebGL mounts late (sheet ~20% up) and unmounts when off-screen
+- Avoid `Environment` HDR presets; studio lights only
+- Cap device pixel ratio (~1.5)
+- Do not load gsap or lenis. Do not create a ScrollTrigger pin
+- GLB: prefer 50k to 200k tris for web
+
+## AI Tool Instructions
+
+1. Prefer pack source `TeslaRoadsterPromo.tsx`. `"use client"`.
+2. Implement **No Scroller** (13.3 viewport virtual earn, release at ends, page owns until dock).
+3. Place the film and GLB as START-HERE describes.
+4. Do not install gsap or lenis. Do not add PSAVE. Never seek the film.
+5. After the default builds, run the **Customization prompts** below until every demo string is gone.
+
+## What to tell your AI (copy-paste customization)
+
+### Brand chrome
+```
+Change TESLA and ROADSTER labels to [BRAND] and [MODEL].
+Keep ink on film and white on the black sheet.
+Keep No Scroller and pin freeing.
+```
+
+### Story cards
+```
+Update PANELS kickers, titles, bodies, and stats for [MY PRODUCT].
+Keep enter-hold-exit timing. Keep No Scroller.
+```
+
+### Film
+```
+Replace /assets/roadster/studio-drive.mp4 with [MY FILM].
+Keep muted loop. Never scrub with scroll. Do not add PSAVE.
+```
+
+### 3D model
+```
+Replace /assets/roadster/roadster.glb with [MY GLB].
+Tune MODEL_SCALE and MODEL_Y. Keep Y-spin and late WebGL mount.
+```
+
+### Colors
+```
+Change ink #171a20 and progress tip #e31937 to [INK] / [ACCENT].
+Keep type readable on the bright film and on the black sheet.
+```
+
+### Pin freeing
+```
+After the last moment, scrolling down must release the pin.
+Then the PAGE owns until the hero docks at the top again.
+Scrolling up in the next section must move the page, not rewind the cards.
+```
+
+### Something looks wrong
+```
+Something is broken: [DESCRIBE WHAT YOU SEE].
+Fix it and keep Roadster as a No Scroller studio-drive hero with looping film, cards, pull-up sheet, and Y-spin GLB.
+Keep pin freeing (page owns until dock). Do not restore ScrollTrigger pin, gsap, lenis, or a tall sticky track. Do not add PSAVE. Do not ask me to write code.
+```
+
+## Expected Output
+
+1. Full-viewport hero, no site header/footer required inside the component.
+2. High-key film loops; never scrubbed by scroll.
+3. No Scroller: page stays still while scroll aims 13.3 vh; cards then sheet; then the pin releases.
+4. After release the page owns until dock. Pointer on the next sibling never drives the hero.
+5. Black rounded specs sheet pulls up over the live film with a spinning GLB.
+6. Reduced-motion settled fallback.
+7. All demo strings, film, and mesh are replaceable.
+8. Works as a drop-in homepage hero for vehicle and physical product launches.
+
+## Package notes (operators)
+
+| Role | Path |
+|------|------|
+| Client film | `/assets/roadster/studio-drive.mp4` |
+| Client mesh | `/assets/roadster/roadster.glb` |
+| Storefront preview | `/assets/videos/roadster-studio-drive-preview-v1.mp4` (leave as-is; no recapture) |
+| Storefront FS | `/assets/videos/roadster-studio-drive-preview-fs-v1.mp4` |
+| Poster / thumb | `/assets/posters/roadster-studio-drive-v1.webp` · `/thumbnails/MS-HERO-ROAD01.webp` |
+| Live demo | `/demo/cleanroom-roadster` (alias `/demo/tesla-roadster`) |
+| Product folder | `public/packages/MS-HERO-ROAD01/files/` |
+| Files zip | `/packages/MS-HERO-ROAD01/Roadster-files-r0ad8t3r5k2m-rd7n4x.zip` |
+| Package PDF | `/packages/MS-HERO-ROAD01/Roadster-package-r0ad8t3r5k2m-rd7n4x.pdf` |
+| Mode | No Scroller · not PSAVE · pin freeing · no gsap |
+| Version | **2.1.0** Platinum Second Revision 2026-08-16 |

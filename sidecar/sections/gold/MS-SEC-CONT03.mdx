@@ -1,0 +1,80 @@
+---
+id: "MS-SEC-CONT03"
+title: "HOLT - Magnet Snap Contact"
+slug: "holt-magnet-snap-contact"
+description: "Amber commission desk. The form docks. Restage the note until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "contact"
+category: "lifestyle"
+subcategory: "studio"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "resin-object"
+tokenTheme: "resin-amber"
+motionPrimitive: "magnet-snap"
+enterRecipe: "hang-rail"
+compatibleWith: ["MS-HERO-PRSM01", "MS-HERO-MIRA01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-holt"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["object-commission", "studio-inquiry", "resin-contact"]
+---
+
+## Promise (buyer-facing)
+
+HOLT is a mid-page **contact** that reads as a commission desk, not a SaaS form. The form docks from the right. Send snaps the button home.
+
+**Why use it:**
+- The snap is the design. The board never says magnet
+- Stage is amber. White is the catch
+- Sits after Prism, Mirage, or Verve without copying Cast or Ember
+
+## Design System
+
+Stage `#E8A04A`. Ink `#1A0E04`. Unbounded display. Outfit UI.
+
+**Primitive:** `magnet-snap` (40px, 160ms). **Enter:** `hang-rail`.
+
+**Anti-slop:** floating labels, three-column form, neon plastic toy, blob field.
+
+## Layout Structure
+
+`100dvh`. Masthead, headline, form.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| headline | Tell us what belongs on the desk. | 56 |
+| period | Lamps are wait-listed through September... | 180 |
+| place | Main Street, Beacon | 40 |
+| ctaLabel | Send the drawing | 24 |
+| doneLabel | It snapped in | 24 |
+
+## Motion Specification
+
+Hang from the rail, then the form docks. Send snaps once. Reduced: rest, no travel.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not clone Ember's pour. Do not clone Cast's lid.

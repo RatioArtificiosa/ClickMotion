@@ -295,7 +295,6 @@ export function HomeExperience({ prompts }: { prompts: GalleryPrompt[] }) {
  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
  const settledRef = useRef(false);
  const tickingRef = useRef(false);
- const bootRef = useRef(false);
  const chromeSentRef = useRef(false);
 
  const paint = useCallback((raw: number) => {
@@ -422,9 +421,30 @@ export function HomeExperience({ prompts }: { prompts: GalleryPrompt[] }) {
  return Math.max(scrollP, endMorph);
  }, [getScrollProgress]);
 
+ /**
+  * Intro runtime boot.
+  * CRITICAL: must fully re-arm on every mount / Strict Mode re-run / client
+  * navigation back to `/`. Never use a "boot once forever" ref — cleanup
+  * removes listeners + is-ms-intro; a second setup must always run again
+  * or soft-nav home shows hero + footer with a dead gallery sheet.
+  */
  useEffect(() => {
- if (bootRef.current) return;
- bootRef.current = true;
+ // Cancel any prior run (Strict Mode cleanup may already have done this)
+ if (idleTimerRef.current) {
+ clearTimeout(idleTimerRef.current);
+ idleTimerRef.current = null;
+ }
+ if (endMorphRafRef.current) {
+ cancelAnimationFrame(endMorphRafRef.current);
+ endMorphRafRef.current = 0;
+ }
+
+ // Fresh runtime every arm
+ settledRef.current = false;
+ autoLatchedRef.current = false;
+ endMorphRef.current = 0;
+ chromeSentRef.current = false;
+ tickingRef.current = false;
 
  // Always run intro on main `/` unless reduced-motion (a11y).
  const skip = Boolean(reduce);
@@ -434,12 +454,35 @@ export function HomeExperience({ prompts }: { prompts: GalleryPrompt[] }) {
  setCompact(true);
  setChromeReady(true);
  chromeSentRef.current = true;
+ document.documentElement.classList.remove("is-ms-intro");
+ document.body.classList.remove("is-ms-intro");
  requestAnimationFrame(() => {
  paintCompactFill();
+ pinScrollTop();
  window.dispatchEvent(new CustomEvent("ms:intro-complete"));
  });
  return;
  }
+
+ // Client nav can leave residual scrollY from browse/product pages —
+ // progress math requires top of stage at entry. Re-pin briefly to beat
+ // Next scroll restoration, but stop early so we don't yank mid-intro.
+ setCompact(false);
+ setChromeReady(false);
+ const entryScrollY = Math.max(
+ window.scrollY || 0,
+ document.documentElement.scrollTop || 0,
+ document.body.scrollTop || 0
+ );
+ const entryHadScroll = entryScrollY > 8;
+ pinScrollTop();
+ // Always re-pin once after layout; extra pins only if we arrived mid-page
+ const pinTimers = (entryHadScroll ? [0, 40, 100, 200] : [0, 40]).map((ms) =>
+ window.setTimeout(() => {
+ // Don't fight the user once they've started the runway
+ if (getScrollProgress() < 0.02) pinScrollTop();
+ }, ms)
+ );
 
  document.documentElement.classList.add("is-ms-intro");
  document.body.classList.add("is-ms-intro");
@@ -467,7 +510,15 @@ export function HomeExperience({ prompts }: { prompts: GalleryPrompt[] }) {
  });
  }
 
+ // Two frames: layout stage height after soft-nav, then paint start frame
  paint(0);
+ requestAnimationFrame(() => {
+ pinScrollTop();
+ paint(0);
+ requestAnimationFrame(() => {
+ if (!settledRef.current) paint(0);
+ });
+ });
 
  const startEndMorph = () => {
  if (reduce || autoLatchedRef.current || settledRef.current) return;
@@ -562,8 +613,15 @@ export function HomeExperience({ prompts }: { prompts: GalleryPrompt[] }) {
  armIdleAuto();
 
  return () => {
- if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
- if (endMorphRafRef.current) cancelAnimationFrame(endMorphRafRef.current);
+ pinTimers.forEach((id) => clearTimeout(id));
+ if (idleTimerRef.current) {
+ clearTimeout(idleTimerRef.current);
+ idleTimerRef.current = null;
+ }
+ if (endMorphRafRef.current) {
+ cancelAnimationFrame(endMorphRafRef.current);
+ endMorphRafRef.current = 0;
+ }
  window.removeEventListener("scroll", onUserScroll);
  window.removeEventListener("resize", onScrollOrResize);
  window.removeEventListener("wheel", onWheelFinish);
@@ -571,8 +629,15 @@ export function HomeExperience({ prompts }: { prompts: GalleryPrompt[] }) {
  document.documentElement.classList.remove("is-ms-intro");
  document.body.classList.remove("is-ms-intro");
  };
- // eslint-disable-next-line react-hooks/exhaustive-deps
- }, []);
+ }, [
+ reduce,
+ paint,
+ paintCompactFill,
+ pinScrollTop,
+ getScrollProgress,
+ getEffectiveProgress,
+ settleToCompact,
+ ]);
 
  useEffect(() => {
  if (!compact) return;

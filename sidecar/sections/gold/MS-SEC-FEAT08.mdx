@@ -1,0 +1,78 @@
+---
+id: "MS-SEC-FEAT08"
+title: "QUILL - Smoke Script Features"
+slug: "quill-smoke-script-features"
+description: "Raw paper. One word of smoke that locks. Restage the work until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "creative"
+subcategory: "print"
+styleTags: ["brutalist"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ink-riot"
+tokenTheme: "sumi-slash"
+motionPrimitive: "smoke-script"
+enterRecipe: "offset-print"
+compatibleWith: ["MS-HERO-REVL01", "MS-SEC-HELI01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-quill"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["print-shop-features", "ink-board", "poster-work"]
+---
+
+## Promise (buyer-facing)
+
+QUILL is a mid-page **features** board that reads as a print shop, not a bento. One word. It arrives as smoke, then locks.
+
+**Why use it:**
+- The smoke is the design. The board never says blur
+- Stage is raw paper. Black is the only ink
+- Sits after Revel, Helix, or Verve without copying Mark or Kern
+
+## Design System
+
+Stage `#F4F0E6`. Ink `#111111`. Newsreader italic display. Inter UI. IBM Plex Mono colophon.
+
+**Primitive:** `smoke-script` (6px, 0.18em, 800ms). **Enter:** `offset-print`.
+
+**Anti-slop:** graffiti clutter, RGB split, three tiles.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, smoked word, period, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| place | Ledoux Street, Taos | 40 |
+| pieces[].name | Posters | 16 |
+| pieces[].period | The lost-dog poster from May is still on a pole on Ledoux... | 160 |
+
+## Motion Specification
+
+Pin-until-complete. Smoke once per piece. Reduced: sharp type, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not clone Mark's falling letters.

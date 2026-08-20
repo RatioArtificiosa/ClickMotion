@@ -1,0 +1,152 @@
+---
+id: "MS-SEC-FEAT04"
+title: "KILN - Wet Glaze Features"
+slug: "kiln-wet-glaze-features"
+description: "A celadon shop. One wet drip. Restage the pieces until they read as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "lifestyle"
+subcategory: "objects"
+styleTags: ["organic", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ceramic-gloss"
+tokenTheme: "celadon-wet"
+motionPrimitive: "glaze-drip"
+enterRecipe: "silk-slip"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-STIL01", "MS-HERO-AETH01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-kiln"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["studio-features", "object-shop", "ceramic-board"]
+---
+
+## Promise (buyer-facing)
+
+KILN is a mid-page **features section** that reads as a pottery shop, not a bento. One piece at a time. A wet highlight drops after the name lands.
+
+**Why use it:**
+- The drip is the design. The board never says glaze
+- Stage is celadon. White is the catchlight
+- Piece names are slots
+- Sits after Elyse, STILL, or Aether without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **KILN** - mid-page **features**. Stage `#C5D5C8`. Ink `#1C2E28`. Catch `#F4FBF6`. Fraunces display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** wet glaze, object photography. Generous radius on the drip only. Not mint SaaS.
+
+**Design language:** `ceramic-gloss` (wow register)  
+**Token theme:** `celadon-wet`  
+**Motion primitive:** `glaze-drip` (28px, spring-like settle)
+
+**Enter (support, once on view):** `silk-slip`. Land ~1320ms. Drip after land.
+
+**Typography:**
+- Wordmark: Fraunces 600
+- Piece: Fraunces `clamp(3.2rem, 12vw, 8rem)`
+- Period: Outfit ~18px
+- Index: Fraunces italic
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#C5D5C8` | Your clay |
+| Ink | `#1C2E28` | Your dark |
+| Muted | `#4A6358` | Period |
+| Accent | `#F4FBF6` | Wet white |
+
+**Anti-slop hard ban:** three equal tiles, leaf particles, wellness beige kit, terrazzo clipart.
+
+**Differentiation:**
+| vs | Kiln must not become |
+|----|------------------------|
+| Atlas | Swiss names. Kiln is wet clay |
+| Cast | Amber flip. Kiln is a drip |
+| Elyse | Sanctuary hero. Kiln is a shop floor |
+
+## Layout Structure
+
+`100dvh` stage.
+
+1. Masthead: Kiln left, index right
+2. Piece name with drip, period
+3. Foot: place, three pieces
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Kiln | 24 | |
+| place | Seagrove, North Carolina | 40 | Real place, restage |
+| pieces[].name | Bowls | 24 | |
+| pieces[].period | These are the bowls we use at home, which is the only test I trust... | 160 | What they are for |
+
+## Motion Specification
+
+**Signature (one):** glaze-drip. After land, the catchlight drops 28px and settles. Restage on each piece.
+
+**Enter (support, once on view):** `silk-slip`.
+
+**Engine:** CSS enter. CSS transform drip.
+
+**Reduced motion:** drip at rest. Instant piece swap.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Name still owns the board |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static drip
+- Keyboard: arrows after land
+- Contrast dark green on celadon
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL
+- One drip
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not lay out a bento. Do not invent mint SaaS.
+
+**Lovable / Bolt:** Same section. Replace pieces and the town. Keep one drip.
+
+## Expected Output
+
+A single React features section that:
+1. Is a **shop board**, not a hero
+2. Slips in, then the glaze drops
+3. Uses celadon-wet tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

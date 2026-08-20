@@ -1,0 +1,152 @@
+---
+id: "MS-SEC-PRIC02"
+title: "CAIRN - Wax Seal Sittings"
+slug: "cairn-wax-seal-sittings"
+description: "A dark case. Three sittings. Wax stamps the kept one. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "pricing"
+category: "fashion"
+subcategory: "jewelry"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "jewel-chrome"
+tokenTheme: "carnelian-black"
+motionPrimitive: "wax-seal"
+enterRecipe: "iris-open"
+compatibleWith: ["MS-HERO-PRSM01", "MS-HERO-MIRA01", "MS-HERO-ELYS01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-cairn"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5400
+useCases: ["atelier-pricing", "jewelry-sittings", "hold-fee"]
+---
+
+## Promise (buyer-facing)
+
+CAIRN is a mid-page **pricing** board that reads as a jewelry case, not a SaaS table. Three sittings. The kept one takes a carnelian seal.
+
+**Why use it:**
+- The seal is the design. The board never says stamp
+- Stage is oxblood black. Carnelian is the wax
+- Sitting names are slots
+- Sits after Prism, Mirage, or Elyse without copying Facet
+
+## Design System
+
+**Aesthetic Direction:** **CAIRN** - mid-page **pricing**. Stage `#140C0C`. Ink `#F7EDE4`. Accent `#C73E2A`. Cinzel display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** high jewelry vitrine. Quiet metal, one gem. Not casino gold.
+
+**Design language:** `jewel-chrome` (wow register)  
+**Token theme:** `carnelian-black`  
+**Motion primitive:** `wax-seal` (scale 0.42 to 1.06, 420ms)
+
+**Enter (support, once on view):** `iris-open`. Land ~980ms. Seal after land on the kept sitting.
+
+**Typography:**
+- Wordmark: Cinzel 600, tracked
+- Sitting: Cinzel `clamp(3.1rem, 11vw, 7.2rem)`
+- Rows: Outfit ~15px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#140C0C` | Your case |
+| Ink | `#F7EDE4` | Ivory |
+| Accent | `#C73E2A` | Your wax |
+| Metal | `#E8C9B0` | Price |
+
+**Anti-slop hard ban:** three equal pricing cards, toggle monthly/yearly, rainbow chrome, hanging orb.
+
+**Differentiation:**
+| vs | Cairn must not become |
+|----|----------------------|
+| Ledger | Print desks. Cairn is a sitting |
+| Facet | Button swing. Cairn is wax on Keep |
+
+## Layout Structure
+
+`100dvh` pinned stage. Room opens from the center.
+
+1. Masthead: Cairn left, index readout right
+2. Sitting name, seal on Keep, price, period, three rows
+3. Foot: street and hours
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Cairn | 24 | |
+| place | Benefit Street, Providence | 40 | Real place |
+| hours | Tuesday looking. Thursday keeping. | 48 | |
+| sittings[].name | Keep | 16 | |
+| sittings[].price | 420 to hold | 24 | Spoken money |
+| sittings[].period | Tuesday is the quiet day. Bring whoever has to like it... | 180 | |
+
+## Motion Specification
+
+**Signature (one):** wax-seal. The disc stamps only on the kept sitting. Other sittings stay unsealed.
+
+**Enter (support, once on view):** `iris-open`. Matching clip units `%` to `%`.
+
+**Engine:** CSS enter. CSS scale stamp.
+
+**Reduced motion:** first sitting at rest. Seal static if Keep is shown. Wheel is not captured.
+
+**Pin-until-complete:** yes. Wheel / trackpad / touch / arrows. Hairline `--pin-p`. Index is readout, not a hit target.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Name still owns the board. Seal stays beside it |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static seal, first plate
+- Keyboard: arrows after land
+- Contrast ivory on oxblood
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL
+- One seal, only on Keep
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not lay out three cards. Do not hang a disconnected orb.
+
+**Lovable / Bolt:** Same section. Replace sittings and the street. Keep one seal on the kept sitting.
+
+## Expected Output
+
+A single React pricing section that:
+1. Is a **case of sittings**, not a hero
+2. Opens from the center, then wax stamps Keep
+3. Uses carnelian-black tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

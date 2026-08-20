@@ -1,0 +1,156 @@
+---
+id: "MS-SEC-CTAS03"
+title: "FACET - Vitrine Viewing CTA"
+slug: "facet-vitrine-viewing-cta"
+description: "A dark case. One gilt stone follows the hand. Restage the street until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "cta"
+category: "fashion"
+subcategory: "waitlist"
+styleTags: ["luxury", "playful"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "jewel-chrome"
+tokenTheme: "vitrine-platinum"
+motionPrimitive: "jewel-swing"
+enterRecipe: "iris-open"
+compatibleWith: ["MS-HERO-PRSM01", "MS-HERO-MIRA01", "MS-HERO-ELYS01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-facet"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["jewelry-viewing", "appointment-close", "vitrine-cta"]
+---
+
+## Promise (buyer-facing)
+
+FACET is a mid-page **close** that reads as a jewelry case, not a checkout bar. One line. One street. One stone. The room opens from the center. The gilt follows the hand, then rests.
+
+**Why use it:**
+- The swing is the design. The board never says swing
+- Stage is the case. Gold is the stone
+- Every line is a slot for your house
+- Sits after Prism, Mirage, or Elyse without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **FACET** - mid-page **waitlist / CTA**. Stage `#0E0F12`. Ink `#F4F1EA`. Gilt `#C9A24A`. Cinzel display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** high jewelry vitrine. One gem. Hard corners (2px). No rainbow chrome.
+
+**Design language:** `jewel-chrome` (wow register)  
+**Token theme:** `vitrine-platinum`  
+**Motion primitive:** `jewel-swing` (max pull 10px, rotate 8deg)
+
+**Enter (support, once on view):** `iris-open`. Circle 0% to 140%. Land ~980ms. Swing after land. Reduced motion skips enter and parks the stone.
+
+**Typography:**
+- Wordmark: Cinzel 600, uppercase tracking `0.08em`
+- Headline: Cinzel 700, `clamp(2.8rem, 9vw, 6.2rem)`
+- Period: Outfit ~17px, muted
+- Place / meta / button: Outfit, 10–12px, uppercase
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#0E0F12` | Your case |
+| Ink | `#F4F1EA` | Your cream |
+| Muted | `#A39E94` | Period |
+| Accent | `#C9A24A` | The stone |
+| Metal | `#D8D5D0` | Chain |
+
+**Anti-slop hard ban:** Helix orbit, rainbow chrome, casino gold, three pills, shiny H1 as the brand.
+
+**Differentiation:**
+| vs | Facet must not become |
+|----|------------------------|
+| Helix | Gallery orbit. Facet is one pendant |
+| Heat | Foil stamp. Facet is a swinging stone |
+| Rouge | Lacquer swipe. Facet is a dark case |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset. Max width ~1040px.
+
+1. Masthead: Facet left, By appointment right
+2. Body: headline, period, place
+3. Foot: one button
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Facet | 24 | |
+| kicker | Until six | 24 | |
+| headline | Come try it on before we close. | 56 | Site copy. Not a caption of the swing |
+| period | There is a ring in the Galena Street window that three people have asked about this week... | 180 | |
+| place | Aspen, Colorado | 40 | Real place, restage |
+| ctaLabel | Hold it until six | 28 | |
+| doneLabel | We'll hold it | 28 | |
+
+## Motion Specification
+
+**Signature (one):** jewel-swing. After land, the button pulls with the pointer, capped at 10px and 8deg. Leave to rest. Confirm parks it.
+
+**Enter (support, once on view):** `iris-open`. CSS clip `%` to `%`.
+
+**Engine:** CSS enter. Transform swing.
+
+**Reduced motion:** open rest. No swing. One click confirms.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None. Case field. No vault film.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Button grows. Stone stays beside it |
+
+## Accessibility
+
+- `prefers-reduced-motion`: parked stone, instant confirm
+- Contrast cream on near-black
+- Keyboard: button after land
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL, no Lottie
+- One pendant
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not install a jewelry kit. Do not copy Helix.
+
+**Lovable / Bolt:** Same section as a mid-page close. Replace street and hours. Keep one stone. Keep one button.
+
+## Expected Output
+
+A single React CTA that:
+1. Is a **close**, not a hero
+2. Opens from the iris, then the stone follows the hand
+3. Uses vitrine-platinum tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

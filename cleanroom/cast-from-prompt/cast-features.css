@@ -1,0 +1,187 @@
+/* CAST — resin amber. Clamshell flip. Not a 3D kit. */
+
+.cast-root {
+  --cast-stage: #e8a04a;
+  --cast-ink: #1a0e04;
+  --cast-muted: #6a3a12;
+  --cast-line: #c48438;
+  --cast-accent: #fff6e8;
+  --ms-pin-fill: var(--cast-ink);
+  position: relative;
+  color: var(--cast-ink);
+  background: var(--cast-stage);
+  font-family: var(--font-cast-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.cast-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.cast-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .cast-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cast-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.cast-enter {
+  opacity: 0;
+}
+
+.cast-root[data-entered="true"] .cast-enter {
+  opacity: 1;
+  transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cast-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--cast-line);
+  flex-shrink: 0;
+}
+
+.cast-brand {
+  font-family: var(--font-cast-display), Unbounded, sans-serif;
+  font-size: clamp(1.5rem, 2.8vw, 1.95rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.cast-meta,
+.cast-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cast-muted);
+}
+
+.cast-shell {
+  appearance: none;
+  flex: 1;
+  min-height: 0;
+  margin: 1.5rem 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  perspective: 1000px;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  transition-delay: 90ms;
+}
+
+.cast-face {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: min(100%, 34rem);
+  min-height: 16rem;
+  padding: 2rem 1.5rem;
+  border-radius: 28px;
+  background: linear-gradient(165deg, var(--cast-accent) 0%, #f0b45a 52%, #d88830 100%);
+  transform: rotateX(88deg);
+  transform-origin: center top;
+  box-shadow: 0 18px 40px #1a0e0422;
+}
+
+.cast-root[data-open="true"] .cast-face {
+  transform: rotateX(0deg);
+  transition: transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cast-name {
+  font-family: var(--font-cast-display), Unbounded, sans-serif;
+  font-size: clamp(3rem, 10vw, 6.4rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+.cast-period {
+  max-width: 18rem;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--cast-muted);
+}
+
+.cast-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 160ms;
+}
+
+.cast-place {
+  margin: 0 0 1rem;
+}
+
+.cast-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.4rem;
+}
+
+.cast-index button {
+  appearance: none;
+  margin: 0;
+  padding: 0.35rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--cast-muted);
+  cursor: pointer;
+  font-family: var(--font-cast-display), Unbounded, sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.03em;
+  border-radius: 0;
+}
+
+.cast-index button[data-active="true"] {
+  color: var(--cast-ink);
+}
+
+.cast-shell:focus-visible,
+.cast-index button:focus-visible,
+.cast-root :is(button):focus-visible {
+  outline: 1px solid var(--cast-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cast-enter,
+  .cast-face,
+  .cast-root[data-open="true"] .cast-face {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .cast-period {
+    color: var(--cast-muted);
+  }
+}

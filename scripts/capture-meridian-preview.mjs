@@ -1,6 +1,6 @@
 /**
  * Burn Meridian UI into a smooth presentation video for MS gallery/product previews.
- * Programmatic scroll scrub (no mouse) → frame sequence → H.264.
+ * Drives pin-until-complete via window.__msScrollNarrative.setProgress (no tall-page scroll).
  *
  * Usage:
  *   node scripts/capture-meridian-preview.mjs
@@ -85,11 +85,18 @@ async function main() {
 
   await page.goto(URL, { waitUntil: "networkidle", timeout: 90_000 });
 
-  // Wait for video metadata + ScrollTrigger ready
+  // Wait for video metadata + pin progress API
   await page.waitForFunction(
     () => {
       const v = document.querySelector("video");
-      return v && v.readyState >= 1 && v.duration > 0;
+      const api = window.__msScrollNarrative;
+      return (
+        v &&
+        v.readyState >= 1 &&
+        v.duration > 0 &&
+        api &&
+        typeof api.setProgress === "function"
+      );
     },
     { timeout: 60_000 }
   );
@@ -100,15 +107,8 @@ async function main() {
     content: `[data-ms-scroll-cue] { display: none !important; }`,
   });
 
-  const maxScroll = await page.evaluate(() => {
-    const track = document.querySelector(".meridian-root > div");
-    if (!track) return document.body.scrollHeight - window.innerHeight;
-    // ScrollTrigger end is bottom of track at bottom of viewport → distance = trackH - vh
-    return Math.max(0, track.offsetHeight - window.innerHeight);
-  });
-
   console.log(
-    `Capturing ${TOTAL_FRAMES} frames @ ${FPS}fps over ${DURATION_S}s (scroll 0…${maxScroll}px)`
+    `Capturing ${TOTAL_FRAMES} frames @ ${FPS}fps over ${DURATION_S}s (virtual progress 0…1)`
   );
 
   for (let i = 0; i < TOTAL_FRAMES; i++) {
@@ -121,13 +121,12 @@ async function main() {
           ? 0.92 + (t - 0.92) * 1.25
           : 0.048 + (t - 0.08) * (0.92 - 0.048) / 0.84;
     const progress = Math.min(1, Math.max(0, eased));
-    const y = progress * maxScroll;
 
-    await page.evaluate((scrollY) => {
-      window.scrollTo(0, scrollY);
-    }, y);
+    await page.evaluate((p) => {
+      window.__msScrollNarrative?.setProgress(p);
+    }, progress);
 
-    // Let ScrollTrigger + video seek settle
+    // Let video seek settle
     await page.evaluate(
       () =>
         new Promise((resolve) => {
@@ -140,7 +139,6 @@ async function main() {
             v.removeEventListener("seeked", done);
             resolve();
           };
-          // If already near target, resolve next frame
           requestAnimationFrame(() => {
             if (v.seeking) v.addEventListener("seeked", done, { once: true });
             else setTimeout(resolve, 16);

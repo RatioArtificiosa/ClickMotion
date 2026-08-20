@@ -44,6 +44,13 @@ AUTH_GOOGLE_SECRET=   # Google OAuth Client secret
 NEXT_PUBLIC_SITE_URL=http://localhost:3004
 # Production: https://www.ClickMotion.dev
 
+# Local: leave AUTH_URL unset. AUTH_TRUST_HOST=true (already in auth config)
+# follows the port you actually open. Pinning AUTH_URL to :3004 while
+# browsing :3001/:3002 makes getSession fail and Next.js paints
+# ClientFetchError over product demos.
+AUTH_TRUST_HOST=true
+# AUTH_URL=http://localhost:3004
+
 # Paid membership until Stripe→member plan is fully wired
 # Comma-separated emails that always get paid entitlements
 PAID_MEMBER_EMAILS=you@example.com

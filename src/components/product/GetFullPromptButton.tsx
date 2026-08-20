@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 
 /**
- * Primary product CTA — Get Full Prompt (package PDF after Google sign-in).
+ * Primary product CTA — Get Full Prompt (files zip preferred, else package PDF).
+ * After Google sign-in. Law: docs/PRODUCT_PACKAGE.md §10.
  * Copy icon retained. Quotas enforced server-side only (never shown here).
  */
 export function GetFullPromptButton({
@@ -93,7 +94,11 @@ export function GetFullPromptButton({
       a.remove();
       URL.revokeObjectURL(url);
       setDone(true);
-      toast.success("Package downloaded");
+      toast.success(
+        name.toLowerCase().endsWith(".zip")
+          ? "Files pack downloaded"
+          : "Package downloaded"
+      );
       window.setTimeout(() => setDone(false), 2500);
     } catch {
       toast.error("Something went wrong. Try again.");

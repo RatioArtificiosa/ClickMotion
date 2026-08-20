@@ -3,9 +3,9 @@ id: "MS-HERO-MERI01"
 title: "MERIDIAN - Scroll Narrative Private Residences Hero"
 slug: "meridian-scroll-narrative-private-residences-hero"
 description: "For private residences and ultra-luxury estates. Guests advance a cinematic shoreline story as they scroll - quiet authority that builds desire before the first tour."
-version: "1.0.0"
+version: "1.2.0"
 created: "2026-08-08"
-updated: "2026-08-08"
+updated: "2026-08-13"
 author: "MS Team"
 status: "published"
 type: "hero"
@@ -36,7 +36,7 @@ videoBackgrounds:
 dependencies:
   - { name: "gsap", version: "^3.12.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: true }
-estimatedTokens: 6800
+estimatedTokens: 7200
 useCases: ["luxury-real-estate-homepage", "private-residences-hero", "scroll-narrative-landing"]
 compatibleWith: []
 positionInPage: "top"
@@ -45,7 +45,7 @@ positionInPage: "top"
 
 **Aesthetic Direction:** Ultra-luxury private residences - **MERIDIAN**. Dark cinematic frame (`#0c0a08`) over a golden-hour Atlantic estate film. Cream type (`#f7f1e8`), single gold accent (`#c9a66b`). Editorial serif display (Cormorant Garamond or Playfair Display), Inter for UI. Quiet, expensive, unhurried - Aman / Four Seasons Residences craft × Apple product-film pacing. **Never** SaaS purple, aurora mesh, pill glass nav, border beams, shiny gradient text, or emoji.
 
-**Famous-UI craft direction (not a clone):** Four Seasons Private Residences editorial calm + linear scroll storytelling (Cartier / Shopify Editions class restraint). One signature system: scroll owns the film.
+**Famous-UI craft direction (not a clone):** Four Seasons Private Residences editorial calm + linear scroll storytelling (Cartier / Shopify Editions class restraint). One signature system: scroll owns the film via **pin-until-complete** virtual progress.
 
 **Typography:**
 - Display / H1: Cormorant Garamond (or Playfair Display), weight 500, tracking `-0.02em`, line-height `0.96`, size `clamp(2.75rem, 7.2vw, 5.85rem)`. Two stacked lines via block spans.
@@ -71,25 +71,24 @@ positionInPage: "top"
 ## Layout Structure
 
 ```
-[Scroll track 420vh desktop; 100vh if reduced-motion]
- [Sticky 100vh stage]
+[Pinned 100dvh stage - pin-until-complete; NO tall multi-vh track]
  video cover (absolute inset-0)
  dual scrim (linear + radial)
  header: MERIDIAN | Private Residences · links · Request Access
- 1px gold progress under nav (scaleX = scroll progress)
+ 1px gold progress under nav (scaleX = virtual progress)
  chapter copy bottom-aligned (grid 12: 8 copy + 4 chapter index 01/02/03)
  scroll cue word + thin gold line (only while progress < 0.04)
-[Closing band #request]
+[Closing band #request - after pin releases at progress 1]
  membership headline + 3 stats + mailto CTA
 ```
 
-**Navbar:** Absolute over film, not sticky site chrome. Wordmark MERIDIAN (display, tracking wide). Desktop links: Residences, Architecture, Locations, Concierge. CTA: outlined gold translucent “Request Access” - rectangular.
+**Navbar:** Absolute over film, not sticky site chrome. Wordmark MERIDIAN (display, tracking wide). Desktop links: Residences, Architecture, Locations, Concierge. CTA: outlined gold translucent "Request Access" - rectangular.
 
 **Chapter copy:** Bottom-left of stage. Eyebrow gold → H1 two lines → body. Right column desktop: vertical chapter markers `01 / 02 / 03` with active gold dash.
 
-**Do not** print instructional copy like “Scroll to move through the residence” or “never autoplayed.” The word **Scroll** (cue) + progress line + chapter markers are enough.
+**Do not** print instructional copy like "Scroll to move through the residence" or "never autoplayed." The word **Scroll** (cue) + progress line + chapter markers are enough.
 
-**Closing band:** Dark canvas, gold “Membership” eyebrow, display headline “Reserved for those / who already have everything.”, supporting copy, stats `12 Residences · 4 Coastlines · 100% Owners only`, outlined gold “Begin a conversation” mailto.
+**Closing band:** Dark canvas, gold "Membership" eyebrow, display headline "Reserved for those / who already have everything.", supporting copy, stats `12 Residences · 4 Coastlines · 100% Owners only`, outlined gold "Begin a conversation" mailto.
 
 ---
 
@@ -112,7 +111,7 @@ positionInPage: "top"
 | nav_cta | Request Access | Gold outline |
 | membership_title | Reserved for those who already have everything. | Closing band |
 
-### Chapter ranges (scroll progress 0-1)
+### Chapter ranges (virtual progress 0-1)
 
 | # | Range | Active when |
 |---|-------|-------------|
@@ -126,37 +125,32 @@ Only one chapter title visible at a time. On chapter 03 only: show the two CTAs.
 
 ## Motion Specification
 
-**Signature mode: scroll-as-narrative.** Scroll progress drives `video.currentTime`. Video never autoplays and never loops as wallpaper.
+**Signature mode: scroll-as-narrative · pin-until-complete.** Virtual progress 0→1 drives `video.currentTime`. Video never autoplays and never loops as wallpaper.
+
+**Hard ban:** tall multi-vh document scrollbar track (legacy `420vh` sticky pattern). **Method only changed** - gold effort and lag stay:
 
 ```tsx
-// GSAP ScrollTrigger - scrub video timeline
-ScrollTrigger.create({
- trigger: trackRef.current, // height ~420vh
- start: "top top",
- end: "bottom bottom",
- scrub: 0.45,
- onUpdate: (self) => {
- const p = self.progress; // 0..1
- const v = videoRef.current;
- if (v?.duration) {
- const t = p * v.duration;
- if (Math.abs(v.currentTime - t) > 0.016) v.currentTime = t;
- }
- // progressBar style transform = `scaleX(${p})` transformOrigin left
- // setActiveChapter from ranges above
- },
-});
+// Pin-until-complete - virtual progress owns the film
+const VIRTUAL_VIEWPORTS = 3.2; // GOLD: ≡ old 420vh track scroll distance
+const SCRUB_LAG = 0.45;        // GOLD: same feel as ScrollTrigger scrub: 0.45
+
+// Wheel / touch / keys → targetProgress
+// gsap.to(proxy, { p: target, duration: SCRUB_LAG, ease: "none", onUpdate: apply })
+// apply: video.currentTime = p * duration when |Δt| > 0.016
+// Release at progress 0 + scroll up, or progress 1 + scroll down (host page continues)
+// Optional: window.__msScrollNarrative = { setProgress, getProgress }
 // video: muted playsInline preload="auto" - no autoPlay, no loop; always pause()
 ```
 
 | Motion | Spec |
 |--------|------|
-| Track height | `420vh` (desktop); `100vh` if `prefers-reduced-motion` |
-| Stage | Sticky `100vh` |
-| Scrub | `0.45` |
+| Stage | **Pinned `100dvh`** - one frame, no tall track |
+| Virtual viewports | **`3.2`** (gold pace - do not change) |
+| Scrub lag | **`0.45`** (GSAP progress proxy tween) |
 | Chapter enter | opacity 0→1, y 18→0, 0.85s, `cubic-bezier(0.22, 1, 0.36, 1)` |
 | Progress bar | direct `scaleX(progress)`, origin left |
 | Scroll cue | visible only when progress &lt; 0.04; thin pulsing gold line under the word SCROLL |
+| Capture API | `window.__msScrollNarrative.setProgress(0..1)` for burns |
 | Reduced motion | No scrub; poster + chapter 01 still |
 
 No Framer layout animations required. Optional CSS keyframes for chapter crossfade only.
@@ -168,9 +162,9 @@ No Framer layout animations required. Optional CSS keyframes for chapter crossfa
 | Field | Value |
 |-------|--------|
 | File | `/assets/videos/sequence-01.mp4` |
-| Poster | `/assets/posters/sequence-01.webp` |
+| Poster | `/assets/posters/sequence-01.webp` - **exact film frame 0, 1920×1080** (same crop as video; never a different still) |
 | Attributes | `muted playsInline preload="auto"` - **NO autoplay, NO loop** |
-| Object-fit | `cover`, full sticky stage |
+| Object-fit | `cover`, full pin stage |
 | Duration | ~12s @ 24fps |
 | Control | `currentTime = progress * duration` |
 
@@ -179,7 +173,7 @@ No Framer layout animations required. Optional CSS keyframes for chapter crossfa
 **Forbidden:** Neon, cyberpunk, cities, aircraft, faces to camera, on-screen text/logos, vertigo cuts.
 
 ```txt
-Use ONLY the paths above. Never hotlink foreign CDNs. Scroll is the transport.
+Use ONLY the paths above. Never hotlink foreign CDNs. Virtual progress is the transport.
 ```
 
 > **AI Video Generation Prompt:** Cinematic 4K continuous single-take feel, ~12 seconds, no audio, 24fps. Sequence as one journey: (1) slow aerial over Mediterranean-revival beachfront mansions at golden hour sunset, Atlantic waves, warm orange sky; (2) dissolve into ascending limestone staircase with dark mahogany banisters, recessed step lights, warm interior glow toward bright ocean windows; (3) emerge onto manicured lawn path between palms and hedges leading to beach gates and open sunset ocean horizon. Ultra luxury real estate atmosphere, natural light only, no people faces, no text, no UI, no logos. Smooth camera, expensive restraint. Seamless emotional arc.
@@ -192,19 +186,19 @@ Encode: MP4 H.264, 1920×1080, silent, progressive, `+faststart`. Prefer frequen
 
 | Breakpoint | Behavior |
 |------------|----------|
-| ≥1280px | Full 12-col layout; chapter index right; nav links visible; track 420vh |
+| ≥1280px | Full 12-col layout; chapter index right; nav links visible; pin 100dvh |
 | ≥768px | Nav links visible; H1 clamp; CTAs row on ch03 |
-| &lt;768px | Nav links hidden; H1 smaller; chapter index under copy or compact; track still tall for scrub; CTAs stack |
-| Reduced motion | Track 100vh; no scrub; chapter 01 + poster |
+| &lt;768px | Nav links hidden; H1 smaller; chapter index under copy or compact; pin stage still one viewport; CTAs stack |
+| Reduced motion | 100vh static; no scrub; chapter 01 + poster |
 
 ---
 
 ## Accessibility
 
-- Honor `prefers-reduced-motion: reduce` - static chapter 01, no tall scrub track
+- Honor `prefers-reduced-motion: reduce` - static chapter 01, no virtual scrub
 - Semantic `header`, `section`, `h1`, real focusable links for all CTAs
 - Cream text on dark scrim meets contrast; never thin gray on bright sky without scrim
-- Native document scroll only - do not trap focus or hijack wheel into a custom scroller
+- Pin consumes wheel/touch while journey runs; **releases** at ends so page can continue (membership band). Do not trap focus.
 - Progress bar is decorative; chapters readable without color alone (numbers 01-03)
 
 ---
@@ -212,7 +206,7 @@ Encode: MP4 H.264, 1920×1080, silent, progressive, `+faststart`. Prefer frequen
 ## Performance Notes
 
 - Single `<video>`; always paused; seek only when `|Δt| > 0.016s`
-- Kill ScrollTrigger on unmount
+- Kill GSAP scrub tween on unmount
 - Poster first paint; `preload="auto"` acceptable for this hero
 - Cap re-renders: chapter state changes only when index changes
 - One WebGL/canvas forbidden for this SKU - video + DOM only
@@ -222,23 +216,23 @@ Encode: MP4 H.264, 1920×1080, silent, progressive, `+faststart`. Prefer frequen
 
 ## AI Tool Instructions
 
-**Cursor / Claude / Grok Build:** One file `MeridianScrollNarrative.tsx` (or `HeroSection.tsx`), `"use client"`, default export. Import `gsap` + `ScrollTrigger`, register plugin. Implement scrub mapping, three chapters, nav progress, membership band. Use Tailwind utilities; load Cormorant Garamond + Inter via `next/font/google` on the page wrapper if Next.js.
+**Cursor / Claude / Grok Build:** One file `MeridianScrollNarrative.tsx` (or `HeroSection.tsx`), `"use client"`, default export. Import `gsap`. Implement **pin-until-complete** (virtual progress 0→1, effort 3.2 viewports, scrub lag 0.45), three chapters, nav progress, membership band after release. Prefer pack `source/MeridianScrollNarrative.tsx` when present. Use Tailwind utilities; load Cormorant Garamond + Inter via `next/font/google` on the page wrapper if Next.js.
 
-**Lovable / Bolt:** Same structure; if GSAP is awkward, implement scroll listener with `requestAnimationFrame` that sets `video.currentTime = progress * duration` - still no autoplay loop. Keep exact copy and colors.
+**Lovable / Bolt:** Same structure; if GSAP is awkward, lerp progress toward target over ~0.45s with `requestAnimationFrame` and set `video.currentTime = progress * duration` - still no autoplay loop, still **no tall multi-vh track**. Keep exact copy and colors.
 
-**Do not** install Magic UI / Aceternity / Lightswind. Do not add aurora backgrounds. Do not make the nav a floating pill dock.
+**Do not** install Magic UI / Aceternity / Lightswind. Do not add aurora backgrounds. Do not make the nav a floating pill dock. Do not rebuild as a tall sticky scroll track.
 
 ---
 
 ## Expected Output
 
 1. Single production React + TypeScript + Tailwind component, default export
-2. Scroll track ~420vh with sticky 100vh cinematic stage
-3. Video scrubbed by scroll (no autoplay wallpaper)
+2. **Pinned 100dvh stage** with pin-until-complete virtual progress (no tall multi-vh track)
+3. Video scrubbed by virtual progress (no autoplay wallpaper); effort **3.2 vh**, lag **0.45**
 4. Three chapter copy states at specified progress ranges; two-line display titles
 5. Gold progress line under nav; chapter markers 01-03
 6. Scroll cue only at start (word + line) - no instructional paragraph about autoplay
-7. Chapter 03 CTAs + closing membership band
+7. Chapter 03 CTAs + closing membership band after pin releases
 8. `prefers-reduced-motion` path
 9. Asset paths exactly as specified
 10. Looks Forbes / private-residences grade on 1440px - not an AI kit skin

@@ -2,151 +2,258 @@
 id: "MS-HERO-ORBI01"
 title: "ORBIT FINANCE - Trustworthy Neobank Hero"
 slug: "orbit-finance-trustworthy-neobank-hero"
-description: "A clean, premium hero for a neobank with abstract financial data visualizations, navy and gold accents, and a trust-focused layout."
+description: "For digital banks and wealth apps. A navy vault film free-plays under DM Serif money type and a gold orbital ring. Rebuild every line and token until the stage is unmistakably your bank."
 version: "1.0.0"
-created: "2026-08-07"
-updated: "2026-08-07"
+created: "2026-08-13"
+updated: "2026-08-13"
 author: "MS Team"
-status: "draft"
+status: "published"
 type: "hero"
+types: ["hero", "landing-page"]
 category: "fintech"
 subcategory: "banking"
-styleTags: ["corporate", "luxury"]
-technicalTags: ["video-background"]
+styleTags: ["corporate", "luxury", "dark-cinematic", "editorial"]
+technicalTags: ["video-background", "parallax", "intersection-observer"]
 motionIntensity: "medium"
-difficulty: "beginner"
+difficulty: "intermediate"
 priceTier: "pro"
 aiToolsRating:
   cursor: 5
   lovable: 4
   bolt: 4
-  claude: 4
+  claude: 5
   grok-build: 5
-frameworksSupported: ["react", "html"]
-previewVideo: "/previews/MS-HERO-ORBI01.mp4"
-previewGif: "/previews/MS-HERO-ORBI01.gif"
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/orbit-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/orbit-preview-fs-v1.mp4"
 thumbnail: "/thumbnails/MS-HERO-ORBI01.webp"
-liveDemo: "/demos/MS-HERO-ORBI01"
+liveDemo: "/demo/cleanroom-orbit"
 videoBackgrounds:
-  - file: "/assets/videos/orbit-data-v1.mp4"
+  - file: "/assets/videos/orbit-vault-v1.mp4"
     format: "mp4"
-    duration: "12s"
+    duration: "15s"
     loop: true
-    sizeMb: 2.9
-    poster: "/assets/posters/orbit-data-v1.webp"
+    poster: "/assets/posters/orbit-vault-v1.webp"
 dependencies:
   - { name: "framer-motion", version: "^11.0.0", required: true }
   - { name: "gsap", version: "^3.12.0", required: true }
-  - { name: "tailwindcss", version: "^4.0.0", required: true }
-estimatedTokens: 4200
-useCases: ["fintech-banking-homepage", "landing-page"]
-compatibleWith: ["MS-SEC-FEAT-003", "MS-SEC-PRICE-001"]
+  - { name: "lucide-react", version: "^0.400.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 13800
+useCases: ["fintech-banking-homepage", "neobank-launch", "wealth-app-hero", "landing-page"]
+compatibleWith: ["MS-HERO-AXIO01", "MS-SEC-HELI01", "MS-HERO-MERI01"]
 positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**ORBIT FINANCE** is a full-viewport **trustworthy premium neobank hero**: deep navy vault stage, orbit gold signal, DM Serif lockup (**Money, elevated.**), a living wealth architecture film, and a signature gold orbital ring. Film free-plays muted. Never scroll-scrubbed.
+
+**Why use it:**
+- Digital banks, wealth apps, and multi-currency products that sell **trust**, not crypto hype
+- Signature orbital ring + free-play vault film rebrand cleanly
+- Client film is pure media (no burnt UI); storefront dual previews are separate agent burns
+- Multi-type browse: **Hero** and **Landing Page**
+
+Default lockup, proof, and CTAs are a starting board. Rewrite them until the page could only be your bank. Keep ethics: no guaranteed returns, no fake regulator seals, no competitor logos.
+
+**How you build it:** download the product pack. Tell your AI: *Build ORBIT FINANCE using the files in this folder. Read PROMPT.md.*
+
 ---
 
 ## Design System
 
-**Aesthetic Direction:** Premium corporate + luxury - ORBIT FINANCE - Trustworthy Neobank Hero rendered with #0F172A, #F59E0B, #E2E8F0 and DM Serif Display typography. High-contrast, production-ready.
+**Aesthetic Direction:** Premium neobank / modern private-bank night. Canvas `#0B1426`, cream `#F7F4EC`, orbit gold `#C9A84C`. DM Serif Display + Inter. **Not** Motionsites cyan kit, crypto neon, Axiom inverted-city thesis, or generic purple mesh cards.
+
+**Famous-UI craft direction (not a clone):** Apple Card bank film restraint × Stripe/Treasury calm density × Forbes digital-bank shortlist authority.
 
 **Typography:**
-- Headings: `DM Serif Display` - font-weight: 700-900, letter-spacing: -0.04em, line-height: 0.85, sizes: clamp(3rem, 8vw, 8rem)
-- Body: `Inter` - font-weight: 300-600, letter-spacing: 0, line-height: 1.6, sizes: clamp(1rem, 1.2vw, 1.25rem)
+- Display / H1: DM Serif Display 400, tracking `-0.03em`, line-height ~0.95, `clamp(2.75rem, 7vw, 5.5rem)`
+- Wordmark: Inter 12px bold tracking `0.28em` uppercase
+- Body: Inter 15-16px, cream ~72%
+- Proof values: DM Serif ~1.35rem
+- Proof labels: Inter 9-10px uppercase tracking ~0.16em
 
-**Spacing:** 8px grid: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128
-**Max-Width:** 1280px container
-**Border Radius:** `--radius: 9999px` (fully rounded pills)
-**Shadows:** `shadow-2xl` for glass, `shadow-primary/30` for glow
+**Color tokens:**
 
-**Color Tokens (HSL, dark-only):**
-- `--background: 0 0% 0%` / foreground near-white
-- `--primary: 187 100% 47%` (cyan) / `--secondary: 340 100% 50%` (pink)
-- `--muted: 0 0% 12%` / `--border: 0 0% 100% / 0.08`
+| Token | Value |
+|-------|--------|
+| Vault navy | `#0B1426` |
+| Cream | `#F7F4EC` |
+| Orbit gold | `#C9A84C` |
+| Gold deep | `#A68B2E` |
+
+**Scrims:** left/bottom navy gradients so type never sits on bright glass.
+
+**Anti-slop:** cyan/pink Motionsites primary, crypto green, candlestick chart spam, scroll-scrub of film, em dashes in customer copy, liquid-glass pill dock as only identity, fake FDIC seals.
+
+**Differentiation:**
+
+| vs | ORBIT must not become |
+|----|------------------------|
+| Axiom | Inverted NYC + true-north horizon thesis |
+| Neon Forge | Rain cyber city + glitch |
+| Nexus | Enterprise AI lattice |
+| Verve | Gen-Z social night |
+
+---
 
 ## Layout Structure
 
-- **Navbar:** Fixed top, height `64px`, padding `0 32px`, flex space-between, z-50
-- **Hero Container:** `100vh`, relative, overflow hidden
-- **Video Background:** absolute inset-0, 100% / 100%, object-cover
-- **Content Overlay:** relative z-10, flex column justify-center, padding `80px 32px 32px 32px`, max-width `1280px`
-- **Content Split:** Text ~60% width, right side breathing room; CTA gap `16px`
+- Full viewport (`100dvh`, min-height ~640px)
+- Film absolute cover under navy scrims
+- Gold orbital ring (UI SVG) offset right-center on desktop
+- Top: ORBIT wordmark + nav (Products · Wealth · Cards · Security) + Open account
+- Left lockup: badge, H1, lead, dual CTAs, proof rail
+- Optional soft card plate lower-right (no PAN / numbers)
 
-## Content Slots
+---
 
-| Slot | Default Text | Max Length | Notes |
-|------|--------------|------------|-------|
-| headline | "Money, elevated." | 25 chars | Primary H1 |
-| subheadline | "Second line" | 20 chars | Secondary color |
-| description | "Production-ready hero for fintech - built for banking." | 180 chars | Supports markdown |
-| cta_primary | "Get Started" | 20 chars | Primary pill |
-| cta_secondary | "Learn More" | 20 chars | Glass pill |
+## Content slots
+
+| Slot | Default |
+|------|---------|
+| wordmark | ORBIT |
+| badge | Trusted globally · Private by design |
+| H1 | Money, elevated. |
+| lead | Banking without borders. Multi-currency wealth, quiet control, and a vault that never shouts. |
+| cta_primary | Open account |
+| cta_secondary | How it works |
+| nav | Products · Wealth · Cards · Security |
+| proof | 2M+ clients · 140 currencies · Bank-grade encryption |
+
+**Proof ethics:** demo metrics are placeholders. Use real regulated numbers or remove the rail when rebranding.
+
+---
+
+## Interaction law (non-negotiable)
+
+1. Film free-plays muted loop. **Never** set `video.currentTime` from scroll.  
+2. Framer stagger entrance on badge → H1 → lead → CTAs → proof.  
+3. Orbital ring: slow continuous rotate (~64s) on UI geometry only (GSAP).  
+4. Desktop: film wrap scale `1 → 1.05`, scrub `1.2`. Off below 768px.  
+5. IntersectionObserver pause off-screen; kill GSAP + IO on unmount.  
+6. Reduced motion: poster still, static ring, no parallax, full type.  
+
+---
+
+## Asset contract
+
+| Role | Path |
+|------|------|
+| Client film | `/assets/videos/orbit-vault-v1.mp4` (~15s silent loop) |
+| Poster | `/assets/posters/orbit-vault-v1.webp` |
+| Storefront page | `/assets/videos/orbit-preview-v1.mp4` (agent UI burn) |
+| Storefront FS | `/assets/videos/orbit-preview-fs-v1.mp4` |
+| Thumbnail | `/thumbnails/MS-HERO-ORBI01.webp` |
+| Backgrounds tile | `/assets/videos/backgrounds/orbit-vault-bg-v1.mp4` |
+
+**Buyer film generation:** pack `VIDEO_GEN_PROMPT.md` (pure world, no UI).  
+**Hard ban:** buyer pack must never include storefront `*-preview*` files.
+
+---
 
 ## Motion Specification
 
-**Framer Motion Container + Item Variants:**
-```tsx
-const containerVariants = {
- hidden: { opacity: 0 },
- visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
-};
-const itemVariants = {
- hidden: { y: 30, opacity: 0 },
- visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
-};
-```
-Child overrides: Badge y:-20 duration 0.6 / Headline y:40 duration 0.8 / Subheadline y:40 delay 0.1 / Description y:30 duration 0.6 / CTAs y:20 stagger 0.05
+| Layer | Spec |
+|-------|------|
+| Film | muted loop autoplay playsInline preload auto |
+| Entrance | stagger ~0.12-0.14s, ease `[0.25, 0.46, 0.45, 0.94]`, ~0.78s |
+| Ring | 64s linear 360° rotate (UI SVG) |
+| Parallax | desktop scale 1→1.05 scrub 1.2 |
+| Reduced motion | static layout; film paused on poster |
 
-**GSAP Parallax:**
-```tsx
-gsap.to(videoRef.current, { scale: 1.05, scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.2 } });
-```
+---
 
 ## Video / Media Integration
 
-- File: `/assets/videos/orbit-data-v1.mp4` (MP4 H.264, 1920x1080, 12s, <5MB, no audio)
-- Poster: `/assets/posters/orbit-data-v1.webp` (1920x1080, <150KB WebP)
-- Implementation: `<video autoPlay muted loop playsInline preload="metadata" poster={poster} className="object-cover w-full h-full" />`
-- Offscreen: IntersectionObserver pauses/resumes video
+- Client rebuild uses pure film path above (operator Premiere `O-Finance_1.mp4` lineage).  
+- Attributes: muted autoPlay loop playsInline preload auto.  
+- Object-fit cover; left/lower navy scrims.  
+- Storefront dual previews are **agent UI burns** of the live demo. Do not ship to buyers.  
 
-> **AI Video Generation Prompt:** Cinematic 4K video, 30 seconds, seamless loop. Premium ORBIT FINANCE - Trustworthy Neobank Hero background - A clean, premium hero for a neobank with abstract financial data visualizations, navy and gold accents, and a trust-focused layout. Color grading: cinematic, volumetric light, 24fps, no people, no text, no UI. Seamless loop.
+---
 
 ## Responsive Behavior
 
-| Breakpoint | Layout & Motion Changes |
-|------------|--------------------------|
-| ≥1536px (2xl) | Full scale; text 8rem; padding 64px; all motion |
-| ≥1280px (xl) | Text 7rem; padding 48px |
-| ≥1024px (lg) | Nav visible; text 6rem; CTAs side-by-side |
-| ≥768px (md) | Nav visible; text 4rem; padding 32px |
-| <768px (mobile) | Nav hidden; text 2.8rem; CTAs stack; parallax disabled |
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, large serif, ring + card plate visible |
+| ≥1024px | Full lockup + dual CTAs |
+| ≥768px | Nav links visible; film parallax allowed; ring visible |
+| <768px | Hide center nav; hide ring; stack CTAs; disable parallax |
+| ≤390px | Tighter type; ≥44px targets |
+
+---
 
 ## Accessibility
 
-- Reduced Motion: `@media (prefers-reduced-motion: reduce)` disables parallax and stagger; simple fade-in
-- Alt Text: Video poster has descriptive alt
-- Focus Ring: `focus:ring-2 focus:ring-primary focus:ring-offset-2`
-- Contrast: White text on dark overlay meets 4.5:1
-- Semantic: `<header>`, `<section>`, `<h1>`, `<p>`
+Semantic `section` / `header` / `nav` / `h1`. Focus rings gold. Reduced motion path. Decorative video and ring `aria-hidden`. Do not trap keyboard focus.
+
+---
 
 ## Performance Notes
 
-- JS Budget: <45KB (Framer + GSAP + React)
-- Font Loading: `font-display: swap`
-- will-change: Applied only to animated elements (transform, opacity), removed after entrance
-- Video: Poster loaded first; preload="metadata"
-- Lazy: IntersectionObserver controls video play/pause offscreen
+Preload auto on film. Single hero. Pause off-screen. Kill GSAP ScrollTrigger + ring tween on unmount. Fonts display swap (`--font-orbit-display` / `--font-orbit-body`).
+
+---
+
+## Stack
+
+React + TypeScript + Tailwind. Framer Motion + GSAP ScrollTrigger. Lucide OK. Prefer pack `source/OrbitFinanceHero.tsx`.
+
+Install: `framer-motion`, `gsap`, `lucide-react`.
+
+---
 
 ## AI Tool Instructions
 
-**Cursor / Claude:** Provide HeroSection.tsx with all imports, Tailwind classes, Framer Motion variants, and GSAP parallax. Use React 19. Include useEffect for scrollTrigger.
-**Lovable / Bolt:** Self-contained component; use motion divs with inline variants. Video uses <video> tag with specified src. Add prefers-reduced-motion via custom hook.
-**v0:** Single file with imports. Use useState/useEffect for IntersectionObserver.
+1. Open the downloaded pack folder.  
+2. Read **PROMPT.md** and follow it exactly.  
+3. Place film + poster at the public paths above.  
+4. Use `source/OrbitFinanceHero.tsx`.  
+5. Install `framer-motion`, `gsap`, `lucide-react`.  
+6. Load DM Serif Display + Inter CSS variables.  
+7. Mount hero; verify free-play, ring, reduced motion.  
+8. Rebrand with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**.  
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite.  
+**Lovable / Bolt:** Single file OK if free-play film, ring, and reduced-motion stay intact.
+
+---
 
 ## Expected Output
 
-1. A single React component HeroSection.tsx that renders a full-screen hero
-2. Fixed navbar with liquid-glass effect, responsive links, and two CTAs
-3. Looping video background with poster fallback and IntersectionObserver
-4. Staggered entrance animations per specification
-5. GSAP parallax on video
-6. Responsive across all 5 breakpoints with distinct layout changes
-7. Accessible with reduced-motion support, focus rings, and semantic HTML
+1. Full-viewport navy vault neobank hero  
+2. Muted free-play wealth architecture film  
+3. DM Serif lockup + dual CTAs  
+4. Gold orbital ring (static if reduced motion)  
+5. Desktop soft film parallax only; never scrub  
+6. Paths resolve; no storefront chrome in client build  
+7. No competitor logos; no em dashes; no guaranteed-return claims  
+
+---
+
+## What to tell your AI
+
+```
+Build ORBIT FINANCE using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+```
+
+To rebrand later, open CUSTOMIZATION.md. To generate a new vault film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `o4b1tv4ult` · PaidSalt: `ob7k3n`  
+- Files zip root = START-HERE.md (no nested `files/` wrapper)  
+- Client media only under package `assets/`  
+- Client: `orbit-vault-v1.mp4` from operator Premiere O-Finance_1.mp4 (~15s)  
+- Storefront dual previews = agent UI burns  
+- Mode: free-play + orbital ring + desktop scale parallax  
+- Types: hero + landing-page  
+- First production post: 2026-08-13 · Platinum Second Revision: 2026-08-13  
+
+ClickMotion · www.ClickMotion.dev

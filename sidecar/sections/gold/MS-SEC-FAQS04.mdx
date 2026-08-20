@@ -1,0 +1,78 @@
+---
+id: "MS-SEC-FAQS04"
+title: "SLIP - Mercury Morph FAQ"
+slug: "slip-mercury-morph-faq"
+description: "Celadon tile questions. The answer plate goes wet. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "faq"
+category: "lifestyle"
+subcategory: "studio"
+styleTags: ["luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "ceramic-gloss"
+tokenTheme: "celadon-wet"
+motionPrimitive: "mercury-morph"
+enterRecipe: "typeset-rise"
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-STIL01", "MS-HERO-AETH01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-slip"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["tile-faq", "studio-faq", "ceramic-board"]
+---
+
+## Promise (buyer-facing)
+
+SLIP is a mid-page **FAQ** that reads as a tile shop, not a help center. One question. The answer plate morphs from sharp to wet.
+
+**Why use it:**
+- The morph is the design. The board never says mercury
+- Stage is celadon. Wet white is the catch
+- Sits after Elyse, STILL, or Aether without copying Kiln, Helm, or Ember
+
+## Design System
+
+Stage `#C5D5C8`. Ink `#1C2E28`. Accent `#F4FBF6`. Fraunces display. Outfit UI.
+
+**Primitive:** `mercury-morph` (radius 4 to 28, scale 1.03, 640ms). **Enter:** `typeset-rise`.
+
+**Anti-slop:** accordion kit, mint SaaS, glaze-drip clone.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, rising question, wet plate, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| items[].question | Can you match the green in my grandmother's bath? | 64 |
+| items[].answer | Bring a piece. A corner is enough... | 220 |
+| place | Marshall Street, North Adams | 40 |
+
+## Motion Specification
+
+Question rises from a mask. Pin. Plate morphs once per question. Reduced: wet plate, first question.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not lay out an accordion. Do not clone Kiln's drip.

@@ -1,0 +1,278 @@
+---
+id: "MS-HERO-ACNE01"
+title: "Acne Secret - Private Clear Skin HVCO Hero"
+slug: "acne-secret-private-clear-skin-hero"
+description: "For clear-skin and skincare brands. A cinematic film holds, then docks into a private brand-reveal lead capture. Fully yours to restage."
+version: "1.0.1"
+created: "2026-08-12"
+updated: "2026-08-13"
+author: "MS Team"
+status: "published"
+type: "hero"
+types: ["hero", "landing-page"]
+category: "business"
+subcategory: "lead-capture"
+styleTags: ["dark-cinematic", "editorial", "conversion"]
+technicalTags: ["video-background", "framer-motion", "lead-form"]
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/acne-secret-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/acne-secret-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-ACNE01.webp"
+liveDemo: "/demo/cleanroom-acne"
+videoBackgrounds:
+  - file: "/assets/videos/acne-secret-v1.webm"
+    format: "webm"
+    duration: "45s"
+    loop: true
+    poster: "/assets/posters/acne-secret-v1.webp"
+dependencies:
+  - { name: "framer-motion", version: "^11.0.0", required: true }
+  - { name: "lucide-react", version: "^0.400.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 12800
+useCases: ["skincare-lead-capture", "hvco-squeeze-page", "brand-reveal-optin", "direct-response-hero"]
+compatibleWith: ["MS-HERO-BLOM01", "MS-SEC-DOPA01"]
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**Acne Secret** is a full-viewport **private clear-skin HVCO hero**: near-black prestige, gold signal, combat-cadence WARNING energy, and a timed film stage that holds centered at half width over dark frosted blur, then docks left so the lead form owns the right. The brand name stays locked until email. Demo unlock may use a labeled synthetic name until you restage your real brand.
+
+**Why use it:**
+- Skincare and clear-skin brands that sell **access and curiosity** before the hard pitch
+- Sabri Suby-class structure: sell the click / opt-in, not the whole catalog on first paint
+- Framer layout phases + free-play film restage cleanly for any product film
+- Client film is pure media (no burnt UI); storefront dual previews are separate presentation burns
+
+Default copy is a starting board. Restage headline, HVCO name, bullets, CTA, and unlock brand until it is unmistakably yours. Keep ethics: no medical cure claims, no body shame, no fake clinical stats.
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build Acne Secret using the files in this folder. Read PROMPT.md.*
+
+---
+
+## Design System
+
+**Aesthetic Direction:** Direct-response prestige. Canvas `#070708`, cream `#f4f1ea` / `#faf8f2`, gold signal `#f5c518`, soft danger `#ff8a7a` on errors only. Inter bold / semibold geometric. Private briefing bar, news-style eyebrow, gold solid CTA dominance. **Not** pastel spa, neon SaaS mesh, purple mesh kits, or polite corporate brochure.
+
+**Famous-UI craft direction (not a clone):** King Kong / Sell Like Crazy soft HVCO squeeze energy + premium product film hold. Private briefing, not carnival.
+
+**Typography:**
+- Display / H1: Inter 700-800, tracking tight, line-height ~1.05, size `clamp(1.65rem, 3.4vw, 2.35rem)` on dock stack
+- Body: Inter 400-500, 14-16px, cream at high contrast on near-black
+- Eyebrow / chips: Inter 10-11px uppercase tracking ~0.18-0.28em
+- CTA: Inter bold uppercase tracking ~0.12em on gold solid
+
+**Color tokens:**
+
+| Token | Value |
+|-------|--------|
+| Canvas | `#070708` |
+| Cream | `#f4f1ea` / `#faf8f2` |
+| Gold signal | `#f5c518` |
+| Soft danger | `#ff8a7a` (errors only) |
+| Glass fields | white ~6% fill, white/10 border, 12px radius |
+
+**Spacing:** 8px grid · content max ~1440px chrome · full-bleed stage · safe horizontal inset min ~1.25rem (desktop ~2-3rem)
+
+**Anti-slop hard ban:** medical cure claims, body shame, emoji spam, brand name before opt-in, scroll-scrub of film, em dashes in customer-facing copy, fake clinical stats, competitor brand names, inventing testimonials.
+
+**Differentiation:**
+
+| vs | Acne Secret must not become |
+|----|------------------------------|
+| Nomad / free-play wallpaper | Cinema hold + docked HVCO form is the signature - not wallpaper-only |
+| Meridian / STILL scrub | Never map scroll to `video.currentTime` |
+| Generic spa skincare | Pastel wellness brochure without combat-cadence HVCO |
+| Full checkout hero | This page sells the **opt-in**; cart/checkout is a later page |
+
+---
+
+## Layout Structure
+
+- Full viewport hero (`100dvh`, min-height ~640px)
+- Dark frosted blur plate under the stage (`backdrop-blur` ~28-32px, dark transparent)
+- Top chrome: Private briefing lock mark + **Brand name locked** chip
+- Phase A (cinema): film centered ~50% viewport width (`max-width` ~720px), optional progress hairline
+- Phase B (docked): film left ~44% / form stack right ~42%, all above the fold on desktop
+- Form: first name, email, gold CTA, privacy microcopy
+- Unlock card after valid submit (demo brand labeled synthetic until restaged)
+- Narrow (`<900px`): stacked film top + form below (still one hero, no long forced cinema)
+
+---
+
+## Content slots
+
+| Slot | Default | Notes |
+|------|---------|--------|
+| chrome_left | Private briefing | Lock mark + label |
+| chrome_right | Brand name locked | Chip until unlock |
+| cinema_badge | Warning · confidential protocol | On-film overlay during cinema |
+| cinema_line | The brand is hidden on purpose. | On-film |
+| cinema_hold | Hold Ns - then the machine docks. | Countdown optional |
+| eyebrow | Breaking · clear skin market | Dock stack |
+| H1 | WARNING: The clear-skin brand they hide from you is not on the shelf label. | Combat cadence |
+| body | Hope-marketing reframe + Private Clear Skin Brief as free HVCO + brand unlock | Keep ethics |
+| bullets | Brand name · Private Clear Skin Brief · how protocol reaches them | Three lines |
+| cta | Unlock the brand name free | Gold solid |
+| privacy | Instant brand unlock + Private Clear Skin Brief. | Microcopy |
+| unlock_brand | AETHERA CLEAR | Demo; label synthetic if not real |
+| fields | First name · Email | Email required for unlock |
+
+---
+
+## Interaction law (non-negotiable)
+
+1. Film **free-plays** muted (`autoPlay` `muted` `loop` `playsInline`). **Never** set `video.currentTime` from scroll.  
+2. Cinema hold `CINEMA_S` default **15s** (wall clock and/or video clock; dock when max reaches `CINEMA_S`).  
+3. After cinema: moderate dock ease (~**1.05s**, cubic-bezier `0.22, 0.61, 0.36, 1`); form fades/slides in (~0.85s, slight delay).  
+4. Brand name **locked** until a valid email submit; then reveal unlock card.  
+5. `prefers-reduced-motion`: skip cinema hold; show docked layout immediately; film may pause on poster.  
+6. IntersectionObserver: pause film when off-screen; cleanup on unmount.  
+7. Optional QA: `window` event `ms-acne-force-dock` forces dock; optional `__MS_CAPTURE_CLOCK` presentation scrub for burns (ignore in normal buyer builds).  
+
+---
+
+## Asset contract
+
+| Role | Path | Notes |
+|------|------|--------|
+| Client film | `/assets/videos/acne-secret-v1.webm` | ~45s silent loopable WebM - rebuild media |
+| Poster | `/assets/posters/acne-secret-v1.webp` | First frame / reduced-motion still |
+| Storefront page | `/assets/videos/acne-secret-preview-v1.mp4` | Presentation only - not in buyer pack |
+| Storefront FS | `/assets/videos/acne-secret-preview-fs-v1.mp4` | Presentation only |
+| Thumbnail | `/thumbnails/MS-HERO-ACNE01.webp` | Gallery card |
+
+**Buyer film generation:** pack file `VIDEO_GEN_PROMPT.md` (pure world / product film, no UI chrome).
+
+**Forbidden in buyer pack:** storefront `*-preview*` files, thumbs, admin assets, secrets.
+
+---
+
+## Motion Specification
+
+**Mode:** Free-play film + timed layout phase (cinema → dock). **Not** scroll-scrub. **Not** wallpaper-only without HVCO dock.
+
+| Layer | Spec |
+|-------|------|
+| Film | muted loop autoplay playsInline; pause off-screen |
+| Cinema | centered ~50vw, dark frosted blur plate, optional progress hairline |
+| Dock | film left ~44% / form right; duration ~1.05s; ease `cubic-bezier(0.22, 0.61, 0.36, 1)` |
+| Form entrance | opacity + x slide ~0.85s, delay ~0.25s, soft ease |
+| Reduced motion | docked immediately; no cinema hold required |
+| Narrow | short beat or stack; no forced 15s hold for usability |
+
+---
+
+## Video / Media Integration
+
+- Client rebuild uses **WebM** path above (operator film kept as WebM).  
+- Attributes: `muted` `autoPlay` `loop` `playsInline` `preload="auto"`.  
+- Object-fit: cover inside rounded film frame; inset shadow optional.  
+- Storefront dual previews are **agent UI burns** of the live demo (cinema full length then scrubbed dock ease). Do not ship those files to buyers.  
+- Backgrounds tile (if used): small encode only - never client HD.
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|------------|---------|
+| Desktop wide | Cinema hold then left/right dock; form above fold |
+| ≥1024px | Full dock proportions; large H1 |
+| <900px | Stack film top + form; shorter or skipped long cinema |
+| ≤390px | Compact type; full-width CTA; ≥44px targets |
+
+---
+
+## Accessibility
+
+- Semantic `section` / `header` / `h1` / form labels  
+- Focus rings gold on near-black field  
+- Error messages with `role="alert"`  
+- `prefers-reduced-motion` docked path  
+- Decorative video (`aria-hidden`)  
+- Do not trap keyboard focus  
+
+---
+
+## Performance Notes
+
+- Preload auto on client film  
+- Single hero component budget (no Three.js required)  
+- IntersectionObserver pause off-screen  
+- Kill listeners / observers on unmount  
+- Prefer silent WebM or silent mp4 for muted autoplay policies  
+- Fonts: Inter `display: swap` via `--font-acne-display` / `--font-acne-body`  
+
+---
+
+## Stack
+
+React + TypeScript + Tailwind. Framer Motion for layout phases. Lucide icons OK. Prefer pack `source/AcneSecretHero.tsx` over rewrite.
+
+Install: `framer-motion`, `lucide-react` (Tailwind if your stack uses it).
+
+---
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder.  
+2. Read **PROMPT.md** and follow it exactly.  
+3. Place film + poster at the public paths above (see START-HERE).  
+4. Use `source/AcneSecretHero.tsx`.  
+5. Install `framer-motion`, `lucide-react`.  
+6. Load Inter (`--font-acne-display` / `--font-acne-body`).  
+7. Mount the hero; verify cinema → dock → brand unlock.  
+8. Restage with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**.  
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite.  
+**Lovable / Bolt:** Single file OK if cinema → dock and reduced-motion branch stay intact.
+
+---
+
+## Expected Output
+
+1. Full-viewport dark HVCO hero with prestige canvas + gold signal  
+2. Muted free-play film (never scroll-scrubbed)  
+3. ~15s centered cinema at half width over dark frosted blur  
+4. Moderate ease to left film + right lead stack (above fold on desktop)  
+5. Brand locked until valid email; unlock card after submit  
+6. No medical cure claims; no body shame; no em dashes in customer copy  
+7. Reduced-motion docks immediately  
+8. Mobile stack usable  
+9. Local film + poster paths resolve; no storefront chrome in client build  
+
+---
+
+## What to tell your AI
+
+```
+Build Acne Secret using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+```
+
+To restage later, open CUSTOMIZATION.md. To generate a new film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `a0cne7s3cr3t` · PaidSalt: `ac8k2n`
+- Files zip root = START-HERE.md (no nested `files/` wrapper)
+- Client media only under package `assets/` (no storefront previews)
+- Client WebM kept as WebM in pack
+- Storefront dual previews = agent UI burns (mp4); presentation only
+- Mode: cinema hold → docked HVCO lead capture
+- First production post: 2026-08-12 · Platinum Second Revision: 2026-08-13
+
+ClickMotion · www.ClickMotion.dev

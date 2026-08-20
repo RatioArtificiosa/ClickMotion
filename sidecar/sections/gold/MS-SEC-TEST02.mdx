@@ -1,0 +1,154 @@
+---
+id: "MS-SEC-TEST02"
+title: "PORT - Club Nights Proof"
+slug: "port-club-nights-proof"
+description: "A dark room. A champagne light follows, then parks on a name. Restage the night until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "testimonials"
+category: "fashion"
+subcategory: "proof"
+styleTags: ["luxury", "dark-cinematic"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "velvet-nocturne"
+tokenTheme: "club-bordeaux"
+motionPrimitive: "spotlight-park"
+enterRecipe: "silk-slip"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-SABL01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-port"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5400
+useCases: ["nightlife-proof", "club-testimonials", "salon-nights"]
+---
+
+## Promise (buyer-facing)
+
+PORT is a mid-page **proof section** that reads as a club after midnight, not a quote carousel. One line from a real night. Three names. The light follows the hand, then parks.
+
+**Why use it:**
+- The pool of light is the design. The board never says spotlight
+- Stage is velvet. Champagne is the lamp
+- Names and cities are slots
+- Sits after Revel, Sable, or Dopamine without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **PORT** - mid-page **testimonials**. Stage `#1A0A12`. Ink `#F6E8EE`. Champagne `#E8D5A3`. Fraunces italic. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** nightlife salon. Soft radius on nothing. No neon city.
+
+**Design language:** `velvet-nocturne` (wow register)  
+**Token theme:** `club-bordeaux`  
+**Motion primitive:** `spotlight-park` (follow, then 420ms park)
+
+**Enter (support, once on view):** `silk-slip`. 20px. Land ~1320ms. Spotlight after land.
+
+**Typography:**
+- Wordmark: Fraunces italic 600
+- Quote: Fraunces italic `clamp(2.2rem, 6.4vw, 4.4rem)`
+- Names: Fraunces italic ~17px
+- Place / city: Outfit, 10px, uppercase
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#1A0A12` | Your velvet |
+| Ink | `#F6E8EE` | Your rose |
+| Muted | `#C4A0B0` | Idle names |
+| Accent | `#E8D5A3` | The lamp |
+
+**Anti-slop hard ban:** quote carousel, five stars, headshots in a row, neon grid, Witness takeover clone.
+
+**Differentiation:**
+| vs | Port must not become |
+|----|------------------------|
+| Witness | Statement takes the plate. Port keeps one lamp |
+| Rouge | Lacquer close. Port is proof |
+| Sable | Fashion hero. Port is a mid-page night |
+
+## Layout Structure
+
+`100dvh` stage. Spotlight under the type.
+
+1. Masthead: Port left, Friday right
+2. Quote
+3. Foot: place, three names
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Port | 24 | |
+| kicker | Friday | 24 | |
+| place | South Congress, Austin | 40 | Real place, restage |
+| voices[].name | Sarah Bell | 28 | Common first and last |
+| voices[].city | Austin | 24 | |
+| voices[].quote | I told myself I would stay for two songs... | 180 | What they said. Not a caption of the light |
+
+## Motion Specification
+
+**Signature (one):** spotlight-park. Pointer follows until a name is chosen. Then the pool parks in 420ms.
+
+**Enter (support, once on view):** `silk-slip`.
+
+**Engine:** CSS enter. Radial gradient follow.
+
+**Reduced motion:** static pool. Instant name swap.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Names wrap. Quote stays large |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static pool
+- Keyboard: arrows after land
+- Contrast rose on bordeaux
+- Semantic `<section>`, `<blockquote>`
+
+## Performance Notes
+
+- No video, no WebGL
+- One radial gradient
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not install a testimonial kit. Do not copy Witness.
+
+**Lovable / Bolt:** Same section. Replace names, cities, and the night. Keep one quote. Keep the lamp.
+
+## Expected Output
+
+A single React testimonials section that:
+1. Is **proof**, not a hero
+2. Slips in, then the light follows and parks
+3. Uses club-bordeaux tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

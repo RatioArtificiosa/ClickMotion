@@ -1,0 +1,935 @@
+{
+  "version": 1,
+  "catalog": "token-themes",
+  "schema": {
+    "spacingBasePx": 8,
+    "sectionPadY": "tokenized",
+    "safeInset": "px-8 minimum, md:px-14 preferred"
+  },
+  "items": [
+    {
+      "id": "stripe-trust-light",
+      "status": "canonical",
+      "label": "Stripe trust light",
+      "language": "calm-fintech",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter",
+        "mono": "IBM Plex Mono",
+        "notes": "Product sans. No decorative script."
+      },
+      "color": {
+        "stage": "#FFFFFF",
+        "ink": "#0A2540",
+        "muted": "#425466",
+        "line": "#E3E8EE",
+        "accent": "#635BFF",
+        "accentNotes": "One accent. Do not rainbow."
+      },
+      "radiusPx": {
+        "sm": 6,
+        "md": 8,
+        "lg": 12
+      },
+      "motionTiming": {
+        "fastMs": 160,
+        "baseMs": 280,
+        "slowMs": 480
+      },
+      "notes": "Calm. Tables welcome. Not indigo-on-black SaaS."
+    },
+    {
+      "id": "print-ledger",
+      "status": "canonical",
+      "label": "Print ledger",
+      "language": "calm-fintech",
+      "goldSku": "MS-SEC-PRIC01",
+      "fonts": {
+        "display": "Instrument Serif",
+        "body": "Inter",
+        "mono": "IBM Plex Mono",
+        "notes": "Financial print. Serif for the figure only. No script."
+      },
+      "color": {
+        "stage": "#EFE8DC",
+        "ink": "#14110C",
+        "muted": "#6B6458",
+        "line": "#C9BFAE",
+        "accent": "#7A6248",
+        "accentNotes": "Bronze as hairline and recommended mark only. Never a fill."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 160,
+        "baseMs": 280,
+        "slowMs": 480
+      },
+      "notes": "Warm paper board. Pair under Axiom / Orbit / Nexus. Not Stripe purple. Not three cards."
+    },
+    {
+      "id": "orbit-trust-dark",
+      "status": "canonical",
+      "label": "Orbit trust dark",
+      "language": "calm-fintech",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter",
+        "mono": "IBM Plex Mono"
+      },
+      "color": {
+        "stage": "#0B0F14",
+        "ink": "#F4F7FA",
+        "muted": "#9AA8B5",
+        "line": "#1C2530",
+        "accent": "#7C9CFF"
+      },
+      "radiusPx": {
+        "sm": 6,
+        "md": 8,
+        "lg": 12
+      },
+      "motionTiming": {
+        "fastMs": 160,
+        "baseMs": 280,
+        "slowMs": 480
+      }
+    },
+    {
+      "id": "prism-glass-dark",
+      "status": "canonical",
+      "label": "Prism glass dark",
+      "language": "liquid-glass",
+      "fonts": {
+        "display": "SF Pro-like fallback: Inter",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#07070A",
+        "ink": "#F7F7F8",
+        "muted": "#A1A1AA",
+        "glass": "rgba(255,255,255,0.08)",
+        "line": "rgba(255,255,255,0.16)",
+        "accent": "#C9CDD3"
+      },
+      "radiusPx": {
+        "sm": 12,
+        "md": 20,
+        "lg": 28
+      },
+      "motionTiming": {
+        "fastMs": 200,
+        "baseMs": 360,
+        "slowMs": 640
+      },
+      "notes": "Highlight edges. Low saturation. No purple glass."
+    },
+    {
+      "id": "editorial-board-gray",
+      "status": "canonical",
+      "label": "Editorial board gray",
+      "language": "luxury-editorial",
+      "fonts": {
+        "display": "Neue Haas / Inter",
+        "body": "Inter",
+        "script": "Birthstone (wordmark only)"
+      },
+      "color": {
+        "stage": "#C3C3C3",
+        "ink": "#1A1A1A",
+        "muted": "#3A3A3A",
+        "line": "#9E9E9E",
+        "accent": "#1A1A1A"
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 2,
+        "lg": 4
+      },
+      "motionTiming": {
+        "fastMs": 180,
+        "baseMs": 400,
+        "slowMs": 700
+      },
+      "notes": "Helix-adjacent board. Photography owns focus."
+    },
+    {
+      "id": "fashion-ink-light",
+      "status": "canonical",
+      "label": "Fashion ink light",
+      "language": "luxury-editorial",
+      "fonts": {
+        "display": "Editorial serif (buyer replaces)",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#F6F4F0",
+        "ink": "#111111",
+        "muted": "#5C5C5C",
+        "line": "#E4DFD6",
+        "accent": "#111111"
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 2
+      },
+      "motionTiming": {
+        "fastMs": 200,
+        "baseMs": 420,
+        "slowMs": 720
+      }
+    },
+    {
+      "id": "swiss-light",
+      "status": "canonical",
+      "label": "Swiss light",
+      "language": "swiss-minimal",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#FAFAFA",
+        "ink": "#111111",
+        "muted": "#6B6B6B",
+        "line": "#E8E8E8",
+        "accent": "#111111"
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 140,
+        "baseMs": 240,
+        "slowMs": 400
+      }
+    },
+    {
+      "id": "cinematic-night",
+      "status": "canonical",
+      "label": "Cinematic night",
+      "language": "dark-cinematic",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#070707",
+        "ink": "#F3F1EC",
+        "muted": "#9A958C",
+        "line": "#2A2A2A",
+        "accent": "#D9C7A3"
+      },
+      "radiusPx": {
+        "sm": 2,
+        "md": 4,
+        "lg": 8
+      },
+      "motionTiming": {
+        "fastMs": 220,
+        "baseMs": 480,
+        "slowMs": 900
+      }
+    },
+    {
+      "id": "wellness-warm",
+      "status": "canonical",
+      "label": "Wellness warm",
+      "language": "organic",
+      "fonts": {
+        "display": "Humanist sans (buyer replaces)",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#F4EFE6",
+        "ink": "#2C241C",
+        "muted": "#6E6458",
+        "line": "#E4D8C8",
+        "accent": "#8C6A4A"
+      },
+      "radiusPx": {
+        "sm": 12,
+        "md": 20,
+        "lg": 32
+      },
+      "motionTiming": {
+        "fastMs": 240,
+        "baseMs": 500,
+        "slowMs": 860
+      }
+    },
+    {
+      "id": "infra-mono",
+      "status": "canonical",
+      "label": "Infra mono",
+      "language": "brutalist",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter",
+        "mono": "IBM Plex Mono"
+      },
+      "color": {
+        "stage": "#E8E6E1",
+        "ink": "#111111",
+        "muted": "#444444",
+        "line": "#111111",
+        "accent": "#111111"
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 80,
+        "baseMs": 160,
+        "slowMs": 280
+      }
+    },
+    {
+      "id": "material-tonal-light",
+      "status": "canonical",
+      "label": "Material tonal light",
+      "language": "material-you",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#F7F2FA",
+        "ink": "#1D1B20",
+        "muted": "#49454F",
+        "line": "#CAC4D0",
+        "accent": "#6750A4",
+        "accentNotes": "Tonal, not neon purple mesh. Keep surfaces Material-like."
+      },
+      "radiusPx": {
+        "sm": 8,
+        "md": 16,
+        "lg": 28
+      },
+      "motionTiming": {
+        "fastMs": 180,
+        "baseMs": 320,
+        "slowMs": 500
+      }
+    },
+    {
+      "id": "vitrine-platinum",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Vitrine platinum",
+      "language": "jewel-chrome",
+      "fonts": {
+        "display": "Cinzel",
+        "body": "Outfit",
+        "mono": "IBM Plex Mono",
+        "notes": "Certificate mono. Jewel serif for the name only."
+      },
+      "color": {
+        "stage": "#0E0F12",
+        "ink": "#F4F1EA",
+        "muted": "#A39E94",
+        "line": "#3A3B40",
+        "accent": "#C9A24A",
+        "metal": "#D8D5D0",
+        "accentNotes": "Gilt as the stone. Metal as the case. Not rainbow chrome."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 2,
+        "lg": 4
+      },
+      "motionTiming": {
+        "fastMs": 160,
+        "baseMs": 320,
+        "slowMs": 640
+      }
+    },
+    {
+      "id": "carnelian-black",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Carnelian black",
+      "language": "jewel-chrome",
+      "fonts": {
+        "display": "Cinzel",
+        "body": "Outfit",
+        "mono": "IBM Plex Mono"
+      },
+      "color": {
+        "stage": "#140C0C",
+        "ink": "#F7EDE4",
+        "muted": "#B08980",
+        "line": "#3A201C",
+        "accent": "#C73E2A",
+        "metal": "#E8C9B0",
+        "accentNotes": "Carnelian, not alert red."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 2,
+        "lg": 4
+      },
+      "motionTiming": {
+        "fastMs": 160,
+        "baseMs": 300,
+        "slowMs": 600
+      }
+    },
+    {
+      "id": "club-bordeaux",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Club bordeaux",
+      "language": "velvet-nocturne",
+      "fonts": {
+        "display": "Fraunces",
+        "body": "Outfit",
+        "notes": "Didone-adjacent. Soft italic for perfume lines."
+      },
+      "color": {
+        "stage": "#1A0A12",
+        "ink": "#F6E8EE",
+        "muted": "#C4A0B0",
+        "line": "#3B1524",
+        "accent": "#E8D5A3",
+        "velvet": "#3B0D22",
+        "accentNotes": "Champagne light on velvet. Not hot pink neon."
+      },
+      "radiusPx": {
+        "sm": 8,
+        "md": 16,
+        "lg": 28
+      },
+      "motionTiming": {
+        "fastMs": 220,
+        "baseMs": 480,
+        "slowMs": 860
+      }
+    },
+    {
+      "id": "ultraviolet-silk",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Ultraviolet silk",
+      "language": "velvet-nocturne",
+      "fonts": {
+        "display": "Fraunces",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#12081C",
+        "ink": "#EDE6F7",
+        "muted": "#A090C0",
+        "line": "#2A1650",
+        "accent": "#E8D5A3",
+        "velvet": "#1C1038",
+        "accentNotes": "Pigment violet as cloth, champagne as the jewel. Not purple mesh."
+      },
+      "radiusPx": {
+        "sm": 10,
+        "md": 18,
+        "lg": 32
+      },
+      "motionTiming": {
+        "fastMs": 220,
+        "baseMs": 500,
+        "slowMs": 900
+      }
+    },
+    {
+      "id": "pistachio-salon",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Pistachio salon",
+      "language": "candy-couture",
+      "fonts": {
+        "display": "Syne",
+        "body": "Outfit",
+        "notes": "Fashionable grotesque. No script."
+      },
+      "color": {
+        "stage": "#D8E8C8",
+        "ink": "#1A2E14",
+        "muted": "#4A6A3C",
+        "line": "#B7CFA8",
+        "accent": "#E23B5A",
+        "accentNotes": "Cherry lacquer on pistachio. One candy, not a bag of them."
+      },
+      "radiusPx": {
+        "sm": 16,
+        "md": 24,
+        "lg": 40
+      },
+      "motionTiming": {
+        "fastMs": 180,
+        "baseMs": 360,
+        "slowMs": 640
+      }
+    },
+    {
+      "id": "cherry-lacquer",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Cherry lacquer",
+      "language": "candy-couture",
+      "fonts": {
+        "display": "Syne",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#C41E3A",
+        "ink": "#FFF5F0",
+        "muted": "#F2C4C8",
+        "line": "#A01830",
+        "accent": "#FFD6C8",
+        "accentNotes": "Gloss highlight. The stage is the lacquer."
+      },
+      "radiusPx": {
+        "sm": 18,
+        "md": 28,
+        "lg": 44
+      },
+      "motionTiming": {
+        "fastMs": 160,
+        "baseMs": 340,
+        "slowMs": 600
+      }
+    },
+    {
+      "id": "poster-day",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Poster day",
+      "language": "kinetic-poster",
+      "fonts": {
+        "display": "Archivo Black",
+        "body": "Inter",
+        "mono": "IBM Plex Mono",
+        "notes": "Two inks. Display owns the sheet."
+      },
+      "color": {
+        "stage": "#F2EFE4",
+        "ink": "#111111",
+        "muted": "#3A3A3A",
+        "line": "#111111",
+        "accent": "#FF3B00",
+        "overprint": "#0033FF",
+        "accentNotes": "Vermilion plus optional cobalt overprint. Two inks max. Not a rainbow."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 120,
+        "baseMs": 280,
+        "slowMs": 480
+      }
+    },
+    {
+      "id": "poster-night",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Poster night",
+      "language": "kinetic-poster",
+      "fonts": {
+        "display": "Archivo Black",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#0A0A0A",
+        "ink": "#F5F0E6",
+        "muted": "#A0A0A0",
+        "line": "#F5F0E6",
+        "accent": "#FFE600",
+        "accentNotes": "School-bus yellow on night paper. One signal."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 100,
+        "baseMs": 240,
+        "slowMs": 420
+      }
+    },
+    {
+      "id": "celadon-wet",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Celadon wet",
+      "language": "ceramic-gloss",
+      "fonts": {
+        "display": "Fraunces",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#C5D5C8",
+        "ink": "#1C2E28",
+        "muted": "#4A6358",
+        "line": "#9BB0A4",
+        "accent": "#F4FBF6",
+        "accentNotes": "Wet white catchlight. Not mint SaaS."
+      },
+      "radiusPx": {
+        "sm": 20,
+        "md": 32,
+        "lg": 48
+      },
+      "motionTiming": {
+        "fastMs": 240,
+        "baseMs": 520,
+        "slowMs": 900
+      }
+    },
+    {
+      "id": "oxblood-glaze",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Oxblood glaze",
+      "language": "ceramic-gloss",
+      "fonts": {
+        "display": "Fraunces",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#5C1218",
+        "ink": "#F6E6D8",
+        "muted": "#D4A090",
+        "line": "#7A2830",
+        "accent": "#E8C4A8",
+        "accentNotes": "Warm lip on dark glaze."
+      },
+      "radiusPx": {
+        "sm": 18,
+        "md": 28,
+        "lg": 44
+      },
+      "motionTiming": {
+        "fastMs": 240,
+        "baseMs": 500,
+        "slowMs": 880
+      }
+    },
+    {
+      "id": "resin-amber",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Resin amber",
+      "language": "resin-object",
+      "fonts": {
+        "display": "Unbounded",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#E8A04A",
+        "ink": "#1A0E04",
+        "muted": "#6A3A12",
+        "line": "#C48438",
+        "accent": "#FFF6E8",
+        "accentNotes": "Translucent amber. White is the catch, not a second brand."
+      },
+      "radiusPx": {
+        "sm": 16,
+        "md": 28,
+        "lg": 40
+      },
+      "motionTiming": {
+        "fastMs": 200,
+        "baseMs": 400,
+        "slowMs": 720
+      }
+    },
+    {
+      "id": "resin-ice",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Resin ice",
+      "language": "resin-object",
+      "fonts": {
+        "display": "Unbounded",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#B8E4F0",
+        "ink": "#0A2030",
+        "muted": "#3A6880",
+        "line": "#8EC8D8",
+        "accent": "#FFFFFF",
+        "accentNotes": "Ice block. Not cyan neon."
+      },
+      "radiusPx": {
+        "sm": 16,
+        "md": 28,
+        "lg": 40
+      },
+      "motionTiming": {
+        "fastMs": 200,
+        "baseMs": 400,
+        "slowMs": 720
+      }
+    },
+    {
+      "id": "sumi-slash",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Sumi slash",
+      "language": "ink-riot",
+      "fonts": {
+        "display": "Newsreader",
+        "body": "Inter",
+        "mono": "IBM Plex Mono",
+        "notes": "Brush for the riot. Mono for the colophon."
+      },
+      "color": {
+        "stage": "#F4F0E6",
+        "ink": "#111111",
+        "muted": "#5A564C",
+        "line": "#111111",
+        "accent": "#111111",
+        "accentNotes": "Black only. The riot is the stroke."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 140,
+        "baseMs": 320,
+        "slowMs": 700
+      }
+    },
+    {
+      "id": "vermilion-colophon",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Vermilion colophon",
+      "language": "ink-riot",
+      "fonts": {
+        "display": "Newsreader",
+        "body": "Inter",
+        "mono": "IBM Plex Mono"
+      },
+      "color": {
+        "stage": "#1A1A1A",
+        "ink": "#F5F0E8",
+        "muted": "#9A9488",
+        "line": "#F5F0E8",
+        "accent": "#E23B2A",
+        "accentNotes": "One vermilion seal. Not a red website."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 140,
+        "baseMs": 300,
+        "slowMs": 640
+      }
+    },
+    {
+      "id": "desert-leaf",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Desert leaf",
+      "language": "solar-gilt",
+      "fonts": {
+        "display": "Cinzel",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#E8C97A",
+        "ink": "#2A1808",
+        "muted": "#7A5A28",
+        "line": "#C4A45A",
+        "accent": "#C9A227",
+        "accentNotes": "Leaf gold on sand. Not crypto foil."
+      },
+      "radiusPx": {
+        "sm": 2,
+        "md": 4,
+        "lg": 8
+      },
+      "motionTiming": {
+        "fastMs": 200,
+        "baseMs": 440,
+        "slowMs": 800
+      }
+    },
+    {
+      "id": "noon-bleach",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Noon bleach",
+      "language": "solar-gilt",
+      "fonts": {
+        "display": "Cinzel",
+        "body": "Outfit"
+      },
+      "color": {
+        "stage": "#F7F1DC",
+        "ink": "#C45A12",
+        "muted": "#A07848",
+        "line": "#E8D8A8",
+        "accent": "#E8A317",
+        "accentNotes": "Hot rust type on bleached noon."
+      },
+      "radiusPx": {
+        "sm": 2,
+        "md": 4,
+        "lg": 8
+      },
+      "motionTiming": {
+        "fastMs": 180,
+        "baseMs": 400,
+        "slowMs": 760
+      }
+    },
+    {
+      "id": "moire-gallery",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Moire gallery",
+      "language": "op-signal",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter",
+        "notes": "Grotesk only. Size is the craft."
+      },
+      "color": {
+        "stage": "#F5F5F5",
+        "ink": "#111111",
+        "muted": "#111111",
+        "line": "#111111",
+        "accent": "#111111",
+        "accentNotes": "No third color. Vibration is the wow."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 80,
+        "baseMs": 180,
+        "slowMs": 360
+      }
+    },
+    {
+      "id": "zebra-salon",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Zebra salon",
+      "language": "op-signal",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter"
+      },
+      "color": {
+        "stage": "#111111",
+        "ink": "#F5F5F5",
+        "muted": "#F5F5F5",
+        "line": "#F5F5F5",
+        "accent": "#F5F5F5",
+        "accentNotes": "Inverted gallery. Still no third color."
+      },
+      "radiusPx": {
+        "sm": 0,
+        "md": 0,
+        "lg": 0
+      },
+      "motionTiming": {
+        "fastMs": 80,
+        "baseMs": 180,
+        "slowMs": 360
+      }
+    },
+    {
+      "id": "chrome-bubblegum",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Chrome bubblegum",
+      "language": "arcade-atelier",
+      "fonts": {
+        "display": "Unbounded",
+        "body": "Syne",
+        "notes": "Fashionable Y2K. Never clipart."
+      },
+      "color": {
+        "stage": "#F7C6D8",
+        "ink": "#1A1A1A",
+        "muted": "#6A4050",
+        "line": "#E8A8BC",
+        "accent": "#E85A9B",
+        "metal": "#E8E8EC",
+        "accentNotes": "Candy plus chrome. Not aurora, not HitCounter."
+      },
+      "radiusPx": {
+        "sm": 12,
+        "md": 20,
+        "lg": 32
+      },
+      "motionTiming": {
+        "fastMs": 140,
+        "baseMs": 280,
+        "slowMs": 520
+      }
+    },
+    {
+      "id": "ice-silver",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Ice silver",
+      "language": "arcade-atelier",
+      "fonts": {
+        "display": "Unbounded",
+        "body": "Syne"
+      },
+      "color": {
+        "stage": "#E4EEF4",
+        "ink": "#1A2330",
+        "muted": "#5A7080",
+        "line": "#C8D8E4",
+        "accent": "#7ED0E8",
+        "metal": "#F7FBFF",
+        "accentNotes": "Glacier, not cyan glow kit."
+      },
+      "radiusPx": {
+        "sm": 12,
+        "md": 20,
+        "lg": 32
+      },
+      "motionTiming": {
+        "fastMs": 140,
+        "baseMs": 280,
+        "slowMs": 520
+      }
+    },
+    {
+      "id": "kit-indigo-aurora",
+      "status": "banned-as-default",
+      "label": "Kit indigo aurora (do not use)",
+      "language": null,
+      "color": {
+        "stage": "#0A0A0F",
+        "accent": "#6366F1",
+        "glow": "#22D3EE"
+      },
+      "notes": "Canonical anti-example. Hero _template.mdx leftover look. Instant fail."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+---
+id: "MS-SEC-TEST03"
+title: "NORI - Pistachio Proof"
+slug: "nori-pistachio-proof"
+description: "A pistachio shop. One quote that jellies. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "testimonials"
+category: "lifestyle"
+subcategory: "salon"
+styleTags: ["playful", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "candy-couture"
+tokenTheme: "pistachio-salon"
+motionPrimitive: "jelly-morph"
+enterRecipe: "pop-in"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-VERV01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-nori"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["salon-proof", "shop-testimonials", "candy-board"]
+---
+
+## Promise (buyer-facing)
+
+NORI is a mid-page **testimonials** board that reads as a pistachio shop, not a quote carousel. One voice. The line squashes once, then sits.
+
+**Why use it:**
+- The jelly is the design. The board never says squash
+- Stage is pistachio. Cherry is one candy
+- Quotes and names are slots
+- Sits after Revel, Verve, or Dopamine without copying Port or Rouge
+
+## Design System
+
+**Aesthetic Direction:** Stage `#D8E8C8`. Ink `#1A2E14`. Accent `#E23B5A`. Syne display. Outfit UI.
+
+**Design language:** `candy-couture` · **Theme:** `pistachio-salon` · **Primitive:** `jelly-morph` (1.08 / 0.92)
+
+**Enter:** `pop-in`. Land ~880ms.
+
+**Anti-slop:** avatar cards, emoji, three equal quotes, Comic bounce as identity.
+
+## Layout Structure
+
+`100dvh` pinned stage. Masthead, quote, name, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| place | Kerrytown, Ann Arbor | 40 |
+| voices[].quote | My daughter has swim at 4:15 on Thursdays... | 180 |
+| voices[].name | Lisa Park | 24 |
+| voices[].city | Ann Arbor | 24 |
+
+## Motion Specification
+
+**Signature:** jelly-morph once per voice. **Pin-until-complete:** yes. Index is readout. **Reduced:** no squash, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not lay out cards. Do not invent a loading blob.

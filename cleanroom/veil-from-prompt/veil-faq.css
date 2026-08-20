@@ -1,0 +1,156 @@
+/* VEIL — ultraviolet silk FAQ. Perfume haze, not a clerk accordion. */
+
+.veil-root {
+  --veil-stage: #12081c;
+  --veil-ink: #ede6f7;
+  --veil-muted: #a090c0;
+  --veil-line: #2a1650;
+  --veil-accent: #e8d5a3;
+  --veil-velvet: #1c1038;
+  --ms-pin-fill: var(--veil-accent);
+  position: relative;
+  color: var(--veil-ink);
+  background:
+    radial-gradient(ellipse 80% 60% at 18% 28%, rgba(42, 22, 80, 0.9), transparent 62%),
+    var(--veil-stage);
+  font-family: var(--font-veil-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.veil-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.veil-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .veil-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .veil-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.veil-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.veil-root[data-entered="true"] .veil-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.veil-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--veil-line);
+  flex-shrink: 0;
+}
+
+.veil-brand {
+  font-family: var(--font-veil-display), Fraunces, serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  color: var(--veil-accent);
+}
+
+.veil-meta,
+.veil-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--veil-muted);
+}
+
+.veil-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  transition-delay: 90ms;
+}
+
+.veil-question {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-veil-display), Fraunces, serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2.4rem, 8.5vw, 5.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+.veil-answer {
+  margin: 1.35rem 0 0;
+  max-width: 28rem;
+  font-size: 1.12rem;
+  line-height: 1.5;
+  color: var(--veil-muted);
+  filter: blur(8px);
+  transform: scale(1.04);
+  transform-origin: 0 40%;
+  opacity: 0.55;
+}
+
+.veil-root[data-haze="true"] .veil-answer {
+  filter: blur(0);
+  transform: none;
+  opacity: 1;
+  transition:
+    filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.veil-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 180ms;
+}
+
+.veil-place {
+  margin: 0 0 1rem;
+}
+
+.veil-root :is(button):focus-visible {
+  outline: 1px solid var(--veil-accent);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil-enter,
+  .veil-answer,
+  .veil-root[data-haze="true"] .veil-answer {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

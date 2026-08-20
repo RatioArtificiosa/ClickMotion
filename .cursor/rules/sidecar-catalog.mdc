@@ -1,0 +1,20 @@
+---
+description: Catalog sidecar law. Applies only when sidecar files are in play. Does not bind the live hero agent.
+globs: sidecar/**
+alwaysApply: false
+---
+
+# Catalog sidecar
+
+You are in `sidecar/`, not the live storefront.
+
+- Read `sidecar/README.md` then `sidecar/sections/LAW.md`.
+- Write only under `sidecar/` unless the operator says integrate (`sidecar/sections/INTEGRATION.md`).
+- Public aisle is **Sections**. `components/` and `elements/` are stubs.
+- Quality: one famous-UI direction, one signature motion, token theme from libraries. Purple mesh bento fails.
+- Do not execute `docs/CONTENT_PLAN_100.md`. Do not clone Magic UI / shadcnblocks.
+- Do not edit `src/app`, `owner-designs.ts`, live prompts, or cleanrooms from this lane.
+- Cite `designLanguage`, `tokenTheme`, `motionPrimitive` ids. Stub primitives cannot ship.
+- Public proof is video demos. `/demo` is operator-only, not the catalog.
+- After each section: Chrome visual pass (`sidecar/sections/VISUAL_PASS.md`). Fix. Re-check. Loop until GOLDEN.
+- No em dash in buyer-facing copy. Brand: ClickMotion.

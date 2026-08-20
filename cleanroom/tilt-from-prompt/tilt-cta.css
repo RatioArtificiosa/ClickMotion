@@ -1,0 +1,199 @@
+/* TILT — chrome bubblegum. One 12px jewel. Not Helix. */
+
+.tilt-root {
+  --tilt-stage: #f7c6d8;
+  --tilt-ink: #1a1a1a;
+  --tilt-muted: #6a4050;
+  --tilt-line: #e8a8bc;
+  --tilt-accent: #e85a9b;
+  --tilt-metal: #e8e8ec;
+  color: var(--tilt-ink);
+  background: var(--tilt-stage);
+  font-family: var(--font-tilt-sans), Syne, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.tilt-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .tilt-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tilt-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.tilt-enter {
+  opacity: 0;
+  transform: translateY(28px) scale(0.92);
+}
+
+.tilt-root[data-entered="true"] .tilt-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 520ms cubic-bezier(0.34, 1.45, 0.64, 1),
+    transform 520ms cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+.tilt-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--tilt-ink);
+  flex-shrink: 0;
+}
+
+.tilt-brand {
+  font-family: var(--font-tilt-display), Unbounded, sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+.tilt-meta,
+.tilt-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tilt-muted);
+}
+
+.tilt-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  max-width: 38rem;
+  transition-delay: 70ms;
+}
+
+.tilt-headline {
+  margin: 0;
+  font-family: var(--font-tilt-display), Unbounded, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 7.6vw, 5.2rem);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.tilt-period {
+  margin: 1.15rem 0 0;
+  max-width: 24rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--tilt-muted);
+}
+
+.tilt-place {
+  margin: 1.1rem 0 0;
+  color: var(--tilt-ink);
+}
+
+.tilt-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 140ms;
+}
+
+.tilt-orbit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tilt-cta {
+  appearance: none;
+  margin: 0;
+  padding: 1rem 1.55rem;
+  border: 1px solid var(--tilt-ink);
+  background: transparent;
+  color: var(--tilt-ink);
+  cursor: pointer;
+  border-radius: 12px;
+  font-family: var(--font-tilt-sans), Syne, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tilt-root[data-confirmed="true"] .tilt-cta {
+  background: var(--tilt-ink);
+  color: var(--tilt-stage);
+}
+
+.tilt-path {
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.tilt-trinket {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #fff, var(--tilt-metal) 45%, #9aa0aa);
+  box-shadow: 0 0 0 1px #ffffff88;
+  transform: translateX(12px);
+}
+
+.tilt-root[data-orbit="true"] .tilt-trinket {
+  animation: tilt-orbit 2400ms linear 1 forwards;
+}
+
+@keyframes tilt-orbit {
+  from {
+    transform: rotate(0deg) translateX(12px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(12px) rotate(-360deg);
+  }
+}
+
+.tilt-cta:focus-visible,
+.tilt-root :is(button):focus-visible {
+  outline: 1px solid var(--tilt-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (max-width: 639px) {
+  .tilt-orbit,
+  .tilt-cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-enter,
+  .tilt-trinket,
+  .tilt-root[data-orbit="true"] .tilt-trinket {
+    opacity: 1;
+    transform: translateX(12px);
+    animation: none;
+    transition: none;
+  }
+}

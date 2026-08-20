@@ -1,5 +1,5 @@
 /**
- * MS-SEC-STUDIO01 — Studio Sequence configuration
+ * MS-SEC-STUDIO01 - Studio Sequence configuration
  *
  * **Edit this file first** to swap film, plate, pin feel, or chrome labels.
  * The section component never hardcodes product-specific media URLs except
@@ -13,9 +13,9 @@
  */
 
 export type BillboardRect = {
-  /** 0–1 fraction of plate width from left edge of plate */
+  /** 0-1 fraction of plate width from left edge of plate */
   left: number;
-  /** 0–1 fraction of plate height from top edge of plate */
+  /** 0-1 fraction of plate height from top edge of plate */
   top: number;
   width: number;
   height: number;
@@ -46,7 +46,7 @@ export type StudioSequenceConfig = {
   sectionId: string;
   /** Accessible name */
   ariaLabel: string;
-  /** Pure billboard film — any public URL or /assets/… path */
+  /** Pure billboard film - any public URL or /assets/... path */
   videoSrc: string;
   /** Optional poster still (first paint before first frame) */
   posterSrc?: string;
@@ -60,13 +60,13 @@ export type StudioSequenceConfig = {
    * Defaults match ny.png. Re-measure when swapping plates.
    */
   billboard: BillboardRect;
-  /** ScrollTrigger pin distance (e.g. "+=280%") */
-  pinEnd: string;
-  /** Scrub lag — higher = silkier camera, slightly looser scroll coupling */
-  scrub: number;
-  /** Hold full-bleed film at start of pin (0–1 progress) */
+  /** Virtual earn viewports on desktop (>=768). Not page height. */
+  virtualViewportsDesktop: number;
+  /** Virtual earn viewports on mobile. Not page height. */
+  virtualViewportsMobile: number;
+  /** Hold full-bleed film at start of pin (0-1 progress) */
   holdIn: number;
-  /** Settle on street before pin end (0–1 progress) */
+  /** Settle on street before pin end (0-1 progress) */
   holdOut: number;
   video: StudioVideoPolicy;
   /** Optional micro-label in lab chrome (not required for production) */
@@ -74,13 +74,13 @@ export type StudioSequenceConfig = {
 };
 
 /**
- * Default demo board — Surreal Studio pure film on NY street plate.
+ * Default demo board - Surreal Studio pure film on NY street plate.
  * Replace videoSrc / plateSrc for any brand without touching camera math.
  */
 export const STUDIO_DEFAULTS: StudioSequenceConfig = {
   sectionId: "studio-sequence",
   ariaLabel:
-    "Studio cinematic — camera pull-out from full-bleed film into street billboard",
+    "Studio cinematic - camera pull-out from full-bleed film into street billboard",
   // Client HD pure film (no UI frames). Full length. Same source as /backgrounds encode.
   videoSrc: "/assets/videos/studio-surreal-v1.mp4",
   posterSrc: "/assets/posters/studio-surreal-v1.webp",
@@ -93,8 +93,8 @@ export const STUDIO_DEFAULTS: StudioSequenceConfig = {
     width: 0.5026,
     height: 0.387,
   },
-  pinEnd: "+=280%",
-  scrub: 1.15,
+  virtualViewportsDesktop: 4,
+  virtualViewportsMobile: 3,
   holdIn: 0.06,
   holdOut: 0.9,
   video: {
@@ -102,7 +102,7 @@ export const STUDIO_DEFAULTS: StudioSequenceConfig = {
     loop: true,
     muted: true,
     preload: "auto",
-    // Appearance lock — film as authored
+    // Appearance lock - film as authored
     cssFilter: undefined,
   },
   menuLabel: "Menu",
@@ -111,7 +111,7 @@ export const STUDIO_DEFAULTS: StudioSequenceConfig = {
 /** Operator / package paths (not imported by the section runtime). */
 export const STUDIO_MEDIA_MAP = {
   productId: "MS-SEC-STUDIO01",
-  /** Pure film — billboard + buyer client HD */
+  /** Pure film - billboard + buyer client HD */
   clientHd: "/assets/videos/studio-surreal-v1.mp4",
   clientHdAlt: "/assets/videos/client/studio-surreal-client-v1.mp4",
   /** Lab source of truth for pure film */
@@ -120,7 +120,7 @@ export const STUDIO_MEDIA_MAP = {
   backgroundsPreview: "/assets/videos/backgrounds/studio-surreal-bg-v1.mp4",
   pureFilmPoster: "/assets/posters/studio-surreal-v1.webp",
   /** Storefront dual previews (full length Premiere exports) */
-  previewPage: "/assets/videos/studio-sequence-preview-v1.mp4",
+  previewPage: "/assets/videos/studio-sequence-preview-v1.webm",
   previewFs: "/assets/videos/studio-sequence-preview-fs-v1.mp4",
   thumbnail: "/thumbnails/MS-SEC-STUDIO01.webp",
   storefrontPoster: "/assets/posters/studio-sequence-preview-v1.webp",

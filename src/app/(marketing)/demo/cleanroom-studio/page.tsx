@@ -1,25 +1,29 @@
 import type { Metadata } from "next";
 import StudioSequence from "../../../../../cleanroom/studio-from-prompt/StudioSequence";
-import { SmoothScroll } from "../../../../../cleanroom/studio-from-prompt/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Studio Sequence · Camera Pull-Out Billboard Section",
   description:
-    "MS-SEC-STUDIO01. Scroll-pinned cinematic pull-out: full-length film opens full-bleed, then settles onto a street billboard. Any video. Full duration. No cuts.",
+    "Pin-until-complete cinematic pull-out: open inside the film, then settle onto a street billboard where your story keeps playing.",
 };
 
-/** Production cleanroom demo for MS-SEC-STUDIO01 (Studio Sequence). */
+/**
+ * Production cleanroom demo for MS-SEC-STUDIO01 (Studio Sequence).
+ * No Scroller: do not overflow-hidden the page. After progress 1,
+ * the next sibling may scroll in. Film free-plays. Not PSAVE.
+ */
 export default function CleanroomStudioPage() {
   return (
-    <div className="min-h-screen bg-black text-white" data-demo-root>
-      <style>{`
-        html.lenis, html.lenis body { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto !important; }
-        .pin-spacer { background: #000 !important; }
-      `}</style>
-      <SmoothScroll>
-        <StudioSequence />
-      </SmoothScroll>
+    <div className="bg-black text-white" data-demo-root>
+      <StudioSequence />
+      <section
+        id="studio-after"
+        className="flex min-h-[40dvh] items-center justify-center bg-black px-6 py-16 text-white/50"
+      >
+        <p className="max-w-md text-center text-[13px] uppercase tracking-[0.12em]">
+          After the sequence
+        </p>
+      </section>
     </div>
   );
 }

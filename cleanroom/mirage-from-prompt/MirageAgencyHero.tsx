@@ -1,23 +1,29 @@
 "use client";
 
 /**
- * MIRAGE — Cleanroom demo (not production)
+ * MIRAGE (MS-HERO-MIRA01) - agency desert glass hero.
  *
- * Advertising-agency hero: desert + subject film plays freely.
- * Scroll only drives five left-rail pivot cards.
+ * No Scroller (pin-until-complete). Not PSAVE: desert film free-plays
+ * (muted loop). Scroll only aims the five left-rail glass cards.
  *
- * Glass: Triada / M.A.C. Liquid Glass stack (read-only from
- * Development/triada — DockRobotCompanion + .os-widget* / .lg-material*).
+ * Wheel / trackpad / touch / keys aim virtual progress on
+ * total * vhPerSheet viewports (7.75 desktop at five sheets).
+ * Cards follow that progress 1:1. At 0+up or 1+down the pin
+ * releases. After release at the end, the PAGE owns the wheel
+ * until the stage docks (top >= -2). Pointer on the next sibling
+ * never drives the cards.
+ *
+ * Glass: morphic dark liquid-glass stack.
  *   shell → glass layers (fill + specular) → body (content above blur)
- * Dark translucent fill + blur + saturate — NOT white frosted.
+ * Dark translucent fill + blur + saturate - NOT white frosted.
  *
- * Do NOT edit Folio. Do NOT edit Triada.
+ * Do not add PSAVE. Do not restore a tall multi-vh sticky track.
  */
 
 import { useRef, useMemo, useState, useEffect, type ReactNode } from "react";
 import {
   motion,
-  useScroll,
+  useMotionValue,
   useTransform,
   useReducedMotion,
   useMotionValueEvent,
@@ -56,7 +62,7 @@ const DEFAULT_SHEETS: MirageSheet[] = [
     index: "01",
     eyebrow: "Brand thesis",
     title: "Find the idea that outlasts the feed.",
-    lead: "We pressure-test positioning until only one truth remains — then every surface tells it.",
+    lead: "We pressure-test positioning until only one truth remains, then every surface tells it.",
     blocks: [
       {
         type: "metrics",
@@ -110,7 +116,7 @@ const DEFAULT_SHEETS: MirageSheet[] = [
     index: "03",
     eyebrow: "Media craft",
     title: "Put every dollar where attention is honest.",
-    lead: "Channel rules live next to the creative — so media and craft never drift apart mid-flight.",
+    lead: "Channel rules live next to the creative, so media and craft never drift apart mid-flight.",
     blocks: [
       {
         type: "metrics",
@@ -143,7 +149,7 @@ const DEFAULT_SHEETS: MirageSheet[] = [
       },
       {
         type: "quote",
-        text: "They made our brand feel inevitable — quiet, expensive, everywhere.",
+        text: "They made our brand feel inevitable. Quiet, expensive, everywhere.",
         by: "CMO, global beauty house",
       },
     ],
@@ -153,7 +159,7 @@ const DEFAULT_SHEETS: MirageSheet[] = [
     index: "05",
     eyebrow: "Growth proof",
     title: "Outcomes the board can audit.",
-    lead: "Brand lift, pipeline, and efficiency reported as one story — not three decks fighting each other.",
+    lead: "Brand lift, pipeline, and efficiency reported as one story, not three decks fighting each other.",
     blocks: [
       {
         type: "metrics",
@@ -176,7 +182,12 @@ const MAX_SHEETS = 5;
 /** Locked client HD (buyer pack). Storefront previews are separate captures. */
 const BG_SRC = "/assets/videos/mirage-desert-v1.mp4";
 
-/* ── Scroll → local progress ── */
+function clamp01(n: number) {
+  if (!Number.isFinite(n)) return 0;
+  return Math.min(1, Math.max(0, n));
+}
+
+/* ── Journey progress → local sheet progress (rotateX / opacity / scale maps) ── */
 
 function useLocalProgress(
   scrollYProgress: MotionValue<number>,
@@ -391,37 +402,204 @@ export default function MirageAgencyHero({
   backgroundSrc = BG_SRC,
   vhPerSheet = 1.55,
 }: MirageAgencyHeroProps) {
-  const trackRef = useRef<HTMLElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const touchYRef = useRef<number | null>(null);
+  const pageOwnsRef = useRef(false);
   const reduced = useReducedMotion() ?? false;
   const total = Math.min(sheets.length, MAX_SHEETS);
   const list = sheets.slice(0, total);
 
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start start", "end end"],
-  });
+  /** 0→1 journey progress (pin-until-complete). Film is not on this clock. */
+  const journeyProgress = useMotionValue(0);
 
-  const local0 = useLocalProgress(scrollYProgress, 0, total);
-  const local1 = useLocalProgress(scrollYProgress, 1, total);
-  const local2 = useLocalProgress(scrollYProgress, 2, total);
-  const local3 = useLocalProgress(scrollYProgress, 3, total);
-  const local4 = useLocalProgress(scrollYProgress, 4, total);
+  const local0 = useLocalProgress(journeyProgress, 0, total);
+  const local1 = useLocalProgress(journeyProgress, 1, total);
+  const local2 = useLocalProgress(journeyProgress, 2, total);
+  const local3 = useLocalProgress(journeyProgress, 3, total);
+  const local4 = useLocalProgress(journeyProgress, 4, total);
   const locals = useMemo(
     () => [local0, local1, local2, local3, local4].slice(0, total),
     [local0, local1, local2, local3, local4, total]
   );
 
-  const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const progressScale = useTransform(journeyProgress, [0, 1], [0, 1]);
   const [activeIdx, setActiveIdx] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
+  useMotionValueEvent(journeyProgress, "change", (p) => {
     setActiveIdx(
       Math.min(total - 1, Math.max(0, Math.floor(p * total + 0.001)))
     );
   });
+  useEffect(() => {
+    const p = journeyProgress.get();
+    setActiveIdx(
+      Math.min(total - 1, Math.max(0, Math.floor(p * total + 0.001)))
+    );
+  }, [journeyProgress, total]);
 
-  // Film plays on its own clock — never scroll-scrubbed
+  useEffect(() => {
+    if (reduced) return;
+    const api = {
+      setProgress: (p: number) => journeyProgress.set(clamp01(p)),
+      getProgress: () => journeyProgress.get(),
+      getTarget: () => journeyProgress.get(),
+      pageOwns: () => pageOwnsRef.current,
+      productId: "MS-HERO-MIRA01",
+    };
+    const w = window as Window & { __msScrollNarrative?: typeof api };
+    w.__msScrollNarrative = api;
+    return () => {
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+    };
+  }, [journeyProgress, reduced]);
+
+  /**
+   * Pin-until-complete: wheel / touch / keys write virtual progress.
+   * Earn = total * vhPerSheet viewports (7.75 at five sheets).
+   * Release at 0 + up or 1 + down. After release at the end, the PAGE
+   * owns the wheel until the stage docks at the top again. Pointer on
+   * the runway never drives the cards.
+   */
+  useEffect(() => {
+    if (reduced) return;
+    const root = rootRef.current;
+    if (!root) return;
+
+    const virtualDistance = () => {
+      const vh = window.innerHeight || 800;
+      return Math.max(vh * 2.4, total * vhPerSheet * vh);
+    };
+
+    const sectionInView = () => {
+      const r = root.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+
+    const pinDocked = () => root.getBoundingClientRect().top >= -2;
+
+    const journeyAtEnd = () => journeyProgress.get() >= 0.9995;
+
+    const eventOnStage = (e: Event) => {
+      if (e.target instanceof Node && root.contains(e.target)) return true;
+      if (e instanceof WheelEvent) {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && root.contains(el)) return true;
+      }
+      return false;
+    };
+
+    const touchOnStage = (e: TouchEvent) => {
+      const t = e.touches[0] || e.changedTouches[0];
+      if (!t) return false;
+      if (e.target instanceof Node && root.contains(e.target)) return true;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      return Boolean(el && root.contains(el));
+    };
+
+    const setPageOwns = (owns: boolean) => {
+      pageOwnsRef.current = owns;
+      root.dataset.mirageOwns = owns ? "page" : "pin";
+    };
+    setPageOwns(false);
+
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const p = journeyProgress.get();
+      if (p <= 0.0005 && deltaPx < 0) return false;
+      if (p >= 0.9995 && deltaPx > 0) return false;
+      journeyProgress.set(clamp01(p + deltaPx / virtualDistance()));
+      return true;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current) return;
+      if (!sectionInView()) return;
+      if (!eventOnStage(e)) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const consumed = applyDelta(e.deltaY);
+      if (!consumed && journeyAtEnd() && e.deltaY > 0) setPageOwns(true);
+      if (consumed) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView() || e.touches.length !== 1) {
+        return;
+      }
+      if (!touchOnStage(e)) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      const deltaY = prev - y;
+      const consumed = applyDelta(deltaY);
+      if (!consumed && journeyAtEnd() && deltaY > 0) setPageOwns(true);
+      if (consumed) e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (pinDocked()) setPageOwns(false);
+      if (pageOwnsRef.current || !sectionInView()) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        el.closest(
+          "a, button, input, textarea, select, [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (!consumed && journeyAtEnd() && delta > 0) setPageOwns(true);
+      if (consumed) e.preventDefault();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [journeyProgress, reduced, total, vhPerSheet]);
+
+  // Film plays on its own clock - never scroll-scrubbed, never PSAVE reverse
   useEffect(() => {
     const v = videoRef.current;
     if (!v || reduced) return;
@@ -433,17 +611,16 @@ export default function MirageAgencyHero({
     return () => v.removeEventListener("canplay", tryPlay);
   }, [reduced]);
 
-  const trackHeight = reduced
-    ? "auto"
-    : `${Math.max(3.2, total * vhPerSheet) * 100}vh`;
-
   const active = list[activeIdx] ?? list[0];
 
   return (
     <section
-      ref={trackRef}
-      className="mirage-root"
-      style={{ height: trackHeight }}
+      ref={rootRef}
+      id="mirage-hero"
+      className={`mirage-root${reduced ? "" : " mirage-root--pin"}`}
+      data-product="MS-HERO-MIRA01"
+      data-mirage-drive="pin"
+      data-mirage-progress={activeIdx}
       aria-label={`${brand} agency hero`}
     >
       <div className={`mirage-stage${reduced ? " mirage-stage--static" : ""}`}>
@@ -543,12 +720,28 @@ export default function MirageAgencyHero({
           width: 100%;
           background: #07080f;
         }
-        .mirage-stage {
-          position: sticky;
-          top: 0;
-          height: 100vh;
-          min-height: 680px;
+        /* Pin-until-complete: one viewport. No tall multi-vh track. */
+        .mirage-root--pin {
+          height: 100dvh;
+          min-height: 100vh;
+          max-height: 100dvh;
           overflow: hidden;
+        }
+        .mirage-stage {
+          position: relative;
+          top: 0;
+          height: 100dvh;
+          min-height: 680px;
+          max-height: 100dvh;
+          overflow: hidden;
+        }
+        .mirage-root--pin .mirage-stage {
+          position: relative;
+          top: 0;
+          width: 100%;
+          height: 100dvh;
+          max-height: 100dvh;
+          min-height: min(680px, 100dvh);
         }
         .mirage-stage--static {
           position: relative;

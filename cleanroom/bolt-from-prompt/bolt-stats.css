@@ -1,0 +1,153 @@
+/* BOLT — moire gallery stats. Second ink knocks in. No third color. */
+
+.bolt-root {
+  --bolt-stage: #f5f5f5;
+  --bolt-ink: #111111;
+  --ms-pin-fill: var(--bolt-ink);
+  position: relative;
+  color: var(--bolt-ink);
+  background: var(--bolt-stage);
+  font-family: var(--font-bolt), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.bolt-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.bolt-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-24px) skewX(12deg);
+  opacity: 0;
+}
+
+.bolt-root[data-entered="true"] .bolt-stage {
+  transform: none;
+  opacity: 1;
+  transition:
+    transform 360ms cubic-bezier(0.12, 0.8, 0.18, 1),
+    opacity 360ms cubic-bezier(0.12, 0.8, 0.18, 1);
+}
+
+@media (min-width: 768px) {
+  .bolt-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bolt-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.bolt-enter {
+  opacity: 1;
+}
+
+.bolt-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--bolt-ink);
+  flex-shrink: 0;
+}
+
+.bolt-brand {
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.bolt-meta,
+.bolt-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.bolt-lockup {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.bolt-figure-wrap {
+  position: relative;
+  width: fit-content;
+}
+
+.bolt-figure,
+.bolt-knock {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(5.6rem, 18vw, 12rem);
+  line-height: 0.78;
+  letter-spacing: -0.07em;
+}
+
+.bolt-knock {
+  position: absolute;
+  left: 0.07em;
+  top: 0.045em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--bolt-ink);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+.bolt-root[data-knock="true"] .bolt-knock {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 300ms cubic-bezier(0.55, 0, 0.15, 1);
+}
+
+.bolt-name {
+  margin: 1.15rem 0 0;
+  max-width: 14ch;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.bolt-period {
+  margin: 1rem 0 0;
+  max-width: 28rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.bolt-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+}
+
+.bolt-place {
+  margin: 0 0 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bolt-stage,
+  .bolt-root[data-entered="true"] .bolt-stage,
+  .bolt-knock,
+  .bolt-root[data-knock="true"] .bolt-knock {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+}

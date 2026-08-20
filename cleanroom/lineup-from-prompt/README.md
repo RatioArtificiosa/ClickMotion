@@ -1,37 +1,40 @@
-# Lineup cleanroom — MS-SEC-LINE01
+# Lineup cleanroom - MS-SEC-LINE01
 
-Production reference implementation of the **product line scroll reveal** section.
+Production reference: **product line reveal** with a **data-driven N-SKU** 3D stage.
 
 | | |
 |--|--|
 | Live demo | `/demo/cleanroom-lineup` |
-| Package | `/packages/MS-SEC-LINE01/Lineup-package-l7n3e9k2m4p8.pdf` |
+| Product id | `MS-SEC-LINE01` |
 | Prompt MDX | `content/prompts/sections/MS-SEC-LINE01.mdx` |
-| Customization | **`CUSTOMIZATION.md`** (AI expand / any product) |
+| Customization | **`CUSTOMIZATION.md`** |
 | Buyer short | `BUYER_PROMPT.md` |
+
+## No Scroller (pin-until-complete)
+
+Not PSAVE. Desktop scroll aims virtual progress on **N viewports** (N = `PRODUCTS.length`). Snap on lift. After the last SKU the page owns until dock. Mobile uses horizontal snap cards.
+
+- One `100dvh` stage in normal document flow
+- Do **not** install lenis. Do **not** overflow-hidden the host page
+- gsap stays for SKU cross-fade tweens only. No ScrollTrigger pin
 
 ## Entry
 
 ```tsx
 import LineupSection from "./LineupSection";
-// wrap with SmoothScroll when Lenis is not already on the page
+
+export default function Page() {
+  return (
+    <>
+      <LineupSection />
+      {/* Next sibling may scroll in after the pin releases. */}
+    </>
+  );
+}
 ```
 
-## Data-driven N products
+## Files
 
-Edit **`lineup-data.ts` only** to change count, copy, colors, specs.  
-`LineupSection` maps `PRODUCTS` for pin length, snap, tabs, blooms, ghosts, and mobile cards.
-
-## Capture storefront previews
-
-```bash
-# Next storefront must serve /demo/cleanroom-lineup
-node scripts/capture-lineup-preview.mjs
-```
-
-Outputs:
-
-- `public/assets/videos/lineup-reveal-preview-v1.mp4`
-- `public/assets/videos/lineup-reveal-preview-fs-v1.mp4`
-- `public/assets/posters/lineup-reveal-preview-v1.webp`
-- `public/thumbnails/MS-SEC-LINE01.webp`
+- `lineup-data.ts` - products, chrome, specs
+- `LineupSection.tsx` - desktop virtual progress + mobile cards
+- `Can3D.tsx` / `InlineCan.tsx` - vessel

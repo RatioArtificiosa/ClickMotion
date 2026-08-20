@@ -1,0 +1,173 @@
+/* MARK — vermilion colophon. Letters fall into the line. Not scramble. */
+
+.mark-root {
+  --mark-stage: #1a1a1a;
+  --mark-ink: #f5f0e8;
+  --mark-muted: #9a9488;
+  --mark-line: #f5f0e8;
+  --mark-accent: #e23b2a;
+  color: var(--mark-ink);
+  background: var(--mark-stage);
+  font-family: var(--font-mark-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.mark-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .mark-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mark-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.mark-enter {
+  opacity: 0;
+  transform: translate(-7px, 7px);
+}
+
+.mark-root[data-entered="true"] .mark-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mark-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--mark-ink);
+  flex-shrink: 0;
+}
+
+.mark-brand {
+  font-family: var(--font-mark-display), Newsreader, serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.3rem);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.mark-meta,
+.mark-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mark-muted);
+}
+
+.mark-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.mark-headline {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  font-family: var(--font-mark-display), Newsreader, serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(3rem, 11vw, 7.2rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+
+.mark-glyph {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.mark-root[data-cascade="true"] .mark-glyph {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mark-period {
+  margin: 1.2rem 0 0;
+  max-width: 24rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--mark-muted);
+  transition-delay: 80ms;
+}
+
+.mark-place {
+  margin: 1.1rem 0 0;
+  color: var(--mark-ink);
+  transition-delay: 110ms;
+}
+
+.mark-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 140ms;
+}
+
+.mark-cta {
+  appearance: none;
+  margin: 0;
+  padding: 1rem 1.5rem;
+  border: 0;
+  background: var(--mark-accent);
+  color: var(--mark-ink);
+  cursor: pointer;
+  border-radius: 0;
+  font-family: var(--font-mark-sans), Inter, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mark-root[data-confirmed="true"] .mark-cta {
+  background: var(--mark-ink);
+  color: var(--mark-stage);
+}
+
+.mark-cta:focus-visible,
+.mark-root :is(button):focus-visible {
+  outline: 1px solid var(--mark-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (max-width: 639px) {
+  .mark-cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-enter,
+  .mark-glyph,
+  .mark-root[data-cascade="true"] .mark-glyph {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

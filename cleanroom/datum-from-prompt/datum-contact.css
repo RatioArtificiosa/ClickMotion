@@ -1,0 +1,299 @@
+/* DATUM — swiss inquiry letter. Radius 0. Not Phobia. Not floating labels. */
+
+.datum-root {
+  --datum-stage: #fafafa;
+  --datum-ink: #111111;
+  --datum-muted: #6b6b6b;
+  --datum-line: #e8e8e8;
+  --datum-i: 0;
+  color: var(--datum-ink);
+  background: var(--datum-stage);
+  font-family: var(--font-datum-sans), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.datum-stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.5rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .datum-stage {
+    padding: 2.25rem 3.5rem 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .datum-stage {
+    padding: 2.5rem 4.5rem 2rem;
+  }
+}
+
+.datum-masthead {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  flex-shrink: 0;
+}
+
+.datum-masthead-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--datum-ink);
+}
+
+.datum-brand,
+.datum-meta,
+.datum-place,
+.datum-label,
+.datum-cta {
+  font-family: var(--font-datum-mono), ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.datum-brand {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.datum-meta,
+.datum-place,
+.datum-label {
+  font-size: 0.625rem;
+  color: var(--datum-muted);
+}
+
+.datum-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-top: 1.6rem;
+}
+
+@media (min-width: 900px) {
+  .datum-body {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 3.5rem;
+    align-items: center;
+    padding-top: 1.25rem;
+  }
+}
+
+.datum-copy {
+  max-width: 28rem;
+}
+
+.datum-headline {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2.35rem, 6.2vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.datum-period {
+  margin: 1.1rem 0 0;
+  max-width: 22rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--datum-muted);
+}
+
+.datum-place {
+  margin: 1.15rem 0 0;
+  color: var(--datum-ink);
+}
+
+.datum-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.datum-field {
+  position: relative;
+  display: block;
+  padding-bottom: 0.15rem;
+}
+
+.datum-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  transition: color 180ms ease;
+}
+
+.datum-field:focus-within .datum-label {
+  color: var(--datum-ink);
+}
+
+.datum-field input,
+.datum-field textarea {
+  appearance: none;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0 0.7rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--datum-ink);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  resize: none;
+}
+
+.datum-field input:focus,
+.datum-field input:focus-visible,
+.datum-field textarea:focus,
+.datum-field textarea:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.datum-root input:focus-visible,
+.datum-root textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.datum-field input:read-only,
+.datum-field textarea:read-only {
+  cursor: default;
+}
+
+.datum-rule {
+  display: block;
+  height: 1px;
+  background: var(--datum-line);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.datum-rule--focus {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--datum-ink);
+  transform: scaleX(0);
+}
+
+.datum-field:focus-within .datum-rule--focus {
+  transform: scaleX(1);
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.datum-type {
+  opacity: 0;
+}
+
+.datum-root[data-entered="true"] .datum-type {
+  opacity: 1;
+  transition: opacity 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.datum-root[data-entered="true"] .datum-masthead-rule,
+.datum-root[data-entered="true"] .datum-rule--rest {
+  transform: scaleX(1);
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.datum-root[data-entered="true"] .datum-masthead-rule {
+  transition-delay: 0ms;
+}
+
+.datum-root[data-entered="true"] .datum-field .datum-rule--rest {
+  transition-delay: calc(80ms + var(--datum-i) * 40ms);
+}
+
+.datum-root[data-entered="true"] .datum-field:focus-within .datum-rule--focus {
+  transition-delay: 0ms;
+}
+
+.datum-foot {
+  padding-top: 0.35rem;
+}
+
+.datum-cta {
+  appearance: none;
+  border: 1px solid var(--datum-ink);
+  background: var(--datum-ink);
+  color: var(--datum-stage);
+  padding: 0.9rem 1.4rem;
+  font-size: 0.6875rem;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.datum-cta:hover,
+.datum-cta:focus-visible {
+  background: transparent;
+  color: var(--datum-ink);
+}
+
+.datum-cta:focus-visible {
+  outline: 1px solid var(--datum-ink) !important;
+  outline-offset: 3px;
+  box-shadow: none !important;
+}
+
+.datum-root[data-sent="true"] .datum-cta,
+.datum-root[data-sent="true"] .datum-cta:hover {
+  background: var(--datum-ink);
+  color: var(--datum-stage);
+  cursor: default;
+}
+
+.datum-root[data-landed="false"] .datum-cta {
+  cursor: default;
+}
+
+@media (max-width: 639px) {
+  .datum-cta {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .datum-type {
+    opacity: 1;
+    transition: none;
+  }
+
+  .datum-masthead-rule,
+  .datum-rule--rest {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .datum-rule--focus {
+    transform: scaleX(0);
+    transition: none;
+  }
+
+  .datum-field:focus-within .datum-rule--focus {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .datum-label {
+    transition: none;
+  }
+}

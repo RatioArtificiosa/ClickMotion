@@ -1,0 +1,199 @@
+/* KILN — celadon wet. One drip of glaze. Not mint SaaS. */
+
+.kiln-root {
+  --kiln-stage: #c5d5c8;
+  --kiln-ink: #1c2e28;
+  --kiln-muted: #4a6358;
+  --kiln-line: #9bb0a4;
+  --kiln-accent: #f4fbf6;
+  --ms-pin-fill: #1c2e28;
+  position: relative;
+  color: var(--kiln-ink);
+  background: var(--kiln-stage);
+  font-family: var(--font-kiln-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.kiln-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.kiln-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .kiln-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .kiln-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.kiln-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.kiln-root[data-entered="true"] .kiln-enter {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kiln-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--kiln-line);
+  flex-shrink: 0;
+}
+
+.kiln-brand {
+  font-family: var(--font-kiln-display), Fraunces, serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.kiln-meta,
+.kiln-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--kiln-muted);
+}
+
+.kiln-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  transition-delay: 90ms;
+}
+
+.kiln-name {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  width: fit-content;
+  font-family: var(--font-kiln-display), Fraunces, serif;
+  font-weight: 600;
+  font-size: clamp(3.2rem, 12vw, 8rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+
+.kiln-drip {
+  position: absolute;
+  top: 6%;
+  right: 9%;
+  width: 3px;
+  height: 38px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, transparent, var(--kiln-accent) 35%, #ffffff);
+  opacity: 0;
+  transform: translateY(-32px);
+  pointer-events: none;
+}
+
+.kiln-root[data-drip="true"] .kiln-drip {
+  animation: kiln-drip 880ms cubic-bezier(0.22, 1.2, 0.36, 1) 1 forwards;
+}
+
+@keyframes kiln-drip {
+  0% {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+  42% {
+    opacity: 0.95;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+}
+
+.kiln-period {
+  margin: 1.15rem 0 0;
+  max-width: 22rem;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  color: var(--kiln-muted);
+}
+
+.kiln-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 180ms;
+}
+
+.kiln-place {
+  margin: 0 0 1rem;
+}
+
+.kiln-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.4rem;
+}
+
+.kiln-index button {
+  appearance: none;
+  margin: 0;
+  padding: 0.35rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--kiln-muted);
+  cursor: pointer;
+  font-family: var(--font-kiln-display), Fraunces, serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  border-radius: 0;
+}
+
+.kiln-index button[data-active="true"] {
+  color: var(--kiln-ink);
+}
+
+.kiln-index button:focus-visible,
+.kiln-root :is(button):focus-visible {
+  outline: 1px solid var(--kiln-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kiln-enter,
+  .kiln-drip,
+  .kiln-root[data-drip="true"] .kiln-drip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+
+  .kiln-drip {
+    opacity: 0;
+  }
+}

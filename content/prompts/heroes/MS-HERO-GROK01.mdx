@@ -1,0 +1,328 @@
+---
+id: "MS-HERO-GROK01"
+title: "Grok Bot - Las Vegas Sphere Scroll Hero"
+slug: "grokbot-vegas-sphere-hero"
+description: "A night-city pin narrative where scroll aims a Sphere-scale Grok Bot film and the picture never jumps. Ice glass HUD stays alive. Fully customizable copy, tokens, and film for your AI brand."
+version: "2.1.0"
+created: "2026-08-16"
+updated: "2026-08-16"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "saas"
+subcategory: "ai-product"
+styleTags: ["dark-cinematic", "liquid-glass", "corporate"]
+technicalTags: ["video-background", "scroll-trigger", "pin-until-complete"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/grokbot-preview-v1.webm"
+previewVideoFullscreen: "/assets/videos/grokbot-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-GROK01.webp"
+liveDemo: "/demo/cleanroom-grokbot"
+videoBackgrounds:
+  - file: "/assets/videos/grokbot-sphere-v1.mp4"
+    format: "mp4"
+    duration: "63s"
+    loop: false
+    sizeMb: 127
+    poster: "/assets/posters/grokbot-sphere-v1.webp"
+dependencies:
+  - { name: "lucide-react", version: "^0.468.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 17000
+useCases: ["ai-agent-homepage", "enterprise-ai-launch", "night-city-product", "product-reveal"]
+compatibleWith: ["MS-HERO-ELYS01", "MS-HERO-REVL01", "MS-HERO-VERT01", "MS-HERO-STIL01", "MS-HERO-PRSM01"]
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**Grok Bot** is a full-viewport **AI-agent pin-until-complete** scroll hero: one night-city stage, a 62.5-second Las Vegas Sphere film the playhead walks from black open to the last frame, under a locked ice liquid-glass HUD. **Dual process = PSAVE + No Scroller.** **PSAVE** (Perfect Scroll Video Engine): scroll aims, down plays forward, up plays reverse, the picture never jumps a frame. **No Scroller:** the page does not physically scroll during the journey. HUD CSS loops stay alive (sheen, ice trip, marquee, orb). Not a tall multi-vh sticky track. Not wallpaper-only. Not Meridian estate scrub. Not Elyse sanctuary gold.
+
+**Why use it:**
+- AI agent, enterprise AI, and night-city product launches that sell **presence as craft**
+- Dual-process signature: scroll aims a long even Sphere film; the picture plays; the page stays still
+- Syne + Outfit restages cleanly for any ice-glass AI brand
+- Client HD is pure film (no burnt UI). Storefront dual previews are separate
+
+Default copy (**Finish / the / swing.** through **Meet your first Bot**) is official Grok Bot language from the public product page. Restage brand, nav, proofs, thread, ticker, and CTAs until it is unmistakably yours. The Sphere is **setting only**. This is not an xAI partnership claim. Do not swap in Optimus.
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build Grok Bot using the files in this folder. Read PROMPT.md and follow it. Prefer source/GrokBotHero.tsx plus hero.css and copy.ts. Dual process: PSAVE plus No Scroller. Pin-until-complete. Scroll aims on 12 viewports (62.5s even Sphere film: two flicks must not dump the film). Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward at the same 1.2x, one 3-frame step per seek. Never jump a frame. When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. HUD loops keep running. Release only when the picture arrives. After release the host page may continue. Replacement films must be re-encoded GOP 3, no B-frames, 25fps. Do not seek the playhead across the film. Do not install gsap. Do not restyle tokens off the lock.*
+
+---
+
+## Design System
+
+**Aesthetic Direction:** Ice liquid-glass prestige on a night-city Sphere. Canvas near-black, ice `#eef4ff`, amber `#f0d7a8`, frost 3-6% white. Syne 800 display, Outfit 300-500 body. Thin blur 12 / heavy blur 18. Saturate 210-250%. **Not** neon SaaS, purple mesh, cream spa, or Meridian dark-gold estate.
+
+**Famous-UI craft direction (not a clone):** Official Grok Bot ice HUD plus Sphere-scale night cinema. One signature system: **PSAVE** on a **pinned 100dvh** stage. Scroll aims. The whole film plays forward or reverse to that moment. The HUD never freezes.
+
+**Typography:**
+- Display / H1: Syne 800, tracking tight, size about `108.8px` at 1440 desktop (clamp down on small screens)
+- Mark / nav: Syne 700 about 12.48px
+- Body / lead: Outfit 300-400, 15-16px, ice at mist `rgba(232, 238, 248, 0.74)`, lead line-height `1.55`
+- Ghost / links: Outfit, 12.16px mist
+- Download (sm primary): 11.84px, pad 15.2, height about 35.2
+
+**Color tokens (do not drift):**
+
+| Token | Value |
+|-------|--------|
+| Ice | `#eef4ff` |
+| Amber | `#f0d7a8` |
+| Mist | `rgba(232, 238, 248, 0.74)` |
+| Mute | `rgba(220, 228, 240, 0.52)` |
+| Frost | `rgba(255, 255, 255, 0.045)` (3-6% white) |
+| Frost heavy | `rgba(255, 255, 255, 0.062)` |
+| Primary 3D | `#0a0c12` |
+| Canvas | near `#05060a` / `#0a0c12` |
+
+**Glass budget:** thin blur `12` on nav / proofs / ticker. Heavy blur `18` on the thread only. Saturate `210-250%`. Ice trip `--trace-at` 0 to 880, hide at 890. Never 1000 while visible. Primary sheen once per `12.5s`.
+
+**Spacing:** 8px grid. Stage `100vw × 100vh`. Safe horizontal inset min ~2rem. Type never flush to edge.
+
+**Anti-slop hard ban:** neon cyan/pink, purple mesh, pill SaaS dock as only identity, grey full-frame wash, Optimus / Tesla robot, Sphere partnership claims, GSAP ScrollTrigger scrub, tall multi-vh sticky track, wallpaper-only loop.
+
+**Differentiation:**
+
+| vs | Grok Bot must not become |
+|----|---------------------------|
+| Still | Night wellness cosmos + five chapters + mint bar |
+| Prism | Multi-panel liquid identity, no Sphere HUD |
+| Elyse | 10s sanctuary, 3.6 vh leftover dest, gold earth |
+| Vertex | Mono security, 3.6 vh, no footer, white bar |
+| Meridian | Seek-scrub only (3.2 vh, gain 0.22, lag 0.45) |
+| Generic AI SaaS | Purple mesh + gradient orbs + "Meet the future" |
+
+---
+
+## Layout Structure
+
+- **One pinned `100dvh` stage** in normal document flow. **No** tall spacer. **No** `position: sticky`. **Do not** `overflow: hidden` the host page.
+- Film absolute cover (`object-fit: cover`, slight `scale(1.04)`, position `52% 46%`) under a dual-edge veil (left type field + side/bottom vignette). Center Sphere stays clean.
+- Grain overlay ~3.5% mix-blend overlay. Pointer-driven spotlight (`--nx` / `--ny`).
+- Top nav: mark (orb + Grok Bot) + Product · How it works · Safety · Enterprise + Sign in (ghost) / Download (small 3D primary)
+- Left copy column: Early beta kicker + SuperGrok Heavy, three-line H1, lead, dual CTAs
+- Right float: Inbox Bot thread (heavy glass, ice trip, live orb, three messages)
+- Bottom proofs (three glass cards) + Sphere · Las Vegas place line
+- Bottom ticker: In flight + looping job names
+- Scroll badge (video opens black): hide **5 seconds after first real scroll**
+- After the picture arrives at 1, the pin **releases** so a host page can continue
+
+---
+
+## Content Slots
+
+| Slot | Default | Notes |
+|------|---------|--------|
+| brand | Grok Bot | Wordmark. Official spelling with space |
+| house | SuperGrok Heavy | Kicker right |
+| nav | Product · How it works · Safety · Enterprise | Desktop |
+| nav_ghost | Sign in | Ghost |
+| nav_solid | Download | Small 3D primary |
+| kicker | Early beta | Live-dot + house |
+| h1 | Finish / the / swing. | Three lines. `swing.` is amber emphasis |
+| lead | Always-on agents with their own computer. They sign into the tools you already use, work 24/7, and only come back when something needs you. | Exact |
+| cta_primary | Meet your first Bot | Arrow + ice trip |
+| cta_secondary | Download for macOS | Glass |
+| proofs | Own computer · Your stack · A real team | Three cards |
+| thread | Close Q3 inbound. / Signed into the CRM. Scoring 142 leads. / 18 drafts ready. Need you on the top five. | You + Bot |
+| ticker | Sales outbound · Inbox to zero · Bug reproduction · New-hire seating · Invoice run · Follow-ups · Marketing campaigns | Loop |
+| place | Sphere · Las Vegas | Setting only |
+
+Copy lock: keep these strings unless the buyer restages. The only house change from the original public page is `sites - even tools` (em dash became hyphen). Do not invent new marketing claims. Do not add Optimus.
+
+---
+
+## Motion Specification
+
+**Mode:** Scroll-as-narrative · **pin-until-complete** (**No Scroller**) · **PSAVE** (Perfect Scroll Video Engine). **Dual process.** Scroll sets a destination on `12` viewports. Down plays the film forward at **1.2x**. Up plays it backward at the same **1.2x**, **exactly one 3-frame step per seek**. Never jump a frame. **When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little**, then rate eases to a stop. HUD CSS loops (sheen 12.5s, ice trip, marquee, orb spin, live dots) **keep running**. Release only when the **picture** arrives at `0` (up) or `1` (down). **Do not** autoplay-loop as primary. **Do not** seek `currentTime` across a jump.
+
+**Hard ban:** tall multi-vh document scrollbar track.
+**Hard ban:** seeking the playhead to a far destination (`video.currentTime = dest * duration` on a large delta).
+**Hard ban:** a 3.6 aim track on this 62.5s film (two flicks dump dest). Locked earn is **12**.
+**Hard ban:** pausing HUD loops when the film chases.
+**Hard ban:** a low-res frame buffer or canvas overlay for reverse. Reverse walks the live video.
+**Hard ban:** releasing the pin because the destination hit 1 while the picture is still walking.
+**Hard ban:** a window wheel listener that keeps driving the film after the pin has released.
+**Hard ban:** a replacement film with one I-frame (or long GOP + B-frames). Reverse will stall mid-film.
+**Hard ban:** pausing on the last wheel tick. The stop is friction, then a graceful slowdown.
+**Hard ban:** installing `gsap` or importing `ScrollTrigger`.
+
+```
+const VIRTUAL_VIEWPORTS = 12;  // GOLD: 62.5s even Sphere. Not Elyse/Vertex 3.6.
+const PSAVE_RATE = 1.2;        // film-seconds per wall-second, both directions
+const PSAVE_FRAME = 1 / 25;    // this film is 25fps
+const PSAVE_REV_STRIDE = 3;    // reverse: exactly 3 frames per seek (0.12s)
+const PSAVE_LIVE_MS = 280;     // still scrolling if last up/down is inside this window
+const PSAVE_COAST_SEC = 0.55;  // leftover dest floor after last real intent
+const PSAVE_EASE_SEC = 0.55;   // forward rate tapers over last leftover film-seconds
+const PSAVE_FLIP_DEADZONE_PX = 32; // ignore tiny opposite trackpad ticks
+```
+
+**Earn vs perceived time:** this film is **even** Sphere time (the night-city show runs the whole 62.5s, not a late kick). Even films that are **short** (Elyse 10s, Vertex 12s) lock at **3.6**. This film is **long**. Two 1800px flicks on 3.6 dump dest past the last beat. On **12**, those same flicks aim about one third of the film. The visitor earns the Sphere. Do not copy Elyse 3.6. Do not flatten the edit.
+
+**The lift:** leftover dest is the Elyse stop. On this 62.5s film dest still dies (1.2x eats it; a tiny opposite tick snaps dest). After last real intent, dest must sit at least `0.55s` of film ahead. Ignore opposite ticks under `32px`. Forward `playbackRate` stays 1.2 until leftover dest is under `0.55s`, then tapers toward ~0.42. Friction, then a graceful stop. Live window is **280ms**.
+
+**Rebuild algorithm (mandatory):** one `100dvh` stage in **normal document flow**. There is **no** required next-sibling band inside this product. Do not `overflow: hidden` the page (a host embed must be able to scroll after release). Do not import ScrollTrigger or GSAP. Do not use `position: sticky`. Do not build a tall spacer. Gestures map **1:1** onto `12` viewports and only move the **destination**. First **real** opposite gesture snaps destination to the picture. Ignore tiny opposite ticks. Each frame, walk the picture toward that destination at **1.2x**, never more than **1/25s** of film on a forward fallback tick. **Down:** muted `play()` at `playbackRate 1.2`, ease over the last `0.55s` of leftover dest. After they lift, apply the `0.55s` dest floor once if dest is closer than that. **Up:** first real up-scroll cancels a pending forward destination. Walk `currentTime` backward exactly one 3-frame step per seek, **during the gesture and after**. Wait `seeked`. Never seek to the stop point. No loop. No low-res buffer. Release only when the **picture** is at `0+up` / `1+down`. Test live `currentTime` as well as the playhead ref (settle can stop ~1 frame short). After release the **page** owns scroll until the stage docks at the top (`top >= -2`). **Opening frame:** film starts black. Show a Scroll badge. Hide it **5 seconds after the first real scroll**. Reduced motion keeps the poster and static HUD.
+
+| Element | Motion |
+|---------|--------|
+| Film | PSAVE: play toward destination forward or reverse, never jump a frame |
+| Stage | Pinned 100dvh; no tall page track |
+| Wheel | 1:1 onto the 12 aim track (destination only) |
+| Lift | 0.55s dest floor + rate ease. Friction, then a graceful stop. |
+| HUD | Sheen 12.5s, ice trip, marquee, orb, live dots keep looping |
+| Scroll badge | Visible on black open. Hide 5s after first real scroll |
+| Reduced motion | 100dvh static stage, poster + HUD, no PSAVE |
+
+Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, pageOwns, productId: "MS-HERO-GROK01" }`. `getProgress` is the picture. `getTarget` is leftover dest. Root marker: `data-grokbot-drive="psave"`. After release: `data-grokbot-owns="page"`.
+
+---
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/grokbot-sphere-v1.mp4` (PSAVE B-roll, GOP 3, no B-frames, 62.52s / 25fps / **521 I-frames** / 1042 P / 0 B / ~127 MB)
+- Poster: `/assets/posters/grokbot-sphere-v1.webp` (pure film, Sphere visible)
+- Storefront page + browse/gallery (presentation only): `/assets/videos/grokbot-preview-v1.webm` (operator Premiere **full** screenshot WebM, 63.76s, 1440×900. Same full video on product page **and** gallery. Do not re-encode this role to mp4. Do not use as the hero.)
+- Storefront FS (presentation only): `/assets/videos/grokbot-preview-fs-v1.mp4` (operator Premiere **full** 1920×1080, 63.76s)
+- Attributes (client build): muted playsInline preload auto. **No** primary wallpaper loop. **No** autoPlay as the product mode.
+- Object-fit: cover. Slight `scale(1.04)`. No extra CSS blur on the film.
+
+**Buyer film generation:** pack file `VIDEO_GEN_PROMPT.md` (pure world, no UI).
+
+**Required film subject:** Las Vegas Sphere at dusk/night with a white Grok Bot face on the dome. City hotels, blue hour, then the Sphere show. No logos other than the face on the dome. No UI. No watermarks.
+
+**Forbidden film subjects:** Optimus / humanoid Tesla robot, generic office AI stock, neon cyberpunk alley, readable third-party brand marks, partnership title cards.
+
+**Film encode (if you change the video):** the shipped client HD is H.264, **GOP 3**, **no B-frames**, 25fps, 62.52s, **521 I-frames**. PSAVE reverse seeks every `0.12s`. Re-encode any replacement:
+
+```
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset medium -crf 18 -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart grokbot-sphere-v1.mp4
+```
+
+Wire that remastered file. Keep 25fps, or set `PSAVE_FRAME = 1/fps` and keep a 3-frame reverse stride. Do not extract PNG frames. Do not use a storefront preview as the hero. Keep leftover dest + 0.55s dest floor on lift. If the new film is much shorter, you may lower the aim track only after two-flick smoke (two flicks must not dump the film). If it is slow-then-kick, keep 12 or raise until the kick is earned.
+
+```txt
+Use ONLY the local paths above. Never hotlink foreign CDNs.
+Scroll aims. The film plays to that moment. Do not skip frames.
+The whole movie plays. Do not cut it to a highlight loop.
+```
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, large display type, thread + proofs + ticker |
+| ≥1024px | Full nav; thread visible; dual CTA row |
+| ≥768px | Nav links visible; thread may compress |
+| <768px | Hide center nav links; stack CTAs; keep proofs readable; **stage still one viewport** |
+| ≤390px | Tighter type clamp; ticker may hide; film cover |
+| Reduced motion | 100vh static; poster + HUD; no chase |
+
+---
+
+## Accessibility
+
+- Semantic section / header / nav / h1
+- Focus rings ice on night field
+- Ice on night overlays meet body contrast intent
+- `prefers-reduced-motion`: still + HUD. No PSAVE
+- Video decorative (`aria-hidden`)
+- Pin consumes wheel / touch / keys while the journey runs; **releases** at ends so a host page can continue. Do not trap Space on focused links.
+- Do not trap keyboard focus
+- Scroll badge is `aria-hidden` (instructional, not content)
+
+---
+
+## Performance Notes
+
+- Playhead chase only (no GSAP, no Framer, no ScrollTrigger)
+- Single video element; decode readiness on metadata
+- HUD CSS animations are cheap transforms / opacity
+- `will-change` only where the sheen and trip need it
+- Fonts: `display: swap` (Syne + Outfit)
+- One viewport stage (no tall spacer DOM)
+- Client film **GOP 3 / no B-frames**
+- Prefer WebP poster
+- lucide-react is one icon. Tailwind is optional if your stack already has it
+
+---
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder. You should see `START-HERE.md` at the top level.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place film + poster at the public paths above (see START-HERE).
+4. Use `source/GrokBotHero.tsx`, `source/hero.css`, and `source/copy.ts`. Do not rewrite the engine unless the files are missing.
+5. **Do not install gsap.** Load Syne 600/700/800 and Outfit 300/400/500 (`--font-gb-display` / `--font-gb-body`).
+6. Mount the hero on a page that is **not** `overflow: hidden`.
+7. Verify: page does not physically scroll during the journey; tiny click creeps; fling plays; lift coasts; reverse walks 3-frame steps; HUD loops stay; Scroll badge hides 5s after first scroll; reduced motion.
+8. Restage with **CUSTOMIZATION.md**. Optionally regenerate film with **VIDEO_GEN_PROMPT.md**, then GOP-3 remaster before wiring.
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite. `"use client"`. Implement **PSAVE** (12 viewport aim track, **1.2x** forward and reverse, reverse every 3rd frame, leftover dest plus 0.55s dest floor on lift, never jump a frame), **HUD loops stay**, **no tall track**, page-owns after release so a host page can continue. If the video is replaced, re-encode GOP 3 / no B-frames first.
+
+**Lovable / Bolt:** Single self-contained component plus CSS + copy module; same tokens. Walk `currentTime` toward the destination on `requestAnimationFrame` at 1.2x, max one 25fps frame per forward tick, reverse every 3rd frame. Still no wallpaper loop. Still **no tall multi-vh track**. Still **no seek across a jump**. Still **no GSAP**.
+
+Do not rebuild as a tall sticky scroll track. Do not seek the playhead across a jump. Do not wire a replacement MP4 that still has a long GOP. Do not freeze the HUD.
+
+---
+
+## Expected Output
+
+1. React files `GrokBotHero.tsx` + `hero.css` + `copy.ts` (`"use client"`)
+2. **Pinned 100dvh stage** with dual process PSAVE + No Scroller (no tall multi-vh track)
+3. Local Sphere video the playhead walks (aim **12 vh**, rate **1.2x**, reverse every 3rd frame, 0.55s dest floor on lift, never jump a frame)
+4. Ice HUD: nav, title, lead, CTAs, proofs, thread, ticker, place
+5. Ice / amber / frost system only. Token lock holds.
+6. HUD loops stay. Scroll badge hides 5s after first real scroll.
+7. Reduced-motion path (poster + HUD)
+8. Host page can scroll after the picture arrives
+9. Local film + poster paths resolve; no storefront chrome in the client build
+
+---
+
+## What to tell your AI
+
+```
+Build Grok Bot using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Prefer source/GrokBotHero.tsx, source/hero.css, and source/copy.ts.
+Dual process: PSAVE (Perfect Scroll Video Engine) plus No Scroller (pin-until-complete).
+One 100dvh stage. Scroll aims on 12 viewports. The page does not physically scroll during the journey.
+Down-scroll plays the whole Sphere film forward at 1.2x. Up-scroll plays it backward every 3rd frame at the same 1.2x. Never jump a frame.
+When they stop, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Ignore tiny opposite ticks.
+The film is a 62.5s even Sphere show. Two flicks must not dump dest. Do not copy Elyse 3.6.
+HUD loops stay (sheen, ice trip, marquee, orb). Release only when the picture arrives. After release the page may continue.
+If you change the video, re-encode GOP 3, no B-frames, crf 18, 25fps, then wire that file.
+Do not import ScrollTrigger or gsap. Do not seek currentTime across a jump. Do not build a tall multi-vh track.
+Keep official Grok Bot copy unless I restage it. Sphere is setting only. Do not add Optimus.
+```
+
+To restage later, open CUSTOMIZATION.md. To generate a new film, open VIDEO_GEN_PROMPT.md.
+
+---
+
+## Package notes (operators)
+
+- Opaque: `g7k0b8t4vg2n` · PaidSalt: `gk4n8x`
+- Pack mode: **files zip + PDF** (Studio-class folder). Zip root = START-HERE.md
+- Client media only under package `assets/` (no storefront previews)
+- Client HD: `/assets/videos/grokbot-sphere-v1.mp4` · poster `/assets/posters/grokbot-sphere-v1.webp`
+- Storefront page+browse: `grokbot-preview-v1.webm` (**full** 63.76s operator Premiere WebM, keep WebM, same file on product page and gallery). FS: `grokbot-preview-fs-v1.mp4` (**full** 63.76s 1080p)
+- Pin gold: PSAVE · 12 vh aim · 1.2x · 3-frame reverse · 280ms live · 0.55s dest floor + rate ease · 32px bounce ignore · GOP 3 client HD (521 I / 1042 P / 0 B) · 25fps
+- Method spec (operators): `docs/PSAVE.md`
+- Demo: `/demo/cleanroom-grokbot` (do not overflow-hidden the page)
+- Dual process lock: 2026-08-16 · Platinum backend pack **v2.1.0**
+- Sphere is setting only. Official Grok Bot. Not a partnership claim.
+
+ClickMotion · www.ClickMotion.dev

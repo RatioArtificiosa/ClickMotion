@@ -3,19 +3,19 @@ id: "MS-SEC-LINE01"
 title: "Lineup - Product Line Scroll Reveal Section"
 slug: "lineup-product-line-scroll-reveal-section"
 description: "Your products enter one by one as the visitor scrolls - a living 3D vessel, soft copy, and a quiet stage that can hold any line from two SKUs to a full collection."
-version: "1.0.0"
+version: "2.1.0"
 created: "2026-08-10"
-updated: "2026-08-10"
+updated: "2026-08-16"
 author: "MS Team"
 status: "published"
 type: "section"
 category: "ecommerce"
 subcategory: "food-beverage"
 styleTags: ["editorial", "3d-immersive", "minimal", "organic"]
-technicalTags: ["scroll-trigger", "3d-threejs", "webgl", "text-split"]
+technicalTags: ["pin-until-complete", "3d-threejs", "webgl", "text-split"]
 motionIntensity: "extreme"
 difficulty: "advanced"
-priceTier: "free"
+priceTier: "pro"
 aiToolsRating:
   cursor: 5
   lovable: 3
@@ -23,9 +23,10 @@ aiToolsRating:
   claude: 5
   grok-build: 5
 frameworksSupported: ["react"]
-previewVideo: "/assets/videos/lineup-reveal-preview-v1.mp4"
+previewVideo: "/assets/videos/lineup-reveal-preview-v1.webm"
 previewVideoFullscreen: "/assets/videos/lineup-reveal-preview-fs-v1.mp4"
 thumbnail: "/thumbnails/MS-SEC-LINE01.webp"
+poster: "/assets/posters/lineup-reveal-preview-v1.webp"
 liveDemo: "/demo/cleanroom-lineup"
 videoBackgrounds: []
 dependencies:
@@ -33,9 +34,8 @@ dependencies:
   - { name: "three", version: "^0.170.0", required: true }
   - { name: "@react-three/fiber", version: "^9.0.0", required: true }
   - { name: "@react-three/drei", version: "^10.0.0", required: true }
-  - { name: "lenis", version: "^1.1.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: false }
-estimatedTokens: 16000
+estimatedTokens: 17000
 useCases: ["product-line-section", "cpg-sku-carousel", "flavor-lineup", "multi-product-reveal", "ecommerce-midpage"]
 compatibleWith: ["MS-HERO-ACTU01"]
 positionInPage: "middle"
@@ -44,6 +44,8 @@ positionInPage: "middle"
 ## Promise (buyer-facing)
 
 **Lineup** is a mid-page **product reveal section** where scroll becomes a private tasting of your range. The stage pins. Each scroll segment lands a new SKU: 3D vessel cross-fades, bloom tint shifts, copy card rebuilds, ghost number breathes. Visitors do not swipe a flat carousel of thumbnails. They meet each product with intention.
+
+**No Scroller (pin-until-complete).** Scroll aims virtual progress on **N viewports** (N = product count). The page does not physically scroll during the viewing. SKUs snap on lift. When the journey ends, the pin **releases**. Then the **page owns the wheel** until the stage docks at the top of the viewport again. Pointer on the next sibling never drives the lineup. Not a tall sticky track. Not GSAP ScrollTrigger pin. Not Lenis. Not PSAVE.
 
 **Why use it:**
 - Your line (2, 3, 5, or more) feels curated and premium, not grid-dumped
@@ -54,9 +56,12 @@ positionInPage: "middle"
 
 Default demo (ACTUALLY Clear / Dawn / Dusk cans) is only a starting board. Tell your AI to restage products, expand the count, or swap the vessel type until it is unmistakably yours.
 
-**Package PDF:** `/packages/MS-SEC-LINE01/Lineup-package-l7n3e9k2m4p8.pdf`  
+**How you build it:** download the product pack (prompt + source + mesh + labels + HDRI). Tell your AI: *Build Lineup using the files in this folder. Read PROMPT.md and follow it. Prefer source/LineupSection.tsx and source/lineup-data.ts. No Scroller: pin-until-complete. One 100dvh stage. Scroll aims virtual progress on N viewports. Snap on lift. At 0 plus up, or 1 plus down, release. After release at the end, the page owns scroll until the stage docks (top >= 0; implement >= -2). Do not install lenis. Do not build a tall multi-vh sticky track. Do not add PSAVE. Keep gsap for SKU cross-fade tweens only.*
+
+**Package PDF:** `/packages/MS-SEC-LINE01/Lineup-package-l7n3e9k2m4p8-q3n7w2.pdf`  
+**Files zip:** `/packages/MS-SEC-LINE01/Lineup-files-l7n3e9k2m4p8-q3n7w2.zip`  
 **Live demo:** `/demo/cleanroom-lineup`  
-**Deep AI guide:** `cleanroom/lineup-from-prompt/CUSTOMIZATION.md`
+**Deep AI guide:** `CUSTOMIZATION.md` in the pack
 
 ## Design System
 
@@ -91,7 +96,7 @@ Default demo (ACTUALLY Clear / Dawn / Dusk cans) is only a starting board. Tell 
 ## Layout Structure
 
 - **Section only** - no forced site chrome
-- **Desktop:** pin `top top`, end `+= N * 100vh` where N = product count, scrub + snap
+- **Desktop:** one `100dvh` stage in flow. Virtual earn **N viewports** (not page height). Snap on lift. Pin freeing after the last SKU.
 - **Grid:** copy `5fr` / stage `7fr`
 - **Mobile:** horizontal snap cards, swipe to change SKU
 - **Tabs:** SKU numbers (01 02 03…) jump to pin progress
@@ -127,7 +132,7 @@ All buyer-facing strings live in **`lineup-data.ts`**: `SECTION_META`, `PRODUCTS
 The section is **data-driven** by the `PRODUCTS` array. `LineupSection` uses `COUNT = PRODUCTS.length` for pin, snap, tabs, blooms, ghosts, and mobile cards.
 
 1. **Add a product:** append an object with all `LineupProduct` fields (include `labelPath`).
-2. **Pin length** becomes `N × viewport height` automatically (`end: += N * innerHeight`).
+2. **Virtual earn** becomes `N × viewport height` automatically (not a document spacer).
 3. **Snap points** become `0, 1/N, 2/N, …, 1` via `snapPoints(COUNT)`.
 4. **Tabs, ghosts, blooms, 3D stage** map over the array - no hand-edit of magic `3`.
 5. **Recommended range:** 2–6 for comfort; 7–8 possible if copy stays short.
@@ -140,16 +145,78 @@ Ask your AI: *“Expand Lineup from 3 to 5 products using this data: [list]. Upd
 
 ## Motion Specification
 
-**Mode:** scroll-scrub pin + snap (desktop). Not free-play film.
+**Mode:** **No Scroller** = **pin-until-complete**. Virtual progress `g` 0→1 on **N viewports**. Snap on lift. Not PSAVE. Not a tall page track.
+
+```
+Earn desktop: VIRTUAL_VIEWPORTS = PRODUCTS.length
+virtualDistance = VIRTUAL_VIEWPORTS * window.innerHeight
+delta progress = wheelDeltaY / virtualDistance
+Snap on lift to 0, 1/N, 2/N, …, 1
+```
 
 | Event | Timing | Notes |
 |-------|--------|-------|
-| Pin | top top → += N·vh | scrub 1 |
-| Snap | 0…1/N…1 | soft 0.25–0.55s |
-| Product change | active index | can x/y/rot/scale/opacity cross-fade ~0.85s |
+| Pin engage | section in view, journey not finished | consume wheel / touch / keys |
+| Product change | `floor(g * N)` | can x/y/rot/scale/opacity cross-fade ~0.85s |
+| Snap | 140ms after last gesture | nearest SKU stop |
 | Copy card | out 0.25s / in 0.45s stagger | data-stage-item |
 | Bloom / ghost | 0.7–0.8s | per active SKU |
-| Tabs / arrows | instant jump | keyboard + click |
+| Release | g ≤ 0 + up, or g ≥ 1 + down | host page may continue |
+| **Pin freeing** | after g = 1 + down | **page owns** until stage docks (`top >= -2`) |
+| Tabs / arrows | jump `g` to i/N | keyboard + click |
+
+**Hard ban:** GSAP `ScrollTrigger` pin + `pinSpacing`.
+**Hard ban:** Lenis / SmoothScroll.
+**Hard ban:** an N vh **document spacer** (N is **virtual earn** only).
+**Hard ban:** installing `lenis`. gsap stays for SKU tweens only.
+**Hard ban:** PSAVE / film reverse.
+**Hard ban:** `overflow: hidden` on the host page.
+
+Root marker: `data-lineup-drive="pin"` · `data-product="MS-SEC-LINE01"`. After release: `data-lineup-owns="page"`. Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, pageOwns, productId: "MS-SEC-LINE01" }`.
+
+**Reduced motion:** first product static, readable copy. No chase.
+
+**Confirm (desktop 900px tall, N = 3):** two 1800px flicks = `g = 1.0` with page `scrollY` still 0. One more down-scroll releases. First up after release moves the page, not the lineup.
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Behavior |
+|------------|----------|
+| <640 | Horizontal snap cards. IntersectionObserver card-in. No tall page track. |
+| 640-767 | Same mobile cards. |
+| 768-1023 | Desktop pin. Earn N vh. Snap on lift. |
+| 1024-1535 | Full ritual. 5fr / 7fr grid. |
+| ≥1536 | Same camera. Keep vessel framed. |
+| reduced-motion | First product static. No chase. |
+
+---
+
+## Accessibility
+
+- Semantic `<section>` plus headings. Tabs are real buttons with `aria-current`.
+- Arrow / Page / Space keys drive `g` while the pin owns. Left / Right jump SKUs. Never trap Tab. Never steal keys from inputs, buttons, or links.
+- After release the page can continue. Do not trap focus in the section.
+- `prefers-reduced-motion`: first product static. Capture helper still registers.
+- Canvas is decorative. Copy is the readable product story.
+
+---
+
+## Performance Notes
+
+- One R3F canvas on desktop. Dispose textures and materials on unmount.
+- Scroll work is virtual progress plus gsap tweens on the active SKU only.
+- Do not load lenis. Do not create a ScrollTrigger pin.
+- Dispose listeners on unmount.
+
+---
+
+## AI Tool Instructions
+
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite. `"use client"`. Implement **No Scroller** (N viewport virtual earn, snap on lift, release at ends). After release at the end, the page owns until dock. Place `can.glb`, labels, and HDRI as START-HERE describes. Install gsap for tweens only. Do not install lenis. Do not add PSAVE. Do not add SmoothScroll or gsap-register.
+
+**Lovable / Bolt:** Single self-contained section; same tokens, 3D stage, copy. Wheel advances `g`. No tall page track.
 
 ## Assets (buyer pack)
 
@@ -163,7 +230,7 @@ No `/backgrounds` contribution - products are the stage.
 
 ## Technical notes for AI tools
 
-Single default-export `LineupSection`. React + TS, GSAP ScrollTrigger, Lenis, three + R3F + drei. `PRODUCTS` + `SECTION_META` drive UI. `prefers-reduced-motion`: static first product, no long scrub.
+Single default-export `LineupSection`. React + TS, gsap tweens only (no ScrollTrigger pin), three + R3F + drei. No Lenis. `PRODUCTS` + `SECTION_META` drive UI. `prefers-reduced-motion`: static first product.
 
 Cleanroom path: `cleanroom/lineup-from-prompt/`  
 Primary edit file: `lineup-data.ts`  
@@ -183,22 +250,23 @@ Products:
 1) name: [A], subtitle: […], pitch: […], accent: [#hex], sku: 01, label: [path]
 2) name: [B], …
 3) name: [C], …
-Keep scroll pin, snap, 3D cross-fade, and tabs. H2 and eyebrow must match count N.
-Never leave ACTUALLY demo copy on my brand.
+Keep No Scroller, snap on lift, 3D cross-fade, pin freeing, and tabs. H2 and eyebrow must match count N.
+Never leave ACTUALLY demo copy on my brand. Do not install lenis. Do not add PSAVE.
 ```
 
 ### Expand from 3 to N products
 ```
 Expand Lineup from 3 to [N] products. Append [N-3] new PRODUCTS entries using [DATA].
-Pin length must be N * 100vh. Snap points 0…1. Tabs show 01…[N].
+Virtual earn must be N viewports (not a document spacer). Snap points 0…1. Tabs show 01…[N].
 Update SECTION_META.title to "[TITLE]." and eyebrowLabel to match.
 Add labelPath for every new SKU. Do not hardcode N=3 anywhere.
+Keep pin freeing. Do not restore ScrollTrigger pin or lenis.
 ```
 
 ### Reduce products
 ```
 Remove products [ids] from PRODUCTS. Update SECTION_META for new count.
-Pin and snap must shrink with PRODUCTS.length.
+Virtual earn and snap must shrink with PRODUCTS.length. Do not restore a tall sticky track.
 ```
 
 ### Swap the 3D vessel for any product
@@ -224,33 +292,44 @@ Set each product bloomColor to my palette. Change ACTUALLY.01 wordmarks to [BRAN
 
 ### Place after Actually! hero
 ```
-Mount LineupSection below ActuallyHero on the same page. Shared Lenis + ScrollTrigger.
+Mount LineupSection below ActuallyHero on the same page.
 Keep both bone stages coherent. Do not nest site chrome inside either component.
+Do not install lenis. Do not share a ScrollTrigger pin. Keep Lineup No Scroller and pin freeing.
 ```
 
 ### Something looks wrong
 ```
-Something is broken: [DESCRIBE]. Fix it and keep Lineup as a scroll-pinned product reveal where each segment introduces a SKU with 3D vessel + copy. Support N products from the array. Do not ask me to write code.
+Something is broken: [DESCRIBE]. Fix it and keep Lineup as a No Scroller product reveal where each segment introduces a SKU with 3D vessel + copy. Keep pin freeing (page owns until dock). Support N products from the array. Do not restore ScrollTrigger pin, lenis, or a tall sticky track. Do not add PSAVE. Do not ask me to write code.
 ```
 
 ## Expected Output
 
 1. Mid-page section, bone stage, no site header/footer required
-2. Desktop pin with N viewport heights and snap per product
-3. 3D vessel cross-fade + bloom + ghost number per SKU
-4. Copy card transition on change
-5. Tabs + keyboard navigation
-6. Mobile horizontal snap cards
-7. Data-driven product count (expand/contract via array + SECTION_META)
-8. Reduced-motion static fallback
-9. All demo strings/assets replaceable (labelPath / meshPath supported)
-10. Compatible after Actually! hero or alone
+2. No Scroller: page stays still while scroll aims SKUs; then the pin releases
+3. After release the page owns until dock. Pointer on the next sibling never drives the lineup
+4. 3D vessel cross-fade + bloom + ghost number per SKU
+5. Copy card transition on change
+6. Tabs + keyboard navigation
+7. Mobile horizontal snap cards
+8. Data-driven product count (expand/contract via array + SECTION_META)
+9. Reduced-motion static fallback
+10. All demo strings/assets replaceable (labelPath / meshPath supported)
 11. No leftover "always 3" hardcoding in chrome copy
+12. No lenis, no ScrollTrigger pin, no tall spacer
 
 ## Package notes (operators)
 
-- Free listing · opaque `l7n3e9k2m4p8` · no PaidSalt
-- Client media = GLB + labels + HDRI
-- Storefront dual preview + FS + poster + thumb
-- **NOT** on `/backgrounds`
-- Capture: `node scripts/capture-lineup-preview.mjs`
+| Role | Path |
+|------|------|
+| Client mesh | `/models/can.glb` |
+| Labels | `/textures/labels/still-01-clear-2.png` (+ dawn / dusk) |
+| HDRI | `/hdri/studio_small_03_1k.hdr` |
+| Storefront preview | `/assets/videos/lineup-reveal-preview-v1.webm` (keep WebM; no recapture) |
+| Storefront FS | `/assets/videos/lineup-reveal-preview-fs-v1.mp4` |
+| Poster / thumb | `/assets/posters/lineup-reveal-preview-v1.webp` · `/thumbnails/MS-SEC-LINE01.webp` |
+| Live demo | `/demo/cleanroom-lineup` |
+| Product folder | `public/packages/MS-SEC-LINE01/files/` |
+| Files zip | `/packages/MS-SEC-LINE01/Lineup-files-l7n3e9k2m4p8-q3n7w2.zip` |
+| Package PDF | `/packages/MS-SEC-LINE01/Lineup-package-l7n3e9k2m4p8-q3n7w2.pdf` |
+| Mode | No Scroller · not PSAVE · pin freeing · gsap tweens only |
+| Version | **2.1.0** Platinum backend 2026-08-16 (storefront visuals left as-is) |

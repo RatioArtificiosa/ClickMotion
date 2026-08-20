@@ -8,10 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { splitChars, splitLines, splitWords } from "./splitFallback";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
   children: ReactNode;
@@ -55,22 +52,36 @@ export function TextReveal({
     else targets = splitLines(el);
 
     gsap.set(el, { opacity: 1 });
-    const tw = gsap.fromTo(
-      targets,
-      { yPercent: 115 },
-      {
-        yPercent: 0,
-        duration: dur,
-        ease: "power2.out",
-        stagger: st,
-        delay,
-        scrollTrigger: { trigger: el, start, once: true },
+    let played = false;
+    const play = () => {
+      if (played) return;
+      played = true;
+      gsap.fromTo(
+        targets,
+        { yPercent: 115 },
+        {
+          yPercent: 0,
+          duration: dur,
+          ease: "power2.out",
+          stagger: st,
+          delay,
+          overwrite: "auto",
+        },
+      );
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        play();
+        io.disconnect();
       },
+      { threshold: 0.12, rootMargin: "0px 0px -12% 0px" },
     );
+    io.observe(el);
 
     return () => {
-      tw.scrollTrigger?.kill();
-      tw.kill();
+      io.disconnect();
+      gsap.killTweensOf(targets);
       el.innerHTML = original;
     };
   }, [split, start, stagger, duration, delay]);

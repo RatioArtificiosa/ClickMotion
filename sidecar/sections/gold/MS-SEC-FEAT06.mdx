@@ -1,0 +1,149 @@
+---
+id: "MS-SEC-FEAT06"
+title: "OPTIC - Marfa Rooms"
+slug: "optic-marfa-rooms"
+description: "A white gallery. The bands shift once. Restage the rooms until they read as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "art"
+subcategory: "gallery"
+styleTags: ["minimal", "brutalist"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "op-signal"
+tokenTheme: "moire-gallery"
+motionPrimitive: "moire-shift"
+enterRecipe: "hard-cut"
+compatibleWith: ["MS-SEC-HELI01", "MS-HERO-VERT01", "MS-HERO-TERR01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-optic"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["gallery-features", "exhibition-rooms", "optical-board"]
+---
+
+## Promise (buyer-facing)
+
+OPTIC is a mid-page **features section** that reads as a gallery wall, not a stripe kit. Black and white only. The bands move eight pixels, once. Never a loop.
+
+**Why use it:**
+- The vibration is the design. The board never says moire
+- No third color
+- Room names are slots
+- Sits after Helix, Vertex, or Terra Nova without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **OPTIC** - mid-page **features**. Stage `#F5F5F5`. Ink `#111111`. Inter only.
+
+**Famous-UI craft direction (not a clone):** optical gallery. Hard black white. Size is the craft.
+
+**Design language:** `op-signal` (wow register)  
+**Token theme:** `moire-gallery`  
+**Motion primitive:** `moire-shift` (8px, 900ms, one cycle)
+
+**Enter (support, once on view):** `hard-cut`. Land ~200ms. Shift after land.
+
+**Typography:**
+- Wordmark: Inter 800, uppercase
+- Room: Inter 800, `clamp(3rem, 11vw, 7.4rem)`, uppercase
+- Period: Inter 500 ~17px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#F5F5F5` | Stay near white |
+| Ink | `#111111` | Stay near black |
+
+**Anti-slop hard ban:** third color, infinite loop, rave strobe, rainbow op-art, bento.
+
+**Differentiation:**
+| vs | Optic must not become |
+|----|------------------------|
+| Helix | Orbiting works. Optic is rooms |
+| Kern | Two-ink poster. Optic is black and white |
+| Atlas | Swiss systems. Optic is a gallery |
+
+## Layout Structure
+
+`100dvh` stage. Bands under the type.
+
+1. Masthead: Optic left, index right
+2. Room name, period
+3. Foot: place, three rooms
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Optic | 24 | |
+| place | Marfa, Texas | 40 | Real place, restage |
+| rooms[].name | Front room | 24 | |
+| rooms[].period | Two paintings in the front room right now, both facing the street... | 160 | What is on the wall |
+
+## Motion Specification
+
+**Signature (one):** moire-shift. After land, overlay translates 8px in 900ms, once. Restage on each room. Never loop.
+
+**Enter (support, once on view):** `hard-cut`.
+
+**Engine:** CSS enter. CSS keyframes, one cycle.
+
+**Reduced motion:** static bands. Instant room swap.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Name still owns the board |
+
+## Accessibility
+
+- `prefers-reduced-motion`: static bands, no shift
+- Keyboard: arrows after land
+- Contrast black on near-white
+- No strobe
+
+## Performance Notes
+
+- No video, no WebGL
+- Two repeating gradients
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not add a third color. Do not loop the shift.
+
+**Lovable / Bolt:** Same section. Replace rooms and the town. Keep black and white. Keep one shift.
+
+## Expected Output
+
+A single React features section that:
+1. Is a **gallery board**, not a hero
+2. Cuts in, then the bands shift once
+3. Uses moire-gallery tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

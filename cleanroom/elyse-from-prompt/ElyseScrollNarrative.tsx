@@ -1,25 +1,55 @@
 "use client";
 
 /**
- * ELYSE — Luxury wellness retreat scroll-as-narrative hero (MS-HERO-ELYS01)
+ * ELYSE - Luxury wellness retreat scroll-as-narrative hero (MS-HERO-ELYS01)
  *
- * Full nature sanctuary film scrubbed by scroll. Scroll owns time.
+ * Full nature sanctuary film. Scroll aims. The playhead walks the film.
  * Thesis: private retreats in the most beautiful places on earth.
  *
  * Direction: Aman / Six Senses restraint x private-bank type density x
  * golden-hour earth film. Not spa cream SaaS. Not climate-tech green.
- * Mode: scroll-as-narrative (GSAP ScrollTrigger scrub) - never free-play primary.
+ *
+ * PSAVE — Perfect Scroll Video Engine:
+ *   Scroll aims a destination on a 3.6-viewport track.
+ *   Down-scroll plays the film forward (native play at 1.2x).
+ *   Up-scroll cancels any pending forward destination, then walks the
+ *   live video backward one 3-frame step at a time. Never seek to the
+ *   stop point. The walk starts while the gesture is still moving.
+ *   The picture never jumps a frame. Copy and the gold bar follow the picture.
+ *   Release only when the picture has arrived at 0 (up) or 1 (down).
+ * Opening still: decode frame 0 (heads up). The film poster is a mid-film
+ * look-down and must not be the HTML video poster on first paint.
  */
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /** Client HD only - never storefront preview burn */
 const VIDEO_SRC = "/assets/videos/elyse-nature-v1.mp4";
 const POSTER_SRC = "/assets/posters/elyse-nature-v1.webp";
+
+/**
+ * Gold virtual distance: old track height 460vh with sticky 100vh + ST
+ * start "top top" / end "bottom bottom" → scroll distance = 360vh = 3.6 viewports.
+ * All gestures aim 1:1 on this track. The playhead, not the wheel, is the limiter.
+ */
+const VIRTUAL_VIEWPORTS = 3.6;
+
+/** PSAVE catch-up: film-seconds per wall-second, both directions. */
+const PSAVE_RATE = 1.2;
+
+/** Never move the playhead more than one 24fps frame in a single forward tick. */
+const PSAVE_FRAME = 1 / 24;
+
+/**
+ * Reverse law: the playhead may recede by exactly this much per seek.
+ * Never assign currentTime to the destination. A 3-frame stride is the
+ * only legal reverse step, during the gesture and after it.
+ */
+const PSAVE_REV_STRIDE = 3;
+const PSAVE_REV_STEP = PSAVE_FRAME * PSAVE_REV_STRIDE;
+
+/** Up/down events inside this window mean the person is still scrolling. */
+const PSAVE_LIVE_MS = 220;
 
 /** Chapters mapped to film progress (0–1 = full duration). */
 const CHAPTERS = [
@@ -71,6 +101,27 @@ export type ElyseScrollNarrativeProps = {
   posterSrc?: string;
 };
 
+function clamp01(n: number) {
+  return Math.min(1, Math.max(0, n));
+}
+
+function wheelDeltaPx(e: WheelEvent) {
+  let y = e.deltaY;
+  if (!Number.isFinite(y) || y === 0) return 0;
+  if (e.deltaMode === 1) y *= 16;
+  else if (e.deltaMode === 2) {
+    y *= typeof window !== "undefined" ? window.innerHeight || 800 : 800;
+  }
+  return y;
+}
+
+type ScrollNarrativeApi = {
+  setProgress: (p: number) => void;
+  getProgress: () => number;
+  getTarget: () => number;
+  productId: string;
+};
+
 export default function ElyseScrollNarrative({
   brand = "ELYSE",
   backgroundSrc = VIDEO_SRC,
@@ -79,34 +130,70 @@ export default function ElyseScrollNarrative({
   const pinRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const touchYRef = useRef<number | null>(null);
+  const targetProgressRef = useRef(0);
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
   const [reduced, setReduced] = useState(false);
   const [activeChapter, setActiveChapter] = useState(0);
   const progressRef = useRef(0);
+  const chapterRef = useRef(0);
+  const cueOnRef = useRef(true);
 
-  const applyProgress = useCallback((p: number) => {
-    const clamped = Math.min(1, Math.max(0, p));
+  const paintPlayheadUi = useCallback((p: number) => {
+    const clamped = clamp01(p);
     progressRef.current = clamped;
-    setProgress(clamped);
-    setActiveChapter(chapterIndex(clamped));
+    if (progressBarRef.current) {
+      progressBarRef.current.style.transform = `scaleX(${clamped})`;
+    }
+    const root = pinRef.current?.parentElement;
+    if (root instanceof HTMLElement) {
+      root.dataset.elysePlayhead = clamped.toFixed(3);
+      root.dataset.elyseTarget = targetProgressRef.current.toFixed(3);
+    }
+    const nextChapter = chapterIndex(clamped);
+    const nextCue = clamped < 0.045;
+    if (nextChapter !== chapterRef.current || nextCue !== cueOnRef.current) {
+      chapterRef.current = nextChapter;
+      cueOnRef.current = nextCue;
+      setActiveChapter(nextChapter);
+      setProgress(clamped);
+    }
+  }, []);
 
-    const video = videoRef.current;
-    if (video && video.duration && Number.isFinite(video.duration)) {
-      const t = clamped * video.duration;
-      if (Math.abs(video.currentTime - t) > 0.016) {
+  const snapPlayhead = useCallback(
+    (p: number) => {
+      const clamped = clamp01(p);
+      targetProgressRef.current = clamped;
+      const video = videoRef.current;
+      if (video && video.duration && Number.isFinite(video.duration)) {
+        video.pause();
         try {
-          video.currentTime = t;
+          video.currentTime = clamped * video.duration;
         } catch {
           /* seek race before metadata */
         }
       }
-    }
+      chapterRef.current = chapterIndex(clamped);
+      cueOnRef.current = clamped < 0.045;
+      progressRef.current = clamped;
+      setProgress(clamped);
+      setActiveChapter(chapterRef.current);
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${clamped})`;
+      }
+    },
+    []
+  );
 
-    if (progressBarRef.current) {
-      progressBarRef.current.style.transform = `scaleX(${clamped})`;
-    }
-  }, []);
+  const setTargetProgress = useCallback(
+    (next: number, immediate = false) => {
+      const clamped = clamp01(next);
+      targetProgressRef.current = clamped;
+      if (immediate) snapPlayhead(clamped);
+    },
+    [snapPlayhead]
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -120,29 +207,119 @@ export default function ElyseScrollNarrative({
     const video = videoRef.current;
     if (!video) return;
 
-    const onMeta = () => {
+    let cancelled = false;
+    let settled = false;
+    let safetyTimer: ReturnType<typeof setTimeout> | null = null;
+    let onSeeked: (() => void) | null = null;
+
+    const cleanupSeek = () => {
+      if (onSeeked) {
+        video.removeEventListener("seeked", onSeeked);
+        onSeeked = null;
+      }
+      if (safetyTimer != null) {
+        clearTimeout(safetyTimer);
+        safetyTimer = null;
+      }
+    };
+
+    const markReady = () => {
+      if (cancelled || settled) return;
+      settled = true;
+      cleanupSeek();
       video.pause();
-      video.currentTime = 0;
       setReady(true);
     };
 
+    const openingTime = () => {
+      const reducedNow = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const duration = video.duration;
+      if (reducedNow && duration && Number.isFinite(duration)) {
+        return Math.min(duration * 0.42, Math.max(0, duration - 0.05));
+      }
+      return 0;
+    };
+
+    const paintStartFrame = () => {
+      if (cancelled || settled) return;
+      video.pause();
+
+      // Force a real decode of the opening frame. The film poster is a
+      // mid-journey look-down; leaving currentTime at 0 without seeking
+      // leaves that poster on screen until the first scroll.
+      cleanupSeek();
+      const target = openingTime();
+      let kicked = false;
+      onSeeked = () => {
+        if (cancelled || settled) return;
+        if (!kicked) {
+          kicked = true;
+          try {
+            video.currentTime = target;
+          } catch {
+            markReady();
+          }
+          return;
+        }
+        markReady();
+      };
+      video.addEventListener("seeked", onSeeked);
+      try {
+        video.currentTime = target + 0.04;
+      } catch {
+        markReady();
+        return;
+      }
+      safetyTimer = setTimeout(() => {
+        if (cancelled) return;
+        try {
+          if (Math.abs(video.currentTime - target) > 0.02) {
+            video.currentTime = target;
+          }
+        } catch {
+          /* ignore */
+        }
+        if (video.readyState >= 2) markReady();
+      }, 800);
+    };
+
+    const onMeta = () => paintStartFrame();
+    const onLoadedData = () => paintStartFrame();
+
     if (video.readyState >= 1) onMeta();
     else video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("loadeddata", onLoadedData);
 
-    return () => video.removeEventListener("loadedmetadata", onMeta);
+    return () => {
+      cancelled = true;
+      cleanupSeek();
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", onLoadedData);
+    };
   }, [backgroundSrc]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !ready) return;
-    const onSeeked = () => {
-      if (!video.duration || !Number.isFinite(video.duration)) return;
-      applyProgress(video.currentTime / video.duration);
+    if (reduced) return;
+    const api: ScrollNarrativeApi = {
+      setProgress: (p: number) => setTargetProgress(p, true),
+      getProgress: () => progressRef.current,
+      getTarget: () => targetProgressRef.current,
+      productId: "MS-HERO-ELYS01",
     };
-    video.addEventListener("seeked", onSeeked);
-    return () => video.removeEventListener("seeked", onSeeked);
-  }, [ready, applyProgress]);
+    const w = window as Window & {
+      __msScrollNarrative?: ScrollNarrativeApi;
+    };
+    w.__msScrollNarrative = api;
+    return () => {
+      if (w.__msScrollNarrative === api) delete w.__msScrollNarrative;
+    };
+  }, [reduced, setTargetProgress]);
 
+  /**
+   * PSAVE: gestures aim a destination on 3.6 vh.
+   * Down plays the film forward. Up walks the live video backward at 1.2x.
+   * Release only when the picture is at 0 + scroll up, or at 1 + scroll down.
+   */
   useEffect(() => {
     if (!ready || reduced) return;
     const pin = pinRef.current;
@@ -150,26 +327,401 @@ export default function ElyseScrollNarrative({
     if (!pin || !video) return;
 
     video.pause();
+    video.loop = false;
+    snapPlayhead(0);
 
-    const st = ScrollTrigger.create({
-      trigger: pin,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.55,
-      onUpdate: (self) => applyProgress(self.progress),
-    });
+    const rootEl = pin.parentElement;
+    const setDir = (dir: "fwd" | "rev" | "idle") => {
+      if (rootEl) rootEl.dataset.elyseDir = dir;
+    };
+    setDir("idle");
 
-    applyProgress(0);
+    const virtualDistance = () => {
+      const vh = window.innerHeight || 800;
+      return VIRTUAL_VIEWPORTS * vh;
+    };
+
+    const sectionInView = () => {
+      const r = pin.getBoundingClientRect();
+      const mid = window.innerHeight * 0.5;
+      return r.top < mid && r.bottom > mid * 0.35;
+    };
+
+    /** Pin is docked at the top of the viewport (journey can own the wheel). */
+    const pinDocked = () => pin.getBoundingClientRect().top >= -2;
+
+    /**
+     * After the picture arrives at 1 and we release downward, the page owns
+     * scroll until the stage docks again. Pointer on the membership band
+     * never drives the film.
+     */
+    let pageOwns = false;
+
+    const eventOnPin = (e: Event) => {
+      if (e.target instanceof Node && pin.contains(e.target)) return true;
+      if (e instanceof WheelEvent) {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && pin.contains(el)) return true;
+      }
+      return false;
+    };
+
+    const touchOnPin = (e: TouchEvent) => {
+      const t = e.touches[0] || e.changedTouches[0];
+      if (!t) return false;
+      if (e.target instanceof Node && pin.contains(e.target)) return true;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      return Boolean(el && pin.contains(el));
+    };
+
+    let lastUpAt = 0;
+    let lastDownAt = 0;
+    let revHead = 0;
+    let revArmed = false;
+    let revAcc = 0;
+    let revBusy = false;
+    let revClear: (() => void) | null = null;
+    let revSafety: ReturnType<typeof setTimeout> | null = null;
+
+    const clearRevWait = () => {
+      if (revClear) {
+        video.removeEventListener("seeked", revClear);
+        revClear = null;
+      }
+      if (revSafety != null) {
+        clearTimeout(revSafety);
+        revSafety = null;
+      }
+      revBusy = false;
+    };
+
+    const markIntent = (deltaPx: number) => {
+      const now = performance.now();
+      if (deltaPx < 0) lastUpAt = now;
+      if (deltaPx > 0) lastDownAt = now;
+    };
+
+    /**
+     * Picture-arrived: last decoded frame is on the opening or closing still.
+     * Chase can settle ~1 frame short of duration, so do not trust progressRef
+     * alone — also read the live video clock.
+     */
+    const pictureAtStart = () => {
+      if (progressRef.current <= 0.0005) return true;
+      const d = video.duration;
+      return Boolean(d && Number.isFinite(d) && video.currentTime <= 0.04);
+    };
+    const pictureAtEnd = () => {
+      if (progressRef.current >= 0.9995) return true;
+      const d = video.duration;
+      return Boolean(
+        d && Number.isFinite(d) && video.currentTime >= d - 0.08
+      );
+    };
+
+    const applyDelta = (deltaPx: number) => {
+      if (!deltaPx || !Number.isFinite(deltaPx)) return false;
+      const playhead = progressRef.current;
+      let target = targetProgressRef.current;
+      if (pictureAtStart() && deltaPx < 0) return false;
+      if (pictureAtEnd() && deltaPx > 0) return false;
+      if (target <= 0.0005 && deltaPx < 0) return true;
+      if (target >= 0.9995 && deltaPx > 0) return true;
+      markIntent(deltaPx);
+      // Opposite intent cancels a pending destination so reverse/forward
+      // starts from the picture, not from a leftover catch-up target.
+      if (deltaPx < 0 && target > playhead) target = playhead;
+      if (deltaPx > 0 && target < playhead) target = playhead;
+      targetProgressRef.current = clamp01(target + deltaPx / virtualDistance());
+      if (rootEl) {
+        rootEl.dataset.elyseTarget = targetProgressRef.current.toFixed(3);
+        rootEl.dataset.elyseDir = deltaPx > 0 ? "fwd" : "rev";
+      }
+      return true;
+    };
+
+    let wheelPending = 0;
+    let wheelRaf = 0;
+    let chaseRaf = 0;
+    let lastTs = 0;
+
+    const flushWheel = () => {
+      wheelRaf = 0;
+      const pending = wheelPending;
+      wheelPending = 0;
+      if (pending) applyDelta(pending);
+    };
+
+    const onEnded = () => {
+      video.pause();
+      video.loop = false;
+      if (video.duration && Number.isFinite(video.duration)) {
+        try {
+          video.currentTime = Math.max(0, video.duration - 0.001);
+        } catch {
+          /* ignore */
+        }
+      }
+      paintPlayheadUi(1);
+    };
+
+    const issueReverseStep = (targetT: number) => {
+      if (revBusy) return false;
+      const next = Math.max(targetT, revHead - PSAVE_REV_STEP);
+      if (next >= revHead - 0.0005) return false;
+      revHead = next;
+      revBusy = true;
+      if (!video.paused) video.pause();
+      video.playbackRate = 1;
+      revClear = () => {
+        clearRevWait();
+      };
+      video.addEventListener("seeked", revClear);
+      revSafety = setTimeout(() => {
+        clearRevWait();
+      }, 200);
+      try {
+        video.currentTime = revHead;
+      } catch {
+        clearRevWait();
+        return false;
+      }
+      return true;
+    };
+
+    const chase = (ts: number) => {
+      chaseRaf = requestAnimationFrame(chase);
+      const duration = video.duration;
+      if (!duration || !Number.isFinite(duration)) return;
+
+      const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 1 / 60;
+      lastTs = ts;
+
+      const targetT = targetProgressRef.current * duration;
+      const liveUp = ts - lastUpAt < PSAVE_LIVE_MS && lastUpAt >= lastDownAt;
+      const liveDown = ts - lastDownAt < PSAVE_LIVE_MS && lastDownAt > lastUpAt;
+      const settle = PSAVE_FRAME * 0.6;
+
+      if (liveUp) {
+        if (!revArmed) {
+          revHead = video.currentTime;
+          revArmed = true;
+          revAcc = PSAVE_REV_STEP;
+        }
+        if (!video.paused) video.pause();
+        video.playbackRate = 1;
+        setDir("rev");
+        if (revHead > targetT + settle && !revBusy) {
+          issueReverseStep(targetT);
+        }
+        paintPlayheadUi(clamp01(revHead / duration));
+        return;
+      }
+
+      if (revArmed && revHead > targetT + settle) {
+        setDir("rev");
+        if (!video.paused) video.pause();
+        video.playbackRate = 1;
+        if (!revBusy) {
+          revAcc += PSAVE_RATE * dt;
+          if (revAcc >= PSAVE_REV_STEP) {
+            revAcc -= PSAVE_REV_STEP;
+            issueReverseStep(targetT);
+          }
+        }
+        paintPlayheadUi(clamp01(revHead / duration));
+        return;
+      }
+
+      if (revArmed && revHead <= targetT + settle) {
+        revArmed = false;
+        revAcc = 0;
+        clearRevWait();
+      }
+
+      const cur = revArmed ? revHead : video.currentTime;
+      const err = targetT - cur;
+
+      if (Math.abs(err) <= settle) {
+        if (!video.paused) video.pause();
+        clearRevWait();
+        revArmed = false;
+        revAcc = 0;
+        setDir("idle");
+        const atFilmEnd = targetT >= duration - 0.08 || cur >= duration - 0.08;
+        const atFilmStart = targetT <= 0.04 && cur <= 0.04;
+        if (atFilmEnd) {
+          try {
+            video.currentTime = Math.max(0, duration - 0.001);
+          } catch {
+            /* ignore */
+          }
+          paintPlayheadUi(1);
+        } else if (atFilmStart) {
+          try {
+            video.currentTime = 0;
+          } catch {
+            /* ignore */
+          }
+          paintPlayheadUi(0);
+        } else {
+          paintPlayheadUi(clamp01(cur / duration));
+        }
+        return;
+      }
+
+      if (err > 0 && !liveUp) {
+        clearRevWait();
+        revArmed = false;
+        revAcc = 0;
+        setDir("fwd");
+        if (cur >= duration - 0.08) {
+          if (!video.paused) video.pause();
+          try {
+            video.currentTime = duration - 0.001;
+          } catch {
+            /* ignore */
+          }
+          paintPlayheadUi(1);
+          return;
+        }
+        if (liveDown || !liveUp) {
+          video.playbackRate = PSAVE_RATE;
+          if (video.paused) {
+            const attempt = video.play();
+            if (attempt && typeof attempt.catch === "function") {
+              attempt.catch(() => {
+                try {
+                  video.currentTime = Math.min(
+                    duration - 0.001,
+                    cur + Math.min(err, PSAVE_RATE * dt, PSAVE_FRAME)
+                  );
+                } catch {
+                  /* ignore */
+                }
+              });
+            }
+          }
+        }
+        paintPlayheadUi(clamp01(video.currentTime / duration));
+        return;
+      }
+
+      if (!video.paused) video.pause();
+      video.playbackRate = 1;
+      if (!revArmed) {
+        revHead = video.currentTime;
+        revArmed = true;
+        revAcc = PSAVE_REV_STEP;
+      }
+      setDir("rev");
+      if (!revBusy) issueReverseStep(targetT);
+      paintPlayheadUi(clamp01(revHead / duration));
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns) return;
+      if (!sectionInView()) return;
+      if (!eventOnPin(e)) return;
+      if (e.ctrlKey || e.metaKey) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaY) < 1) {
+        return;
+      }
+      const raw = wheelDeltaPx(e);
+      if (!raw) return;
+
+      const releasing =
+        (pictureAtStart() && raw < 0) || (pictureAtEnd() && raw > 0);
+      if (releasing) {
+        if (pictureAtEnd() && raw > 0) pageOwns = true;
+        return;
+      }
+
+      markIntent(raw);
+      wheelPending += raw;
+      if (!wheelRaf) wheelRaf = requestAnimationFrame(flushWheel);
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns || !sectionInView() || e.touches.length !== 1) return;
+      if (!touchOnPin(e)) return;
+      touchYRef.current = e.touches[0]!.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns || !sectionInView() || e.touches.length !== 1) return;
+      if (!touchOnPin(e)) return;
+      const y = e.touches[0]!.clientY;
+      const prev = touchYRef.current;
+      touchYRef.current = y;
+      if (prev == null) return;
+      const deltaY = prev - y;
+      const consumed = applyDelta(deltaY);
+      if (!consumed && pictureAtEnd() && deltaY > 0) pageOwns = true;
+      if (consumed) e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (pinDocked()) pageOwns = false;
+      if (pageOwns || !sectionInView()) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        el.closest(
+          "a, button, input, textarea, select, [contenteditable='true']"
+        )
+      ) {
+        return;
+      }
+      const step = virtualDistance() * 0.045;
+      let delta = 0;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        delta = e.key === "PageDown" ? step * 2.2 : step;
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        delta = e.key === "PageUp" ? -step * 2.2 : -step;
+      } else {
+        return;
+      }
+      const consumed = applyDelta(delta);
+      if (!consumed && pictureAtEnd() && delta > 0) pageOwns = true;
+      if (consumed) e.preventDefault();
+    };
+
+    video.addEventListener("ended", onEnded);
+    chaseRaf = requestAnimationFrame(chase);
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      st.kill();
+      if (wheelRaf) cancelAnimationFrame(wheelRaf);
+      if (chaseRaf) cancelAnimationFrame(chaseRaf);
+      clearRevWait();
+      video.removeEventListener("ended", onEnded);
+      video.pause();
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
     };
-  }, [ready, reduced, applyProgress]);
+  }, [ready, reduced, paintPlayheadUi, snapPlayhead]);
 
   useEffect(() => {
     if (!ready || !reduced) return;
-    applyProgress(0.42);
-  }, [ready, reduced, applyProgress]);
+    snapPlayhead(0.42);
+  }, [ready, reduced, snapPlayhead]);
 
   const chapter = CHAPTERS[activeChapter];
   const showScrollCue = !reduced && progress < 0.045;
@@ -177,27 +729,37 @@ export default function ElyseScrollNarrative({
 
   return (
     <div
-      className="elyse-root"
+      className={`elyse-root${reduced ? "" : " elyse-root--pin"}`}
+      data-elyse-pin={reduced ? "false" : "true"}
+      data-elyse-progress={activeChapter}
+      data-elyse-drive="psave"
       style={{
         fontFamily: "var(--font-elyse-sans), system-ui, sans-serif",
       }}
     >
-      {/* Tall scroll track; sticky cinema stage */}
-      <div
-        ref={pinRef}
-        className="elyse-pin"
-        style={{ height: reduced ? "100vh" : "460vh" }}
-      >
-        <div className="elyse-stage">
+      {/* Pin-until-complete: one viewport stage; virtual progress drives film */}
+      <div ref={pinRef} className="elyse-pin">
+        <div
+          className="elyse-stage"
+          style={
+            reduced
+              ? {
+                  backgroundImage: `url(${posterSrc})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center 48%",
+                }
+              : undefined
+          }
+        >
           <video
             ref={videoRef}
-            className="elyse-video"
+            className={`elyse-video${ready ? " is-ready" : ""}`}
             src={backgroundSrc}
-            poster={posterSrc}
             muted
             playsInline
             preload="auto"
             // no autoplay — scroll owns time
+            // no HTML poster — mid-film still must not own first paint
             aria-hidden
           />
 
@@ -396,11 +958,18 @@ export default function ElyseScrollNarrative({
         .elyse-pin {
           position: relative;
           width: 100%;
+          height: 100dvh;
+          min-height: 100vh;
+          max-height: 100dvh;
+        }
+        .elyse-root--pin .elyse-pin {
+          height: 100dvh;
+          min-height: 100vh;
+          max-height: 100dvh;
         }
         .elyse-stage {
-          position: sticky;
-          top: 0;
-          height: 100vh;
+          position: relative;
+          height: 100%;
           min-height: 640px;
           width: 100%;
           overflow: hidden;
@@ -414,6 +983,11 @@ export default function ElyseScrollNarrative({
           object-fit: cover;
           object-position: center 48%;
           transform: scale(1.02);
+          opacity: 0;
+          transition: opacity 0.45s ease;
+        }
+        .elyse-video.is-ready {
+          opacity: 1;
         }
         .elyse-veil {
           position: absolute;

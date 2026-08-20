@@ -1,0 +1,151 @@
+---
+id: "MS-SEC-FEAT05"
+title: "CAST - Amber Object Features"
+slug: "cast-amber-object-features"
+description: "An amber block. It opens like a lid. Restage the object until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "lifestyle"
+subcategory: "objects"
+styleTags: ["playful", "luxury"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "resin-object"
+tokenTheme: "resin-amber"
+motionPrimitive: "flip-clamshell"
+enterRecipe: "fade-hold"
+compatibleWith: ["MS-HERO-PRSM01", "MS-HERO-MIRA01", "MS-HERO-VERV01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-cast"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5400
+useCases: ["object-features", "product-still", "studio-cast"]
+---
+
+## Promise (buyer-facing)
+
+CAST is a mid-page **features section** that reads as one resin object, not a product grid. The block starts on its edge, then opens. Click to close. Hover another name to open the next.
+
+**Why use it:**
+- The lid is the design. The board never says flip
+- Stage is amber. White is the catch
+- Object names are slots
+- Sits after Prism, Mirage, or Verve without copying their film
+
+## Design System
+
+**Aesthetic Direction:** **CAST** - mid-page **features**. Stage `#E8A04A`. Ink `#1A0E04`. Catch `#FFF6E8`. Unbounded display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** design-object still. Radius 28px on the object. Not cheap acrylic.
+
+**Design language:** `resin-object` (wow register)  
+**Token theme:** `resin-amber`  
+**Motion primitive:** `flip-clamshell` (rotateX 88 to 0, 540ms, perspective 1000)
+
+**Enter (support, once on view):** `fade-hold`. Land ~1400ms. Lid after land.
+
+**Typography:**
+- Wordmark: Unbounded 700
+- Object: Unbounded 800, `clamp(3rem, 10vw, 6.4rem)`
+- Period: Outfit ~18px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#E8A04A` | Your resin |
+| Ink | `#1A0E04` | Your dark |
+| Muted | `#6A3A12` | Period |
+| Accent | `#FFF6E8` | Catch |
+
+**Anti-slop hard ban:** three product cards, 3D kit, rainbow fill, toy plastic.
+
+**Differentiation:**
+| vs | Cast must not become |
+|----|------------------------|
+| Kiln | Wet drip. Cast is a lid |
+| Prism | Glass hero. Cast is one object |
+| Tilt | Chrome bead. Cast is amber |
+
+## Layout Structure
+
+`100dvh` stage. Perspective on the shell.
+
+1. Masthead: Cast left, index right
+2. Object lid
+3. Foot: place, three objects
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Cast | 24 | |
+| place | Warren Street, Hudson | 40 | Real place, restage |
+| objects[].name | Lamp | 20 | |
+| objects[].period | It sits on the desk and gets warm, not hot... | 160 | What it does at home |
+
+## Motion Specification
+
+**Signature (one):** flip-clamshell. After land, rotateX 88deg opens to 0. Click toggles. Next object restages the lid.
+
+**Enter (support, once on view):** `fade-hold`. Opacity only.
+
+**Engine:** CSS enter. CSS 3D transform.
+
+**Reduced motion:** open rest. Instant object swap.
+
+**Pin-until-complete:** not used.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Object still owns the middle |
+
+## Accessibility
+
+- `prefers-reduced-motion`: open face, no rotation
+- Keyboard: arrows and Enter after land
+- Contrast dark on amber
+- `aria-expanded` on the lid
+
+## Performance Notes
+
+- No video, no WebGL
+- One transform
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not install a 3D kit. Do not lay out a shop grid.
+
+**Lovable / Bolt:** Same section. Replace objects and the street. Keep the lid.
+
+## Expected Output
+
+A single React features section that:
+1. Is an **object board**, not a hero
+2. Fades in, then the lid opens
+3. Uses resin-amber tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

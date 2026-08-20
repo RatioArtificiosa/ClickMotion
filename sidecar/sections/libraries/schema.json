@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clickmotion.dev/sidecar/libraries.schema.json",
+  "title": "ClickMotion sidecar libraries",
+  "description": "Contract for motion primitives, design languages, token themes, and composition rules. Sidecar only until merge.",
+  "type": "object",
+  "required": ["version", "catalog", "items"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "catalog": {
+      "type": "string",
+      "enum": ["motion-primitives", "design-languages", "token-themes", "composition-rules", "enter-recipes"]
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "label"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "status": {
+            "type": "string",
+            "enum": ["canonical", "stub", "banned-as-default"]
+          },
+          "label": { "type": "string" },
+          "license": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

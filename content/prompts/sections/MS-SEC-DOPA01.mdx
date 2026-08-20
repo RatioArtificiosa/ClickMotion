@@ -1,0 +1,176 @@
+---
+id: "MS-SEC-DOPA01"
+title: "Dopamine - Complete Fashion Footer"
+slug: "dopamine-complete-fashion-footer"
+description: "Close every fashion page with authority. Dual nav, exclusion wordmark, living figure, Lottie badge, letter scramble, and a couture subscribe form you restage for any brand."
+version: "1.0.1"
+created: "2026-08-11"
+updated: "2026-08-11"
+author: "MS Team"
+status: "published"
+type: "section"
+category: "agency"
+subcategory: "fashion"
+styleTags: ["dark-cinematic", "editorial", "minimal", "luxury"]
+technicalTags: ["scroll-trigger", "lottie", "text-split"]
+motionIntensity: "high"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 3
+  bolt: 3
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/dopamine-footer-preview-v1.webm"
+previewVideoFullscreen: "/assets/videos/dopamine-footer-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-SEC-DOPA01.webp"
+liveDemo: "/demo/cleanroom-dopamine"
+videoBackgrounds: []
+dependencies:
+  - { name: "gsap", version: "^3.12.0", required: true }
+  - { name: "lottie-web", version: "^5.12.0", required: true }
+estimatedTokens: 12000
+useCases: ["fashion-ecommerce-footer", "campaign-close", "brand-newsletter-capture", "agency-portfolio-footer", "luxury-lifestyle-site"]
+compatibleWith: ["MS-SEC-STUDIO01", "MS-SEC-PHOB01", "MS-SEC-HELI01"]
+positionInPage: "footer"
+---
+
+## Promise (buyer-facing)
+
+**Dopamine** is a **complete fashion footer** that closes a page with couture confidence. Dual navigation, an exclusion-blend wordmark, a living hero figure, a Lottie discount badge, letter scramble on enter, and a subscribe form that feels like the brand - not a generic SaaS bar.
+
+**Why use it:**
+- Your last screen becomes a brand moment, not an afterthought
+- Scramble + Lottie + figure deliver motion luxury without WebGL
+- Every label, figure, badge, and credit line is meant to be restaged
+- One self-contained footer with no required site chrome above it
+
+**How you build it:** download the product pack (prompt + source + figure + masks + Lottie). Tell your AI: *Build Dopamine footer using the files in this folder. Read PROMPT.md.*
+
+## Design System
+
+**Aesthetic Direction:** dark couture stage, mono legal type, heavy geometric wordmark, soft figure photography, red accent for emphasis only.
+
+**Craft direction:** European fashion e-com close × high-end campaign end-card. Calm until scroll arrives - then the system wakes.
+
+**Do not:**
+- Use Tailwind `.container` (breaks width - use **`dop-container`** only)
+- Strip scramble, Lottie, or the figure for a "simple" footer
+- Add external hyperlinks unless the buyer explicitly wants them
+- Ship storefront preview videos as rebuild media
+- Hardcode Club GSAP plugins
+
+**Differentiation:**
+
+| vs | Dopamine must not become |
+|----|--------------------------|
+| Helix | Mid-page WebGL gallery |
+| Studio Sequence | Scroll camera billboard |
+| Phobia | Pointer-flee void stage |
+| Generic site footer | Static link columns without motion system |
+
+## Layout Structure
+
+- **Footer only** - full width, CSS-masked stage, overflow hidden
+- **Figure** absolute, height-driven (desktop ~65rem)
+- **Discount** absolute Lottie badge (canvas renderer)
+- **Container** (`dop-container`): dual nav → wordmark → subscribe + form → legal row
+- **Credits** overlay panel (dialog), no site header required above
+
+## Content slots
+
+All buyer media and copy live in the pack source + assets.
+
+| Slot | Guidance |
+|------|----------|
+| Hero figure | Transparent PNG (`Woman1.png`); height-driven, desktop ~65rem |
+| Mask backgrounds | Mobile / tablet / desktop webp set driving CSS mask stage |
+| Lottie badge | `FOOTER_LOTTIE_v1.json` - swap or hide `.footer__discount` |
+| Wordmark | `DopamineLogo.tsx` SVG; exclusion blend over figure |
+| Shop + legal nav | Arrays in `SiteFooter.tsx`; scramble on `data-split` text |
+| Subscribe | Title, email label, CTA - client validation only |
+| Legal bottom | Copyright, privacy, credits, IG as text (no external links by default) |
+| Credits panel | Brand-only copy; open/close dialog |
+
+## Motion Specification
+
+**Mode:** scroll-enter once (not scroll-scrub film, not pointer flee).
+
+| Event | Feel |
+|-------|------|
+| Footer enters (`top 80%`, once) | Logo rises (yPercent 300→0), figure enters (100→0) |
+| Same enter | Form fades in; subscribe title scaleY 0→1 |
+| Same enter | Nav + bottom rows letter-scramble into place |
+| Lottie enter | Badge plays to mid (desktop) or full (coarse pointer) |
+| Desktop hover on badge | Frame range advances / returns |
+| Reduced motion | Settled readable footer; no scramble thrash; no entrance offsets |
+
+**Timing anchors:** logo/figure ~1.2s `power3.out`; form ~2s; title ~0.8s from +0.4s; scramble ~0.18s/char with stagger 0.04s.
+
+## Responsive Behavior
+
+- **Mobile:** full-width stage, mobile mask, figure composition retained, no hover Lottie scrub
+- **Tablet:** tablet mask + intermediate fluid rem scale
+- **Desktop:** desk mask, tall figure (~65rem), hover Lottie frame control
+- **Ultrawide:** fluid rem keeps type and layout intentional (not a Tailwind max-width cage)
+- **Reduced motion:** final composition visible without entrance thrash
+
+## Accessibility
+
+- Footer is semantic `<footer>`; logo has `aria-label`
+- Decorative figure and masks use empty `alt` unless buyer supplies meaning
+- Credits panel is a dialog with `aria-modal`, close control, and inert when closed
+- Form uses native email validation + visible error text
+- Default links are `#` with `preventDefault` - no surprise external navigation
+- Respect `prefers-reduced-motion: reduce`
+
+## Performance Notes
+
+- GSAP transforms for enter motion; Lottie canvas for the badge only
+- Prefetch Lottie on mount so enter feels snappy
+- Cleanup kills timeline, Lottie instance, and hover listeners on unmount
+- Optimize figure PNG; keep mask webps lean
+- No Three.js / WebGL required
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place `assets/*` under `public/assets/dopamine/` (same filenames).
+4. Use `source/SiteFooter.tsx`, `scramble.ts`, `DopamineLogo.tsx`, `dopamine-footer.css`.
+5. Install `gsap` and `lottie-web`.
+6. Import `dopamine-footer.css` once. Mount `<SiteFooter />` after page content (leave runway so scroll-enter is visible).
+7. Verify figure, wordmark exclusion, scramble, Lottie, form validation, credits panel.
+8. Restage with **CUSTOMIZATION.md**.
+
+## Expected Output
+
+1. Full-width masked footer stage, no broken images  
+2. Tall hero figure + exclusion wordmark composition  
+3. Scroll into view: logo rise, figure enter, scramble, form fade, Lottie  
+4. Email invalid → error; valid → "You're in" (no network)  
+5. Credits panel opens and closes  
+6. IG / nav are not external links by default  
+7. No Tailwind `.container` crushing width - only `dop-container`  
+8. Reduced-motion safe settled footer  
+
+## What to tell your AI
+
+```
+Build Dopamine footer using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Use source/ and assets/ as provided.
+```
+
+To restage later, open CUSTOMIZATION.md and ask for a new figure, wordmark, nav labels, Lottie, or colors.
+
+## Package notes (operators)
+
+- Paid listing · opaque `d0p4m1n38k2x` · pro tier · sale-ready
+- Client media = figure + masks + Lottie (not storefront Premiere)
+- Storefront dual previews = operator Dopamine-Small-2 (page) + Dopamine (FS, unchanged)
+- **NOT** on `/backgrounds`
+- Demo: `/demo/cleanroom-dopamine`
+- Lab origin: `Lab/dopamine` (footer only; film/lips is a separate product if sold)
+- Files zip preferred for Get Full Prompt; PDF is the pack manual

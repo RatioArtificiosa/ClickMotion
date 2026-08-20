@@ -14,6 +14,8 @@ export function Footer() {
   if (
     pathname === "/demo/scroll-narrative" ||
     pathname?.startsWith("/demo/scroll-narrative/") ||
+    pathname === "/demo/tesla-roadster" ||
+    pathname?.startsWith("/demo/tesla-roadster/") ||
     pathname === "/demo/cleanroom-aether" ||
     pathname === "/demo/cleanroom-vertex" ||
     pathname?.startsWith("/demo/cleanroom-")

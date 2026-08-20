@@ -3,16 +3,16 @@ id: "MS-HERO-REVL01"
 title: "REVEL - Scroll Narrative Fashion Commerce Hero"
 slug: "revel-scroll-narrative-fashion-commerce-hero"
 description: "For fashion and social-commerce brands. A light pearl scroll narrative where the iPhone breakout film advances with the scroll - four chapters from feed to freedom."
-version: "1.0.0"
+version: "1.3.0"
 created: "2026-08-09"
-updated: "2026-08-09"
+updated: "2026-08-14"
 author: "MS Team"
 status: "published"
 type: "hero"
 category: "ecommerce"
 subcategory: "fashion"
-styleTags: ["editorial", "minimal", "light"]
-technicalTags: ["scroll-scrub", "video-background", "narrative"]
+styleTags: ["editorial", "minimal", "luxury"]
+technicalTags: ["video-background", "scroll-trigger"]
 motionIntensity: "aggressive"
 difficulty: "advanced"
 priceTier: "pro"
@@ -32,22 +32,29 @@ videoBackgrounds:
     format: "mp4"
     duration: "20s"
     loop: false
-    sizeMb: 12
+    sizeMb: 51
     poster: "/assets/posters/revel-breakout-v1.webp"
 dependencies:
-  - { name: "gsap", version: "^3.12.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: true }
-estimatedTokens: 7800
+estimatedTokens: 11000
 useCases: ["fashion-homepage", "social-commerce-landing", "campaign-scroll-hero"]
 compatibleWith: []
 positionInPage: "top"
 ---
 
+## Promise (buyer-facing)
+
+**REVEL** is a fashion-commerce **pin-until-complete** scroll hero: one full-viewport pearl stage, a 20-second iPhone breakout film the playhead walks through four chapters from feed to freedom. **PSAVE** (Perfect Scroll Video Engine): scroll aims, down plays forward, up plays reverse, the picture never jumps a frame. Not a tall multi-page scrollbar track. Not Meridian dark coastal. Not Vertex mono security.
+
+**How you build it:** this listing is **PDF-only** (no files zip). Give your AI this sold prompt plus the Revel package PDF. Tell it: *Build REVEL with PSAVE (Perfect Scroll Video Engine). Pin-until-complete. Scroll aims on 12 viewports so the kick is earned (about 5 or 6 scrolls to halfway). Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward at the same 1.2x, one 3-frame step per seek. Never jump a frame. When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Copy and the rose bar follow the picture. Release only when the picture arrives. After release the page owns the atelier. Replacement films must be re-encoded GOP 3, no B-frames. Do not seek the playhead across the film. Do not copy old Vertex seek-scrub or the old Revel wheel-gain scrub. Do not build a 480vh sticky track.*
+
+---
+
 ## Design System
 
-**Aesthetic Direction:** **REVEL** - fashion commerce scroll narrative. Pearl canvas `#F7F4F1`, charcoal ink `#1A1614`, rose gold `#C4A574`, soft blush `#E8B4B8`. Instrument Serif display + Inter UI. Sticky full-viewport stage; **scroll owns the film timeline** (scrub). Light studio luxury - not dark private-bank Meridian, not mono Vertex security, not neon cyberpunk, not forest climate, not quantum lab.
+**Aesthetic Direction:** **REVEL** - fashion commerce scroll narrative. Pearl canvas `#F7F4F1`, charcoal ink `#1A1614`, rose gold `#C4A574`, soft blush `#E8B4B8`. Instrument Serif display + Inter UI. **Pinned 100dvh stage**. **PSAVE.** Scroll aims. The film plays forward or reverse to that moment. Light studio luxury - not dark private-bank Meridian, not mono Vertex security, not neon cyberpunk, not forest climate, not quantum lab.
 
-**Famous-UI craft direction (not a clone):** High-fashion campaign site restraint (Vogue digital calm × Apple product-film pacing). One film. Four chapters. Scroll owns time. Stop.
+**Famous-UI craft direction (not a clone):** High-fashion campaign site restraint (Vogue digital calm × Apple product-film pacing). One film. Four chapters. Virtual progress owns time. Stop.
 
 **Typography:**
 - Display / H1: Instrument Serif, tracking `-0.03em`, line-height `0.98`, size `clamp(2.5rem, 6.4vw, 5.5rem)`
@@ -80,12 +87,20 @@ positionInPage: "top"
 
 ## Layout Structure
 
-- **Scroll track:** ~480vh (100vh if reduced motion)
-- **Sticky stage:** `h-screen`, video cover, dual scrims (pearl top + dark bottom)
-- **Navbar:** REVEL + Fashion Commerce, center fashion links, Enter atelier frost CTA, rose-gold progress
-- **Chapters:** 4 copy states keyed to progress ranges; right rail indices 01-04
-- **Finale CTAs:** Shop the drop · Watch campaign (chapter 4 only)
-- **Closing band:** `#atelier` pearl section with meta grid
+```
+[Pinned 100dvh stage - pin-until-complete + PSAVE; NO tall multi-vh track]
+  video cover (breakout) - scroll aims, film plays forward or reverse
+  dual scrim (pearl top + dark bottom) + rose vignette
+  nav + rose-gold progress hairline (follows the picture)
+  chapter stack: eyebrow, title, body, (finale: dual CTAs)
+  chapter index 01/02/03/04 right rail
+  scroll cue at start
+[#atelier closing band - after the picture arrives and the pin releases]
+```
+
+**Navbar:** REVEL + Fashion Commerce, center fashion links, Enter atelier frost CTA, rose-gold progress.  
+**Finale CTAs:** Shop the drop · Watch campaign (chapter 4 only).  
+**Closing band:** `#atelier` pearl section with meta grid - **after** the pin releases at progress 1.
 
 ## Content slots
 
@@ -101,56 +116,137 @@ positionInPage: "top"
 
 ## Motion Specification
 
-GSAP ScrollTrigger on pin track: `start: "top top"`, `end: "bottom bottom"`, `scrub: 0.5`.  
-`video.currentTime = progress * duration` (threshold 16ms).  
-Chapter text CSS fade/rise 0.65-0.85s on change.  
-Progress bar `scaleX(progress)`.  
-Scroll cue until progress > 0.05.  
-**Reduced motion:** no scrub, static ~0.45 progress frame, single chapter view.
+**Mode:** Scroll-as-narrative · **pin-until-complete** · **PSAVE** (Perfect Scroll Video Engine). Scroll sets a destination on `12` viewports. Down plays the film forward at **1.2x**. Up plays it backward at the same **1.2x**, **exactly one 3-frame step per seek**. Never jump a frame. **When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little**, then rate eases to a stop. **Do not** autoplay-loop as primary. **Do not** seek `currentTime` across a jump.
+
+**Hard ban:** tall multi-vh document scrollbar track (legacy `480vh` sticky pattern).  
+**Hard ban:** seeking the playhead to a far destination (GSAP scrub, wheel-gain dump, old Vertex `0.22`, old Revel `0.11` / GSAP lag `0.55` / swipe `0.09`). Live Vertex is PSAVE (`3.6` + 0.55 coast), not that scrub.  
+**Hard ban:** a 3.8 or 7.2 aim track on this 20s film (two flicks dump dest; feels like a video). Locked earn is **12**.  
+**Hard ban:** a low-res frame buffer or canvas overlay for reverse. Reverse walks the live video.  
+**Hard ban:** releasing the pin because the destination hit 1 while the picture is still walking.  
+**Hard ban:** a window wheel listener that keeps driving the film when the pointer is on the atelier.  
+**Hard ban:** a replacement film with one I-frame (or long GOP + B-frames). Reverse will stall mid-film.  
+**Hard ban:** pausing on the last wheel tick. The stop is friction, then a graceful slowdown.
+
+```
+const VIRTUAL_VIEWPORTS = 12;  // GOLD: earned. Not Elyse 3.6. Not old 3.8 seek-scrub.
+const PSAVE_RATE = 1.2;        // film-seconds per wall-second, both directions
+const PSAVE_FRAME = 1 / 24;    // never skip more than one frame in a forward tick
+const PSAVE_REV_STRIDE = 3;    // reverse: exactly 3 frames per seek (0.125s)
+const PSAVE_LIVE_MS = 280;     // still scrolling if last up/down is inside this window
+const PSAVE_COAST_SEC = 0.55;  // leftover dest floor after last real intent
+const PSAVE_EASE_SEC = 0.55;   // forward rate tapers over last leftover film-seconds
+const PSAVE_FLIP_DEADZONE_PX = 32; // ignore tiny opposite trackpad ticks
+```
+
+**Perceived time:** this film is designed slow then fast. She lives in the phone and walks up to the glass (slow). Then a kick and jump out (fast). Halfway is “she leaves the viewpoint.” That beat takes about **5 or 6 scrolls**. Do not remaster the film to flatten the cut. Size the aim track so the kick is earned.
+
+**The lift:** leftover dest is the Elyse stop. On this 20s film dest often dies (1.2x eats it; a tiny opposite tick snaps dest). After last real intent, dest must sit at least `0.55s` of film ahead. Ignore opposite ticks under `32px`. Forward `playbackRate` stays 1.2 until leftover dest is under `0.55s`, then tapers toward ~0.42. Friction, then a graceful stop. This `0.55` is **not** old GSAP scrub lag.
+
+**Rebuild algorithm (mandatory):** one `100dvh` stage in **normal document flow**. `#atelier` is the **next sibling**. Do not `overflow: hidden` the page. Do not import ScrollTrigger or GSAP scrub. Do not use `position: sticky`. Do not build a `480vh` spacer. Gestures map **1:1** onto `12` viewports and only move the **destination**. First **real** opposite gesture snaps destination to the picture. Ignore tiny opposite ticks. Each frame, walk the picture toward that destination at **1.2x**, never more than **1/24s** of film on a forward fallback tick. **Down:** muted `play()` at `playbackRate 1.2`, ease over the last `0.55s` of leftover dest. After they lift, apply the `0.55s` dest floor once if dest is closer than that. **Up:** first real up-scroll cancels a pending forward destination. Walk `currentTime` backward exactly one 3-frame step per seek, **during the gesture and after**. Wait `seeked`. Never seek to the stop point. No loop. No low-res buffer. Copy, chapters, and the rose bar follow the **playhead**. Release only when the **picture** is at `0+up` / `1+down`. Test live `currentTime` as well as the playhead ref (settle can stop ~1 frame short). After release the **page** owns scroll until the stage docks at the top. Pointer on `#atelier` never drives the film. **Opening frame:** the poster is frame 0 (gold phone / feed). Kick-seek `0.04 → 0`, wait `seeked`, fade the film in. Reduced motion may keep that poster and seek to `~0.45`.
+
+| Element | Motion |
+|---------|--------|
+| Film | PSAVE: play toward destination forward or reverse, never jump a frame |
+| Stage | Pinned 100dvh; no tall page track |
+| Wheel | 1:1 onto the 12 aim track (destination only) |
+| Lift | 0.55s dest floor + rate ease. Friction, then a graceful stop. |
+| Chapters | Crossfade eyebrow/title/body from **playhead** (revelFade / revelRise) |
+| Progress bar | `scaleX(playhead)` rose-gold gradient |
+| Scroll cue | visible only when playhead &lt; 0.05 |
+| Reduced motion | 100dvh static stage, mid-film still (~0.45), no PSAVE |
+
+Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, productId: "MS-HERO-REVL01" }`.
 
 ## Video / Media Integration
 
-- Client HD: `/assets/videos/revel-breakout-v1.mp4` (scrubbed B-roll, no autoplay primary)
-- Poster: `/assets/posters/revel-breakout-v1.webp`
+- Client HD: `/assets/videos/revel-breakout-v1.mp4` (PSAVE B-roll, GOP 3, no B-frames, 20.04s / 24fps / 161 I-frames)
+- Poster: `/assets/posters/revel-breakout-v1.webp` (this still **is** frame 0)
 - Storefront preview: `/assets/videos/revel-scroll-preview-v1.mp4`
 - Storefront FS: `/assets/videos/revel-scroll-preview-fs-v1.mp4`
 - Attributes: muted playsInline preload auto - **not** autoPlay loop as primary mode
+- Control: PSAVE. Scroll aims. The film plays forward or reverse. Never seek across a jump.
 - Subject: gold iPhone social breakout - feed → shatter → freedom
+
+**Film encode (if you change the video):** the shipped client HD is H.264, **GOP 3**, **no B-frames**, 24fps, 20.04s, 482 frames, 161 I-frames. PSAVE reverse seeks every `0.125s`. A normal export with a 2-second GOP will stall mid-reverse. Re-encode any replacement:
+
+```
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset slow -crf 16 -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart your-film-psave.mp4
+```
+
+Wire that remastered file. Keep 24fps, or set `PSAVE_FRAME = 1/fps` and keep a 3-frame reverse stride. Do not extract PNG frames. Do not use a storefront preview as the hero.
+
+```txt
+Use ONLY the paths above. Never hotlink foreign CDNs. Scroll aims. The film plays to that moment.
+```
 
 ## Responsive Behavior
 
 | Breakpoint | Behavior |
 |------------|----------|
-| ≥1024px | Full nav, chapter rail, huge type |
+| ≥1024px | Full nav, chapter rail, huge type; pin 100dvh |
 | ≥768px | Nav links, large type |
-| <768px | Hide center nav, smaller type, stack CTAs, keep scrub |
+| <768px | Hide center nav, smaller type, stack CTAs, pin stage still one viewport |
+| Reduced motion | 100vh static; no scrub; ~0.45 frame |
 
 ## Accessibility
 
-- Reduced motion path (static)
+- Reduced motion path (static mid-break frame)
 - Focus rings on CTAs
 - Semantic header/section/h1
 - Video aria-hidden when copy complete
+- Pin consumes wheel/touch while journey runs; **releases** at ends so the atelier can continue. Do not trap Space on focused links.
 
 ## Performance Notes
 
-- GSAP only (no Framer required)
-- Video preload auto for scrub decode readiness
-- will-change avoided on large surfaces
+- Playhead chase only (no GSAP, no Framer, no ScrollTrigger)
+- Single video element; decode readiness on metadata
+- Animate transform/opacity only on chapter text
 - font-display: swap
+- One viewport stage (no tall spacer DOM)
 
 ## AI Tool Instructions
 
-**Cursor / Claude / Grok Build:** Build `RevelScrollNarrative.tsx` from this brief only. Wire exact video paths. GSAP ScrollTrigger scrub is mandatory for the signature.
+**Cursor / Claude / Grok Build:** Build `RevelScrollNarrative.tsx` from this brief only. `"use client"`. Implement **PSAVE** (12 viewport aim track, **1.2x** forward and reverse, reverse every 3rd frame, 0.55s dest floor + rate ease on lift, never jump a frame), four chapters from the **picture**, atelier band after the picture arrives, page-owns the atelier after release. If the video is replaced, re-encode GOP 3 / no B-frames first. Wire exact video paths. Prefer cleanroom `RevelScrollNarrative.tsx` when present.
 
-**Lovable / Bolt:** Single self-contained component; same tokens and chapters. Prefer GSAP if available.
+**Lovable / Bolt:** Single self-contained component; same tokens and chapters. Walk `currentTime` toward the destination on `requestAnimationFrame` at 1.2x, max one 24fps frame per forward tick, reverse every 3rd frame. Still no wallpaper loop. Still **no tall multi-vh track**. Still **no seek across a jump**. Still **no GSAP scrub**.
+
+Do not rebuild as a tall sticky scroll track. Do not seek the playhead across a jump. Do not drive the film from the atelier after release. Do not wire a replacement MP4 that still has a long GOP.
 
 ## Expected Output
 
 1. Single React component `RevelScrollNarrative.tsx` (`"use client"`)
-2. Tall scroll track + sticky stage + scrubbed video
-3. Four chapters + progress + scroll cue
-4. Pearl / rose-gold / charcoal system only
-5. Closing atelier band
-6. Reduced-motion path
-7. No host marketing shell
+2. **Pinned 100dvh stage** with pin-until-complete PSAVE (no tall multi-vh track)
+3. Local breakout video the playhead walks (aim **12 vh**, rate **1.2x**, reverse every 3rd frame, 0.55s dest floor on lift, never jump a frame)
+4. Four chapters + progress + scroll cue
+5. Pearl / rose-gold / charcoal system only
+6. Closing atelier band after pin releases
+7. Reduced-motion path
+8. No host marketing shell
+
+## What to tell your AI
+
+```
+Build REVEL from this prompt (and the Revel package PDF if you have it).
+There is no files zip and no START-HERE folder.
+Use /assets/videos/revel-breakout-v1.mp4 (or the video URL in the PDF).
+Implement PSAVE (Perfect Scroll Video Engine) as pin-until-complete: one 100dvh stage. Scroll aims on 12 viewports.
+Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward every 3rd frame at the same 1.2x. Never jump a frame.
+When they stop, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. Ignore tiny opposite ticks.
+The film is slow then a kick. Halfway (she leaves the phone) takes about 5 or 6 scrolls. Do not flatten the edit.
+Copy and the rose bar follow the picture. Release only when the picture arrives. After release the page owns the atelier.
+If you change the video, re-encode GOP 3, no B-frames, crf 16, then wire that file. Size the aim track to the story beat.
+Do not import ScrollTrigger. Do not seek currentTime across a jump. Do not build a tall multi-vh track.
+```
+
+## Package notes (operators)
+
+- Opaque: `r7v3l9k2mx4q` · PaidSalt: `rv8n3p`
+- Pack mode: **PDF-only** (peer: Vertex). No `files/` folder, no files zip
+- Client HD: `/assets/videos/revel-breakout-v1.mp4` · poster `/assets/posters/revel-breakout-v1.webp`
+- Storefront: `revel-scroll-preview-v1.mp4` + FS `revel-scroll-preview-fs-v1.mp4`
+- Pin gold: PSAVE · 12 vh aim · 1.2x · 3-frame reverse · 280ms live · 0.55s dest floor + rate ease · 32px bounce ignore · GOP 3 client HD
+- Method spec (operators): `docs/PSAVE.md` §5A / §5B / §5C / §9.1
+- Demo: `/demo/cleanroom-revel` (do not overflow-hidden the page)
+- PSAVE lock: 2026-08-14 · earn + lift lock: 2026-08-14
+
+ClickMotion · www.ClickMotion.dev

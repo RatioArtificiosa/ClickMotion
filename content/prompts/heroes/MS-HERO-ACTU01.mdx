@@ -3,19 +3,19 @@ id: "MS-HERO-ACTU01"
 title: "Actually! - Interactive Product Can Hero"
 slug: "actually-interactive-product-can-hero"
 description: "Your product becomes the stage: a living 3D object, a pointer that opens a window into the brand, and scroll that reveals all, your product and presentation - restage it for any offer."
-version: "1.0.0"
+version: "2.1.0"
 created: "2026-08-10"
-updated: "2026-08-10"
+updated: "2026-08-16"
 author: "MS Team"
 status: "published"
 type: "hero"
 category: "ecommerce"
 subcategory: "food-beverage"
 styleTags: ["editorial", "3d-immersive", "minimal", "organic"]
-technicalTags: ["scroll-trigger", "3d-threejs", "webgl", "text-split"]
+technicalTags: ["pin-until-complete", "3d-threejs", "webgl", "text-split"]
 motionIntensity: "extreme"
 difficulty: "advanced"
-priceTier: "free"
+priceTier: "pro"
 aiToolsRating:
   cursor: 5
   lovable: 3
@@ -26,6 +26,7 @@ frameworksSupported: ["react"]
 previewVideo: "/assets/videos/actually-hero-preview-v1.mp4"
 previewVideoFullscreen: "/assets/videos/actually-hero-preview-fs-v1.mp4"
 thumbnail: "/thumbnails/MS-HERO-ACTU01.webp"
+poster: "/assets/posters/actually-hero-preview-v1.webp"
 liveDemo: "/demo/cleanroom-actually"
 videoBackgrounds: []
 dependencies:
@@ -33,9 +34,8 @@ dependencies:
   - { name: "three", version: "^0.170.0", required: true }
   - { name: "@react-three/fiber", version: "^9.0.0", required: true }
   - { name: "@react-three/drei", version: "^10.0.0", required: true }
-  - { name: "lenis", version: "^1.1.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: false }
-estimatedTokens: 14000
+estimatedTokens: 16000
 useCases: ["cpg-product-hero", "beverage-launch", "nootropic-brand", "physical-product-homepage"]
 compatibleWith: []
 positionInPage: "top"
@@ -44,6 +44,10 @@ positionInPage: "top"
 ## Promise (buyer-facing)
 
 **Actually!** is a full-viewport **product hero** that treats the vessel as the brand. A living 3D can drops into a quiet editorial stage; a pointer-driven circular window peels bone paper into ink studio light; scroll pins the frame, expands the reveal, and opens support copy about the formula. Visitors do not watch a stock film. They meet the product.
+
+**No Scroller (pin-until-complete).** Scroll aims virtual progress on **1.2 viewports**. The page does not physically scroll during the viewing. The clip expands, the can locks, and the formula story lands. When the journey ends, the pin **releases**. Then the **page owns the wheel** until the stage docks at the top of the viewport again. Pointer on the next sibling never drives the hero. Not a tall sticky track. Not GSAP ScrollTrigger pin. Not Lenis. Not PSAVE.
+
+**How you build it:** download the product pack. Tell your AI: *Build Actually! using the files in this folder. Read PROMPT.md. Prefer source/ActuallyHero.tsx. No Scroller: pin-until-complete. One 100dvh stage. Scroll aims virtual progress on 1.2 viewports. At 0 plus up, or 1 plus down, release. After release at the end, the page owns until dock (top >= 0; implement >= -2). Do not install lenis. Do not build a tall multi-vh sticky track. Do not add PSAVE. Keep gsap for pointer, clip, and support tweens only.*
 
 **Why use it:**
 - Your can, bottle, or vessel feels premium and touchable on first paint
@@ -89,7 +93,7 @@ Default demo content (ACTUALLY. wordmark, nootropic formula, Clear SKU) is only 
 
 - **Hero only** - no forced site chrome inside the component
 - **Desktop stack:** bone paper layer (wordmark + taglines + scroll hint) over ink stage with clip-path circle window into WebGL can + support column
-- **Pin:** start `top top`, end `+=120%`, scrub true
+- **Pin:** one `100dvh` stage. Virtual earn **1.2 viewports**. Pin freeing after the last moment.
 - **Mobile:** stacked wordmark, can height ~52vh, drag-to-spin, formula block below
 - **Loader:** bone curtain, FLIP into hero H1, soft ~2.2s / hard 9s
 
@@ -109,7 +113,13 @@ Default demo content (ACTUALLY. wordmark, nootropic formula, Clear SKU) is only 
 
 ## Motion Specification
 
-**Mode:** scroll-scrub pin + pointer window + 3D grab. Not free-play film.
+**Mode:** **No Scroller** = **pin-until-complete** + pointer window + 3D grab. Not free-play film. Not PSAVE.
+
+```
+Earn desktop: VIRTUAL_VIEWPORTS = 1.2
+virtualDistance = 1.2 * window.innerHeight
+delta progress = wheelDeltaY / virtualDistance
+```
 
 | Event | Timing | Ease / notes |
 |-------|--------|--------------|
@@ -117,7 +127,8 @@ Default demo content (ACTUALLY. wordmark, nootropic formula, Clear SKU) is only 
 | Can entrance | ~1.6s after reveal | drop + spin ease-out |
 | Clip entrance | 1.2s delay 0.15 | circle radius grows |
 | Pointer follow | continuous | quickTo x/y on fine pointer |
-| Pin scrub | +=120% | expand clip, lock blend, dolly |
+| Virtual progress | g 0→1 on 1.2 vh | expand clip, lock blend, dolly |
+| **Pin freeing** | after g = 1 + down | **page owns** until dock (`top >= -2`) |
 | Support reveal | pin progress > ~0.58 | stagger fade-up |
 | Grab drag | any time (pre-lock) | pointer capture on can |
 
@@ -137,7 +148,9 @@ No `/backgrounds` contribution - the product is the stage, not a looping film ti
 
 Build a single default-export React component `ActuallyHero` (or page section).
 
-Stack: React + TypeScript, GSAP ScrollTrigger, Lenis coupled to ScrollTrigger.update, three + @react-three/fiber + @react-three/drei (`Environment`, `ContactShadows`, `useGLTF`).
+Stack: React + TypeScript, gsap tweens only (no ScrollTrigger pin), three + @react-three/fiber + @react-three/drei (`Environment`, `ContactShadows`, `useGLTF`). No Lenis.
+
+Root marker: `data-actually-drive="pin"` · `data-product="MS-HERO-ACTU01"`. After release: `data-actually-owns="page"`. Capture helper: `window.__msScrollNarrative`.
 
 Canvas: transparent, ACES tone mapping, studio lights + HDRI `background={false}`, dpr cap ~1.5.
 
@@ -179,7 +192,7 @@ This product is **not** listed on the backgrounds library - there is no looping 
 | BP | Behavior |
 |----|----------|
 | <768 | no clip-path pin; stacked wordmark + can (~52vh) + formula; drag-to-spin |
-| ≥768 | bone paper + pointer circle window + pin `+=120%` + left support column |
+| ≥768 | bone paper + pointer circle window + No Scroller 1.2 vh + left support column |
 | fine pointer | clip follows cursor; grab enabled on can |
 | coarse / touch | mobile path; drag spin without pin window |
 | reduced-motion | static product pose, readable copy, no long scrub |
@@ -189,6 +202,8 @@ This product is **not** listed on the backgrounds library - there is no looping 
 - Semantic `<section id="hero">` + heading hierarchy
 - Wordmark `aria-label` with the spoken brand name
 - Loader `role="status"` during curtain
+- Arrow / Page / Space drive `g` while the pin owns. Never trap Tab. Never steal keys from inputs, buttons, or links
+- After release the page can continue. Do not trap focus in the hero
 - Canvas may stay decorative; support copy remains in the DOM for screen readers
 - `prefers-reduced-motion`: skip long pin scrub and entrance spin
 - Contrast: ink on bone / bone on ink
@@ -199,15 +214,15 @@ This product is **not** listed on the backgrounds library - there is no looping 
 - `useGLTF.preload` for the can mesh
 - Dispose label textures and materials on unmount
 - HDRI Environment with `background={false}`
-- Lenis only on the shell that owns the pin
+- Do not load lenis. Do not create a ScrollTrigger pin.
 - ContactShadows resolution modest (512)
 
 ## AI Tool Instructions
 
-1. Paste this full prompt into Cursor, Claude, Grok Build, Lovable, or Bolt.
-2. Ask for a single React + TypeScript hero component with GSAP ScrollTrigger, React Three Fiber, drei, and Lenis smooth scroll coupled to ScrollTrigger.
-3. Place the GLB, label PNG, and HDRI where the component loads them (default paths above).
-4. Mount the hero inside a smooth-scroll shell so pin scrub stays in sync.
+1. Prefer pack source `ActuallyHero.tsx`. `"use client"`.
+2. Implement **No Scroller** (1.2 viewport virtual earn, release at ends, page owns until dock).
+3. Place the GLB, label PNG, and HDRI as START-HERE describes.
+4. Install gsap for pointer / clip / support tweens only. Do not install lenis. Do not add PSAVE.
 5. After the default builds, run the **Customization prompts** below until every demo string and sample label is gone.
 
 ## What to tell your AI (copy-paste customization)
@@ -231,7 +246,7 @@ Keep editorial spacing and uppercase tracking on the meta block.
 ### Formula story
 ```
 Rewrite the support index, H2, body paragraph, and two stats for [PRODUCT STORY].
-Keep the left column reveal on scroll past mid pin.
+Keep the left column reveal after mid progress. Keep No Scroller and pin freeing.
 ```
 
 ### Product mesh and labels
@@ -249,21 +264,22 @@ Keep type readable on both layers.
 ### Tone of voice pass
 ```
 Rewrite every visible string so the voice matches [BRAND VOICE].
-Do not change pin length or 3D math unless I ask.
+Do not change 1.2 vh earn or 3D math unless I ask. Do not restore a tall sticky track.
 ```
 
 ### Something looks wrong
 ```
 Something is broken: [DESCRIBE WHAT YOU SEE].
-Fix it and keep Actually! as a product-first hero with pointer window, living 3D vessel, and scroll formula reveal.
-Do not ask me to write code. Keep reduced-motion support.
+Fix it and keep Actually! as a product-first hero with pointer window, living 3D vessel, and No Scroller formula reveal.
+Keep pin freeing (page owns until dock). Do not restore ScrollTrigger pin, lenis, or a tall sticky track. Do not add PSAVE. Do not ask me to write code.
 ```
 
 ## Expected Output
 
 1. Full-viewport hero, no site header/footer required inside the component.
 2. Desktop: bone paper wordmark layer + ink studio with pointer-driven circle window into WebGL can.
-3. Scroll pins ~120% viewport; progress expands the window, soft-locks the can, reveals formula support copy.
+3. No Scroller: page stays still while scroll aims 1.2 vh; clip expands, can locks, formula lands; then the pin releases.
+3b. After release the page owns until dock. Pointer on the next sibling never drives the hero.
 4. Can entrance drop + grab-to-spin + optional float idle.
 5. Loader curtain with brand mark before reveal.
 6. Mobile stacked layout with drag spin.
@@ -274,8 +290,18 @@ Do not ask me to write code. Keep reduced-motion support.
 
 ## Package notes (operators)
 
-- Free listing · opaque package `a9ct7u4l2y1x` · no PaidSalt
-- Client media = GLB + labels + HDRI (not a film)
-- Storefront dual preview + FS full UI capture
-- **NOT** on `/backgrounds`
+| Role | Path |
+|------|------|
+| Client mesh | `/models/can.glb` |
+| Labels | `/textures/labels/still-01-clear-2.png` (+ dawn / dusk) |
+| HDRI | `/hdri/studio_small_03_1k.hdr` |
+| Storefront preview | `/assets/videos/actually-hero-preview-v1.mp4` (leave as-is; no recapture) |
+| Storefront FS | `/assets/videos/actually-hero-preview-fs-v1.mp4` |
+| Poster / thumb | `/assets/posters/actually-hero-preview-v1.webp` · `/thumbnails/MS-HERO-ACTU01.webp` |
+| Live demo | `/demo/cleanroom-actually` |
+| Product folder | `public/packages/MS-HERO-ACTU01/files/` |
+| Files zip | `/packages/MS-HERO-ACTU01/Actually-files-a9ct7u4l2y1x-r5m4x9.zip` |
+| Package PDF | `/packages/MS-HERO-ACTU01/Actually-package-a9ct7u4l2y1x-r5m4x9.pdf` |
+| Mode | No Scroller · not PSAVE · pin freeing · gsap tweens only |
+| Version | **2.1.0** Platinum Second Revision 2026-08-16 |
 

@@ -1,0 +1,134 @@
+/* HELM — zebra salon FAQ. Crop punches to the full frame. No third color. */
+
+.helm-root {
+  --helm-stage: #111111;
+  --helm-ink: #f5f5f5;
+  --ms-pin-fill: var(--helm-ink);
+  position: relative;
+  color: var(--helm-ink);
+  background: var(--helm-stage);
+  font-family: var(--font-helm), Inter, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.helm-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.helm-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .helm-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .helm-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.helm-enter {
+  opacity: 0;
+}
+
+.helm-root[data-entered="true"] .helm-enter {
+  opacity: 1;
+}
+
+.helm-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--helm-ink);
+  flex-shrink: 0;
+}
+
+.helm-brand {
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.helm-meta,
+.helm-place {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.helm-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.helm-punch {
+  width: fit-content;
+  max-width: 100%;
+  clip-path: inset(18%);
+}
+
+.helm-root[data-punch="true"] .helm-punch {
+  clip-path: inset(0%);
+  transition: clip-path 320ms cubic-bezier(0.55, 0, 0.15, 1);
+}
+
+.helm-question {
+  margin: 0;
+  max-width: 14ch;
+  font-weight: 800;
+  font-size: clamp(2.3rem, 8vw, 5.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.helm-answer {
+  margin: 1.25rem 0 0;
+  max-width: 28rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+}
+
+.helm-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+}
+
+.helm-place {
+  margin: 0 0 1rem;
+}
+
+.helm-root :is(button):focus-visible {
+  outline: 1px solid var(--helm-ink);
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .helm-enter,
+  .helm-punch,
+  .helm-root[data-entered="true"] .helm-enter,
+  .helm-root[data-punch="true"] .helm-punch {
+    opacity: 1;
+    clip-path: none;
+    transition: none;
+  }
+}

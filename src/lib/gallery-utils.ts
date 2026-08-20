@@ -23,8 +23,24 @@ export const REAL_PREVIEW_VIDEOS: Record<string, string> = {
   "MS-HERO-NEXU01": "/assets/videos/nexus-enterprise-preview-v1.mp4",
   "MS-SEC-HELI01": "/assets/videos/helix-gallery-preview-v1.mp4",
   "MS-HERO-ACTU01": "/assets/videos/actually-hero-preview-v1.mp4",
-  "MS-SEC-LINE01": "/assets/videos/lineup-reveal-preview-v1.mp4",
-  "MS-SEC-STUDIO01": "/assets/videos/studio-sequence-preview-v1.mp4",
+  "MS-SEC-LINE01": "/assets/videos/lineup-reveal-preview-v1.webm",
+  "MS-SEC-STUDIO01": "/assets/videos/studio-sequence-preview-v1.webm",
+  "MS-SEC-PHOB01": "/assets/videos/phobia-forms-preview-v1.webm",
+  "MS-SEC-DOPA01": "/assets/videos/dopamine-footer-preview-v1.webm",
+  "MS-HERO-ROAD01": "/assets/videos/roadster-studio-drive-preview-v1.mp4",
+  "MS-HERO-NOMA01": "/assets/videos/nomad-preview-v1.mp4",
+  // Operator screenshot WebM (law: page + browse/gallery stay WebM — never re-encode to mp4)
+  "MS-HERO-STIL01": "/assets/videos/still-preview-v1.webm",
+  // Agent capture; operator did not supply screenshot WebM for this SKU
+  "MS-HERO-BLOM01": "/assets/videos/bloom-preview-v1.mp4",
+  "MS-HERO-ACNE01": "/assets/videos/acne-secret-preview-v1.mp4",
+  "MS-HERO-VERV01": "/assets/videos/verve-preview-v1.mp4",
+  "MS-HERO-ORBI01": "/assets/videos/orbit-preview-v1.mp4",
+  // Operator screenshot WebM (law: page + browse/gallery stay WebM — never re-encode to mp4)
+  "MS-HERO-ZERO01": "/assets/videos/zero-energy-preview-v1.webm",
+  // Operator Premiere GrokBot-VEGAS.webm — FULL 63.76s on product page AND gallery
+  "MS-HERO-GROK01": "/assets/videos/grokbot-preview-v1.webm",
+  "MS-HERO-SKYS01": "/assets/videos/skyspires-preview-v1.mp4",
 };
 
 /**
@@ -52,6 +68,18 @@ export const REAL_PREVIEW_FULLSCREEN_VIDEOS: Record<string, string> = {
   "MS-HERO-ACTU01": "/assets/videos/actually-hero-preview-fs-v1.mp4",
   "MS-SEC-LINE01": "/assets/videos/lineup-reveal-preview-fs-v1.mp4",
   "MS-SEC-STUDIO01": "/assets/videos/studio-sequence-preview-fs-v1.mp4",
+  "MS-SEC-PHOB01": "/assets/videos/phobia-forms-preview-fs-v1.mp4",
+  "MS-SEC-DOPA01": "/assets/videos/dopamine-footer-preview-fs-v1.mp4",
+  "MS-HERO-ROAD01": "/assets/videos/roadster-studio-drive-preview-fs-v1.mp4",
+  "MS-HERO-NOMA01": "/assets/videos/nomad-preview-fs-v1.mp4",
+  "MS-HERO-STIL01": "/assets/videos/still-preview-fs-v1.mp4",
+  "MS-HERO-BLOM01": "/assets/videos/bloom-preview-fs-v1.mp4",
+  "MS-HERO-ACNE01": "/assets/videos/acne-secret-preview-fs-v1.mp4",
+  "MS-HERO-VERV01": "/assets/videos/verve-preview-fs-v1.mp4",
+  "MS-HERO-ORBI01": "/assets/videos/orbit-preview-fs-v1.mp4",
+  "MS-HERO-ZERO01": "/assets/videos/zero-energy-preview-fs-v1.mp4",
+  "MS-HERO-GROK01": "/assets/videos/grokbot-preview-fs-v1.mp4",
+  "MS-HERO-SKYS01": "/assets/videos/skyspires-preview-fs-v1.mp4",
 };
 
 /** Scroll-as-narrative products: show Scroll cue badge on product previews. */
@@ -67,6 +95,11 @@ export const SCROLL_EXPERIENCE_PRODUCT_IDS = new Set([
   "MS-HERO-ACTU01",
   "MS-SEC-LINE01",
   "MS-SEC-STUDIO01",
+  "MS-HERO-ROAD01",
+  "MS-HERO-STIL01",
+  "MS-HERO-ZERO01",
+  "MS-HERO-GROK01",
+  "MS-HERO-SKYS01",
 ]);
 
 export function resolvePreviewVideoFullscreen(
@@ -106,15 +139,24 @@ export const DEMO_SLUG_BY_ID: Record<string, string> = {
   "MS-HERO-SABL01": "cleanroom-sable",
   "MS-HERO-AXIO01": "cleanroom-axiom",
   "MS-HERO-ELYS01": "cleanroom-elyse",
-  "MS-HERO-VERV01": "verve",
-  "MS-HERO-ORBI01": "orbit",
-  "MS-HERO-NOMA01": "nomad",
+  "MS-HERO-VERV01": "cleanroom-verve",
+  "MS-HERO-ORBI01": "cleanroom-orbit",
+  "MS-HERO-NOMA01": "cleanroom-nomad",
   "MS-HERO-NEXU01": "cleanroom-nexus",
   "MS-SEC-HELI01": "cleanroom-helix",
   "MS-HERO-ACTU01": "cleanroom-actually",
   "MS-SEC-LINE01": "cleanroom-lineup",
   "MS-SEC-STUDIO01": "cleanroom-studio",
+  "MS-SEC-PHOB01": "cleanroom-phobia",
+  "MS-SEC-DOPA01": "cleanroom-dopamine",
+  "MS-HERO-ROAD01": "cleanroom-roadster",
   "MS-HERO-MERI01": "scroll-narrative",
+  "MS-HERO-STIL01": "cleanroom-still",
+  "MS-HERO-BLOM01": "cleanroom-bloom",
+  "MS-HERO-ACNE01": "cleanroom-acne",
+  "MS-HERO-ZERO01": "cleanroom-zero",
+  "MS-HERO-GROK01": "cleanroom-grokbot",
+  "MS-HERO-SKYS01": "cleanroom-skyspires",
 };
 
 export type GalleryPrompt = {
@@ -122,6 +164,8 @@ export type GalleryPrompt = {
   slug: string;
   title: string;
   type: string;
+  /** Extra type memberships for multi-type browse filters (optional). */
+  types?: string[];
   category: string;
   styleTags: string[];
   motionIntensity: string;
@@ -164,9 +208,55 @@ export function typeLabel(type: string): string {
   return type.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+/**
+ * Browse type filter match: primary `type` or optional multi-type list.
+ * Mirrors how type + genre already let a product sit under Hero and Agency.
+ */
+export function productMatchesType(
+  p: { type: string; types?: string[] | null },
+  filterType: string
+): boolean {
+  if (!filterType) return true;
+  if (p.type === filterType) return true;
+  if (Array.isArray(p.types) && p.types.includes(filterType)) return true;
+  return false;
+}
+
+/** All distinct type ids for a product (primary first). */
+export function productTypeIds(p: {
+  type: string;
+  types?: string[] | null;
+}): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  for (const t of [p.type, ...(Array.isArray(p.types) ? p.types : [])]) {
+    if (!t || seen.has(t)) continue;
+    seen.add(t);
+    out.push(t);
+  }
+  return out;
+}
+
+/** Multi-type label e.g. "Hero Section · Landing Page" */
+export function typeLabelsJoined(p: {
+  type: string;
+  types?: string[] | null;
+}): string {
+  return productTypeIds(p).map(typeLabel).join(" · ");
+}
+
 /** Genre line shown on product cards and product pages: "Hero Section · Tech & Startup" */
 export function genreLine(type: string, categoryId: string): string {
   return [typeLabel(type), categoryLabel(categoryId)].filter(Boolean).join(" · ");
+}
+
+/** Genre line with multi-type support when product has types[]. */
+export function genreLineForProduct(
+  p: { type: string; types?: string[] | null; genreId?: string; category?: string },
+  categoryId?: string
+): string {
+  const cat = categoryId ?? p.genreId ?? p.category ?? "";
+  return [typeLabelsJoined(p), categoryLabel(cat)].filter(Boolean).join(" · ");
 }
 
 /**
@@ -185,11 +275,12 @@ export function resolvePreviewVideo(
     videoBackgroundFile?: string;
   }
 ): string | undefined {
-  // Owned capture first (reliable product previews)
+  // Storefront capture first. Never let client HD (videoBackgrounds) beat
+  // an explicit previewVideo / operator WebM.
   const owned = [
     REAL_PREVIEW_VIDEOS[id],
-    options?.videoBackgroundFile,
     options?.previewVideo,
+    options?.videoBackgroundFile,
   ].filter(Boolean) as string[];
 
   for (const src of owned) {

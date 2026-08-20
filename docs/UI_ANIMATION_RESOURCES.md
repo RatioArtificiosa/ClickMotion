@@ -384,7 +384,7 @@ Ground truth: [Three.js examples](https://threejs.org/examples/), [R3F examples]
 | Play | Technique | MS product shape |
 |------|-----------|------------------|
 | **One object with weight** | Single hero mesh, real materials, inertia, Z-depth camera | Product hero / special |
-| **Scroll as narrative** | Scroll position drives camera / scene sequence (GSAP + Lenis optional) | Long-form LP special |
+| **Scroll as narrative** | Scroll **gestures** drive camera / scene sequence via **pin-until-complete** (virtual progress while section is pinned; release when done) — PRODUCT_LAW. Not tall multi-vh document scroll as the product UX. | Long-form LP / section special |
 | **Mouse-reveal monolith** | Cursor uncovers lighting/geometry detail | B2B extreme hero |
 | **Particle-dispersing type** | Points morph from text (Shopify Editions-class) | Launch / changelog special |
 | **Room per product** | Distinct 3D alcove per item | Catalog special (rare) |

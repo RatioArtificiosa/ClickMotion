@@ -3,19 +3,19 @@ id: "MS-SEC-HELI01"
 title: "HELIX - Helical Design Gallery Carousel Section"
 slug: "helix-helical-design-gallery-carousel-section"
 description: "A spatial mid-page gallery where your work rides a 3D helix as titles cross the stage. Fully customizable cards, copy, and color so it feels made for your brand."
-version: "1.1.0"
+version: "2.2.0"
 created: "2026-08-10"
-updated: "2026-08-10"
+updated: "2026-08-15"
 author: "MS Team"
 status: "published"
 type: "section"
 category: "agency"
 subcategory: "design-studio"
 styleTags: ["editorial", "minimal", "3d-immersive", "luxury"]
-technicalTags: ["scroll-trigger", "3d-threejs", "webgl", "text-split"]
+technicalTags: ["pin-until-complete", "3d-threejs", "webgl"]
 motionIntensity: "extreme"
 difficulty: "advanced"
-priceTier: "free"
+priceTier: "pro"
 aiToolsRating:
   cursor: 5
   lovable: 3
@@ -26,23 +26,24 @@ frameworksSupported: ["react"]
 previewVideo: "/assets/videos/helix-gallery-preview-v1.mp4"
 previewVideoFullscreen: "/assets/videos/helix-gallery-preview-fs-v1.mp4"
 thumbnail: "/thumbnails/MS-SEC-HELI01.webp"
+poster: "/assets/posters/helix-gallery-preview-v1.webp"
 liveDemo: "/demo/cleanroom-helix"
 videoBackgrounds: []
 dependencies:
-  - { name: "gsap", version: "^3.12.0", required: true }
   - { name: "three", version: "^0.170.0", required: true }
   - { name: "@react-three/fiber", version: "^9.0.0", required: true }
-  - { name: "lenis", version: "^1.1.0", required: true }
   - { name: "tailwindcss", version: "^3.4.0", required: false }
-estimatedTokens: 11000
+estimatedTokens: 15000
 useCases: ["design-studio-midpage", "agency-gallery-section", "portfolio-carousel", "dribbble-style-showcase"]
-compatibleWith: []
+compatibleWith: ["MS-SEC-FOLI01"]
 positionInPage: "middle"
 ---
 
 ## Promise (buyer-facing)
 
 HELIX is a mid-page **gallery carousel section** that turns scroll into a spatial presentation. Nine of **your** design pieces ride a WebGL cylindrical helix while giant titles cross the frame and a quiet center lockup holds the brand. Visitors do not skim a flat grid. They move through a crafted arc of work.
+
+**No Scroller (pin-until-complete).** Scroll aims the helix. The page does not physically scroll during the viewing. When the journey ends, the pin **releases**. Then the **page owns the wheel** until the stage docks at the top of the viewport again. Pointer on the next sibling never drives the helix. Not a tall sticky track. Not GSAP ScrollTrigger. Not Lenis. Not PSAVE. There is no reverse-played film.
 
 **Why use it:**
 - Your portfolio or case studies feel like a private viewing, not a stock carousel
@@ -53,11 +54,15 @@ HELIX is a mid-page **gallery carousel section** that turns scroll into a spatia
 
 Default demo content (ClickMotion wordmark, sample mock cards, "Design in / motion") is only a starting board. Tell your AI to restage everything until it reads as you alone.
 
+**How you build it:** download the product pack (prompt + source + nine stills). Tell your AI: *Build HELIX using the files in this folder. Read PROMPT.md and follow it. Prefer source/HelixGallerySection.tsx and source/OrbitHelix.tsx. No Scroller: pin-until-complete. One 100dvh stage. Scroll aims virtual progress on 5 viewports desktop / 3 viewports mobile. Titles and helix follow that progress 1:1. At 0 plus up, or 1 plus down, release so the host page can continue. After release at the end, the page owns scroll until the stage docks (top >= 0; implement >= -2). Do not install gsap. Do not install lenis. Do not build a tall multi-vh sticky track. Do not add PSAVE. There is no film to rewind.*
+
+---
+
 ## Design System
 
-**Aesthetic Direction:** **HELIX** - mid-page **carousel / gallery section** (not a full-bleed hero). Cool gray stage `#C3C3C3` by default (fully recolorable). Nine design stills ride a WebGL cylindrical helix while giant type **"Design in"** and **"motion"** cross the frame. Center lockup: brand wordmark (Birthstone or your script) above a quiet uppercase line. Stage is solid color by default so **your cards own the focus**. Scroll owns the pin.
+**Aesthetic Direction:** **HELIX** - mid-page **carousel / gallery section** (not a full-bleed hero). Cool gray stage `#C3C3C3` by default (fully recolorable). Nine design stills ride a WebGL cylindrical helix while giant type **"Design in"** and **"motion"** cross the frame. Center lockup: brand wordmark (Birthstone or your script) above a quiet uppercase line. Stage is solid color by default so **your cards own the focus**. Scroll aims. The page stays still.
 
-**Famous-UI craft direction (not a clone):** editorial Dribbble showcase × Swiss gray board × private-studio restraint. Serious. Spatial. Readable under cards.
+**Famous-UI craft direction (not a clone):** editorial Dribbble showcase x Swiss gray board x private-studio restraint. Serious. Spatial. Readable under cards.
 
 **Typography:**
 - Giant titles: geometric sans (Neue Haas / Inter / Helvetica Neue), uppercase, `clamp(3.25rem, 13vw, 9.5rem)`, tracking `-0.04em`, line-height `0.8`, ink `#1a1a1a`
@@ -71,7 +76,6 @@ Default demo content (ClickMotion wordmark, sample mock cards, "Design in / moti
 | Stage | `#C3C3C3` | Your board color (keep type readable) |
 | Ink | `#0a0a0a` / `#1a1a1a` | Your primary type |
 | Rails | `#9E9E9E` ~50% | Soft guide lines on stage |
-| Pin spacer | match stage | Never flash white under pin |
 
 **Anti-slop hard ban:** purple mesh, emoji, rainbow H1, Motionsites pill docks, required third-party Dribbble CTA, footer stripe wipe as the product signature, auto-rotating carousel without scroll pin, leaving demo ClickMotion copy if the buyer brand is different.
 
@@ -79,20 +83,26 @@ Default demo content (ClickMotion wordmark, sample mock cards, "Design in / moti
 | vs | Helix must not become |
 |----|------------------------|
 | Folio | Liquid-glass decision sheets + underlay film |
-| Prism | Multi-face hero constellation |
+| Prism | Multi-face hero constellation + PSAVE film |
 | Nexus | Enterprise AI free-play film hero |
-| Meridian | Coastal scroll-scrub narrative |
+| Meridian | Coastal seek-scrub narrative |
+
+---
 
 ## Layout Structure
 
 - **Section only** - no forced page intro/outro in the component
-- **Pin stage:** `100dvh`, solid stage color
-- **Scroll length:** ~`5 × 100vh` desktop / `3 × 100vh` mobile (helix phase only; titles exit at end)
+- **Pin stage:** `100dvh`, solid stage color, in normal document flow
+- **No** tall multi-vh spacer. **No** `position: sticky` track. **No** GSAP `pinSpacing`
+- **Earn (virtual, not page height):** 5 viewports desktop / 3 viewports mobile
 - **Stack:** z-0 titles + concepts; z-1 WebGL canvas full viewport
 - **Safe insets:** concepts `px-5 md:px-10`, bottom pad `pb-10 md:pb-14`
 - **No** site chrome, no runway, no footer handoff inside the product component
+- On a buyer site the next sibling after `#helix-gallery` may scroll in after release
 
-## Content slots (every string is replaceable)
+---
+
+## Content Slots (every string is replaceable)
 
 | Slot | Default (demo only) | Guidance | Max |
 |------|---------------------|----------|-----|
@@ -106,23 +116,48 @@ Default demo content (ClickMotion wordmark, sample mock cards, "Design in / moti
 | Stage color | `#C3C3C3` | Board that makes cards and type read | hex |
 | Type color | `#1a1a1a` | High contrast on stage | hex |
 
+---
+
 ## Motion Specification
 
-**Mode:** scroll-scrub pin (GSAP ScrollTrigger + Lenis). Cards and titles are driven by scroll progress, not a free-play film.
+**Mode:** **No Scroller** = **pin-until-complete**. Cards and titles are driven by **virtual progress** `g` 0→1, not a free-play film, not a tall page scrollbar.
+
+```
+Earn desktop: VIRTUAL_VIEWPORTS = 5
+Earn mobile (<768): VIRTUAL_VIEWPORTS = 3
+virtualDistance = VIRTUAL_VIEWPORTS * window.innerHeight
+delta progress = wheelDeltaY / virtualDistance
+```
+
+Gestures map **1:1** onto that distance. No wheel gain. No GSAP lag. Old `scrub: true` feel: titles and helix follow `g` immediately.
 
 | Event | Timing | Ease / notes |
 |-------|--------|--------------|
-| Pin engage | start `top top` | pinType fixed, scrub true |
-| Helix phase `g` | 0→1 over full pin | maps card path offset |
+| Pin engage | section in view, journey not finished | consume wheel / touch / keys |
+| Helix phase `g` | 0→1 over the earn track | maps card path offset |
 | Title A | g maps x from `-100vw` to `+100vw` | peak center ~g=0.18 |
 | Title B | g maps x from `+100vw` to `-100vw` | mirror of A |
 | Center lockup fade | after g≈0.55 | opacity falls toward 0 by ~g=0.8 |
 | Cards enter | g from 0 | ease in from off-path (no seeded mid-arc) |
 | Rails draw | with P = min(1, g/(400/600)) | guide lines grow with helix |
+| Release | g ≤ 0 + up, or g ≥ 1 + down | host page may continue |
+| **Pin freeing** | after g = 1 + down | **page owns** until stage docks (`top >= -2`) |
+| Pointer on next sibling | never | runway never drives the helix |
 
-**Reduced motion:** show static mid pose (g≈0.45), titles near center, no long scrub track required.
+**Hard ban:** GSAP `ScrollTrigger` pin + `scrub`.
+**Hard ban:** Lenis coupled to ScrollTrigger.
+**Hard ban:** a 3 vh / 5 vh **document spacer** as the method (those numbers are **virtual earn** only).
+**Hard ban:** installing `gsap` or `lenis` for this section.
+**Hard ban:** PSAVE / GOP 3 / reverse film. Helix has no film clock.
+**Hard ban:** `overflow: hidden` on the host page (release must be able to reveal the next sibling).
 
-## Media Integration (gallery stills - fully yours)
+Root marker: `data-helix-drive="pin"`. After release: `data-helix-owns="page"`. While the pin owns: `data-helix-owns="pin"`. Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, pageOwns, productId: "MS-SEC-HELI01" }`.
+
+**Reduced motion:** show static mid pose (g≈0.45), titles near center, no chase.
+
+---
+
+## Video / Media Integration (gallery stills - fully yours)
 
 This section is a **card gallery**, not a full-bleed video hero. The default pack ships nine stills:
 
@@ -136,46 +171,76 @@ Load order on the helix is **reversed** (09 → 01). Each card is a rounded-rect
 
 **Optional stage treatment:** keep solid stage color (recommended for focus), or ask your AI to add a very soft texture/gradient behind cards if your brand needs it. Do not bury the cards under a loud background film unless you deliberately want that.
 
-Storefront previews on ClickMotion (presentation only):
+Storefront previews on ClickMotion (presentation only, forward shop clips, never GOP for reverse):
 - Page: `/assets/videos/helix-gallery-preview-v1.mp4`
 - Fullscreen: `/assets/videos/helix-gallery-preview-fs-v1.mp4`
 
+Do not use storefront previews as rebuild media.
+
+---
+
 ## Responsive Behavior
 
-| BP | Behavior |
-|----|----------|
-| <768 | pin ~3vh units; FOV ~58; camera z~28 |
-| 768-1199 | FOV ~54; z~24 |
-| ≥1200 | FOV ~52; z~22; pin ~5vh units |
-| tall mobile | titles clamp; concepts still bottom-left |
-| reduced-motion | static mid helix |
+| Breakpoint | Behavior |
+|------------|----------|
+| <640 | Earn 3 vh. Camera z 28 / fov 58. Titles clamp small. Concepts stay bottom-left. |
+| 640-767 | Earn 3 vh. Camera z 28 / fov 58. No camera tilt (`lookY` stays 0). |
+| 768-1023 | Earn 5 vh. Camera z 24 / fov 54. |
+| 1024-1535 | Earn 5 vh. Camera z 22 / fov 52. |
+| ≥1536 | Same camera as desktop. Keep cards from overscaling. |
+| reduced-motion | Static mid helix at g≈0.45. Titles near center. No chase. |
+
+---
 
 ## Accessibility
 
 - Semantic `<section>` + heading hierarchy
 - Wordmark `aria-label` with the spoken brand name
 - Canvas `aria-hidden`
-- `prefers-reduced-motion`: no long scrub required
+- Arrow / Page / Space keys drive `g` while the pin owns. Never trap Tab.
+- After release the page can continue. Do not trap focus in the section.
+- `prefers-reduced-motion`: static mid pose, no chase
 - Contrast: dark type on light stage (or invert if you recolor)
+
+---
 
 ## Performance Notes
 
 - R3F Canvas `dpr` capped at 2; transparent clear
 - Textures: LinearFilter, no mipmaps, SRGB
 - Dispose geos/mats/textures on unmount
-- Lenis only on the shell that owns the pin
+- Force canvas size to the viewport (never leave R3F at 300x150)
 - Do not load drei unless you add controls later
+- Do not load gsap or lenis
+
+---
 
 ## AI Tool Instructions
 
-1. Paste this full prompt into Cursor, Claude, Grok Build, Lovable, or Bolt.
-2. Ask for a single React + TypeScript section component with GSAP ScrollTrigger, React Three Fiber, and Lenis smooth scroll coupled to ScrollTrigger.
-3. Place your nine images where the component loads them (default paths `orbit-01`…`orbit-09`).
-4. Load Birthstone (or your brand script font) for the wordmark.
-5. Mount the section inside a smooth-scroll shell so pin scrub stays in sync.
-6. After the default builds, run the **Customization prompts** below until every demo string and sample image is gone.
+**Cursor / Claude / Grok Build:** Prefer pack source over rewrite. `"use client"`. Implement **No Scroller** (5 / 3 viewport **virtual earn**, not a document track, virtual progress 1:1, release at ends). After release at the end, the page owns until dock. Wire fonts Inter (or Neue Haas) + Birthstone. Place nine images at the orbit paths. Do not install gsap. Do not install lenis. Do not add PSAVE. Do not copy leftover SmoothScroll or gsap-register files. They are not part of this product.
 
-## What to tell your AI (copy-paste customization)
+**Lovable / Bolt:** Single self-contained section; same tokens, helix, titles. Wheel advances `g`. No tall page track.
+
+---
+
+## Expected Output
+
+1. Mid-page section, full-viewport stage, no site header/footer required inside the component.
+2. No Scroller: the page stays still while scroll aims the helix; then the pin releases.
+3. After release at the end, the page owns scroll until the stage docks. Pointer on the next sibling never drives the helix.
+4. Nine cards travel a cylindrical helix with thin guide rails.
+5. Title A enters from left; Title B from right; they cross and exit by journey end.
+6. Brand wordmark sits above the center lines at rest, then fades late in the journey.
+7. Concepts copy bottom-left under cards (z below canvas).
+8. No required third-party CTA, no stripe wipe, no footer pull as part of the section product.
+9. Reduced-motion static fallback.
+10. All demo strings and sample images are replaceable via the prompts below.
+11. Works as a drop-in section on a marketing page.
+12. No gsap, lenis, SmoothScroll, or gsap-register in the buyer rebuild.
+
+---
+
+## What to tell your AI
 
 Use these as-is. Replace brackets. Prefer one request at a time so the AI does not drop motion.
 
@@ -190,7 +255,7 @@ Update any aria-label to match [YOUR BRAND NAME].
 ```
 Change the left-entering giant title from "Design in" to "[TITLE A]".
 Change the right-entering giant title from "motion" to "[TITLE B]".
-Keep both uppercase, huge clamp sizing, and the left-to-right / right-to-left cross as scroll progresses.
+Keep both uppercase, huge clamp sizing, and the left-to-right / right-to-left cross as progress advances.
 Prefer short lines so they stay elegant.
 ```
 
@@ -199,7 +264,7 @@ Prefer short lines so they stay elegant.
 Change the two center uppercase lines to:
 Line 1: "[YOUR LINE 1]"
 Line 2: "[YOUR LINE 2]"
-Keep small tracking, centered under the wordmark, and the late-scroll fade.
+Keep small tracking, centered under the wordmark, and the late-journey fade.
 ```
 
 ### Bottom-left concepts copy
@@ -231,14 +296,14 @@ If I only give descriptions, generate tasteful mock UI / campaign stills that ma
 ```
 Change the stage gray #C3C3C3 to [STAGE HEX].
 Change title and body ink to [INK HEX].
-Keep pin-spacer background matched to the stage so there is no white flash on pin engage.
+Keep the section background matched to the stage so there is no flash when the pin releases.
 Ensure wordmark and small type stay readable.
 ```
 
 ### Tone of voice pass
 ```
 Rewrite every visible string so the voice matches [BRAND VOICE: e.g. quiet luxury / bold studio / technical product].
-Do not change motion math, helix radius, or scroll pin behavior unless I ask.
+Do not change helix math or No Scroller behavior unless I ask.
 ```
 
 ### Optional soft stage treatment
@@ -247,34 +312,36 @@ Keep cards as the hero. If useful, add a very subtle stage texture or soft gradi
 Do not add a loud full-bleed background video that competes with the cards unless I explicitly request it.
 ```
 
+### Pin freeing (if scroll feels stuck after the last moment)
+```
+After the last moment, scrolling down must release the pin.
+Then the PAGE owns the wheel until the section docks at the top of the viewport again (stage.top >= 0).
+Scrolling up in the next section must move the page, not rewind the helix.
+Pointer on the next sibling must never drive the helix.
+Do not restore a tall sticky track. Do not add PSAVE.
+```
+
 ### Something looks wrong
 ```
 Something is broken: [DESCRIBE WHAT YOU SEE].
-Fix it and keep Helix as a spatial mid-page gallery carousel with scroll-pinned helix cards and crossing titles.
-Do not ask me to write code. Keep reduced-motion support.
+Fix it and keep Helix as a spatial mid-page gallery carousel with No Scroller (pin-until-complete), helix cards, and crossing titles.
+Keep pin freeing (page owns until dock).
+Do not restore gsap, lenis, or a tall multi-vh sticky track. Do not add PSAVE. Do not ask me to write code. Keep reduced-motion support.
 ```
 
-## Expected Output
-
-1. Mid-page section, full-viewport stage, no site header/footer required inside the component.
-2. Scroll pins the stage; progress drives helix + titles.
-3. Nine cards travel a cylindrical helix with thin guide rails.
-4. Title A enters from left; Title B from right; they cross and exit by pin end.
-5. Brand wordmark sits above the center lines at rest, then fades late in the journey.
-6. Concepts copy bottom-left under cards (z below canvas).
-7. No required third-party CTA, no stripe wipe, no footer pull as part of the section product.
-8. Reduced-motion static fallback.
-9. All demo strings and sample images are replaceable via the prompts above.
-10. Works as a drop-in section on a marketing page.
+---
 
 ## Package notes (operators)
 
 | Role | Path |
 |------|------|
 | Gallery stills (client media) | `/assets/images/orbit/orbit-0N.jpg` |
-| Storefront preview | `/assets/videos/helix-gallery-preview-v1.mp4` |
+| Storefront preview | `/assets/videos/helix-gallery-preview-v1.mp4` (leave as-is; no recapture; no GOP 3) |
 | Storefront FS | `/assets/videos/helix-gallery-preview-fs-v1.mp4` |
 | Poster / thumb | `/assets/posters/helix-gallery-preview-v1.webp` · `/thumbnails/MS-SEC-HELI01.webp` |
 | Live demo | `/demo/cleanroom-helix` |
-| Package PDF | `/packages/MS-SEC-HELI01/Helix-package-h3l1x9k2m7p4.pdf` |
+| Product folder | `public/packages/MS-SEC-HELI01/files/` |
+| Files zip | `/packages/MS-SEC-HELI01/Helix-files-h3l1x9k2m7p4-t2v8c6.zip` |
+| Package PDF | `/packages/MS-SEC-HELI01/Helix-package-h3l1x9k2m7p4-t2v8c6.pdf` |
 | Backgrounds page | N/A (gallery cards, not a bg-film SKU) |
+| Mode | No Scroller · not PSAVE · pin freeing · Platinum backend 2026-08-15 |

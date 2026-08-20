@@ -1,20 +1,20 @@
 /**
- * LINEUP — product catalog + section chrome for MS-SEC-LINE01.
+ * LINEUP - product catalog + section chrome for MS-SEC-LINE01.
  *
  * ═══════════════════════════════════════════════════════════════════════════
- * AI / BUYER CUSTOMIZATION — read this first
+ * AI / BUYER CUSTOMIZATION - read this first
  * ═══════════════════════════════════════════════════════════════════════════
  *
  * Everything the visitor reads and the 3D stage shows is driven from THIS FILE.
  * Do not hardcode product count elsewhere. LineupSection maps over PRODUCTS;
- * pin length, snap points, tabs, blooms, ghosts, and mobile cards all scale
+ * virtual earn, snap points, tabs, blooms, ghosts, and mobile cards all scale
  * with PRODUCTS.length.
  *
  * HOW TO PLACE ANY PRODUCT LINE
  * 1. Edit SECTION_META (eyebrow, H2, swipe hint, total footer labels).
  * 2. Replace SPEC_ROWS with features/ingredients/materials for your category
  *    (or leave empty and hide specs in copy by using empty array + AI hide).
- * 3. Replace PRODUCTS entirely with your SKUs (2–8 recommended).
+ * 3. Replace PRODUCTS entirely with your SKUs (2-8 recommended).
  * 4. For each product set: id, skuNumber, number (BRAND.01), name, descriptor,
  *    flavorPair (subtitle), pitch, bloomColor, leadIngredient (spec id),
  *    optional labelPath (absolute public URL for UV map).
@@ -40,7 +40,7 @@ export type SpecRow = {
   name: string;
   /**
    * Primary numeric cell (demo: milligrams).
-   * For other industries: price, volume, SPF, count, watts — any number.
+   * For other industries: price, volume, SPF, count, watts - any number.
    */
   dosageMg: number;
   /** Optional per-row unit override (defaults to SECTION_META.specUnit). */
@@ -59,13 +59,13 @@ export const SPEC_ROWS: SpecRow[] = [
   { id: "bacopa", name: "Bacopa Monnieri", dosageMg: 300 },
 ];
 
-/** @deprecated alias — prefer SPEC_ROWS */
+/** @deprecated alias - prefer SPEC_ROWS */
 export const INGREDIENTS = SPEC_ROWS;
 
 export const TOTAL_BLEND_MG = SPEC_ROWS.reduce((s, i) => s + i.dosageMg, 0);
 
 /**
- * Section chrome — update when product count or industry changes.
+ * Section chrome - update when product count or industry changes.
  * LineupSection reads these for eyebrow, H2, mobile hint, and total footer.
  */
 export type SectionMeta = {
@@ -127,7 +127,7 @@ export type LineupProduct = {
   labelPath?: string;
   /**
    * Optional mesh path if this SKU uses a different vessel than the default
-   * can.glb (advanced — wire in Can3D / stage when needed).
+   * can.glb (advanced - wire in Can3D / stage when needed).
    */
   meshPath?: string;
 };
@@ -184,7 +184,7 @@ export const PRODUCTS: LineupProduct[] = [
   },
 ];
 
-/** @deprecated alias — prefer PRODUCTS */
+/** @deprecated alias - prefer PRODUCTS */
 export const FLAVORS = PRODUCTS;
 
 /** Alternating stage tilt sign by index (works for any length). */
@@ -197,7 +197,7 @@ export const FLAVOR_TILT = PRODUCTS.map((_, i) => tiltFor(i));
 
 export const PRODUCT_COUNT = PRODUCTS.length;
 
-/** English-ish count word for AI-suggested eyebrow updates (2–12). */
+/** English-ish count word for AI-suggested eyebrow updates (2-12). */
 export function countWord(n: number): string {
   const words = [
     "Zero",

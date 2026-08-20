@@ -1,0 +1,79 @@
+---
+id: "MS-SEC-PRIC03"
+title: "GILDA - Stack Shuffle Pricing"
+slug: "gilda-stack-shuffle-pricing"
+description: "Cherry lacquer sittings. One plate shuffles. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "pricing"
+category: "lifestyle"
+subcategory: "salon"
+styleTags: ["fashion"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "candy-couture"
+tokenTheme: "cherry-lacquer"
+motionPrimitive: "stack-shuffle"
+enterRecipe: "hop-in"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-VERV01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-gilda"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5400
+useCases: ["salon-pricing", "makeup-sittings", "couture-plans"]
+---
+
+## Promise (buyer-facing)
+
+GILDA is a mid-page **pricing** board that reads as a makeup book, not three kit cards. One sitting. Empty ghosts behind. The plate shuffles 3 degrees and lands.
+
+**Why use it:**
+- The shuffle is the design. The board never says deck
+- Stage is lacquer. Ivory is the highlight
+- Sits after Revel, Verve, or Dopamine without copying Rouge or Cairn
+
+## Design System
+
+Stage `#C41E3A`. Ink `#FFF5F0`. Syne display. Outfit UI.
+
+**Primitive:** `stack-shuffle` (480ms, 3deg). **Enter:** `hop-in`.
+
+**Anti-slop:** three equal pricing cards, lipstick swipe clone, Get Started.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, one plate, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| sittings[].name | Window | 20 |
+| sittings[].price | 45 | 12 |
+| sittings[].period | You sit by the glass on Ocean... | 180 |
+| place | Ocean Avenue, Carmel | 40 |
+
+## Motion Specification
+
+Pin-until-complete. Shuffle once per sitting. Reduced: first plate at rest.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Ghost cards carry no prices. Do not lay out a three-card grid.

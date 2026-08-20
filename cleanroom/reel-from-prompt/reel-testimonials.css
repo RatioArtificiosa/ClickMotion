@@ -1,0 +1,143 @@
+/* REEL — oxblood darkroom. Polaroid develops the quote. Not Ember pour. */
+
+.reel-root {
+  --reel-stage: #5c1218;
+  --reel-ink: #f6e6d8;
+  --reel-muted: #d4a090;
+  --reel-line: #7a2830;
+  --reel-accent: #e8c4a8;
+  --ms-pin-fill: var(--reel-accent);
+  position: relative;
+  color: var(--reel-ink);
+  background: var(--reel-stage);
+  font-family: var(--font-reel-sans), Outfit, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+.reel-root--pin {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.reel-stage {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 1.6rem;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .reel-stage {
+    padding: 2.4rem 3.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reel-stage {
+    padding: 2.75rem 4.5rem 2.25rem;
+  }
+}
+
+.reel-enter {
+  opacity: 0;
+}
+
+.reel-root[data-entered="true"] .reel-enter {
+  opacity: 1;
+  transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reel-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--reel-line);
+  flex-shrink: 0;
+}
+
+.reel-brand {
+  font-family: var(--font-reel-display), Fraunces, serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.reel-meta,
+.reel-place,
+.reel-who span {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--reel-muted);
+}
+
+.reel-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  transition-delay: 50ms;
+}
+
+.reel-quote {
+  margin: 0;
+  max-width: 22ch;
+  font-family: var(--font-reel-display), Fraunces, serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(2rem, 6.6vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  filter: contrast(0.35) brightness(1.4);
+  opacity: 0.72;
+}
+
+.reel-root[data-develop="true"] .reel-quote {
+  filter: contrast(1) brightness(1);
+  opacity: 1;
+  transition:
+    filter 1400ms ease,
+    opacity 1400ms ease;
+}
+
+.reel-who {
+  margin: 1.35rem 0 0;
+  font-size: 1.05rem;
+  color: var(--reel-muted);
+}
+
+.reel-who span {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--reel-accent);
+}
+
+.reel-foot {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  transition-delay: 120ms;
+}
+
+.reel-place {
+  margin: 0 0 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-enter,
+  .reel-quote,
+  .reel-root[data-entered="true"] .reel-enter,
+  .reel-root[data-develop="true"] .reel-quote {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}

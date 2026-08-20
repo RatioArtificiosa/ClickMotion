@@ -1,0 +1,162 @@
+---
+id: "MS-SEC-FOOT01"
+title: "CLEAR - Orbit House Footer"
+slug: "clear-orbit-house-footer"
+description: "A trust close. One desk holds the page. Few links. The books are open. Restage the desks until they read as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "footer"
+category: "fintech"
+subcategory: "clearing"
+styleTags: ["corporate", "minimal"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "calm-fintech"
+tokenTheme: "orbit-trust-dark"
+motionPrimitive: "desk-ink"
+enterRecipe: "stamp-settle"
+compatibleWith: ["MS-HERO-ORBI01", "MS-HERO-AXIO01", "MS-HERO-NEXU01"]
+positionInPage: "bottom"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-clear"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["neobank-footer", "clearing-close", "trust-footer"]
+---
+
+## Promise (buyer-facing)
+
+CLEAR is a **footer** that reads as a close, not a sitemap. One desk holds the proof. Three house links. One seat request. Visitors do not hunt twelve columns. They leave knowing the books are open.
+
+**Why use it:**
+- Completeness without a dump: brand, desks, nav, legal, one verb
+- The desk rail is the motion. Accent is a hairline
+- Every place and period is a slot for your house
+- Sits after Orbit, Axiom, or Nexus without copying their film
+- Built for rooms that clear, not announce
+
+## Design System
+
+**Aesthetic Direction:** **CLEAR** - page **footer / close** (not a hero, not Dopamine). Stage `#0B0F14`. Ink `#F4F7FA`. Accent `#7C9CFF` as the active desk hairline only. Inter display. IBM Plex Mono labels.
+
+**Famous-UI craft direction (not a clone):** Stripe trust × Orbit night × a clearing blotter. Quiet chrome. No fashion scramble.
+
+**Design language:** `calm-fintech`  
+**Token theme:** `orbit-trust-dark`  
+**Motion primitive:** `desk-ink` (ink 220ms, hairline 280ms, origin left)
+
+**Enter (support, once on view):** `stamp-settle`. Type settles 14px / 0.988. Land ~980ms. Interaction after land. Reduced motion skips enter.
+
+**Typography:**
+- Place: Inter 400, `clamp(2.2rem, 5.6vw, 4.1rem)`, tracking `-0.045em`
+- Period: Inter ~15px, muted
+- Masthead / desks index / nav / CTA / legal: IBM Plex Mono, 10–11px, uppercase tracking `0.18em`
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#0B0F14` | Your night |
+| Ink | `#F4F7FA` | Your type |
+| Muted | `#9AA8B5` | Rest desks |
+| Line | `#1C2530` | Rules |
+| Accent | `#7C9CFF` | Active hairline only |
+
+**Anti-slop hard ban:** four-column sitemap, Mailchimp newsletter under a gradient banner, App Store row, Dopamine scramble/fashion clone, rising column kit, Orbit blue as a fill.
+
+**Differentiation:**
+| vs | Clear must not become |
+|----|------------------------|
+| Dopamine | Fashion complete footer. Clear is a trust close |
+| Docket | FAQ accordion. Same night, different job |
+| Tally | Counted figures. Clear restages a desk, no ticker |
+| Collect UI footers | Ciao blocks, ZELLIFY newsletter, twelve columns |
+
+## Layout Structure
+
+`100dvh` stage for the plant. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~1180px.
+
+1. Masthead: Clear left, Close right, ink rule
+2. Body: Books open, place, period
+3. Desk rail: three desks, accent hairline on the active
+4. Foot: three house links + Talk to the desk
+5. Legal line
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Clear | 24 | Masthead |
+| kicker | Close | 24 | |
+| desks[0–2].name | Charlotte / Stamford / Jersey City | 24 | |
+| desks[].place | Charlotte, North Carolina / … | 40 | Real places, restage |
+| desks[].period | | 120 | |
+| nav | Custody, Clearing, Paper | 3 | Not a sitemap |
+| ctaLabel | Talk to the desk | 28 | Not Get Started |
+| legal | Clearing member. Written on the blotter. | 80 | |
+
+## Motion Specification
+
+**Signature (one):** desk-ink. After land, hover or click a desk (or arrows). The proof restages. The accent hairline `scaleX` follows the active desk. Not a count. Not four columns rising.
+
+**Enter (support, once on view):** `stamp-settle`. CSS cubic standing in for the letterpress. Interaction starts after land.
+
+**Engine:** CSS enter. CSS hairline. State swap for copy.
+
+**Reduced motion:** rest at Charlotte. Instant desk swap. Hairline already full on the active. No settle.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section.
+
+## Video / Media Integration
+
+None. Night board. No vault film. (Orbit hero keeps the vault.)
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥640px | Three desks in a row |
+| <640px | Desks stack. CTA full width |
+
+## Accessibility
+
+- `prefers-reduced-motion`: rest, instant swap
+- Contrast on `#0B0F14` ≥ 4.5:1
+- Keyboard: desk tabs, arrows after land
+- Semantic `<footer>`, `<h2>`, `role="tablist"`
+- `aria-live="polite"` on the place
+- Accent is a 2px hairline, not the only meaning
+
+## Performance Notes
+
+- No video, no WebGL, no Lottie, no scramble
+- One active desk at a time
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React footer (`ClearFooterSection.tsx`) plus CSS. Do not install a footer kit. Do not lay out four equal columns. Do not copy Dopamine.
+
+**Lovable / Bolt:** Same section as a page close. Imports at top. Replace demo desks with the buyer's venues. Keep three links. Keep the accent as a hairline.
+
+## Expected Output
+
+A single React footer that:
+1. Is a **footer**, not a site shell
+2. Stamps in, then inks one desk
+3. Uses orbit-trust-dark tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

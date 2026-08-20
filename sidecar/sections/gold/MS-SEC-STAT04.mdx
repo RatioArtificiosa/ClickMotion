@@ -1,0 +1,79 @@
+---
+id: "MS-SEC-STAT04"
+title: "BOLT - Duotone Knockout Stats"
+slug: "bolt-duotone-knockout-stats"
+description: "Gallery white. A second ink knocks into the figure. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-15"
+updated: "2026-08-15"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "stats"
+category: "lifestyle"
+subcategory: "studio"
+styleTags: ["brutalist"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "op-signal"
+tokenTheme: "moire-gallery"
+motionPrimitive: "duotone-knockout"
+enterRecipe: "shear-slice"
+compatibleWith: ["MS-SEC-HELI01", "MS-HERO-VERT01", "MS-HERO-TERR01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-bolt"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5000
+useCases: ["press-stats", "optical-proof", "gallery-figures"]
+---
+
+## Promise (buyer-facing)
+
+BOLT is a mid-page **stats** board that reads as an optical press, not a ticker kit. One figure. A second ink knocks in.
+
+**Why use it:**
+- The knockout is the design. The board never says duotone
+- Gallery white. Black only. Vibration is the wow
+- Sits after Helix, Vertex, or Terra without copying Optic, Helm, or Press
+
+## Design System
+
+Stage `#F5F5F5`. Ink `#111111`. Inter only. No third color.
+
+**Primitive:** `duotone-knockout` (300ms). **Enter:** `shear-slice`.
+
+**Anti-slop:** number ticker, rave strobe, third color, sequin burst clone.
+
+## Layout Structure
+
+`100dvh` pin. Masthead, figure, name, street.
+
+## Content Slots
+
+| Slot | Default | Max |
+|------|---------|-----|
+| metrics[].figure | 175 | 8 |
+| metrics[].name | How it looks from the lot | 40 |
+| metrics[].period | Tighter than this and the ink fills in... | 200 |
+| place | San Francisco Street, Flagstaff | 48 |
+
+## Motion Specification
+
+Shear squares. Pin. Knockout once per figure. Reduced: both inks, first plate.
+
+## AI Tool Instructions
+
+Single React section plus CSS. Do not add a third color. Do not clone Optic's bands or Press's crash.

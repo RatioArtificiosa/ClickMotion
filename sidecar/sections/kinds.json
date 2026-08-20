@@ -1,0 +1,119 @@
+{
+  "$comment": "Sidecar source for section kinds. Merge into src/config/taxonomy.ts later. Do not invent ids outside this file.",
+  "version": 1,
+  "idPattern": "MS-SEC-{CODE}{NN}",
+  "codeNote": "CODE is 4 letters for new V1 kinds (PRIC, FAQS). Live showpieces keep existing ids (HELI01, FOLI01, STUDIO01).",
+  "kinds": [
+    {
+      "id": "features",
+      "code": "FEAT",
+      "label": "Features",
+      "positionInPage": "middle",
+      "status": "v1",
+      "notes": "Not a default Magic UI bento. Editorial board or staged pin."
+    },
+    {
+      "id": "pricing",
+      "code": "PRIC",
+      "label": "Pricing",
+      "positionInPage": "middle",
+      "status": "v1",
+      "notes": "Recommended first gold SKU candidate."
+    },
+    {
+      "id": "testimonials",
+      "code": "TEST",
+      "label": "Testimonials",
+      "positionInPage": "middle",
+      "status": "v1"
+    },
+    {
+      "id": "stats",
+      "code": "STAT",
+      "label": "Stats",
+      "positionInPage": "middle",
+      "status": "v1",
+      "notes": "Scroll-tied count, not kit number ticker as identity."
+    },
+    {
+      "id": "faq",
+      "code": "FAQS",
+      "label": "FAQ",
+      "positionInPage": "middle",
+      "status": "v1",
+      "notes": "Recommended first gold SKU candidate."
+    },
+    {
+      "id": "cta",
+      "code": "CTAS",
+      "label": "CTA / Waitlist",
+      "positionInPage": "middle",
+      "status": "v1"
+    },
+    {
+      "id": "contact",
+      "code": "CONT",
+      "label": "Contact / Booking",
+      "positionInPage": "middle",
+      "status": "v1"
+    },
+    {
+      "id": "footer",
+      "code": "FOOT",
+      "label": "Footer",
+      "positionInPage": "bottom",
+      "status": "v1",
+      "goldLiveId": "MS-SEC-DOPA01"
+    },
+    {
+      "id": "gallery-helix",
+      "code": "HELI",
+      "label": "Helical gallery",
+      "positionInPage": "middle",
+      "status": "live-showpiece",
+      "goldLiveId": "MS-SEC-HELI01",
+      "notes": "Do not re-author in sidecar."
+    },
+    {
+      "id": "folio-pivot",
+      "code": "FOLI",
+      "label": "Folio pivot",
+      "positionInPage": "middle",
+      "status": "live-showpiece",
+      "goldLiveId": "MS-SEC-FOLI01"
+    },
+    {
+      "id": "lineup",
+      "code": "LINE",
+      "label": "Product lineup",
+      "positionInPage": "middle",
+      "status": "live-showpiece",
+      "goldLiveId": "MS-SEC-LINE01"
+    },
+    {
+      "id": "studio-sequence",
+      "code": "STUD",
+      "label": "Studio sequence",
+      "positionInPage": "middle",
+      "status": "live-showpiece",
+      "goldLiveId": "MS-SEC-STUDIO01",
+      "notes": "Live id is MS-SEC-STUDIO01 (not STUD01)."
+    },
+    {
+      "id": "phobia-forms",
+      "code": "PHOB",
+      "label": "Phobia forms",
+      "positionInPage": "middle",
+      "status": "live-showpiece",
+      "goldLiveId": "MS-SEC-PHOB01"
+    },
+    {
+      "id": "footer-dopamine",
+      "code": "DOPA",
+      "label": "Dopamine footer",
+      "positionInPage": "bottom",
+      "status": "live-showpiece",
+      "goldLiveId": "MS-SEC-DOPA01"
+    }
+  ]
+}

@@ -9,9 +9,6 @@ const IDS = [
   "MS-HERO-AETH01",
   "MS-HERO-VERT01",
   "MS-HERO-NEXU01",
-  "MS-SEC-HELI01",
-  "MS-HERO-ACTU01",
-  "MS-SEC-LINE01",
 ];
 const now = new Date().toISOString();
 
@@ -55,36 +52,6 @@ const meta = {
     ],
     aiTools: ["Cursor", "Grok Build", "Claude", "Lovable", "Bolt"],
   },
-  "MS-SEC-HELI01": {
-    genreId: "agency",
-    previewVideo: "/assets/videos/helix-gallery-preview-v1.mp4",
-    previewVideoFullscreen: "/assets/videos/helix-gallery-preview-fs-v1.mp4",
-    poster: "/assets/posters/helix-gallery-preview-v1.webp",
-    thumbnail: "/thumbnails/MS-SEC-HELI01.webp",
-    liveDemo: "/demo/cleanroom-helix",
-    videoBackgrounds: [],
-    aiTools: ["Cursor", "Grok Build", "Claude", "Lovable", "Bolt"],
-  },
-  "MS-HERO-ACTU01": {
-    genreId: "ecommerce",
-    previewVideo: "/assets/videos/actually-hero-preview-v1.mp4",
-    previewVideoFullscreen: "/assets/videos/actually-hero-preview-fs-v1.mp4",
-    poster: "/assets/posters/actually-hero-preview-v1.webp",
-    thumbnail: "/thumbnails/MS-HERO-ACTU01.webp",
-    liveDemo: "/demo/cleanroom-actually",
-    videoBackgrounds: [],
-    aiTools: ["Cursor", "Grok Build", "Claude", "Lovable", "Bolt"],
-  },
-  "MS-SEC-LINE01": {
-    genreId: "ecommerce",
-    previewVideo: "/assets/videos/lineup-reveal-preview-v1.mp4",
-    previewVideoFullscreen: "/assets/videos/lineup-reveal-preview-fs-v1.mp4",
-    poster: "/assets/posters/lineup-reveal-preview-v1.webp",
-    thumbnail: "/thumbnails/MS-SEC-LINE01.webp",
-    liveDemo: "/demo/cleanroom-lineup",
-    videoBackgrounds: [],
-    aiTools: ["Cursor", "Grok Build", "Claude", "Lovable", "Bolt"],
-  },
 };
 
 for (const id of IDS) {
@@ -93,6 +60,11 @@ for (const id of IDS) {
     : `content/prompts/heroes/${id}.mdx`;
   const raw = fs.readFileSync(file, "utf8");
   const { data: fm, content: body } = matter(raw);
+  if (fm.priceTier && fm.priceTier !== "free") {
+    throw new Error(
+      `${id} is ${fm.priceTier} in MDX. Remove it from this free-sync script.`,
+    );
+  }
   const m = meta[id];
   let p = store.products.find((x) => x.id === id);
   const payload = {

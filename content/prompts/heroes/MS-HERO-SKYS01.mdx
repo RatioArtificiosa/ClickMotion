@@ -1,0 +1,283 @@
+---
+id: "MS-HERO-SKYS01"
+title: "SkySpires - Sunrise Scroll Hero"
+slug: "skyspires-sunrise-scroll-hero"
+description: "A sunrise pin narrative where scroll aims a 25-second SkySpires film and the picture never jumps. Frost HUD stays alive. Fully customizable copy, tokens, and film for your studio."
+version: "2.1.0"
+created: "2026-08-16"
+updated: "2026-08-16"
+author: "MS Team"
+status: "published"
+type: "hero"
+category: "agency"
+subcategory: "creative"
+styleTags: ["dark-cinematic", "liquid-glass", "editorial"]
+technicalTags: ["video-background", "scroll-trigger", "pin-until-complete"]
+motionIntensity: "aggressive"
+difficulty: "advanced"
+priceTier: "pro"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: "/assets/videos/skyspires-preview-v1.mp4"
+previewVideoFullscreen: "/assets/videos/skyspires-preview-fs-v1.mp4"
+thumbnail: "/thumbnails/MS-HERO-SKYS01.webp"
+liveDemo: "/demo/cleanroom-skyspires"
+videoBackgrounds:
+  - file: "/assets/videos/skyspires-sunrise-v1.mp4"
+    format: "mp4"
+    duration: "25s"
+    loop: false
+    sizeMb: 18
+    poster: "/assets/posters/skyspires-sunrise-v1.webp"
+dependencies:
+  - { name: "lucide-react", version: "^0.468.0", required: false }
+  - { name: "tailwindcss", version: "^3.4.0", required: false }
+estimatedTokens: 17000
+useCases: ["design-studio-homepage", "agency-launch", "cinematic-hero", "product-reveal"]
+compatibleWith: ["MS-HERO-STIL01", "MS-HERO-PRSM01", "MS-HERO-GROK01", "MS-HERO-ELYS01"]
+positionInPage: "top"
+---
+
+## Promise (buyer-facing)
+
+**SkySpires** is a full-viewport **design-studio pin-until-complete** scroll hero: one sunrise stage, a 25.04-second cinematic film the playhead walks from first light to last frame, under a locked frost liquid-glass HUD. **Dual process = PSAVE + No Scroller.** **PSAVE** (Perfect Scroll Video Engine): scroll aims, down plays forward, up plays reverse, the picture never jumps a frame. **No Scroller:** the page does not physically scroll during the journey. HUD CSS and interval loops stay alive (CTA 12.5s, dock sheen, gold trip, stats list to gauge, rings, CDMX clock). Not a tall multi-vh sticky track. Not wallpaper-only. Not Nexora. Not Grok Bot ice.
+
+**Why use it:**
+- Design studios and agencies that sell **sunrise craft**
+- Dual-process signature: scroll aims a long even film; the picture plays; the HUD keeps breathing
+- Playfair + Outfit restages cleanly for any editorial studio
+- Client HD is pure film (no burnt UI). Storefront dual previews are separate
+
+Default copy (**Design / without / limits.** through **Start Your Project**) is the frozen SkySpires board. Restage brand, nav, proofs, dock, and CTAs until it is unmistakably yours. Do not restore Nexora. Do not chase Gemini film morphs frame by frame.
+
+**How you build it:** download the product pack (prompt + source + film). Tell your AI: *Build SkySpires using the files in this folder. Read PROMPT.md and follow it. Prefer source/SkySpiresHero.tsx plus hero.css and copy.ts. Dual process: PSAVE plus No Scroller. Pin-until-complete. Scroll aims on 12 viewports (25s even sunrise: two flicks must not dump the film). Down-scroll plays the film forward at 1.2x. Up-scroll plays it backward at the same 1.2x, one 3-frame step per seek. Never jump a frame. When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little, then rate eases to a stop. HUD loops keep running. Do not retune .lg-fill or .lg-spec on dock, CTA, Log In, or stats. Release only when the picture arrives. After release the host page may continue. Replacement films must be re-encoded GOP 3, no B-frames, 24fps. Do not seek the playhead across the film. Do not install gsap.*
+
+---
+
+## Design System
+
+**Aesthetic Direction:** Editorial frost prestige on a cinematic sunrise. Ink `#f7f3ec`, gold `#e8c48a`, peach `#f0b090`, violet `#8b7cff`. Playfair Display 500 italic for *limits.*, Outfit 300-500 chrome. **Not** neon SaaS, purple mesh, ice Grok Bot, or mint Still.
+
+**Famous-UI craft direction (not a clone):** Frozen SkySpires frost HUD plus sunrise cinema. One signature system: **PSAVE** on a **pinned 100dvh** stage. Scroll aims. The whole film plays. The HUD never freezes.
+
+**Typography:**
+- Display / H1: Playfair Display 500, `clamp(3.4rem, 6.2vw, 6.15rem)`, line-height 0.9, tracking `-0.034em`
+- Accent *limits.*: italic 1.08em, violet to peach gradient
+- Body: Outfit 300, 0.98rem, line-height 1.55
+- Mark: Outfit 500, 0.84rem, tracking 0.22em uppercase
+- Chrome: Outfit 400, ~0.78rem mist
+
+**Color tokens (do not drift locked glass fills):**
+
+| Token | Value |
+|-------|--------|
+| Ink | `#f7f3ec` |
+| Mist | `rgba(236, 242, 250, 0.78)` |
+| Gold | `#e8c48a` / edge `#f6e2a8` |
+| Peach | `#f0b090` |
+| Violet | `#8b7cff` |
+| Sky right | `3.2%` (Log In flush to stats) |
+
+**Glass lock:** do not retune `.lg-fill` / `.lg-spec` on dock, CTA, Log In, stats. Distortion filter exists in the DOM and is not applied to those panes.
+
+**Anti-slop hard ban:** process filament, colored step boxes, icon tints, traveling stats contour, pulsing side bars, purple wordmark S, Lab · hero badge, second CTA glossy, CTA wrap-flash on the top after the left finish, Nexora naming, GSAP, tall sticky track.
+
+---
+
+## Layout Structure
+
+- **One pinned `100dvh` stage** in normal document flow. **No** tall spacer. **No** `position: sticky`. **Do not** `overflow: hidden` the host page.
+- Film absolute cover (`object-position: 50% 52%`) under a thin dual-edge veil.
+- Top nav: SKYSPIRES wordmark (no S icon) + Home · About · Process ▾ · Community · News · Students · Contact + search + Sign Up / Log In
+- Log In right edge aligns with stats (`--sky-right: 3.2%`)
+- Left copy: kicker, two-line H1, body, dual CTAs
+- Right stats: list 10s then gauge (rings, retainers, facts, Discover·Make·Ship, CDMX clock)
+- Bottom process dock: four neutral frost steps, sheen, one gold trip
+- Scroll to explore cue (HTML overlay)
+- After the picture arrives at 1, the pin **releases** so a host page can continue
+
+---
+
+## Content Slots
+
+| Slot | Default | Notes |
+|------|---------|--------|
+| brand | SkySpires | Wordmark. No S icon |
+| nav | Home · About · Process · Community · News · Students · Contact | Chevron on Process only |
+| h1 | Design / without / limits. | *limits.* is the gradient italic |
+| kicker | AI-Powered Design Studio | |
+| body | We blend human creativity with artificial intelligence to build digital experiences that inspire and perform. | Exact |
+| cta | Start Your Project | 12.5s pulse |
+| secondary | See Case Studies | Ghost. Law 9 inert |
+| stats list | 987+ / 98% / 28+ | 10s then gauge |
+| rings | 98% NPS · 28+ Years · 987+ Projects | 2.8s cycle |
+| dock | Strategy · Design · Develop · Launch | Neutral frost |
+
+---
+
+## Motion Specification
+
+**Mode:** Scroll-as-narrative · **pin-until-complete** (**No Scroller**) · **PSAVE** (Perfect Scroll Video Engine). **Dual process.** Scroll sets a destination on `12` viewports. Down plays the film forward at **1.2x**. Up plays it backward at the same **1.2x**, **exactly one 3-frame step per seek**. Never jump a frame. **When they lift, leftover dest plus a 0.55s dest floor keeps the film going a little**, then rate eases to a stop. HUD loops **keep running**. Release only when the **picture** arrives at `0` (up) or `1` (down).
+
+```
+const VIRTUAL_VIEWPORTS = 12;  // GOLD: 25.04s even sunrise. Not Elyse 3.6.
+const PSAVE_RATE = 1.2;
+const PSAVE_FRAME = 1 / 24;    // this film is 24fps
+const PSAVE_REV_STRIDE = 3;
+const PSAVE_LIVE_MS = 280;
+const PSAVE_COAST_SEC = 0.55;
+const PSAVE_EASE_SEC = 0.55;
+const PSAVE_FLIP_DEADZONE_PX = 32;
+```
+
+**HUD clocks (independent of PSAVE, do not desync):**
+
+| Clock | Period |
+|-------|--------|
+| CTA | 12.5s (scale 0-2s, gold trip ~5-11.5s, fade 880-890) |
+| Dock sheen | 6.4s LTR |
+| Dock gold trip | 12s (one lap, wait, loop) |
+| Stats list | 10s then gauge |
+| Rings | 2.8s |
+| CDMX clock | 15s |
+| Video | 25.04s PSAVE (not synced to CTA, residual SS-01) |
+
+**Hard ban:** tall multi-vh track. Seeking `currentTime` across a jump. A 3.6 aim track on this 25s film. Pausing HUD loops. Installing gsap. Restoring filament.
+
+### Two clocks
+
+| Clock | Who writes it | Who reads it |
+|-------|----------------|--------------|
+| Destination 0-1 | Gestures, 1:1 on the 12 vh track | Chase loop only |
+| Playhead 0-1 | Decoded picture (`currentTime / duration`) | Release only |
+
+The destination may leap. The picture may not. HUD loops do not follow either clock.
+
+### Rebuild algorithm
+
+1. Render one `100dvh` stage in normal document flow. Do not `overflow: hidden` the page. Do not use `position: sticky`. Do not build a tall spacer.
+2. Gestures add `deltaPx / (12 * innerHeight)` to destination only. Raw 1:1.
+3. Wheel (`passive: false`): ignore ctrl/meta zoom; normalize `deltaMode`; `preventDefault` only while the pin owns.
+4. **Down:** muted `play()` at 1.2. After lift, leftover dest plus 0.55s dest floor. Ease over last leftover dest.
+5. **Up:** first real opposite gesture snaps dest onto the picture. Reverse every 3rd frame. Wait `seeked`.
+6. HUD loops keep running. Do not pause them.
+7. Release only when the picture is at 0+up or 1+down. Then page owns until dock (`top >= -2`).
+8. Reduced motion: poster + static HUD. No chase.
+
+Capture helper: `window.__msScrollNarrative = { setProgress, getProgress, getTarget, pageOwns, productId: "MS-HERO-SKYS01" }`. Root: `data-skyspires-drive="psave"`. After release: `data-skyspires-owns="page"`.
+
+---
+
+## Video / Media Integration
+
+- Client HD: `/assets/videos/skyspires-sunrise-v1.mp4` (PSAVE B-roll, GOP 3, no B-frames, 25.04s / 24fps / **201 I-frames** / 400 P / 0 B / ~18 MB)
+- Poster: `/assets/posters/skyspires-sunrise-v1.webp`
+- Storefront page + gallery: `/assets/videos/skyspires-preview-v1.mp4` (presentation only)
+- Storefront FS: `/assets/videos/skyspires-preview-fs-v1.mp4`
+- Attributes: muted playsInline preload auto. **No** primary wallpaper loop.
+
+**Required film subject:** cinematic sunrise / sky architecture. No UI. No watermarks. No Nexora wordmark.
+
+**Forbidden film subjects:** office stock, neon cyberpunk, Optimus, readable third-party marks.
+
+**Film encode:**
+
+```
+ffmpeg -y -i your-film.mp4 -an -c:v libx264 -pix_fmt yuv420p -preset medium -crf 18 -g 3 -keyint_min 3 -bf 0 -sc_threshold 0 -movflags +faststart skyspires-sunrise-v1.mp4
+```
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|------------|---------|
+| ≥1280px | Full nav, large display, stats, dock |
+| ≥1100px | Full HUD |
+| <1100px | Tighter type; stats narrower |
+| <820px | Hide center nav and stats; dock becomes 2x2; **stage still one viewport** |
+| Reduced motion | 100vh static; poster + HUD; no chase |
+
+---
+
+## Accessibility
+
+- Semantic section / header / nav / h1
+- Focus rings violet on frost
+- `prefers-reduced-motion`: still + HUD. No PSAVE
+- Video decorative (`aria-hidden`)
+- Pin consumes gestures while the journey runs; **releases** at ends
+- Do not trap Space on focused links
+
+---
+
+## Performance Notes
+
+- Playhead chase only (no GSAP, no Framer, no ScrollTrigger)
+- Single video element
+- HUD CSS + two intervals
+- Fonts display swap (Playfair + Outfit)
+- Client film GOP 3 / no B-frames
+- Prefer WebP poster
+
+---
+
+## AI Tool Instructions
+
+1. Open the downloaded pack folder. You should see `START-HERE.md` at the top level.
+2. Read **PROMPT.md** and follow it exactly.
+3. Place film + poster at the public paths above.
+4. Use `source/SkySpiresHero.tsx`, `source/hero.css`, and `source/copy.ts`.
+5. **Do not install gsap.** Load Playfair Display + Outfit (`--font-sky-display` / `--font-sky-body`).
+6. Mount on a page that is **not** `overflow: hidden`.
+7. Verify: page does not physically scroll during the journey; HUD loops stay; glass fills unchanged; pin frees after last frame.
+8. Restage with **CUSTOMIZATION.md**.
+
+---
+
+## Expected Output
+
+1. React files `SkySpiresHero.tsx` + `hero.css` + `copy.ts`
+2. Pinned 100dvh dual-process stage (no tall track)
+3. Whole sunrise film walks on 12 vh at 1.2x, reverse every 3rd frame, 0.55s dest floor
+4. Frost HUD with glass lock
+5. HUD loops stay (CTA, dock, stats, rings, clock)
+6. Reduced-motion path (poster + HUD)
+7. Host page can scroll after the picture arrives. Page owns until dock
+8. Local film + poster only
+9. No Nexora. No filament. No gsap
+10. Tailwind preflight does not flatten CTA / Log In
+11. Pin freeing after last frame + down
+12. Capture helper `__msScrollNarrative` present
+
+---
+
+## What to tell your AI
+
+```
+Build SkySpires using only the files in this pack folder.
+Read PROMPT.md and follow it exactly. Prefer source/SkySpiresHero.tsx, source/hero.css, and source/copy.ts.
+Dual process: PSAVE plus No Scroller. One 100dvh stage. Scroll aims on 12 viewports.
+Down plays the whole sunrise film forward at 1.2x. Up plays it backward every 3rd frame. Never jump a frame.
+HUD loops stay. Do not retune .lg-fill or .lg-spec on dock, CTA, Log In, or stats.
+Do not install gsap. Do not restore filament, colored step boxes, or Nexora.
+Release only when the picture arrives. After release the page may continue.
+```
+
+---
+
+## Package notes (operators)
+
+- Opaque: `s4y8p1r3sk7n` · PaidSalt: `sk5n2q`
+- Pack mode: files zip + PDF. Zip root = START-HERE.md
+- Client HD: `/assets/videos/skyspires-sunrise-v1.mp4` · poster `/assets/posters/skyspires-sunrise-v1.webp`
+- Clone `E:\website-tests\skyspires-clone` is FROZEN. Do not edit shipped clone files.
+- Dual process lock: 2026-08-16 · Platinum backend pack **v2.1.0**
+- Residual SS-01: video 25.04s ≠ CTA 12.5s. Human waived sync.
+
+ClickMotion · www.ClickMotion.dev

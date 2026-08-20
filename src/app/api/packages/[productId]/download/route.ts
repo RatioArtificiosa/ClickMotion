@@ -14,7 +14,9 @@ import { getCmsStore } from "@/lib/cms/service";
 export const dynamic = "force-dynamic";
 
 /**
- * Member package PDF download.
+ * Member package download (Get Full Prompt).
+ * Prefer files zip when registered; fall back to package PDF.
+ * Law: docs/PRODUCT_PACKAGE.md §10 · product-packages.ts checklist.filesZip / packagePdf.
  * Enforces free vs paid product access + silent quotas (not shown on marketing site).
  */
 export async function GET(
@@ -33,7 +35,15 @@ export async function GET(
   }
 
   const pack = packageByProductId(productId);
-  if (!pack?.pdfHref || !pack.checklist.packagePdf) {
+  // Prefer full file pack zip (prompt + source + assets); fall back to PDF manual
+  const deliveryHref =
+    pack?.filesZipHref && pack.checklist.filesZip
+      ? pack.filesZipHref
+      : pack?.pdfHref && pack.checklist.packagePdf
+        ? pack.pdfHref
+        : undefined;
+
+  if (!pack || !deliveryHref) {
     return NextResponse.json(
       { error: "Package not available", code: "NO_PACKAGE" },
       { status: 404 }
@@ -73,7 +83,7 @@ export async function GET(
     );
   }
 
-  const rel = pack.pdfHref.replace(/^\//, "");
+  const rel = deliveryHref.replace(/^\//, "");
   const abs = path.join(process.cwd(), "public", rel);
   let buf: Buffer;
   try {
@@ -88,10 +98,11 @@ export async function GET(
   await recordPackageDownload(email, productId);
 
   const filename = path.basename(abs);
+  const isZip = filename.toLowerCase().endsWith(".zip");
   return new NextResponse(new Uint8Array(buf), {
     status: 200,
     headers: {
-      "Content-Type": "application/pdf",
+      "Content-Type": isZip ? "application/zip" : "application/pdf",
       "Content-Disposition": `attachment; filename="${filename}"`,
       "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff",

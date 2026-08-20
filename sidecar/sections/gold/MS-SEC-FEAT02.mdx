@@ -1,0 +1,162 @@
+---
+id: "MS-SEC-FEAT02"
+title: "ISSUE - Editorial Features Section"
+slug: "issue-editorial-features-section"
+description: "A gray board of capabilities. One story holds the spread. The sheet turns. Restage the rooms until they read as your book."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "features"
+category: "fashion"
+subcategory: "atelier"
+styleTags: ["editorial", "luxury", "minimal"]
+technicalTags: []
+motionIntensity: "medium"
+difficulty: "intermediate"
+priceTier: "pro"
+designLanguage: "luxury-editorial"
+tokenTheme: "editorial-board-gray"
+motionPrimitive: "paper-pivot"
+enterRecipe: "crop-reveal"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-SABL01", "MS-SEC-HELI01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-issue"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 7200
+useCases: ["fashion-features", "lookbook-capabilities", "editorial-spread"]
+---
+
+## Promise (buyer-facing)
+
+ISSUE is a mid-page **features section** that reads as a magazine spread, not a bento. One story holds the sheet. The crop opens the board. Then a contents line turns the paper. Visitors do not scan six icon tiles. They sit with a room and three lines.
+
+**Why use it:**
+- Your capabilities feel edited, not marketed
+- The sheet turns. No cards, no icons, no orbit
+- Every name, figure, and row is a slot for your book
+- Sits after Revel, Sable, or Helix without copying the helix
+- Built for fashion, press, and desks that ship from a lookbook
+
+## Design System
+
+**Aesthetic Direction:** **ISSUE** - mid-page **capability spread** (not a hero, not Helix, not a bento). Board gray `#C3C3C3`. Ink `#1A1A1A`. Paper sheet `#D8D8D8`. Birthstone wordmark only. Inter for the book.
+
+**Famous-UI craft direction (not a clone):** SSENSE contents page × Helix board gray × a press sheet that turns. Photography owns focus even when the photograph is type. No glass.
+
+**Design language:** `luxury-editorial`  
+**Token theme:** `editorial-board-gray`  
+**Motion primitive:** `paper-pivot` (rotateX 8deg, 550ms, ease `[0.22, 1, 0.36, 1]`, origin bottom)
+
+**Enter (support, once on view):** `crop-reveal`. Duration 860ms. Interaction after land (~1080ms). Reduced motion skips enter.
+
+**Typography:**
+- Wordmark: Birthstone, `clamp(2.4rem, 5vw, 3.4rem)`
+- Display name: Inter 400, `clamp(2.5rem, 6.2vw, 4.85rem)`, tracking `-0.045em`
+- Figure: Inter 400, `clamp(1.35rem, 2.8vw, 2.15rem)`, muted, tabular-nums
+- Period: Inter 14px, muted
+- Contents / folio / CTA: Inter, 10–15px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#C3C3C3` | Your board |
+| Paper | `#D8D8D8` | Your sheet |
+| Ink | `#1A1A1A` | Your type |
+| Muted | `#3A3A3A` | Captions |
+| Line | `#9E9E9E` | Rules |
+
+**Anti-slop hard ban:** icon + title + blurb bento, three equal rounded cards, Helix orbit clone, Folio glass clone, Witness quote clone, shiny H1, pill docks, Magic UI / v0 feature grid.
+
+**Differentiation:**
+| vs | Issue must not become |
+|----|------------------------|
+| Helix | Crossing titles and a WebGL helix. Issue is a contents spread |
+| Folio | Glass pin. Issue is paper on gray |
+| Witness | Quotes and names. Issue is capabilities |
+| Atlas | Swiss spec plate, white board. Issue is editorial gray |
+
+## Layout Structure
+
+`100dvh` stage. Safe inset `px-8` / `md:px-14` / `lg:px-18`. Max width ~1180px.
+
+1. Masthead: Issue wordmark left, folio right
+2. Left contents: kicker THE BOOK, then 01 Pattern room … 04 Press check
+3. Paper sheet: name, figure, period, three rows
+4. Foot: mobile folio 01–04 + solid ink CTA
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Issue | 24 | Birthstone wordmark |
+| kicker | The book | 24 | Lives in the left legend |
+| stories[0–3].name | Pattern room / Cloth mill / Sample last / Press check | 28 | Two words |
+| stories[0–3].figure | 12 hands / 480 gsm / 8 weeks / 2 inks | 16 | |
+| stories[0–3].period | | 120 | Common real places, original to the book |
+| stories[].rows | label + value | 3 rows | |
+| ctaLabel | Ask for this season | 28 | Not Get Started |
+
+## Motion Specification
+
+**Signature (one):** paper-pivot. The sheet lifts `rotateX: 8deg → 0` from the bottom edge when the contents change. Duration 550ms. Retriggers on each story.
+
+**Enter (support, once on view):** `crop-reveal`. The board opens from a 12% inset crop. Interaction (contents, folio, CTA) starts after land.
+
+**Engine:** CSS for crop and pivot. Motion only for `prefers-reduced-motion` detection and land gating.
+
+**Reduced motion:** full crop at rest. Instant sheet swap. No rotate.
+
+**Pin-until-complete:** not used. This is not a scroll-narrative section.
+
+## Video / Media Integration
+
+None. Type on a gray board. Photography may replace the paper field later. Do not add a kit image grid.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| ≥960px | Left contents visible. Folio numbers hidden |
+| <960px | Contents hidden. Folio 01–04 + CTA. Name and figure still own the sheet |
+
+## Accessibility
+
+- `prefers-reduced-motion`: rest crop, no pivot
+- Contrast on gray ≥ 4.5:1 for body
+- Keyboard: contents and folio are buttons, arrows after land
+- Semantic `<section>`, `<h2>`, `<dl>`, folio `role="tablist"`
+- `aria-live="polite"` on the sheet
+
+## Performance Notes
+
+- No video, no WebGL, no extra kits
+- One crop on view, one pivot per change
+- One sheet mounted
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section (`IssueFeaturesSection.tsx`) plus CSS. CSS clip-path crop on view. CSS rotateX pivot when contents change. Reimplement the mechanic. Do not install Magic UI. Do not clone Helix, Folio, or Witness. Do not add icons unless the buyer asks.
+
+**Lovable / Bolt:** Same section as a page block. Imports at top. Replace demo copy with the buyer's rooms. Keep two-word names. Keep one story on the sheet.
+
+## Expected Output
+
+A single React section that:
+1. Is a **section**, not a site shell
+2. Crops open, then pivots the sheet when contents change
+3. Uses editorial-board-gray tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

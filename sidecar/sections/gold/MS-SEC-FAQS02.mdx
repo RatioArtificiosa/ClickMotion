@@ -1,0 +1,150 @@
+---
+id: "MS-SEC-FAQS02"
+title: "VEIL - Perfume Haze FAQ"
+slug: "veil-perfume-haze-faq"
+description: "A violet room. One question. The answer clears like perfume. Restage until it reads as your house."
+version: "0.1.0"
+created: "2026-08-14"
+updated: "2026-08-14"
+author: "MS Team"
+status: "sidecar-draft"
+type: "section"
+sectionKind: "faq"
+category: "fashion"
+subcategory: "salon"
+styleTags: ["luxury", "playful"]
+technicalTags: []
+motionIntensity: "high"
+difficulty: "intermediate"
+priceTier: "pro"
+register: "wow"
+designLanguage: "velvet-nocturne"
+tokenTheme: "ultraviolet-silk"
+motionPrimitive: "perfume-haze"
+enterRecipe: "silk-slip"
+compatibleWith: ["MS-HERO-REVL01", "MS-HERO-SABL01", "MS-SEC-DOPA01"]
+positionInPage: "middle"
+aiToolsRating:
+  cursor: 5
+  lovable: 4
+  bolt: 4
+  claude: 5
+  grok-build: 5
+frameworksSupported: ["react"]
+previewVideo: ""
+liveDemo: "/demo/cleanroom-veil"
+videoBackgrounds: []
+dependencies:
+  - { name: "motion", version: "^11.0.0", required: true }
+estimatedTokens: 5200
+useCases: ["salon-faq", "night-house", "perfume-board"]
+---
+
+## Promise (buyer-facing)
+
+VEIL is a mid-page **FAQ** that reads as a night house, not a help center. One question owns the plate. The answer starts in haze, then clears.
+
+**Why use it:**
+- The haze is the design. The board never says blur
+- Stage is pigment violet. Champagne is the jewel
+- Questions are slots for your house
+- Sits after Revel, Sable, or Dopamine without copying Port
+
+## Design System
+
+**Aesthetic Direction:** **VEIL** - mid-page **faq**. Stage `#12081C`. Ink `#EDE6F7`. Accent `#E8D5A3`. Fraunces italic display. Outfit UI.
+
+**Famous-UI craft direction (not a clone):** nightlife salon. Velvet dark, one jewel light. Not a purple mesh.
+
+**Design language:** `velvet-nocturne` (wow register)  
+**Token theme:** `ultraviolet-silk`  
+**Motion primitive:** `perfume-haze` (8px blur, scale 1.04, 900ms)
+
+**Enter (support, once on view):** `silk-slip`. Land ~1320ms. Haze after land.
+
+**Typography:**
+- Wordmark: Fraunces italic 500
+- Question: Fraunces italic `clamp(2.4rem, 8.5vw, 5.6rem)`
+- Answer: Outfit ~18px
+
+**Color tokens (defaults - replace freely):**
+| Token | Default | Change to |
+|-------|---------|-----------|
+| Stage | `#12081C` | Your cloth |
+| Ink | `#EDE6F7` | Your silk |
+| Muted | `#A090C0` | Answer |
+| Accent | `#E8D5A3` | Champagne |
+
+**Anti-slop hard ban:** accordion kit, three FAQ columns, purple glow mesh, tiny click labels that swap the headline.
+
+**Differentiation:**
+| vs | Veil must not become |
+|----|----------------------|
+| Docket | Clerk accordion. Veil is one question, haze |
+| Port | Spotlight nights. Veil is a question that clears |
+
+## Layout Structure
+
+`100dvh` pinned stage.
+
+1. Masthead: Veil left, index readout right
+2. Question, then answer that hazes clear
+3. Foot: street
+
+## Content Slots
+
+| Slot | Default | Max | Notes |
+|------|---------|-----|-------|
+| brand | Veil | 24 | |
+| place | Broughton Street, Savannah | 40 | Real place, restage |
+| items[].question | When do you close on Saturday? | 48 | Spoken, not help-center |
+| items[].answer | Thursday at four... | 160 | What the house actually does |
+
+## Motion Specification
+
+**Signature (one):** perfume-haze. After land, the answer blurs then clears once. Restage on each question.
+
+**Enter (support, once on view):** `silk-slip`.
+
+**Engine:** CSS enter. CSS filter/transform haze.
+
+**Reduced motion:** first question at rest, answer sharp. Wheel is not captured.
+
+**Pin-until-complete:** yes. Wheel / trackpad / touch / arrows. Hairline `--pin-p`. Index is readout, not a hit target.
+
+## Video / Media Integration
+
+None.
+
+## Responsive Behavior
+
+| Breakpoint | Changes |
+|-----------|---------|
+| <640px | Question still owns the board |
+
+## Accessibility
+
+- `prefers-reduced-motion`: no blur, first plate
+- Keyboard: arrows after land
+- Contrast silk on violet
+- Semantic `<section>`, `<h2>`
+
+## Performance Notes
+
+- No video, no WebGL
+- One haze per chapter
+
+## AI Tool Instructions
+
+**Cursor / Claude / Codex / Grok Build:** Single React section plus CSS. Do not lay out an accordion list. Do not invent a help center.
+
+**Lovable / Bolt:** Same section. Replace questions and the street. Keep one haze.
+
+## Expected Output
+
+A single React FAQ section that:
+1. Is a **night house board**, not a hero
+2. Slips in, then the answer clears
+3. Uses ultraviolet-silk tokens
+4. Honors reduced motion
+5. Is fully slot-driven for brand replacement

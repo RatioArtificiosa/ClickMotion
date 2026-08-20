@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { Play, Pause, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { stillPosterForVideo } from "@/lib/media-url";
 
 export function PreviewPlayer({
   videoSrc,
@@ -14,6 +15,9 @@ export function PreviewPlayer({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(autoPlay);
+  /** Still only after load error — not as HTML poster (avoids flash). */
+  const [failed, setFailed] = useState(false);
+  const failureStill = stillPosterForVideo(posterSrc, undefined);
 
   if (!videoSrc) {
     return (
@@ -25,32 +29,47 @@ export function PreviewPlayer({
 
   return (
     <div className="group relative aspect-video overflow-hidden rounded-lg bg-black">
-      <video
-        ref={ref}
-        src={videoSrc}
-        poster={posterSrc}
-        autoPlay={autoPlay}
-        muted
-        loop
-        playsInline
-        controlsList="nodownload noplaybackrate"
-        disablePictureInPicture
-        onContextMenu={(e) => e.preventDefault()}
-        className="absolute inset-0 h-full w-full object-contain object-center"
-        onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
-      />
-      <button
-        aria-label={playing ? "Pause preview" : "Play preview"}
-        onClick={() => {
-          if (!ref.current) return;
-          if (playing) ref.current.pause();
-          else ref.current.play();
-        }}
-        className="absolute bottom-3 left-3 rounded-full bg-black/60 p-2 text-white backdrop-blur transition-opacity hover:bg-black/80"
-      >
-        {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-      </button>
+      {failed && failureStill ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={failureStill}
+          alt=""
+          className="absolute inset-0 h-full w-full object-contain object-center"
+        />
+      ) : (
+        <video
+          ref={ref}
+          src={videoSrc}
+          autoPlay={autoPlay}
+          muted
+          loop
+          playsInline
+          controlsList="nodownload noplaybackrate"
+          disablePictureInPicture
+          onContextMenu={(e) => e.preventDefault()}
+          onError={() => setFailed(true)}
+          className="absolute inset-0 h-full w-full object-contain object-center"
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+        />
+      )}
+      {!failed && (
+        <button
+          aria-label={playing ? "Pause preview" : "Play preview"}
+          onClick={() => {
+            if (!ref.current) return;
+            if (playing) ref.current.pause();
+            else void ref.current.play();
+          }}
+          className="absolute bottom-3 left-3 rounded-full bg-black/60 p-2 text-white backdrop-blur transition-opacity hover:bg-black/80"
+        >
+          {playing ? (
+            <Pause className="h-4 w-4" />
+          ) : (
+            <Play className="h-4 w-4" />
+          )}
+        </button>
+      )}
     </div>
   );
 }

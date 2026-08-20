@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ContextMenuGuard } from "@/components/media/ContextMenuGuard";
 import { SessionProvider } from "@/components/auth/SessionProvider";
+import { auth } from "@/lib/auth/config";
 import { inter, syne, birthstone } from "@/lib/fonts";
 
 export const metadata: Metadata = {
@@ -26,18 +27,26 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", creator: "@ClickMotion" },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let session = null;
+  try {
+    session = await auth();
+  } catch (err) {
+    console.warn("[auth] root session read failed; continuing logged out", err);
+    session = null;
+  }
+
   return (
     <html
       lang="en"
       className={`dark ${inter.variable} ${syne.variable} ${birthstone.variable}`}
     >
       <body className={`${inter.className} flex min-h-screen flex-col`}>
-        <SessionProvider>
+        <SessionProvider session={session}>
           <Suspense fallback={null}>
             <ContextMenuGuard />
           </Suspense>

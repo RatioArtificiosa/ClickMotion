@@ -1,0 +1,1885 @@
+{
+  "version": 1,
+  "catalog": "motion-primitives",
+  "enginePreference": [
+    "motion",
+    "gsap",
+    "css",
+    "webgl"
+  ],
+  "items": [
+    {
+      "id": "magnetic-hover",
+      "status": "canonical",
+      "label": "Magnetic hover",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "pricing",
+        "features"
+      ],
+      "numbers": {
+        "lerp": 0.18,
+        "maxPullPx": 12,
+        "durationMs": 180,
+        "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "resetMs": 280
+      },
+      "reducedMotion": "no pull; opacity/border only",
+      "license": "original-recipe",
+      "notes": "One magnetic target per section unless composing a set of small chips."
+    },
+    {
+      "id": "magnetic-recommended",
+      "status": "canonical",
+      "label": "Magnetic recommended card",
+      "engine": "motion",
+      "signatureOf": [
+        "pricing"
+      ],
+      "numbers": {
+        "lerp": 0.16,
+        "maxPullPx": 10,
+        "scale": 1.02,
+        "liftPx": 8,
+        "durationMs": 220
+      },
+      "reducedMotion": "static recommended outline, no follow",
+      "license": "original-recipe"
+    },
+    {
+      "id": "pin-until-complete",
+      "status": "canonical",
+      "label": "Pin until complete",
+      "engine": "gsap",
+      "signatureOf": [
+        "features",
+        "testimonials",
+        "stats"
+      ],
+      "numbers": {
+        "virtualViewports": 2.4,
+        "scrubLag": 0.45,
+        "release": "after-journey"
+      },
+      "reducedMotion": "static stacked layout; no pin theater",
+      "license": "original-recipe",
+      "notes": "PRODUCT_LAW. Not a tall multi-vh sticky track. Meridian gold."
+    },
+    {
+      "id": "paper-pivot",
+      "status": "canonical",
+      "label": "Paper pivot",
+      "engine": "gsap",
+      "signatureOf": [
+        "features",
+        "faq"
+      ],
+      "numbers": {
+        "rotateXdeg": 8,
+        "staggerMs": 90,
+        "scrub": 0.5
+      },
+      "reducedMotion": "instant sheet swap",
+      "license": "original-recipe",
+      "notes": "Folio craft. Do not copy Folio content."
+    },
+    {
+      "id": "text-split-reveal",
+      "status": "canonical",
+      "label": "Text split reveal",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features",
+        "faq"
+      ],
+      "numbers": {
+        "staggerMs": 28,
+        "durationMs": 700,
+        "yPx": 24,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "full string visible",
+      "license": "original-recipe"
+    },
+    {
+      "id": "accordion-stage",
+      "status": "canonical",
+      "label": "Staged accordion height",
+      "engine": "motion",
+      "signatureOf": [
+        "faq"
+      ],
+      "numbers": {
+        "heightMs": 420,
+        "ease": [
+          0.25,
+          0.46,
+          0.45,
+          0.94
+        ],
+        "inkFadeMs": 200
+      },
+      "reducedMotion": "instant open/close",
+      "license": "original-recipe",
+      "notes": "Typographic. Not a gray chevron kit."
+    },
+    {
+      "id": "count-on-scroll",
+      "status": "canonical",
+      "label": "Count on scroll",
+      "engine": "motion",
+      "signatureOf": [
+        "stats"
+      ],
+      "numbers": {
+        "durationMs": 900,
+        "once": true,
+        "ease": "easeOut"
+      },
+      "reducedMotion": "final number immediately",
+      "license": "original-recipe",
+      "notes": "Do not make a bouncing ticker the identity."
+    },
+    {
+      "id": "card-takeover",
+      "status": "canonical",
+      "label": "Card takeover",
+      "engine": "motion",
+      "signatureOf": [
+        "testimonials",
+        "features"
+      ],
+      "numbers": {
+        "layoutDurationMs": 480,
+        "backdropOpacity": 0.4
+      },
+      "reducedMotion": "inline expand, no shared-element",
+      "license": "original-recipe"
+    },
+    {
+      "id": "tilt-card",
+      "status": "canonical",
+      "label": "Pointer tilt card",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "pricing"
+      ],
+      "numbers": {
+        "maxTiltDeg": 6,
+        "perspectivePx": 900,
+        "glare": false
+      },
+      "reducedMotion": "no tilt",
+      "license": "original-recipe",
+      "notes": "Glare optional and banned-as-default (kit look)."
+    },
+    {
+      "id": "spring-press",
+      "status": "canonical",
+      "label": "Spring press",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "contact"
+      ],
+      "numbers": {
+        "scale": 0.98,
+        "stiffness": 420,
+        "damping": 28
+      },
+      "reducedMotion": "no scale",
+      "license": "original-recipe"
+    },
+    {
+      "id": "hold-to-confirm",
+      "status": "canonical",
+      "label": "Hold to confirm",
+      "engine": "motion",
+      "signatureOf": [
+        "cta"
+      ],
+      "numbers": {
+        "holdMs": 850,
+        "progressEase": "linear"
+      },
+      "reducedMotion": "single click confirm",
+      "license": "original-recipe"
+    },
+    {
+      "id": "field-focus-lift",
+      "status": "canonical",
+      "label": "Field focus lift",
+      "engine": "css",
+      "signatureOf": [
+        "contact"
+      ],
+      "numbers": {
+        "labelMs": 180,
+        "lineMs": 220
+      },
+      "reducedMotion": "color only",
+      "license": "original-recipe"
+    },
+    {
+      "id": "stagger-enter",
+      "status": "canonical",
+      "label": "Stagger enter",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "pricing",
+        "footer"
+      ],
+      "numbers": {
+        "staggerMs": 80,
+        "childMs": 500,
+        "yPx": 16
+      },
+      "reducedMotion": "all visible",
+      "license": "original-recipe",
+      "notes": "Generic support stagger. Prefer a named enter recipe from enter-recipes.json / ENTER.md."
+    },
+    {
+      "id": "stamp-settle",
+      "status": "canonical",
+      "label": "Stamp settle enter",
+      "engine": "motion",
+      "temperament": "elegant",
+      "signatureOf": [
+        "pricing",
+        "features",
+        "footer"
+      ],
+      "numbers": {
+        "yPx": 22,
+        "scale": 0.988,
+        "durationMs": 720,
+        "staggerMs": 70,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ],
+        "landMs": 980
+      },
+      "reducedMotion": "rest immediately",
+      "license": "original-recipe",
+      "notes": "Letterpress. Paper boards. Support enter, not the signature. Plays once on view. Interaction after land."
+    },
+    {
+      "id": "click-in",
+      "status": "canonical",
+      "label": "Click in enter",
+      "engine": "motion",
+      "temperament": "aggressive",
+      "signatureOf": [
+        "faq",
+        "features",
+        "contact"
+      ],
+      "numbers": {
+        "yPx": 10,
+        "durationMs": 280,
+        "staggerMs": 48,
+        "ease": [
+          0.2,
+          0.12,
+          0.18,
+          1
+        ],
+        "landMs": 720
+      },
+      "reducedMotion": "rest immediately",
+      "license": "original-recipe",
+      "notes": "Clerk stamp. Short, hard, no bounce. Docket gold."
+    },
+    {
+      "id": "drop-drape",
+      "status": "canonical",
+      "label": "Drop drape enter",
+      "engine": "motion",
+      "temperament": "elegant",
+      "signatureOf": [
+        "testimonials",
+        "cta",
+        "features"
+      ],
+      "numbers": {
+        "yPx": 36,
+        "durationMs": 900,
+        "staggerMs": 90,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ],
+        "landMs": 1080
+      },
+      "reducedMotion": "rest immediately",
+      "license": "original-recipe",
+      "notes": "Magazine drop. Witness gold. Soft land, no slap."
+    },
+    {
+      "id": "stomp-in",
+      "status": "canonical",
+      "label": "Stomp in enter",
+      "engine": "motion",
+      "temperament": "aggressive",
+      "signatureOf": [
+        "cta",
+        "stats",
+        "pricing"
+      ],
+      "numbers": {
+        "yPx": -26,
+        "scale": 1.045,
+        "durationMs": 260,
+        "staggerMs": 40,
+        "ease": [
+          0.55,
+          0,
+          0.15,
+          1
+        ],
+        "landMs": 560
+      },
+      "reducedMotion": "rest immediately",
+      "license": "original-recipe",
+      "notes": "Hits from above. Brutalist / infra. Not default fintech."
+    },
+    {
+      "id": "slap-in",
+      "status": "canonical",
+      "label": "Slap in enter",
+      "engine": "motion",
+      "temperament": "rebellion",
+      "signatureOf": [
+        "cta",
+        "features",
+        "contact"
+      ],
+      "numbers": {
+        "xPx": -42,
+        "rotateDeg": -2,
+        "durationMs": 340,
+        "staggerMs": 55,
+        "ease": [
+          0.12,
+          0.8,
+          0.18,
+          1
+        ],
+        "landMs": 700
+      },
+      "reducedMotion": "rest immediately",
+      "license": "original-recipe",
+      "notes": "Side hit, hard stop. Rebellion only. Never on calm-fintech."
+    },
+    {
+      "id": "pop-in",
+      "status": "canonical",
+      "label": "Pop in enter",
+      "engine": "motion",
+      "temperament": "fun",
+      "signatureOf": [
+        "cta",
+        "features",
+        "stats"
+      ],
+      "numbers": {
+        "yPx": 28,
+        "scale": 0.92,
+        "stiffness": 420,
+        "damping": 18,
+        "staggerMs": 80,
+        "landMs": 880
+      },
+      "reducedMotion": "rest immediately",
+      "license": "original-recipe",
+      "notes": "Spring pop. Material You / playful brands. Banned as identity on editorial and fintech."
+    },
+    {
+      "id": "curtain-wipe",
+      "status": "canonical",
+      "label": "Curtain wipe",
+      "engine": "gsap",
+      "signatureOf": [
+        "cta"
+      ],
+      "notes": "Full-page cover. Section enter uses curtain-part in enter-recipes.json.",
+      "license": "original-recipe"
+    },
+    {
+      "id": "liquid-refract",
+      "status": "stub",
+      "label": "Liquid refract",
+      "engine": "css",
+      "signatureOf": [
+        "pricing",
+        "faq"
+      ],
+      "notes": "Prism/Folio adjacent. Spec blur, saturate, border. Not frosted junk."
+    },
+    {
+      "id": "helix-orbit",
+      "status": "canonical",
+      "label": "Helix orbit",
+      "engine": "webgl",
+      "signatureOf": [],
+      "notes": "Live Helix only. Do not reuse as default features section.",
+      "license": "original-recipe"
+    },
+    {
+      "id": "cursor-flee",
+      "status": "canonical",
+      "label": "Cursor flee",
+      "engine": "motion",
+      "signatureOf": [
+        "contact"
+      ],
+      "notes": "Phobia gold. Use only when the brand can be playful. Not default contact.",
+      "license": "original-recipe"
+    },
+    {
+      "id": "infinite-marquee",
+      "status": "banned-as-default",
+      "label": "Infinite logo marquee",
+      "engine": "css",
+      "notes": "Kit identity. Allowed as a quiet proof strip, never the section."
+    },
+    {
+      "id": "border-glow",
+      "status": "banned-as-default",
+      "label": "Border glow / beam",
+      "engine": "css",
+      "notes": "Magic UI tell. Specials only, one accent max."
+    },
+    {
+      "id": "shiny-text",
+      "status": "banned-as-default",
+      "label": "Shiny gradient text",
+      "engine": "css",
+      "notes": "Instant authority fail as H1 identity."
+    },
+    {
+      "id": "aurora-mesh-bg",
+      "status": "banned-as-default",
+      "label": "Aurora mesh background",
+      "engine": "css",
+      "notes": "AI SaaS tell. Not a V1 language."
+    },
+    {
+      "id": "number-ticker-kit",
+      "status": "banned-as-default",
+      "label": "Kit number ticker",
+      "engine": "motion",
+      "notes": "Use count-on-scroll instead, tied to layout."
+    },
+    {
+      "id": "parallax-layer",
+      "status": "stub",
+      "label": "Parallax layer",
+      "engine": "motion"
+    },
+    {
+      "id": "shared-layout-expand",
+      "status": "stub",
+      "label": "Shared layout expand",
+      "engine": "motion"
+    },
+    {
+      "id": "cursor-follow",
+      "status": "stub",
+      "label": "Cursor follow",
+      "engine": "motion"
+    },
+    {
+      "id": "morph-radius",
+      "status": "stub",
+      "label": "Morph radius",
+      "engine": "css"
+    },
+    {
+      "id": "fade-blur-in",
+      "status": "stub",
+      "label": "Fade blur in",
+      "engine": "css"
+    },
+    {
+      "id": "scroll-word-pin",
+      "status": "stub",
+      "label": "Scroll word pin",
+      "engine": "gsap"
+    },
+    {
+      "id": "tally-plan-switch",
+      "status": "stub",
+      "label": "Tally plan switch",
+      "engine": "motion",
+      "signatureOf": [
+        "pricing"
+      ]
+    },
+    {
+      "id": "height-morph-tier",
+      "status": "stub",
+      "label": "Height morph tier",
+      "engine": "motion",
+      "signatureOf": [
+        "pricing"
+      ]
+    },
+    {
+      "id": "testimonial-pan",
+      "status": "stub",
+      "label": "Testimonial slow pan",
+      "engine": "gsap",
+      "signatureOf": [
+        "testimonials"
+      ]
+    },
+    {
+      "id": "type-breathe",
+      "status": "stub",
+      "label": "Type breathe",
+      "engine": "css",
+      "signatureOf": [
+        "testimonials",
+        "cta"
+      ]
+    },
+    {
+      "id": "footer-column-rise",
+      "status": "stub",
+      "label": "Footer column rise",
+      "engine": "motion",
+      "signatureOf": [
+        "footer"
+      ],
+      "notes": "Banned as the default. Rising columns become a link dump. Prefer desk-ink."
+    },
+    {
+      "id": "desk-ink",
+      "status": "canonical",
+      "label": "Desk ink",
+      "engine": "css",
+      "signatureOf": [
+        "footer"
+      ],
+      "numbers": {
+        "inkMs": 220,
+        "hairlineMs": 280
+      },
+      "reducedMotion": "instant swap",
+      "license": "original-recipe",
+      "notes": "One desk holds the close. Hover or click restages the proof. Not four columns."
+    },
+    {
+      "id": "css-view-timeline",
+      "status": "stub",
+      "label": "CSS view timeline reveal",
+      "engine": "css",
+      "notes": "Prefer for corporate/minimal when GSAP is too heavy."
+    },
+    {
+      "id": "3d-tilt-webgl",
+      "status": "stub",
+      "label": "WebGL product tilt",
+      "engine": "webgl",
+      "notes": "Elements aisle later. Do not default Features to this."
+    },
+    {
+      "id": "mercury-morph",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Mercury morph",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "pricing",
+        "cta"
+      ],
+      "languages": [
+        "jewel-chrome",
+        "ceramic-gloss",
+        "resin-object"
+      ],
+      "numbers": {
+        "durationMs": 640,
+        "borderRadiusFrom": 4,
+        "borderRadiusTo": 28,
+        "scale": 1.03,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "static radius",
+      "license": "original-recipe",
+      "notes": "Liquid metal. One morph. Not a blob field."
+    },
+    {
+      "id": "foil-stamp",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Foil stamp",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "pricing",
+        "stats"
+      ],
+      "languages": [
+        "jewel-chrome",
+        "solar-gilt"
+      ],
+      "numbers": {
+        "scale": 1.18,
+        "rotateDeg": -4,
+        "durationMs": 320,
+        "ease": [
+          0.18,
+          0.9,
+          0.2,
+          1
+        ]
+      },
+      "reducedMotion": "static mark",
+      "license": "original-recipe",
+      "notes": "Hot foil hit. One mark."
+    },
+    {
+      "id": "sequin-shimmer",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Sequin shimmer",
+      "engine": "css",
+      "signatureOf": [
+        "cta",
+        "testimonials",
+        "features"
+      ],
+      "languages": [
+        "jewel-chrome",
+        "arcade-atelier",
+        "candy-couture"
+      ],
+      "numbers": {
+        "flickerMs": 40,
+        "count": 8,
+        "holdMs": 400
+      },
+      "reducedMotion": "static sheen, no flicker",
+      "license": "original-recipe",
+      "notes": "CSS sheen, once. Not a particle sequin rain."
+    },
+    {
+      "id": "velvet-crush",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Velvet crush",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "pricing",
+        "cta"
+      ],
+      "languages": [
+        "velvet-nocturne"
+      ],
+      "numbers": {
+        "scaleY": 0.97,
+        "durationMs": 280,
+        "shadowBlurPx": 28,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "color only",
+      "license": "original-recipe"
+    },
+    {
+      "id": "jewel-swing",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Jewel swing",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "pricing"
+      ],
+      "languages": [
+        "jewel-chrome"
+      ],
+      "numbers": {
+        "rotateDeg": 8,
+        "stiffness": 180,
+        "damping": 12,
+        "maxPullPx": 10
+      },
+      "reducedMotion": "no swing",
+      "license": "original-recipe",
+      "notes": "One pendant. Not Helix orbit."
+    },
+    {
+      "id": "lacquer-pour",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Lacquer pour",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "candy-couture",
+        "ceramic-gloss"
+      ],
+      "numbers": {
+        "clipFrom": "inset(0 0 100% 0)",
+        "clipTo": "inset(0 0 0% 0)",
+        "durationMs": 780,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "filled rest",
+      "license": "original-recipe"
+    },
+    {
+      "id": "glaze-drip",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Glaze drip",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "cta"
+      ],
+      "languages": [
+        "ceramic-gloss"
+      ],
+      "numbers": {
+        "yPx": 28,
+        "stiffness": 220,
+        "damping": 18
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "chrome-drip",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Chrome drip",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "cta"
+      ],
+      "languages": [
+        "resin-object",
+        "arcade-atelier",
+        "jewel-chrome"
+      ],
+      "numbers": {
+        "yPx": 36,
+        "skewYDeg": 4,
+        "durationMs": 700,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "ribbon-unwrap",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Ribbon unwrap",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features",
+        "testimonials"
+      ],
+      "languages": [
+        "candy-couture",
+        "solar-gilt"
+      ],
+      "numbers": {
+        "rotateYDeg": 82,
+        "durationMs": 720,
+        "perspectivePx": 900,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "instant unwrap",
+      "license": "original-recipe"
+    },
+    {
+      "id": "lipstick-swipe",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Lipstick swipe",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "candy-couture",
+        "velvet-nocturne"
+      ],
+      "numbers": {
+        "clipFrom": "inset(0 100% 0 0)",
+        "clipTo": "inset(0 0% 0 0)",
+        "durationMs": 480,
+        "ease": [
+          0.2,
+          0.12,
+          0.18,
+          1
+        ]
+      },
+      "reducedMotion": "filled rest",
+      "license": "original-recipe"
+    },
+    {
+      "id": "perfume-haze",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Perfume haze",
+      "engine": "motion",
+      "signatureOf": [
+        "testimonials",
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "velvet-nocturne"
+      ],
+      "numbers": {
+        "blurPx": 8,
+        "scale": 1.04,
+        "durationMs": 900,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "no blur",
+      "license": "original-recipe",
+      "notes": "Once on view or hover. Not a fog loop."
+    },
+    {
+      "id": "flash-pop",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Flash pop",
+      "engine": "css",
+      "signatureOf": [
+        "cta",
+        "testimonials"
+      ],
+      "languages": [
+        "solar-gilt",
+        "velvet-nocturne",
+        "kinetic-poster"
+      ],
+      "numbers": {
+        "flashMs": 80,
+        "count": 1
+      },
+      "reducedMotion": "no flash",
+      "license": "original-recipe",
+      "notes": "Photography flash. One pop."
+    },
+    {
+      "id": "runway-walk",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Runway walk",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "testimonials",
+        "cta"
+      ],
+      "languages": [
+        "solar-gilt",
+        "candy-couture",
+        "velvet-nocturne"
+      ],
+      "numbers": {
+        "xPx": 80,
+        "durationMs": 900,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "polaroid-develop",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Polaroid develop",
+      "engine": "css",
+      "signatureOf": [
+        "features",
+        "testimonials"
+      ],
+      "languages": [
+        "ceramic-gloss",
+        "solar-gilt"
+      ],
+      "numbers": {
+        "durationMs": 1400,
+        "contrastFrom": 0.35,
+        "brightnessFrom": 1.4
+      },
+      "reducedMotion": "final exposure",
+      "license": "original-recipe"
+    },
+    {
+      "id": "vitrine-sweep",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Vitrine sweep",
+      "engine": "css",
+      "signatureOf": [
+        "pricing",
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "jewel-chrome",
+        "solar-gilt"
+      ],
+      "numbers": {
+        "durationMs": 900,
+        "sheenDeg": 24
+      },
+      "reducedMotion": "static metal",
+      "license": "original-recipe",
+      "notes": "One light across the case. Not shiny-text identity."
+    },
+    {
+      "id": "wax-seal",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Wax seal",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "contact"
+      ],
+      "languages": [
+        "solar-gilt",
+        "ink-riot",
+        "jewel-chrome"
+      ],
+      "numbers": {
+        "scaleFrom": 0.42,
+        "scalePeak": 1.06,
+        "durationMs": 420,
+        "ease": [
+          0.18,
+          0.9,
+          0.2,
+          1
+        ]
+      },
+      "reducedMotion": "static seal",
+      "license": "original-recipe"
+    },
+    {
+      "id": "silk-ripple",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Silk ripple",
+      "engine": "css",
+      "signatureOf": [
+        "testimonials",
+        "features"
+      ],
+      "languages": [
+        "velvet-nocturne",
+        "candy-couture"
+      ],
+      "numbers": {
+        "wavePx": 6,
+        "durationMs": 700,
+        "cycles": 1
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "heel-click",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Heel click",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "stats"
+      ],
+      "languages": [
+        "candy-couture",
+        "solar-gilt",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "yPx": -12,
+        "taps": 2,
+        "tapMs": 140
+      },
+      "reducedMotion": "no tap",
+      "license": "original-recipe"
+    },
+    {
+      "id": "jelly-morph",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Jelly morph",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features",
+        "pricing"
+      ],
+      "languages": [
+        "candy-couture",
+        "arcade-atelier",
+        "resin-object"
+      ],
+      "numbers": {
+        "scalePeak": 1.08,
+        "scaleSquash": 0.92,
+        "stiffness": 340,
+        "damping": 14
+      },
+      "reducedMotion": "no squash",
+      "license": "original-recipe",
+      "notes": "Couture jelly. Not a loading blob."
+    },
+    {
+      "id": "bubble-loom",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Bubble loom",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "cta"
+      ],
+      "languages": [
+        "resin-object",
+        "candy-couture"
+      ],
+      "numbers": {
+        "scaleFrom": 0,
+        "borderRadiusPct": 50,
+        "durationMs": 560,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "static circle",
+      "license": "original-recipe",
+      "notes": "One bubble. Not a soda field."
+    },
+    {
+      "id": "yo-yo-drop",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Yo-yo drop",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "stats"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "candy-couture"
+      ],
+      "numbers": {
+        "yPx": 72,
+        "overshootPx": -10,
+        "stiffness": 280,
+        "damping": 16
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "pendulum-arc",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Pendulum arc",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "jewel-chrome",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "rotateDeg": 12,
+        "counterDeg": -8,
+        "stiffness": 160,
+        "damping": 14
+      },
+      "reducedMotion": "no arc",
+      "license": "original-recipe"
+    },
+    {
+      "id": "magnet-snap",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Magnet snap",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "pricing",
+        "contact"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "jewel-chrome",
+        "resin-object"
+      ],
+      "numbers": {
+        "xPx": 40,
+        "durationMs": 160,
+        "ease": [
+          0.55,
+          0,
+          0.15,
+          1
+        ]
+      },
+      "reducedMotion": "instant dock",
+      "license": "original-recipe"
+    },
+    {
+      "id": "rubber-band",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Rubber band",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "candy-couture",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "scaleX": 1.28,
+        "stiffness": 420,
+        "damping": 16
+      },
+      "reducedMotion": "no stretch",
+      "license": "original-recipe"
+    },
+    {
+      "id": "kaleido-fold",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Kaleido fold",
+      "engine": "motion",
+      "signatureOf": [
+        "features"
+      ],
+      "languages": [
+        "op-signal",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "rotateDeg": 60,
+        "scale": 0.88,
+        "durationMs": 520,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "static fold",
+      "license": "original-recipe",
+      "notes": "One fold. Not a kaleidoscope loop."
+    },
+    {
+      "id": "sequin-burst",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Sequin burst",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "stats"
+      ],
+      "languages": [
+        "candy-couture",
+        "arcade-atelier",
+        "jewel-chrome"
+      ],
+      "numbers": {
+        "dots": 12,
+        "durationMs": 420,
+        "spreadPx": 48
+      },
+      "reducedMotion": "no burst",
+      "license": "original-recipe",
+      "notes": "Twelve dots, once. Not emoji confetti."
+    },
+    {
+      "id": "balloon-lift",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Balloon lift",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "candy-couture"
+      ],
+      "numbers": {
+        "yPx": 36,
+        "overshootPx": -8,
+        "stiffness": 200,
+        "damping": 18
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "dice-settle",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Dice settle",
+      "engine": "motion",
+      "signatureOf": [
+        "stats",
+        "cta"
+      ],
+      "languages": [
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "rotateDeg": 180,
+        "yPx": 20,
+        "durationMs": 500,
+        "ease": [
+          0.18,
+          0.9,
+          0.2,
+          1
+        ]
+      },
+      "reducedMotion": "final face",
+      "license": "original-recipe"
+    },
+    {
+      "id": "zipper-split",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Zipper split",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "faq",
+        "cta"
+      ],
+      "languages": [
+        "candy-couture",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "clipFrom": "inset(0 50% 0 50%)",
+        "clipTo": "inset(0 0% 0 0%)",
+        "durationMs": 520,
+        "ease": [
+          0.2,
+          0.12,
+          0.18,
+          1
+        ]
+      },
+      "reducedMotion": "open rest",
+      "license": "original-recipe"
+    },
+    {
+      "id": "flip-clamshell",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Flip clamshell",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "pricing"
+      ],
+      "languages": [
+        "resin-object",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "rotateXDeg": 88,
+        "durationMs": 540,
+        "perspectivePx": 1000,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "static face",
+      "license": "original-recipe"
+    },
+    {
+      "id": "squish-press",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Squish press",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "pricing"
+      ],
+      "languages": [
+        "candy-couture",
+        "resin-object"
+      ],
+      "numbers": {
+        "scale": 0.94,
+        "stiffness": 480,
+        "damping": 22
+      },
+      "reducedMotion": "no scale",
+      "license": "original-recipe",
+      "notes": "Hover/press. Couture squish."
+    },
+    {
+      "id": "boomerang-toss",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Boomerang toss",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "kinetic-poster"
+      ],
+      "numbers": {
+        "xPx": 56,
+        "rotateDeg": 24,
+        "durationMs": 640,
+        "ease": [
+          0.12,
+          0.8,
+          0.18,
+          1
+        ]
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "slingshot-in",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Slingshot in",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "stats"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "kinetic-poster"
+      ],
+      "numbers": {
+        "xPx": -44,
+        "stiffness": 380,
+        "damping": 14
+      },
+      "reducedMotion": "static",
+      "license": "original-recipe"
+    },
+    {
+      "id": "type-collision",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Type collision",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "kinetic-poster",
+        "ink-riot"
+      ],
+      "numbers": {
+        "xPx": 120,
+        "durationMs": 380,
+        "ease": [
+          0.55,
+          0,
+          0.15,
+          1
+        ]
+      },
+      "reducedMotion": "composed rest",
+      "license": "original-recipe",
+      "notes": "Two lines from opposite sides. The poster slam."
+    },
+    {
+      "id": "overprint-lock",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Overprint lock",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "kinetic-poster",
+        "ink-riot"
+      ],
+      "numbers": {
+        "offsetPx": 6,
+        "lockMs": 280,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "locked register",
+      "license": "original-recipe",
+      "notes": "Misregister then lock. Two inks."
+    },
+    {
+      "id": "chromatic-slip",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Chromatic slip",
+      "engine": "css",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "ink-riot",
+        "arcade-atelier",
+        "kinetic-poster"
+      ],
+      "numbers": {
+        "splitPx": 2,
+        "durationMs": 200
+      },
+      "reducedMotion": "no split",
+      "license": "original-recipe",
+      "notes": "Fashion aberration. 2px, once. Not matrix."
+    },
+    {
+      "id": "moire-shift",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Moire shift",
+      "engine": "css",
+      "signatureOf": [
+        "features"
+      ],
+      "languages": [
+        "op-signal"
+      ],
+      "numbers": {
+        "shiftPx": 8,
+        "durationMs": 900,
+        "cycles": 1
+      },
+      "reducedMotion": "static bands",
+      "license": "original-recipe",
+      "notes": "Gallery vibration. Never loop forever."
+    },
+    {
+      "id": "poster-shear",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Poster shear",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "cta"
+      ],
+      "languages": [
+        "kinetic-poster",
+        "op-signal"
+      ],
+      "numbers": {
+        "skewXDeg": 8,
+        "durationMs": 340,
+        "ease": [
+          0.12,
+          0.8,
+          0.18,
+          1
+        ]
+      },
+      "reducedMotion": "no skew",
+      "license": "original-recipe"
+    },
+    {
+      "id": "scale-crash",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Scale crash",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "features",
+        "stats"
+      ],
+      "languages": [
+        "kinetic-poster",
+        "op-signal",
+        "ink-riot"
+      ],
+      "numbers": {
+        "scaleFrom": 2.4,
+        "durationMs": 380,
+        "ease": [
+          0.55,
+          0,
+          0.15,
+          1
+        ]
+      },
+      "reducedMotion": "rest scale",
+      "license": "original-recipe",
+      "notes": "Giant type slams to reading size."
+    },
+    {
+      "id": "baseline-wave",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Baseline wave",
+      "engine": "motion",
+      "signatureOf": [
+        "testimonials",
+        "cta"
+      ],
+      "languages": [
+        "ink-riot",
+        "candy-couture"
+      ],
+      "numbers": {
+        "yPx": 10,
+        "staggerMs": 40,
+        "durationMs": 520,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "flat baseline",
+      "license": "original-recipe"
+    },
+    {
+      "id": "glyph-cascade",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Glyph cascade",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "stats"
+      ],
+      "languages": [
+        "ink-riot",
+        "kinetic-poster"
+      ],
+      "numbers": {
+        "yPx": 40,
+        "staggerMs": 22,
+        "durationMs": 420,
+        "ease": [
+          0.16,
+          1,
+          0.3,
+          1
+        ]
+      },
+      "reducedMotion": "full string",
+      "license": "original-recipe",
+      "notes": "Short display only. Not body scramble."
+    },
+    {
+      "id": "duotone-knockout",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Duotone knockout",
+      "engine": "css",
+      "signatureOf": [
+        "features",
+        "testimonials"
+      ],
+      "languages": [
+        "kinetic-poster",
+        "op-signal"
+      ],
+      "numbers": {
+        "durationMs": 300
+      },
+      "reducedMotion": "final inks",
+      "license": "original-recipe"
+    },
+    {
+      "id": "crop-punch",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Crop punch",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "cta"
+      ],
+      "languages": [
+        "kinetic-poster",
+        "op-signal"
+      ],
+      "numbers": {
+        "insetPct": 18,
+        "durationMs": 320,
+        "ease": [
+          0.55,
+          0,
+          0.15,
+          1
+        ]
+      },
+      "reducedMotion": "full frame",
+      "license": "original-recipe"
+    },
+    {
+      "id": "stack-shuffle",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Stack shuffle",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "testimonials",
+        "pricing"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "kinetic-poster",
+        "candy-couture"
+      ],
+      "numbers": {
+        "layoutDurationMs": 480,
+        "rotateDeg": 3
+      },
+      "reducedMotion": "instant stack",
+      "license": "original-recipe"
+    },
+    {
+      "id": "orbit-trinket",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Orbit trinket",
+      "engine": "motion",
+      "signatureOf": [
+        "cta",
+        "pricing"
+      ],
+      "languages": [
+        "jewel-chrome",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "radiusPx": 12,
+        "durationMs": 2400,
+        "count": 1
+      },
+      "reducedMotion": "parked jewel",
+      "license": "original-recipe",
+      "notes": "One jewel, 12px path. Not Helix."
+    },
+    {
+      "id": "spotlight-park",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Spotlight park",
+      "engine": "motion",
+      "signatureOf": [
+        "features",
+        "testimonials",
+        "cta"
+      ],
+      "languages": [
+        "velvet-nocturne",
+        "solar-gilt"
+      ],
+      "numbers": {
+        "followLerp": 0.14,
+        "parkMs": 420
+      },
+      "reducedMotion": "static pool",
+      "license": "original-recipe",
+      "notes": "Follows, then parks on the subject."
+    },
+    {
+      "id": "strobe-hold",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Strobe hold",
+      "engine": "css",
+      "signatureOf": [
+        "cta",
+        "features"
+      ],
+      "languages": [
+        "op-signal",
+        "arcade-atelier"
+      ],
+      "numbers": {
+        "flashMs": 60,
+        "count": 2
+      },
+      "reducedMotion": "forbidden; static",
+      "license": "original-recipe",
+      "notes": "Two flashes then rest. Never a loop. Honor reduced motion hard."
+    },
+    {
+      "id": "iridescent-shift",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Iridescent shift",
+      "engine": "css",
+      "signatureOf": [
+        "cta",
+        "features",
+        "pricing"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "resin-object",
+        "jewel-chrome"
+      ],
+      "numbers": {
+        "hueDeg": 25,
+        "durationMs": 640
+      },
+      "reducedMotion": "static hue",
+      "license": "original-recipe",
+      "notes": "Fabric iridescence. Not rainbow CSS identity."
+    },
+    {
+      "id": "smoke-script",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Smoke script",
+      "engine": "motion",
+      "signatureOf": [
+        "testimonials",
+        "cta"
+      ],
+      "languages": [
+        "ink-riot",
+        "velvet-nocturne"
+      ],
+      "numbers": {
+        "blurPx": 6,
+        "letterSpacingEm": 0.18,
+        "durationMs": 800,
+        "ease": [
+          0.22,
+          1,
+          0.36,
+          1
+        ]
+      },
+      "reducedMotion": "sharp type",
+      "license": "original-recipe"
+    },
+    {
+      "id": "neon-ignite",
+      "status": "canonical",
+      "register": "wow",
+      "label": "Neon ignite",
+      "engine": "css",
+      "signatureOf": [
+        "cta",
+        "stats"
+      ],
+      "languages": [
+        "arcade-atelier",
+        "velvet-nocturne"
+      ],
+      "numbers": {
+        "flickerCount": 3,
+        "flickerMs": 70,
+        "holdMs": 800
+      },
+      "reducedMotion": "steady on",
+      "license": "original-recipe",
+      "notes": "One tube catches. Not a neon city."
+    }
+  ]
+}

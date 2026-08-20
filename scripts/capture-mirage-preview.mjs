@@ -313,21 +313,26 @@ async function captureForeground(viewport, framesDir) {
   await page.addStyleTag({ content: CAPTURE_CSS });
   await page.waitForTimeout(200);
 
-  const maxScroll = await page.evaluate(() => {
-    const root = document.querySelector(".mirage-root");
-    if (!root) return document.body.scrollHeight - window.innerHeight;
-    return Math.max(0, root.offsetHeight - window.innerHeight);
+  const hasApi = await page.evaluate(() => {
+    const api = window.__msScrollNarrative;
+    return Boolean(api && typeof api.setProgress === "function");
   });
+  if (!hasApi) {
+    throw new Error(
+      "Mirage capture requires window.__msScrollNarrative.setProgress (No Scroller). Do not window.scrollTo a tall track."
+    );
+  }
 
   console.log(
-    `Capturing ${TOTAL_FRAMES} FG frames @ ${FPS}fps (cards only, transparent bg) over 0…${maxScroll}px`
+    `Capturing ${TOTAL_FRAMES} FG frames @ ${FPS}fps (cards only, transparent bg) via setProgress`
   );
 
   for (let i = 0; i < TOTAL_FRAMES; i++) {
     const progress = progressForFrame(i, TOTAL_FRAMES);
-    const y = Math.round(progress * maxScroll);
 
-    await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
+    await page.evaluate((p) => {
+      window.__msScrollNarrative?.setProgress(p);
+    }, progress);
     await page.evaluate(
       () =>
         new Promise((r) =>
