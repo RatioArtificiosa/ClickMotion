@@ -12,11 +12,11 @@ This proposal is executable only when its source-of-truth documents remain synch
 - `docs/SPANISH_LOCALIZATION_CHECKLIST.md` — executable acceptance gates.
 - `docs/SPANISH_PROPOSAL_OBSERVATIONS_AND_CHANGELOG.md` — evidence, decisions, errors, fixes, unresolved work, and drift control.
 
-Before implementation changes begin, create and verify a restorable remote checkpoint of code and media. The checkpoint must include application source, documentation, prompts, cleanrooms, Lab material, package archives, and every video copy required to reconstruct the site. Video and archive binaries may use Git LFS, but LFS pointers alone do not constitute a backup: the remote LFS objects and the branch containing the pointers must both be verified.
+Before implementation changes begin, create and verify a restorable remote checkpoint of code and a separate large-file backup. GitHub is reserved for normal Git commits and pushes only. Do not add Git LFS configuration, LFS pointers, or large media/archive binaries to the site repository. Google Drive is the canonical large-file backup and must contain the complete approved media inventory.
 
 The media inventory must include public, package-embedded, client, storefront, background, Lab, cleanroom, research, test, temporary, capture, upload, and generated duplicate video locations. If a nested repository or submodule cannot be pushed by the current GitHub identity, its required media must be stored in an accessible parent-repository archive with a documented extraction path and checksum plan. No Spanish implementation phase may be declared backup-safe until the remote branch, commit, LFS object availability, archive availability, and restoration test are recorded in the observations/changelog.
 
-The English/Spanish work must never use an incomplete or unverified media backup as its rollback plan. [VALIDATION NEEDED] The complete media backup is a release prerequisite and must be reverified after material media additions.
+The English/Spanish work must never use an incomplete or unverified media backup as its rollback plan. [VALIDATION NEEDED] The Google Drive backup is a release prerequisite and must be reverified after material media additions. The current approved Drive destination is `ClickMotion/MS-selected-media-backup-2026-08-20`; its upload scope is recorded in the observations/changelog.
 
 ## Executive recommendation
 

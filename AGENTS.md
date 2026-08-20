@@ -86,7 +86,7 @@ The English version is the canonical default and must never be overwritten, sile
 10. If an English file must be changed for a genuine bug fix or shared architecture improvement, record the reason, affected English surfaces, before/after verification, and operator approval when the change is outside the current task.
 11. Before every Spanish creation or localization task, record the English source paths and protected artifacts in the observation log.
 12. Before release, run an English regression matrix proving that English routes, demos, prompts, media, packages, metadata, and commerce behavior were not unintentionally changed.
-13. Before Spanish implementation or a shared localization refactor, verify a remote, restorable backup of code plus every duplicated video/media path. Git LFS pointers without remotely verified objects do not satisfy this requirement; nested repositories require separate verification or an accessible parent archive.
+13. Before Spanish implementation or a shared localization refactor, verify a remote, restorable normal-Git backup of code plus a Google Drive backup of every duplicated video/media path. Do not add Git LFS or large media/archive binaries to this site repository; large files belong in the approved Google Drive backup.
 13. A Spanish implementation is not complete if it works only by mutating the English source of truth.
 
 Required invariant:

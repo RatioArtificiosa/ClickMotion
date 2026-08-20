@@ -490,6 +490,26 @@ Do not create vague entries such as “translation issue” without identifying 
 - Related documents: `SPANISH_LOCALIZATION_PROPOSAL.md` Document control; `SPANISH_LOCALIZATION_CHECKLIST.md` Backup and recovery gate; `English-Spanish-Law.md` Backup and restoration law.
 - Follow-up date or trigger: Before Spanish implementation begins and after any material media addition.
 
+### OBS-2026-08-20-014 — Google Drive is the canonical large-file backup
+
+- Date discovered: 2026-08-20
+- Area: backup, Google Drive, Git policy
+- Source/evidence: Operator authorized uploading `public`, `test videos`, `Lab`, documentation, and all other root-level files/folders under 1 GB to rclone remote `clickmotion-backup`, destination `ClickMotion/MS-selected-media-backup-2026-08-20`.
+- Observation: The complete MS folder is larger than the available Drive capacity. The approved scope separates normal GitHub source/documentation backup from Google Drive large-file backup. GitHub must remain normal Git only; no LFS is permitted for this site.
+- Classification: IN PROGRESS
+- Severity: High
+- Status: IN PROGRESS — rclone uploads are active; final Drive listing, byte count, and download verification remain required.
+- User impact: Large media is intentionally retrieved from Google Drive rather than GitHub.
+- Technical impact: GitHub commits must exclude videos, archives, and files over the documented large-file threshold; Drive must preserve the original relative paths under the selected backup folder.
+- Primary failure mode: A future commit accidentally adds a large media/archive file to normal Git or the Drive upload is assumed complete without verification.
+- Recommended next action: Finish both rclone jobs, verify the Drive folder contents and sizes, run a representative download/checksum test, and record completion.
+- Operator approval required: No; scope explicitly approved by operator.
+- Operator decision: Approved
+- Fix performed: Normal-Git backup worktree prepared; LFS is not used in the normal Git branch; governing documents updated with the GitHub/Google Drive division.
+- Verification evidence: Zero staged video/archive files and zero staged files over 25 MB in the normal-Git checkpoint; Drive destination exists and upload is active.
+- Related documents: `SPANISH_LOCALIZATION_PROPOSAL.md` Document control; `SPANISH_LOCALIZATION_CHECKLIST.md` Backup and recovery gate; `English-Spanish-Law.md` Backup and restoration law.
+- Follow-up date or trigger: After rclone completion.
+
 ### CHG-2026-08-20-009 — Added backup and restoration controls to all governing documents
 
 - Date: 2026-08-20

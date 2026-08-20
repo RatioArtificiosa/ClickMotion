@@ -1,0 +1,43 @@
+
+  canvas {
+    position: fixed;
+    inset: 0;
+  }
+
+  .section {
+    pointer-events: none;
+  }
+  
+  .gamme_container,
+  .profile_container,
+  .benefits_container,
+  .argument_container,
+  .carousel_title-bis-wrapper,
+  .scan_container {
+    position: fixed;
+    inset: 0;
+  }
+
+  .benefits_nav {
+    position: fixed;
+  }
+
+  .loader {
+    display: flex;
+  }
+
+  /*
+    Linked CSS (before React). These overlays are position:fixed and
+    stack on first paint until initHud adds body.is-hud-ready.
+  */
+  body:not(.is-hud-ready) .profile_container,
+  body:not(.is-hud-ready) .benefits_container,
+  body:not(.is-hud-ready) .argument_container,
+  body:not(.is-hud-ready) .carousel_title-bis-wrapper,
+  body:not(.is-hud-ready) .benefits_nav,
+  body:not(.is-hud-ready) .carousel_slide,
+  body:not(.is-hud-ready) .carousel_desc,
+  body:not(.is-hud-ready) .carousel_title-b {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }

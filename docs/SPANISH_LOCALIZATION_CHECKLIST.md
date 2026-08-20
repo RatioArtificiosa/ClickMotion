@@ -11,17 +11,18 @@ English remains the default. Spanish uses /es/. Existing videos remain unchanged
 - [ ] Inventory every video extension used by the project: MP4, WebM, MOV, M4V, AVI, and MKV, plus any future project-specific extension.
 - [ ] Inventory public videos, package-embedded videos, client videos, storefront videos, backgrounds, Lab videos, cleanroom videos, research videos, test videos, temporary captures, upload artifacts, and generated duplicate copies.
 - [ ] Record every duplicate path; do not deduplicate by deleting a path that the application, package, archive, or reconstruction workflow may reference.
-- [ ] Track large binaries through Git LFS or an approved equivalent object store.
-- [ ] Verify that every committed LFS pointer has a remotely available LFS object.
+- [ ] Keep GitHub limited to normal Git commits and pushes; do not add Git LFS or LFS pointers.
+- [ ] Store all large videos, archives, and other large binaries in the approved Google Drive backup.
+- [ ] Verify that every required large file exists in Google Drive and is downloadable.
 - [ ] Verify that every required archive is remotely available and has a documented extraction destination.
 - [ ] Verify nested repositories and submodules separately; a Git submodule pointer is not proof that its files are backed up.
 - [ ] If a nested repository cannot be pushed with the current identity, create a parent-repository archive of its required media and record the limitation.
 - [ ] Perform a clean restoration test using only the remote checkpoint and documented media retrieval process.
 - [ ] Compare restored file paths and checksums against the inventory.
-- [ ] Record the backup commit, remote branch, LFS verification, archive verification, restoration result, and exceptions in `SPANISH_PROPOSAL_OBSERVATIONS_AND_CHANGELOG.md`.
+- [ ] Record the backup commit, remote branch, Google Drive path, Drive verification, archive verification, restoration result, and exceptions in `SPANISH_PROPOSAL_OBSERVATIONS_AND_CHANGELOG.md`.
 - [ ] Do not begin Spanish implementation on the assumption that an unverified local cache is recoverable.
 
-The backup gate is separate from localization. It protects both language versions and is a hard prerequisite for safe work. A successful code push without successful binary-object verification is incomplete.
+The backup gate is separate from localization. It protects both language versions and is a hard prerequisite for safe work. GitHub is the normal-Git source for code and documentation; Google Drive is the large-file source for media and archives. A successful code push without successful Google Drive verification is incomplete.
 
 ## Non-negotiable English protection rule
 
@@ -586,7 +587,7 @@ No new motion-site product may be presented as fully approved for publication or
 - [ ] English and Spanish performance baselines recorded.
 - [ ] All critical and high-severity issues resolved.
 - [ ] The complete code and duplicated-media backup has a verified remote branch.
-- [ ] Remote LFS objects and media archives have been verified.
+- [ ] Google Drive media objects and archives have been verified and are downloadable.
 - [ ] A clean restoration test has passed, or every exception is explicitly approved and recorded.
 
 For any new product or translated product package published for sale, also apply SHIP_FOR_SALE.md, PRODUCTION_READY_CHECKLIST.md Phases 0–12, PRODUCT_PACKAGE.md §10, ASSET_PIPELINE.md, PRODUCT_LAW.md, QUALITY_CHECKLIST.md, and PLATINUM_SECOND_REVISION.md Phase 13 after permission.
