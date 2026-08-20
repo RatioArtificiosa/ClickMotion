@@ -380,6 +380,14 @@ Spanish checks:
 
 HTTP 200 alone is not sufficient. Also verify rendered content, hydration, console errors, media loading, layout, interaction, and language correctness.
 
+## Backup and restoration law
+
+English protection and Spanish separation are not enforceable if the rollback material is incomplete. Before Spanish implementation or a shared-code refactor begins, the project must have a restorable remote checkpoint containing English source, content, prompts, demos, cleanrooms, Lab references, design records, public media, every duplicate video path, package-embedded media, product archives, and any temporary, test, capture, research, client, storefront, background, or generated copy required to reconstruct or diagnose the site.
+
+Large binaries may be represented by Git LFS pointers, but a pointer without a remotely verified LFS object is not backed up. A remote branch containing pointers without successful object retrieval is incomplete. Nested repositories and submodules require separate verification; a gitlink is not a copy of the nested files. If the current identity cannot push a nested repository, its required files must be archived in an accessible parent repository, with the original paths and extraction procedure recorded.
+
+Required evidence is the remote repository, branch, commit, LFS/object verification result, archive checksum, inventory count, and clean restoration test. Any exception must be marked `[BLOCKED]` or `[VALIDATION NEEDED]`, reported to the operator, and recorded in `SPANISH_PROPOSAL_OBSERVATIONS_AND_CHANGELOG.md`. No document, agent, or implementation may claim the project is safely backed up while this evidence is missing.
+
 ## Observation and changelog law
 
 Every material finding must be recorded in SPANISH_PROPOSAL_OBSERVATIONS_AND_CHANGELOG.md.

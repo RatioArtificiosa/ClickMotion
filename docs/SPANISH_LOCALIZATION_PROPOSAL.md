@@ -2,6 +2,22 @@
 
 No existing files are to be deleted or rewritten for this proposal. This document defines the durable plan for an English-default ClickMotion site with a Spanish version at /es/.
 
+## Document control and backup integrity gate
+
+This proposal is executable only when its source-of-truth documents remain synchronized:
+
+- `AGENTS.md` — repository operating instructions.
+- `docs/English-Spanish-Law.md` — binding English/Spanish separation law.
+- This proposal — strategy, scope, architecture, sequencing, assumptions, risks, and resources.
+- `docs/SPANISH_LOCALIZATION_CHECKLIST.md` — executable acceptance gates.
+- `docs/SPANISH_PROPOSAL_OBSERVATIONS_AND_CHANGELOG.md` — evidence, decisions, errors, fixes, unresolved work, and drift control.
+
+Before implementation changes begin, create and verify a restorable remote checkpoint of code and media. The checkpoint must include application source, documentation, prompts, cleanrooms, Lab material, package archives, and every video copy required to reconstruct the site. Video and archive binaries may use Git LFS, but LFS pointers alone do not constitute a backup: the remote LFS objects and the branch containing the pointers must both be verified.
+
+The media inventory must include public, package-embedded, client, storefront, background, Lab, cleanroom, research, test, temporary, capture, upload, and generated duplicate video locations. If a nested repository or submodule cannot be pushed by the current GitHub identity, its required media must be stored in an accessible parent-repository archive with a documented extraction path and checksum plan. No Spanish implementation phase may be declared backup-safe until the remote branch, commit, LFS object availability, archive availability, and restoration test are recorded in the observations/changelog.
+
+The English/Spanish work must never use an incomplete or unverified media backup as its rollback plan. [VALIDATION NEEDED] The complete media backup is a release prerequisite and must be reverified after material media additions.
+
 ## Executive recommendation
 
 ### Thesis
@@ -147,7 +163,7 @@ The switcher must remain visually minimal and sit beside the existing Unlimited 
 
 On Spanish pages:
 
-    [ Poder ilimitado ] [ EN ]
+    [ Poder Ilimitado ] [ EN ]
 
 It must preserve the current equivalent page, product slug, demo slug, search filters, and safe query parameters. It must never send users to the Spanish homepage when an equivalent route exists, must be keyboard accessible, must have a screen-reader label, and must work on desktop and mobile.
 

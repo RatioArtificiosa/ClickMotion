@@ -465,6 +465,42 @@ Do not create vague entries such as “translation issue” without identifying 
 - Verification: the proposal and checklist now link to the canonical law and include the full area map and separation requirements.
 - Related observations: OBS-2026-08-20-010
 
+### OBS-2026-08-20-013 — Complete duplicate-media backup is not remotely verified
+
+- Date discovered: 2026-08-20
+- Area: backup, Git, Git LFS, media pipeline
+- Source/evidence: `git ls-remote --heads origin` exposes only `main` and `backup/pre-spanish-localization`; local `backup/media-lfs` contains commits `7bf9e57` and `ca9e050` but no remote ref; local inventory found 351 video files totaling approximately 10.69 GB before deduplication.
+- Observation: The local LFS branch includes public, package, Lab, test, temporary, upload, and duplicate videos. The 85 videos inside `_research/motionsites.ai` could not be pushed to its separate remote because the current identity received HTTP 403, so they were also placed into `public/media-backups/motionsites-ai-video-vault.tar`. The complete parent LFS upload was started but not completed or remotely verified.
+- Classification: BLOCKED
+- Severity: High
+- Status: BLOCKED — local backup exists; remote media branch and LFS object availability are not confirmed.
+- User impact: A later clean checkout from GitHub cannot yet be proven to restore every video without access to the current computer.
+- Business impact: Rebuilding, rerecording, or reproducing demos may require manual recovery if the local media store is lost.
+- Technical impact: `backup/media-lfs` is local only; LFS objects are cached locally; `_research/motionsites.ai` is a tracked gitlink without a valid `.gitmodules` mapping in the parent repository.
+- Primary failure mode: Treating a local LFS cache or a Git pointer as proof that GitHub contains the binary.
+- Secondary risks: GitHub LFS quota/bandwidth limits, incomplete nested-repository access, archive checksum drift, and restoring pointers without downloading objects.
+- Dependency chain: A writable remote/object store, sufficient quota, successful upload, remote retrieval, archive extraction, path/checksum comparison, and a clean restoration test must all succeed.
+- Counterargument: The code backup is already on GitHub, so media could be recovered from the current workstation. That is not a durable disaster-recovery guarantee.
+- False-positive risk: A green Git status or visible LFS pointer can look complete while the remote object is unavailable.
+- Recommended next action: Choose an accessible remote LFS/object-storage destination, resume or migrate the upload, publish the media branch, verify object downloads, and run a clean restoration test.
+- Operator approval required: Yes for selecting any new external storage or GitHub account; no for resuming the already authorized upload if the existing remote quota and access are confirmed.
+- Operator decision: Pending
+- Fix performed: Added the backup/restoration gate to the proposal, checklist, `English-Spanish-Law.md`, and `AGENTS.md`; added the complete research-video archive to the local media branch.
+- Verification evidence: Local branch `backup/media-lfs` at `ca9e050`; remote media ref absent at audit time; submodule push returned HTTP 403.
+- Related documents: `SPANISH_LOCALIZATION_PROPOSAL.md` Document control; `SPANISH_LOCALIZATION_CHECKLIST.md` Backup and recovery gate; `English-Spanish-Law.md` Backup and restoration law.
+- Follow-up date or trigger: Before Spanish implementation begins and after any material media addition.
+
+### CHG-2026-08-20-009 — Added backup and restoration controls to all governing documents
+
+- Date: 2026-08-20
+- Files: `AGENTS.md`; `docs/SPANISH_LOCALIZATION_PROPOSAL.md`; `docs/SPANISH_LOCALIZATION_CHECKLIST.md`; `docs/English-Spanish-Law.md`; this changelog
+- Status: APPLIED LOCALLY; remote media branch still pending
+- Change: Added one synchronized rule set requiring remote verification of code, duplicate videos, LFS objects, nested-repository media, archives, checksums, and clean restoration before localization work.
+- Existing content deleted: none
+- Operator approval: Explicitly requested a complete, error-resistant audit.
+- Verification: Cross-document references and the hard backup gate were added; remote state remains recorded as blocked above.
+- Related observations: OBS-2026-08-20-013
+
 ## Open operator questions
 
 1. Do you want the /robots.txt HTTP 500 diagnosed and fixed now?
